@@ -18,7 +18,7 @@ const Alert = React.forwardRef(
       action,
       dismissible = false,
       onDismiss,
-      dismissAriaLabel = 'Dismiss',
+      dismissAriaLabel,
       statusIconAriaLabel,
       ...props
     }: AlertProps,

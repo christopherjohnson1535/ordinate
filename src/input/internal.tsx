@@ -7,6 +7,7 @@ import { InternalButton } from '../button/internal';
 import { InternalIcon } from '../icon/internal';
 import { useFormFieldContext } from '../internal/context/form-field-context';
 import { fireKeyboardEvent, fireNonCancelableEvent } from '../internal/events';
+import { useInternalI18n } from '../internal/i18n/context';
 import { InputProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -33,7 +34,7 @@ export const InternalInput = React.forwardRef(
       autoFocus,
       ariaLabel,
       ariaRequired,
-      clearAriaLabel = 'Clear',
+      clearAriaLabel,
       name,
       autoComplete = true,
       disableBrowserAutocorrect = false,
@@ -51,6 +52,7 @@ export const InternalInput = React.forwardRef(
     }: InputProps,
     ref: React.Ref<InputProps.Ref>
   ) => {
+    const i18n = useInternalI18n('input');
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => ({
       focus: () => inputRef.current?.focus(),
@@ -125,7 +127,7 @@ export const InternalInput = React.forwardRef(
             variant="icon"
             formAction="none"
             iconName="close"
-            ariaLabel={clearAriaLabel}
+            ariaLabel={i18n('clearAriaLabel', clearAriaLabel)}
             onClick={clear}
           />
         )}

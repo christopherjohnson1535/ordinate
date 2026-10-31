@@ -25,7 +25,7 @@ const Button = React.forwardRef(
       target,
       rel,
       external = false,
-      externalIconAriaLabel = 'Opens in a new tab',
+      externalIconAriaLabel,
       download,
       formAction = 'submit',
       form,

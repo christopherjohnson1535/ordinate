@@ -19,7 +19,7 @@ export default function Modal({
   position = 'center',
   disableContentPaddings = false,
   hideDismissButton = false,
-  closeAriaLabel = 'Close',
+  closeAriaLabel,
   ...props
 }: ModalProps) {
   return (

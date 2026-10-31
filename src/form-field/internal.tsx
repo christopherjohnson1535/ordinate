@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
 import { FormFieldContext } from '../internal/context/form-field-context';
+import { useInternalI18n } from '../internal/i18n/context';
 import { warnOnce } from '../internal/logging';
 import { FormFieldProps } from './interfaces';
 
@@ -38,6 +39,7 @@ export function InternalFormField({
   secondaryControl,
   ...rest
 }: FormFieldProps) {
+  const i18n = useInternalI18n('form-field');
   const baseId = useId();
   const controlId = controlIdProp ?? `${baseId}control`;
   const labelId = `${baseId}label`;
@@ -104,7 +106,7 @@ export function InternalFormField({
             className={styles['message-icon']}
             name="status-negative"
             size="small"
-            ariaLabel={errorIconAriaLabel}
+            ariaLabel={i18n('errorIconAriaLabel', errorIconAriaLabel)}
           />
           <span>{errorText}</span>
         </div>
@@ -115,7 +117,7 @@ export function InternalFormField({
             className={styles['message-icon']}
             name="status-warning"
             size="small"
-            ariaLabel={warningIconAriaLabel}
+            ariaLabel={i18n('warningIconAriaLabel', warningIconAriaLabel)}
           />
           <span>{warningText}</span>
         </div>

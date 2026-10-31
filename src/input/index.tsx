@@ -24,7 +24,7 @@ const Input = React.forwardRef(
       autoFocus = false,
       ariaLabel,
       ariaRequired,
-      clearAriaLabel = 'Clear',
+      clearAriaLabel,
       name,
       autoComplete = true,
       disableBrowserAutocorrect = false,

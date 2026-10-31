@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
 import { fireCancelableEvent } from '../internal/events';
+import { useInternalI18n } from '../internal/i18n/context';
 import { warnOnce } from '../internal/logging';
 import { ButtonProps } from './interfaces';
 
@@ -48,6 +49,7 @@ export const InternalButton = React.forwardRef(
     }: InternalButtonProps,
     ref: React.Ref<ButtonProps.Ref>
   ) => {
+    const i18n = useInternalI18n('button');
     const elementRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
     useImperativeHandle(ref, () => ({ focus: () => elementRef.current?.focus() }));
 
@@ -107,7 +109,7 @@ export const InternalButton = React.forwardRef(
           <InternalIcon
             className={styles['external-icon']}
             name="external"
-            ariaLabel={target === '_blank' ? externalIconAriaLabel : undefined}
+            ariaLabel={target === '_blank' ? i18n('externalIconAriaLabel', externalIconAriaLabel) : undefined}
           />
         )}
         {rightIcon}

@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
 import { fireCancelableEvent, fireNonCancelableEvent } from '../internal/events';
+import { useInternalI18n } from '../internal/i18n/context';
 import { warnOnce } from '../internal/logging';
 import { LinkProps } from './interfaces';
 
@@ -51,6 +52,7 @@ export const InternalLink = React.forwardRef(
     }: InternalLinkProps,
     ref: React.Ref<LinkProps.Ref>
   ) => {
+    const i18n = useInternalI18n('link');
     const linkRef = useRef<HTMLAnchorElement>(null);
     useImperativeHandle(ref, () => ({ focus: () => linkRef.current?.focus() }));
 
@@ -89,7 +91,7 @@ export const InternalLink = React.forwardRef(
               className={styles['external-icon']}
               name="external"
               size="inherit"
-              ariaLabel={externalIconAriaLabel}
+              ariaLabel={i18n('externalIconAriaLabel', externalIconAriaLabel)}
             />
           </>
         )}

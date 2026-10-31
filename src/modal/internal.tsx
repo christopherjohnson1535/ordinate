@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
 import { fireNonCancelableEvent } from '../internal/events';
+import { useInternalI18n } from '../internal/i18n/context';
 import { ModalProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -21,9 +22,10 @@ export function InternalModal({
   position = 'center',
   disableContentPaddings = false,
   hideDismissButton = false,
-  closeAriaLabel = 'Close',
+  closeAriaLabel,
   ...rest
 }: ModalProps) {
+  const i18n = useInternalI18n('modal');
   const dialogRef = useRef<HTMLDialogElement>(null);
   const headingId = useId();
 
@@ -80,7 +82,7 @@ export function InternalModal({
                 variant="icon"
                 formAction="none"
                 iconName="close"
-                ariaLabel={closeAriaLabel}
+                ariaLabel={i18n('closeAriaLabel', closeAriaLabel)}
                 onClick={() => dismiss('closeButton')}
               />
             )}

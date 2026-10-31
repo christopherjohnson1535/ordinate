@@ -7,6 +7,7 @@ import { InternalButton } from '../button/internal';
 import { IconProps } from '../icon/interfaces';
 import { InternalIcon } from '../icon/internal';
 import { fireNonCancelableEvent } from '../internal/events';
+import { useInternalI18n } from '../internal/i18n/context';
 import { AlertProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -27,12 +28,13 @@ export const InternalAlert = React.forwardRef(
       action,
       dismissible = false,
       onDismiss,
-      dismissAriaLabel = 'Dismiss',
+      dismissAriaLabel,
       statusIconAriaLabel,
       ...rest
     }: AlertProps,
     ref: React.Ref<AlertProps.Ref>
   ) => {
+    const i18n = useInternalI18n('alert');
     const focusRef = useRef<HTMLDivElement>(null);
     const headerId = useId();
 
@@ -73,7 +75,7 @@ export const InternalAlert = React.forwardRef(
             <InternalButton
               variant="icon"
               formAction="none"
-              ariaLabel={dismissAriaLabel}
+              ariaLabel={i18n('dismissAriaLabel', dismissAriaLabel)}
               iconSvg={<InternalIcon name="close" />}
               onClick={() => fireNonCancelableEvent(onDismiss, null)}
             />

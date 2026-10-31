@@ -8,6 +8,7 @@ import { InternalIcon } from '../icon/internal';
 import { Dropdown } from '../internal/components/dropdown';
 import { useFormFieldContext } from '../internal/context/form-field-context';
 import { fireNonCancelableEvent } from '../internal/events';
+import { useInternalI18n } from '../internal/i18n/context';
 import { SelectProps } from './interfaces';
 import { flattenOptions, getLabel, isSameOption, ListItem, OptionItem } from './utils';
 
@@ -66,6 +67,7 @@ export const InternalSelect = React.forwardRef(
     }: SelectProps,
     ref: React.Ref<SelectProps.Ref>
   ) => {
+    const i18n = useInternalI18n('select');
     const triggerRef = useRef<HTMLButtonElement>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const filterRef = useRef<HTMLInputElement>(null);
@@ -390,7 +392,11 @@ export const InternalSelect = React.forwardRef(
       if (statusType === 'error') {
         return (
           <span className={styles['status-error']}>
-            <InternalIcon name="status-negative" variant="error" ariaLabel={errorIconAriaLabel} />
+            <InternalIcon
+              name="status-negative"
+              variant="error"
+              ariaLabel={i18n('errorIconAriaLabel', errorIconAriaLabel)}
+            />
             <span>{errorText}</span>
             {recoveryText && (
               <InternalButton
