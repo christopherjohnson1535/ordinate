@@ -7,8 +7,6 @@ Two things set it apart:
 - Revisions. The look of the whole library is versioned separately from its code. An application pins one revision, such as `2026.1`, and every component follows it. A new revision, for example one that rounds every corner, never changes an application until it opts in.
 - No style overrides. Components accept no `className` or `style`. Consistency comes from the components, not from discipline in each application.
 
-The structure of this repository follows [Cloudscape](https://github.com/cloudscape-design/components).
-
 ## Packages
 
 | Package                   | Contents                                                    |
