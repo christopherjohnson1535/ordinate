@@ -1,0 +1,56 @@
+// Copyright Christopher Johnson. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+@use './tokens' as ord;
+
+@mixin font-body {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-body;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+}
+
+@mixin font-label {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-label;
+  font-weight: ord.$font-weight-label;
+  font-stretch: ord.$font-stretch-label;
+  line-height: ord.$line-height-body;
+}
+
+@mixin font-display {
+  font-family: ord.$font-family-display;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-heading;
+}
+
+@mixin border-radius($radius) {
+  border-start-start-radius: $radius;
+  border-start-end-radius: $radius;
+  border-end-start-radius: $radius;
+  border-end-end-radius: $radius;
+}
+
+@mixin focus-ring {
+  outline-width: ord.$border-width-focus-ring;
+  outline-style: dashed;
+  outline-color: ord.$color-border-focus-ring;
+  outline-offset: ord.$border-focus-ring-offset;
+}
+
+// Disabled controls are hatched rather than greyed out.
+@mixin hatch {
+  background-image: repeating-linear-gradient(135deg, ord.$color-hatch 0 1px, transparent 1px 6px);
+}
+
+// All transitions and animations go through this mixin so that reduced-motion
+// preferences and `disableMotion()` apply everywhere.
+@mixin with-motion {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+  :global(.ord-motion-disabled) & {
+    animation: none;
+    transition: none;
+  }
+}

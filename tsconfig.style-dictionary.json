@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "types": [],
+    "rootDir": "style-dictionary",
+    "outDir": "lib/style-dictionary"
+  },
+  "include": ["style-dictionary"]
+}

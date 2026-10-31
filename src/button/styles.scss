@@ -1,0 +1,106 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.button {
+  @include styles.font-label;
+  @include styles.border-radius(ord.$border-radius-button);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: ord.$space-xs;
+  box-sizing: border-box;
+  min-block-size: ord.$size-control-height;
+  padding-block: 0;
+  padding-inline: ord.$space-button-horizontal;
+  border-width: ord.$border-width-control;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-body;
+  text-decoration-line: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color, color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover {
+    background-color: ord.$color-background-button-normal-hover;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.variant-primary {
+  border-color: ord.$color-background-button-primary;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+
+  &:hover {
+    border-color: ord.$color-background-button-primary-hover;
+    background-color: ord.$color-background-button-primary-hover;
+  }
+}
+
+.variant-link {
+  padding-inline: ord.$space-xxs;
+  border-color: transparent;
+  background-color: transparent;
+  text-decoration-line: underline;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxs;
+
+  &:hover {
+    background-color: transparent;
+    text-decoration-thickness: ord.$border-width-control;
+  }
+}
+
+.variant-destructive {
+  border-color: ord.$color-border-error;
+  color: ord.$color-text-error;
+}
+
+.variant-icon {
+  inline-size: ord.$size-control-height;
+  padding-inline: 0;
+}
+
+.icon {
+  display: inline-flex;
+  inline-size: ord.$size-icon;
+  block-size: ord.$size-icon;
+}
+
+.full-width {
+  inline-size: 100%;
+}
+
+.disabled {
+  @include styles.hatch;
+  border-width: ord.$border-width-default;
+  border-color: ord.$color-border-disabled;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-disabled;
+  cursor: default;
+
+  &:hover {
+    border-color: ord.$color-border-disabled;
+    background-color: ord.$color-background-button-normal;
+  }
+
+  &.variant-link {
+    border-color: transparent;
+    background-image: none;
+  }
+}

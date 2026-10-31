@@ -1,0 +1,14 @@
+node_modules
+coverage
+# build output
+lib
+pages/dist
+global-styles/lib
+# generated sources
+src/index.ts
+src/internal/generated
+# IDEs
+.idea
+.vscode
+# System
+.DS_Store

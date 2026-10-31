@@ -1,0 +1,23 @@
+{
+  "name": "@ordinate/global-styles",
+  "version": "0.1.0",
+  "description": "Fonts, base styles and the mode and revision helpers for Ordinate.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js",
+    "./index.css": "./lib/index.css"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('src/index.css', 'lib/index.css')\""
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/old-standard-tt": "^5.3.0"
+  }
+}

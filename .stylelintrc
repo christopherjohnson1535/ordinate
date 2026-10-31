@@ -1,0 +1,35 @@
+{
+  "extends": ["stylelint-config-recommended-scss"],
+  "plugins": ["stylelint-use-logical"],
+  "rules": {
+    "selector-pseudo-class-no-unknown": [true, { "ignorePseudoClasses": ["global"] }]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.scss"],
+      "rules": {
+        "property-disallowed-list": ["border", "border-radius", "margin", "padding"],
+        "csstools/use-logical": "always",
+        "declaration-property-value-allowed-list": {
+          "/^(color|background-color|border(-[a-z]+)*-color|outline-color|text-decoration-color)$/": [
+            "/^ord\\.\\$/",
+            "transparent",
+            "currentColor",
+            "inherit"
+          ],
+          "/^(fill|stroke)$/": ["/^ord\\.\\$/", "currentColor", "none"],
+          "/radius$/": ["/^ord\\.\\$/", "/^\\$radius$/"],
+          "/^font-(family|size|weight|stretch)$/": ["/^ord\\.\\$/", "inherit"],
+          "/^line-height$/": ["/^ord\\.\\$/"],
+          "/^(transition|animation)-(duration|timing-function)$/": ["/^ord\\.\\$/"],
+          "/^(border(-[a-z]+)*-width|outline-width|outline-offset|stroke-width|text-decoration-thickness|text-underline-offset)$/": [
+            "/^ord\\.\\$/",
+            "0"
+          ],
+          "/^(padding|margin)(-[a-z]+)*$/": ["/^(ord\\.\\$[a-z0-9-]+|0|auto)( (ord\\.\\$[a-z0-9-]+|0|auto))*$/"],
+          "/^(gap|row-gap|column-gap)$/": ["/^ord\\.\\$/"]
+        }
+      }
+    }
+  ]
+}
