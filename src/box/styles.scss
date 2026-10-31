@@ -1,0 +1,271 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// Every class here has the same specificity, so the order of the blocks decides
+// which wins: variant defaults first, then the overrides set by props.
+
+.root {
+  @include styles.font-body;
+  color: ord.$color-text-body;
+}
+
+.variant-h1,
+.variant-h2,
+.variant-h3,
+.variant-h4,
+.variant-h5 {
+  @include styles.font-heading;
+}
+
+.variant-h1,
+.variant-h2,
+.variant-h3,
+.variant-h4,
+.variant-h5,
+.variant-p {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-xxs;
+  padding-inline: 0;
+}
+
+.variant-h1 {
+  font-size: ord.$font-size-heading-m;
+}
+
+.variant-h2 {
+  font-size: ord.$font-size-heading-s;
+}
+
+.variant-h3,
+.variant-h4 {
+  font-size: ord.$font-size-heading-xs;
+}
+
+.variant-h5 {
+  font-size: ord.$font-size-small;
+}
+
+.variant-strong {
+  font-weight: ord.$font-weight-bold;
+}
+
+.variant-small {
+  display: inline-block;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-secondary;
+}
+
+.variant-code,
+.variant-pre,
+.variant-samp,
+.variant-inline-code {
+  @include styles.font-code;
+}
+
+.variant-pre {
+  margin-block: 0;
+  margin-inline: 0;
+  white-space: pre;
+}
+
+.variant-inline-code {
+  @include styles.border-radius(ord.$border-radius-inline-code);
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-xxs;
+  background-color: ord.$color-background-inline-code;
+}
+
+.variant-key-label {
+  @include styles.font-label;
+  margin-block-end: ord.$space-xxxs;
+}
+
+.variant-value-large {
+  @include styles.font-heading;
+  font-size: ord.$font-size-display-l;
+  font-weight: ord.$font-weight-light;
+  color: inherit;
+}
+
+.font-size-body-s {
+  font-size: ord.$font-size-small;
+  line-height: ord.$line-height-body;
+}
+
+.font-size-body-m {
+  font-size: ord.$font-size-body;
+  line-height: ord.$line-height-body;
+}
+
+.font-size-heading-xs {
+  font-size: ord.$font-size-heading-xs;
+  line-height: ord.$line-height-heading;
+}
+
+.font-size-heading-s {
+  font-size: ord.$font-size-heading-s;
+  line-height: ord.$line-height-heading;
+}
+
+.font-size-heading-m {
+  font-size: ord.$font-size-heading-m;
+  line-height: ord.$line-height-heading;
+}
+
+.font-size-heading-l {
+  font-size: ord.$font-size-heading-l;
+  line-height: ord.$line-height-heading;
+}
+
+.font-size-heading-xl {
+  font-size: ord.$font-size-heading-xl;
+  line-height: ord.$line-height-heading;
+}
+
+.font-size-display-l {
+  font-size: ord.$font-size-display-l;
+  line-height: ord.$line-height-heading;
+}
+
+.font-size-display-xl {
+  font-size: ord.$font-size-display-xl;
+  line-height: ord.$line-height-heading;
+}
+
+.font-weight-light {
+  font-weight: ord.$font-weight-light;
+}
+
+.font-weight-normal {
+  font-weight: ord.$font-weight-body;
+}
+
+.font-weight-bold {
+  font-weight: ord.$font-weight-bold;
+}
+
+.font-weight-heavy {
+  font-weight: ord.$font-weight-heavy;
+}
+
+.color-inherit {
+  color: inherit;
+}
+
+.color-text-label {
+  color: ord.$color-text-body;
+}
+
+.color-text-body-secondary {
+  color: ord.$color-text-body-secondary;
+}
+
+.color-text-status-error {
+  color: ord.$color-text-error;
+}
+
+.color-text-status-success {
+  color: ord.$color-text-status-success;
+}
+
+.color-text-status-info {
+  color: ord.$color-text-status-info;
+}
+
+.color-text-status-inactive {
+  color: ord.$color-text-status-inactive;
+}
+
+.color-text-status-warning {
+  color: ord.$color-text-status-warning;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.display-inline-block {
+  display: inline-block;
+}
+
+.display-none {
+  display: none;
+}
+
+.text-align-left {
+  text-align: start;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: end;
+}
+
+.float-left {
+  float: inline-start;
+}
+
+.float-right {
+  float: inline-end;
+}
+
+$space-sizes: (
+  'n': 0,
+  'xxxs': ord.$space-xxxs,
+  'xxs': ord.$space-xxs,
+  'xs': ord.$space-xs,
+  's': ord.$space-s,
+  'm': ord.$space-m,
+  'l': ord.$space-l,
+  'xl': ord.$space-xl,
+  'xxl': ord.$space-xxl,
+  'xxxl': ord.$space-xxxl,
+);
+
+// Sides come after the axes so that `{ horizontal: 'l', left: 'n' }` keeps the single side.
+$space-sides: (
+  'horizontal': (
+    '-inline-start',
+    '-inline-end',
+  ),
+  'vertical': (
+    '-block-start',
+    '-block-end',
+  ),
+  'top': ('-block-start'),
+  'right': ('-inline-end'),
+  'bottom': ('-block-end'),
+  'left': ('-inline-start'),
+);
+
+@each $property in (padding, margin) {
+  @each $size, $value in $space-sizes {
+    .#{$property}-#{$size} {
+      #{$property}-block: $value;
+      #{$property}-inline: $value;
+    }
+  }
+
+  @each $side, $suffixes in $space-sides {
+    @each $size, $value in $space-sizes {
+      .#{$property}-#{$side}-#{$size} {
+        @each $suffix in $suffixes {
+          #{$property}#{$suffix}: $value;
+        }
+      }
+    }
+  }
+}

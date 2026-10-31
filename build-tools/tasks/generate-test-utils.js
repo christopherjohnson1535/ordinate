@@ -34,11 +34,33 @@ async function listWrappers() {
   return names.sort();
 }
 
+// Every wrapper inherits the generated finders, so a generated name that a wrapper
+// already uses for one of its parts (ModalWrapper.findHeader) cannot go on ElementWrapper.
+// Those finders are added only to the root wrapper that createWrapper() returns.
+async function listOwnMethodNames(names) {
+  const methods = new Set();
+  for (const name of names) {
+    const source = await fs.readFile(path.join(domDir, name, 'index.ts'), 'utf8');
+    for (const match of source.matchAll(/^\s+(find\w+)\s*\(/gm)) {
+      methods.add(match[1]);
+    }
+  }
+  return methods;
+}
+
 module.exports = task('generate-test-utils', async () => {
-  const wrappers = (await listWrappers()).map(name => {
+  const names = await listWrappers();
+  const ownMethods = await listOwnMethodNames(names);
+  const wrappers = names.map(name => {
     const component = toPascalCase(name);
     return { name, component, wrapper: `${component}Wrapper`, plural: pluralize(component) };
   });
+  const finders = wrappers.flatMap(w => [
+    { method: `find${w.component}`, returns: `${w.wrapper} | null`, helper: 'findComponent', wrapper: w.wrapper },
+    { method: `findAll${w.plural}`, returns: `${w.wrapper}[]`, helper: 'findAllComponents', wrapper: w.wrapper },
+  ]);
+  const shared = finders.filter(f => !ownMethods.has(f.method));
+  const rootOnly = finders.filter(f => ownMethods.has(f.method));
 
   const content = [
     '// Copyright Christopher Johnson. All Rights Reserved.',
@@ -51,28 +73,30 @@ module.exports = task('generate-test-utils', async () => {
     '',
     "declare module './core' {",
     '  interface ElementWrapper<E extends Element = HTMLElement> {',
-    ...wrappers.flatMap(w => [
-      `    find${w.component}(selector?: string): ${w.wrapper} | null;`,
-      `    findAll${w.plural}(selector?: string): ${w.wrapper}[];`,
-    ]),
+    ...shared.map(f => `    ${f.method}(selector?: string): ${f.returns};`),
     '  }',
     '}',
     '',
-    ...wrappers.flatMap(w => [
-      `ElementWrapper.prototype.find${w.component} = function (this: ElementWrapper<Element>, selector?: string) {`,
-      `  return this.findComponent(${w.wrapper}, selector);`,
-      '};',
-      `ElementWrapper.prototype.findAll${w.plural} = function (this: ElementWrapper<Element>, selector?: string) {`,
-      `  return this.findAllComponents(${w.wrapper}, selector);`,
+    ...shared.flatMap(f => [
+      `ElementWrapper.prototype.${f.method} = function (this: ElementWrapper<Element>, selector?: string) {`,
+      `  return this.${f.helper}(${f.wrapper}, selector);`,
       '};',
     ]),
+    '',
+    'export class RootWrapper extends ElementWrapper<Element> {',
+    ...rootOnly.flatMap(f => [
+      `  ${f.method}(selector?: string): ${f.returns} {`,
+      `    return this.${f.helper}(${f.wrapper}, selector);`,
+      '  }',
+    ]),
+    '}',
     '',
     '/**',
     ' * Wraps `root` (the document body by default) so components inside it can be',
     ' * found and driven in tests: `createWrapper().findButton()!.click()`.',
     ' */',
-    'export default function createWrapper(root: Element = document.body): ElementWrapper<Element> {',
-    '  return new ElementWrapper(root);',
+    'export default function createWrapper(root: Element = document.body): RootWrapper {',
+    '  return new RootWrapper(root);',
     '}',
     '',
   ].join('\n');

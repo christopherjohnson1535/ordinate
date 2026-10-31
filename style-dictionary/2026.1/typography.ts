@@ -21,5 +21,10 @@ export const tokens: TypographyDictionary = {
   fontStretchLabel: '100%',
   lineHeightBody: '1.5',
   lineHeightHeading: '1.3',
-  fontSizeDisplayL: '42px',
+  fontSizeHeadingXs: '{fontSizeBody}',
+  fontSizeDisplayXl: '42px',
+  fontWeightLight: '300',
+  fontWeightBold: '600',
+  fontWeightHeavy: '700',
+  fontSizeDisplayL: '32px',
 };

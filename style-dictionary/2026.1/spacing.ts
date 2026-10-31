@@ -14,4 +14,5 @@ export const tokens: SpacingDictionary = {
   spaceButtonHorizontal: '14px',
   spaceInputHorizontal: '{spaceS}',
   spaceContainer: '20px',
+  spaceXxxl: '64px',
 };

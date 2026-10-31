@@ -1,0 +1,82 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-container);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+// Stacked containers read as one sheet split into sections: they share borders, and only
+// the outer corners of the run follow the container radius.
+.variant-stacked {
+  @include styles.border-radius(0);
+}
+
+.variant-stacked + .variant-stacked {
+  border-block-start-width: 0;
+}
+
+.variant-stacked:not(.variant-stacked + .variant-stacked) {
+  border-start-start-radius: ord.$border-radius-container;
+  border-start-end-radius: ord.$border-radius-container;
+}
+
+.variant-stacked:not(:has(+ .variant-stacked)) {
+  border-end-start-radius: ord.$border-radius-container;
+  border-end-end-radius: ord.$border-radius-container;
+}
+
+.fit-height {
+  block-size: 100%;
+  overflow: hidden;
+
+  > .content {
+    flex: 1 1 auto;
+    min-block-size: 0;
+    overflow-y: auto;
+  }
+}
+
+.header {
+  padding-block: ord.$space-m;
+  padding-inline: ord.$space-container;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+}
+
+.content {
+  padding-block: ord.$space-container;
+  padding-inline: ord.$space-container;
+}
+
+.footer {
+  padding-block: ord.$space-m;
+  padding-inline: ord.$space-container;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.header,
+.content,
+.footer {
+  &.no-paddings {
+    padding-block: 0;
+    padding-inline: 0;
+  }
+}

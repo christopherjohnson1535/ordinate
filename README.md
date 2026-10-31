@@ -45,11 +45,16 @@ export default {
 
 ## Components
 
+- Box
 - Button
+- Container
+- Divider
 - FormField
+- Header
 - Icon and IconProvider
 - Input
 - Modal
+- SpaceBetween
 
 Components are added in phases; phase 1 adds layout primitives, form controls and status components.
 

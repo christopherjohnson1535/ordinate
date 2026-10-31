@@ -1,0 +1,79 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  color: ord.$color-text-body;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: ord.$space-xs;
+}
+
+.title {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.heading {
+  @include styles.font-heading;
+  margin-block: 0;
+  margin-inline: 0;
+  overflow-wrap: break-word;
+}
+
+.variant-h1 .heading {
+  font-size: ord.$font-size-heading-m;
+}
+
+.variant-h2 .heading {
+  font-size: ord.$font-size-heading-s;
+}
+
+.variant-h3 .heading {
+  font-size: ord.$font-size-heading-xs;
+}
+
+.heading-text {
+  color: inherit;
+}
+
+.counter {
+  font-weight: ord.$font-weight-body;
+  color: ord.$color-text-secondary;
+}
+
+.info {
+  @include styles.font-body;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+  margin-inline-start: auto;
+}
+
+.description {
+  @include styles.font-body;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}

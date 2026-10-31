@@ -12,4 +12,5 @@ export const tokens: BordersDictionary = {
   borderRadiusBadge: '4px',
   borderRadiusToggle: '9px',
   borderRadiusRadio: '50%',
+  borderRadiusInlineCode: '3px',
 };

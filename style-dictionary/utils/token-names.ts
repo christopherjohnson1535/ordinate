@@ -79,6 +79,7 @@ export const colorsTokenNames = [
   'colorBorderStatusInfo',
   'colorHatch',
   'colorTextLinkInverted',
+  'colorBackgroundInlineCode',
 ] as const;
 
 export const bordersTokenNames = [
@@ -98,6 +99,7 @@ export const bordersTokenNames = [
   'borderRadiusDropdown',
   'borderRadiusToggle',
   'borderRadiusRadio',
+  'borderRadiusInlineCode',
 ] as const;
 
 export const typographyTokenNames = [
@@ -119,6 +121,11 @@ export const typographyTokenNames = [
   'fontStretchLabel',
   'lineHeightBody',
   'lineHeightHeading',
+  'fontSizeHeadingXs',
+  'fontSizeDisplayXl',
+  'fontWeightLight',
+  'fontWeightBold',
+  'fontWeightHeavy',
   'fontSizeDisplayL',
 ] as const;
 
@@ -134,6 +141,7 @@ export const spacingTokenNames = [
   'spaceButtonHorizontal',
   'spaceInputHorizontal',
   'spaceContainer',
+  'spaceXxxl',
 ] as const;
 
 export const sizesTokenNames = [

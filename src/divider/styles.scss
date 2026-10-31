@@ -1,0 +1,56 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.divider {
+  box-sizing: border-box;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+}
+
+.horizontal {
+  display: block;
+  inline-size: 100%;
+  block-size: 0;
+  border-block-start-width: ord.$border-width-default;
+}
+
+.vertical {
+  display: inline-block;
+  align-self: stretch;
+  inline-size: 0;
+  block-size: auto;
+  border-inline-start-width: ord.$border-width-default;
+}
+
+.labelled {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  inline-size: 100%;
+}
+
+.line {
+  flex: 1 1 0;
+  min-inline-size: ord.$space-m;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.label {
+  @include styles.font-body;
+  flex: 0 1 auto;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-secondary;
+  overflow-wrap: break-word;
+}

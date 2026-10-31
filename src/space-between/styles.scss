@@ -1,0 +1,72 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.child {
+  min-inline-size: 0;
+}
+
+// A child that renders nothing would still take a gap.
+.child:empty {
+  display: none;
+}
+
+.size-xxxs {
+  gap: ord.$space-xxxs;
+}
+
+.size-xxs {
+  gap: ord.$space-xxs;
+}
+
+.size-xs {
+  gap: ord.$space-xs;
+}
+
+.size-s {
+  gap: ord.$space-s;
+}
+
+.size-m {
+  gap: ord.$space-m;
+}
+
+.size-l {
+  gap: ord.$space-l;
+}
+
+.size-xl {
+  gap: ord.$space-xl;
+}
+
+.size-xxl {
+  gap: ord.$space-xxl;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}

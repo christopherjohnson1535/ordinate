@@ -1,0 +1,31 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.grid {
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding-block: 6px;
+    padding-inline: 16px;
+    text-align: start;
+    vertical-align: baseline;
+  }
+
+  th {
+    font-weight: 500;
+    color: var(--ord-color-text-secondary);
+    white-space: nowrap;
+  }
+}
+
+.frame {
+  outline: 1px dashed var(--ord-color-border-control);
+}
+
+.fill {
+  display: block;
+  background-color: var(--ord-color-background-highlight);
+}
