@@ -34,23 +34,31 @@ async function listWrappers() {
   return names.sort();
 }
 
-// Every wrapper inherits the generated finders, so a generated name that a wrapper
-// already uses for one of its parts (ModalWrapper.findHeader) cannot go on ElementWrapper.
-// Those finders are added only to the root wrapper that createWrapper() returns.
-async function listOwnMethodNames(names) {
-  const methods = new Set();
+// Every wrapper inherits the generated finders. When a wrapper declares a finder with
+// the same name but a different return type (ModalWrapper.findHeader returns the
+// modal's header slot, not a Header), that finder cannot go on ElementWrapper and is
+// added only to the root wrapper that createWrapper() returns.
+async function listOwnMethods(names) {
+  const methods = new Map();
   for (const name of names) {
     const source = await fs.readFile(path.join(domDir, name, 'index.ts'), 'utf8');
-    for (const match of source.matchAll(/^\s+(find\w+)\s*\(/gm)) {
-      methods.add(match[1]);
+    for (const match of source.matchAll(/^\s+(find\w+)\s*\([^)]*\)\s*:\s*([^{]+?)\s*\{/gm)) {
+      const returns = methods.get(match[1]) ?? new Set();
+      returns.add(match[2].replace(/\s+/g, ' '));
+      methods.set(match[1], returns);
     }
   }
   return methods;
 }
 
+function clashes(ownMethods, finder) {
+  const returns = ownMethods.get(finder.method);
+  return Boolean(returns) && [...returns].some(type => type !== finder.returns);
+}
+
 module.exports = task('generate-test-utils', async () => {
   const names = await listWrappers();
-  const ownMethods = await listOwnMethodNames(names);
+  const ownMethods = await listOwnMethods(names);
   const wrappers = names.map(name => {
     const component = toPascalCase(name);
     return { name, component, wrapper: `${component}Wrapper`, plural: pluralize(component) };
@@ -59,8 +67,8 @@ module.exports = task('generate-test-utils', async () => {
     { method: `find${w.component}`, returns: `${w.wrapper} | null`, helper: 'findComponent', wrapper: w.wrapper },
     { method: `findAll${w.plural}`, returns: `${w.wrapper}[]`, helper: 'findAllComponents', wrapper: w.wrapper },
   ]);
-  const shared = finders.filter(f => !ownMethods.has(f.method));
-  const rootOnly = finders.filter(f => ownMethods.has(f.method));
+  const shared = finders.filter(f => !clashes(ownMethods, f));
+  const rootOnly = finders.filter(f => clashes(ownMethods, f));
 
   const content = [
     '// Copyright Christopher Johnson. All Rights Reserved.',
