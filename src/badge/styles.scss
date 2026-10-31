@@ -1,0 +1,59 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.badge {
+  @include styles.font-label;
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: inline-block;
+  box-sizing: border-box;
+  padding-block: 0;
+  padding-inline: ord.$space-xs;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  font-size: ord.$font-size-small;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.color-grey,
+.color-severity-neutral {
+  border-color: ord.$color-border-control;
+  color: ord.$color-text-body-secondary;
+}
+
+.color-blue {
+  border-color: ord.$color-border-status-info;
+  color: ord.$color-text-status-info;
+}
+
+.color-green {
+  border-color: ord.$color-border-status-success;
+  color: ord.$color-text-status-success;
+}
+
+.color-red,
+.color-severity-critical,
+.color-severity-high {
+  border-color: ord.$color-border-error;
+  color: ord.$color-text-error;
+}
+
+.color-severity-medium,
+.color-severity-low {
+  border-color: ord.$color-border-status-warning;
+  color: ord.$color-text-status-warning;
+}
+
+.color-severity-critical {
+  border-width: ord.$border-width-section;
+  font-weight: ord.$font-weight-heading;
+}
+
+.color-severity-low {
+  border-style: dashed;
+}

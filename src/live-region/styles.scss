@@ -1,0 +1,27 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The wrapper adds no box of its own, so the content lays out as if it were placed directly.
+.root {
+  display: contents;
+}
+
+.content {
+  display: contents;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+// Visually hidden, but read by screen readers.
+.announcer {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

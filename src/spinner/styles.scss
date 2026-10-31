@@ -1,0 +1,64 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+// Without motion the open arc stays still, which still reads as a loading mark.
+.arc {
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+  stroke-linecap: round;
+
+  :global(path) {
+    vector-effect: non-scaling-stroke;
+  }
+
+  @include styles.with-motion {
+    animation-name: spin;
+    animation-duration: ord.$motion-duration-rotation;
+    animation-timing-function: ord.$motion-easing-linear;
+    animation-iteration-count: infinite;
+  }
+}
+
+.size-normal {
+  inline-size: ord.$size-icon;
+  block-size: ord.$size-icon;
+}
+
+.size-big {
+  inline-size: ord.$size-icon-big;
+  block-size: ord.$size-icon-big;
+}
+
+.size-large {
+  inline-size: ord.$size-icon-large;
+  block-size: ord.$size-icon-large;
+}
+
+.variant-disabled {
+  color: ord.$color-text-disabled;
+}
+
+.variant-inverted {
+  color: ord.$color-text-button-primary;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

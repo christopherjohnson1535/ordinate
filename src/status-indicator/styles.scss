@@ -1,0 +1,77 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: inline-flex;
+  align-items: baseline;
+  gap: ord.$space-xs;
+  max-inline-size: 100%;
+}
+
+.type-error {
+  color: ord.$color-text-error;
+}
+
+.type-warning {
+  color: ord.$color-text-status-warning;
+}
+
+.type-success {
+  color: ord.$color-text-status-success;
+}
+
+.type-info {
+  color: ord.$color-text-status-info;
+}
+
+.type-stopped,
+.type-pending,
+.type-in-progress,
+.type-loading {
+  color: ord.$color-text-status-inactive;
+}
+
+// An override has to beat the type color, so it gets one more class of specificity.
+.root.color-red {
+  color: ord.$color-text-error;
+}
+
+.root.color-yellow {
+  color: ord.$color-text-status-warning;
+}
+
+.root.color-green {
+  color: ord.$color-text-status-success;
+}
+
+.root.color-blue {
+  color: ord.$color-text-status-info;
+}
+
+.root.color-grey {
+  color: ord.$color-text-status-inactive;
+}
+
+// Keeps the icon on the first line of wrapped text, centred on it.
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-self: flex-start;
+  align-items: center;
+  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+}
+
+.no-wrap {
+  .text {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

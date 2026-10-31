@@ -1,0 +1,23 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.narrow {
+  max-inline-size: 260px;
+  padding-block: 8px;
+  padding-inline: 8px;
+  outline: 1px dashed var(--ord-color-border-divider);
+}
