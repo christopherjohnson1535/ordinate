@@ -21,4 +21,5 @@ export const tokens: TypographyDictionary = {
   fontStretchLabel: '100%',
   lineHeightBody: '1.5',
   lineHeightHeading: '1.3',
+  fontSizeDisplayL: '42px',
 };

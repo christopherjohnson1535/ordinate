@@ -43,4 +43,5 @@ export const tokens: ColorsDictionary = {
   colorBorderStatusWarning: { light: '{colorOchre600}', dark: '{colorOchre400}' },
   colorBorderStatusInfo: { light: '{colorBlue600}', dark: '{colorCyan400}' },
   colorHatch: { light: 'rgba(19, 20, 22, 0.18)', dark: 'rgba(236, 230, 226, 0.22)' },
+  colorTextLinkInverted: { light: '{colorWhite}', dark: '{colorChalk900}' },
 };

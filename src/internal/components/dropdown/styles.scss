@@ -1,0 +1,71 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.root {
+  position: relative;
+  display: block;
+}
+
+.popup {
+  @include styles.border-radius(ord.$border-radius-dropdown);
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-inline-size: 100%;
+  max-block-size: min(
+    #{ord.$size-dropdown-max-height},
+    var(--dropdown-available-block-size, #{ord.$size-dropdown-max-height})
+  );
+  margin-block-start: ord.$space-xxxs;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  overflow: hidden;
+
+  @include styles.with-motion {
+    animation-name: popup-enter;
+    animation-duration: ord.$motion-duration-responsive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.popup-above {
+  inset-block-start: auto;
+  inset-block-end: 100%;
+  margin-block-start: 0;
+  margin-block-end: ord.$space-xxxs;
+}
+
+.header {
+  flex-shrink: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
+@keyframes popup-enter {
+  from {
+    opacity: 0;
+  }
+}
