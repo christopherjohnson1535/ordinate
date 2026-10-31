@@ -3,8 +3,8 @@
 import { SizesDictionary } from '../utils/interfaces.js';
 
 export const tokens: SizesDictionary = {
-  sizeControlHeight: '36px',
-  sizeControlHeightSmall: '28px',
+  sizeControlHeight: { comfortable: '36px', compact: '30px' },
+  sizeControlHeightSmall: { comfortable: '28px', compact: '24px' },
   sizeIcon: '16px',
   sizeIconSmall: '12px',
   sizeIconMedium: '20px',

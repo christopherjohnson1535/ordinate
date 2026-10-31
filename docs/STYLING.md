@@ -40,6 +40,19 @@ The token contract test (`src/__tests__/token-contract.test.ts`) checks that eve
 
 Mode is not a theme. Each color token defines both a `light` and a `dark` value, which compile to `light-dark()`. `applyMode` sets `color-scheme` through a class: light, dark, or system to follow the operating system.
 
+## Density
+
+Compact density tightens padding and control heights. Spacing tokens come in two kinds:
+
+- `space-scaled-*` and control heights change with density. Use them for padding inside containers, rows and controls.
+- `space-*` stays the same. Use it for gaps that carry meaning, such as the space between an icon and its label.
+
+A token gets density values by holding `{ comfortable, compact }` in the revision. See [Theming, revisions and density](THEMING.md).
+
+## Runtime theming
+
+Applications can change a fixed set of brand tokens at runtime with `applyTheme`. Components need nothing special for this, as long as they read colors, fonts and radii from tokens. See [Theming, revisions and density](THEMING.md) for the themeable set.
+
 ## The look
 
 Revision 2026.1 is a quiet console style: a light grey frame holding the navigation, content on white sheets, ink-colored text and rules, IBM Plex Sans for the interface and IBM Plex Mono for code and data, square corners, and drafting blue used sparingly for accents and progress. Grey control borders keep forms light; strong ink borders are kept for things drawn like a plate, such as modals and title blocks.

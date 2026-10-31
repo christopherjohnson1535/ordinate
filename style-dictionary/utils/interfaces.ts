@@ -24,14 +24,22 @@ export interface ModeValue {
   dark: GlobalValue;
 }
 
-export type TokenValue = GlobalValue | ModeValue;
+/**
+ * A value that differs between comfortable and compact density.
+ */
+export interface DensityValue {
+  comfortable: GlobalValue;
+  compact: GlobalValue;
+}
+
+export type TokenValue = GlobalValue | ModeValue | DensityValue;
 
 export type ColorPaletteDictionary = Record<ColorPaletteTokenName, GlobalValue>;
 export type ColorsDictionary = Record<ColorsTokenName, ModeValue>;
 export type BordersDictionary = Record<BordersTokenName, GlobalValue>;
 export type TypographyDictionary = Record<TypographyTokenName, GlobalValue>;
-export type SpacingDictionary = Record<SpacingTokenName, GlobalValue>;
-export type SizesDictionary = Record<SizesTokenName, GlobalValue>;
+export type SpacingDictionary = Record<SpacingTokenName, GlobalValue | DensityValue>;
+export type SizesDictionary = Record<SizesTokenName, GlobalValue | DensityValue>;
 export type MotionDictionary = Record<MotionTokenName, GlobalValue>;
 
 /**

@@ -50,3 +50,34 @@ describe('token contract', () => {
     });
   });
 });
+
+describe('density', () => {
+  const compactBlock = generatedCss.split('}').find(block => block.split('{')[0].includes('.ord-compact-mode'));
+
+  test('compact mode repoints exactly the tokens that have density values', () => {
+    const densityTokens = new Set<string>();
+    for (const revision of revisions) {
+      for (const [name, value] of Object.entries(resolveTokens(revision.tokens))) {
+        if (typeof value === 'object' && 'comfortable' in value) {
+          densityTokens.add(toCssVariable(name));
+        }
+      }
+    }
+    const repointed = [...(compactBlock ?? '').matchAll(/(--ord-[a-z0-9-]+):/g)].map(match => match[1]);
+    expect(repointed.sort()).toEqual([...densityTokens].sort());
+    expect(densityTokens.size).toBeGreaterThan(0);
+  });
+
+  test('compact mode also applies inside nested revision subtrees', () => {
+    const selector = (compactBlock ?? '').split('{')[0];
+    revisions.forEach(revision => expect(selector).toContain(`.ord-revision-${revision.id.replace(/\./g, '-')}`));
+  });
+
+  test('a token cannot vary by both mode and density', () => {
+    const [{ tokens }] = revisions;
+    const broken = { ...tokens, spaceScaledS: '{colorTextBody}' };
+    expect(() => resolveTokens(broken)).not.toThrow();
+    const both = { ...tokens, colorTextBody: { light: '{spaceScaledS}', dark: '#fff' } };
+    expect(() => resolveTokens(both)).toThrow(/both mode and density/);
+  });
+});

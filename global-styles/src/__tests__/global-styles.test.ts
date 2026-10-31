@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
-import { applyMode, applyRevision, disableMotion, Mode, Revision } from '../index';
+import { applyDensity, applyMode, applyRevision, Density, disableMotion, Mode, Revision } from '../index';
 
 afterEach(() => {
   document.body.className = '';
@@ -61,4 +61,27 @@ test('disableMotion toggles the motion class', () => {
   expect(document.body.classList.contains('ord-motion-disabled')).toBe(true);
   disableMotion(false);
   expect(document.body.classList.contains('ord-motion-disabled')).toBe(false);
+});
+
+describe('applyDensity', () => {
+  test('compact adds the compact class and comfortable removes it', () => {
+    applyDensity(Density.Compact);
+    expect(document.body.className).toBe('ord-compact-mode');
+    applyDensity(Density.Comfortable);
+    expect(document.body.className).toBe('');
+  });
+
+  test('can scope density to a subtree', () => {
+    const section = document.createElement('section');
+    applyDensity(Density.Compact, section);
+    expect(section.className).toBe('ord-compact-mode');
+    expect(document.body.className).toBe('');
+  });
+
+  test('warns about an unsupported density and changes nothing', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    applyDensity('roomy' as Density);
+    expect(warn).toHaveBeenCalledOnce();
+    expect(document.body.className).toBe('');
+  });
 });

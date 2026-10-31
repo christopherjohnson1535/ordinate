@@ -13,6 +13,12 @@ export const tokens: SpacingDictionary = {
   spaceXxl: '48px',
   spaceButtonHorizontal: '14px',
   spaceInputHorizontal: '{spaceS}',
-  spaceContainer: '20px',
+  spaceContainer: { comfortable: '20px', compact: '14px' },
   spaceXxxl: '64px',
+  spaceScaledXxs: { comfortable: '4px', compact: '2px' },
+  spaceScaledXs: { comfortable: '8px', compact: '6px' },
+  spaceScaledS: { comfortable: '12px', compact: '8px' },
+  spaceScaledM: { comfortable: '16px', compact: '12px' },
+  spaceScaledL: { comfortable: '24px', compact: '16px' },
+  spaceScaledXl: { comfortable: '32px', compact: '24px' },
 };

@@ -7,6 +7,11 @@ export enum Mode {
   System = 'system',
 }
 
+export enum Density {
+  Comfortable = 'comfortable',
+  Compact = 'compact',
+}
+
 // Keep in sync with the revisions exported from style-dictionary/index.ts.
 export enum Revision {
   V2026_1 = '2026.1',
@@ -55,6 +60,18 @@ export function applyRevision(revision: Revision | null, target: Element = docum
   if (revision) {
     target.classList.add(`${revisionClassPrefix}${revision.replace(/\./g, '-')}`);
   }
+}
+
+/**
+ * Sets comfortable or compact density on `target`. Compact tightens padding and
+ * control heights. Passing `null` returns to the default, comfortable.
+ */
+export function applyDensity(density: Density | null, target: Element = document.body): void {
+  if (density && !isSupported(Density, density)) {
+    console.warn(`[ordinate] Density "${density}" is not supported.`);
+    return;
+  }
+  target.classList.toggle('ord-compact-mode', density === Density.Compact);
 }
 
 /**

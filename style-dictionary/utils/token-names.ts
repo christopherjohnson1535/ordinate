@@ -142,6 +142,12 @@ export const spacingTokenNames = [
   'spaceInputHorizontal',
   'spaceContainer',
   'spaceXxxl',
+  'spaceScaledXxs',
+  'spaceScaledXs',
+  'spaceScaledS',
+  'spaceScaledM',
+  'spaceScaledL',
+  'spaceScaledXl',
 ] as const;
 
 export const sizesTokenNames = [

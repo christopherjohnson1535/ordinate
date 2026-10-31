@@ -11,5 +11,6 @@ import { Revision } from './utils/interfaces.js';
 export const revisions: ReadonlyArray<Revision> = [revision2026_1, revision2026_2];
 
 export { resolveTokens } from './utils/resolve.js';
+export { themeableTokenNames } from './utils/themeable.js';
 export { allTokenNames } from './utils/token-names.js';
 export type { Revision, RevisionTokens } from './utils/interfaces.js';
