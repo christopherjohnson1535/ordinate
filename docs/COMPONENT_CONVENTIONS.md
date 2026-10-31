@@ -18,7 +18,7 @@ Every component also has:
 
 ## Definition of done
 
-A component is done when it has the four standard files, unit tests with an axe check, a server-rendering test, a test-utils wrapper and a dev page, and when it looks right in both revisions and all three modes.
+A component is done when it has the four standard files, unit tests with an axe check, a server-rendering test, a test-utils wrapper and a dev page, and when it looks right in both revisions, all three color modes, compact density and right-to-left layout.
 
 ## Public API
 
@@ -35,6 +35,22 @@ A component is done when it has the four standard files, unit tests with an axe 
 - Use `InternalIcon` with a built-in icon name for any icon inside a component. Add a new icon to `src/icon/icons/` rather than drawing SVG inline.
 - A disabled link keeps its role, loses its `href` and gets `aria-disabled`.
 - Warn about misuse with `warnOnce` instead of throwing.
+
+## Built-in strings
+
+Any text a component renders on its own, such as an accessible name for a close button or a "Loading" label, is a translatable message.
+
+- Expose it as an optional prop, such as `closeAriaLabel` or `i18nStrings.nextPageAriaLabel`, with no default value in the destructuring.
+- Add the English text to `src/i18n/messages/all.en.ts` under the component's folder name.
+- Read it in `internal.tsx` with `const i18n = useInternalI18n('modal')` and `i18n('closeAriaLabel', closeAriaLabel)`. The prop wins, then the `I18nProvider` locale, then English.
+- Messages with numbers use ICU plurals, such as `{count, plural, one {# item} other {# items}}`, and are called with `i18n(key, prop, { count })`.
+- Every locale file must define the same keys as English; the i18n tests check this.
+
+## Right-to-left
+
+- Lay out with logical properties only (Stylelint enforces this).
+- For arrow-key navigation along a row, use `getLogicalArrowStep(event.key, element)` from `src/internal/direction.ts`, so Right moves backward in right-to-left layout.
+- Icons that point along the reading direction (`angle-left`, `arrow-right`, `external` and so on) mirror themselves; don't swap icon names by direction.
 
 ## Adding a component
 

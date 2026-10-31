@@ -89,3 +89,7 @@
 .variant-link {
   color: ord.$color-text-link;
 }
+
+.flip-in-rtl:dir(rtl) {
+  transform: scaleX(-1);
+}

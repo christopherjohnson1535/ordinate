@@ -8,7 +8,7 @@
 .shell {
   display: grid;
   grid-template-columns: 228px minmax(0, 1fr);
-  grid-template-rows: 48px auto;
+  grid-template-rows: minmax(48px, auto) auto;
   min-block-size: 100vh;
   background-color: var(--ord-color-background-layout-main);
 }
@@ -78,7 +78,9 @@
 .top {
   display: flex;
   align-items: center;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding-block: 8px;
   padding-inline: 25px 20px;
 }
 
@@ -92,6 +94,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.choice {
+  block-size: 28px;
+  padding-inline: 8px;
+  border: 1px solid var(--ord-color-border-control);
+  background-color: var(--ord-color-background-control);
+  color: var(--ord-color-text-body);
+  font: inherit;
+  font-size: 13px;
 }
 
 .setting-label {

@@ -9,10 +9,10 @@ Two things set it apart:
 
 ## Packages
 
-| Package                   | Contents                                                    |
-| ------------------------- | ----------------------------------------------------------- |
-| `@ordinate/components`    | The React components. Built from this repository's root.    |
-| `@ordinate/global-styles` | Fonts, base page styles, and the mode and revision helpers. |
+| Package                   | Contents                                                             |
+| ------------------------- | -------------------------------------------------------------------- |
+| `@ordinate/components`    | The React components. Built from this repository's root.             |
+| `@ordinate/global-styles` | Fonts, base page styles, and the mode, density and revision helpers. |
 
 ## Usage
 
@@ -30,7 +30,26 @@ export function SaveBar() {
 }
 ```
 
-`applyRevision` and `applyMode` take an optional element, so a single page or section can try a newer revision before the whole application moves to it.
+`applyRevision`, `applyMode` and `applyDensity` take an optional element, so a single page or section can try a newer revision before the whole application moves to it.
+
+### Brand theme
+
+`applyTheme` from `@ordinate/components/theming` changes a fixed set of brand tokens: primary and accent colors, font families and corner radii. The theme sits on top of the pinned revision. See [Theming, revisions and density](docs/THEMING.md).
+
+### Translations and right-to-left
+
+Components ship English labels. Wrap the application in `I18nProvider` with one of the 15 built-in locales, or your own messages:
+
+```tsx
+import I18nProvider from '@ordinate/components/i18n';
+import german from '@ordinate/components/i18n/messages/all.de';
+
+<I18nProvider locale="de" messages={[german]}>
+  <App />
+</I18nProvider>;
+```
+
+Set `dir="rtl"` on the page for right-to-left languages; layouts, icons and keyboard navigation follow it.
 
 ### Astro and other server-rendered setups
 

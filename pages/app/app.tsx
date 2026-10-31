@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import React, { useEffect, useState } from 'react';
 
-import { applyMode, applyRevision, Mode, Revision } from '~global-styles';
+import I18nProvider, { I18nProviderProps } from '~components/i18n';
+import { applyTheme } from '~components/theming';
+import { applyDensity, applyMode, applyRevision, Density, Mode, Revision } from '~global-styles';
 
 import styles from './styles.module.scss';
 
@@ -21,6 +23,58 @@ const routes = Object.entries(pages)
   .sort((a, b) => a.path.localeCompare(b.path));
 
 const groups = Array.from(new Set(routes.map(route => route.group)));
+
+const messageModules = import.meta.glob<{ default: I18nProviderProps.Messages }>(
+  '../../lib/components/i18n/messages/all.*.js',
+  { eager: true }
+);
+const allMessages = Object.values(messageModules).map(module => module.default);
+const locales = Object.keys(messageModules)
+  .map(file => file.replace(/^.*all\./, '').replace(/\.js$/, ''))
+  .sort();
+const rtlLocales = new Set(['ar', 'he']);
+
+type Direction = 'ltr' | 'rtl';
+type ThemeChoice = 'none' | 'brand';
+
+// A sample brand theme, to check that themeable tokens flow through every component.
+const brandTheme = {
+  tokens: {
+    colorBackgroundButtonPrimary: { light: '#0b5cad', dark: '#7cc4ff' },
+    colorBackgroundButtonPrimaryHover: { light: '#094a8c', dark: '#a6d8ff' },
+    colorTextButtonPrimary: { light: '#ffffff', dark: '#0a1a2b' },
+    colorTextLink: { light: '#0b5cad', dark: '#7cc4ff' },
+    colorTextAccent: { light: '#0b5cad', dark: '#7cc4ff' },
+    colorBorderFocusRing: { light: '#0b5cad', dark: '#7cc4ff' },
+    colorBackgroundControlChecked: { light: '#0b5cad', dark: '#7cc4ff' },
+    borderRadiusButton: '999px',
+  },
+};
+
+function Choice<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: ReadonlyArray<T>;
+  value: T;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <label className={styles.setting}>
+      <span className={styles['setting-label']}>{label}</span>
+      <select className={styles.choice} value={value} onChange={event => onChange(event.target.value as T)}>
+        {options.map(option => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
 
 function useHashPath() {
   const [path, setPath] = useState(() => window.location.hash.slice(1));
@@ -61,9 +115,26 @@ export default function App() {
   const path = useHashPath();
   const [mode, setMode] = useState<Mode>(Mode.Light);
   const [revision, setRevision] = useState<Revision>(Revision.V2026_1);
+  const [density, setDensity] = useState<Density>(Density.Comfortable);
+  const [direction, setDirection] = useState<Direction>('ltr');
+  const [locale, setLocale] = useState('en');
+  const [theme, setTheme] = useState<ThemeChoice>('none');
 
   useEffect(() => applyMode(mode), [mode]);
   useEffect(() => applyRevision(revision), [revision]);
+  useEffect(() => applyDensity(density), [density]);
+  useEffect(() => {
+    document.documentElement.dir = direction;
+  }, [direction]);
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+  useEffect(() => (theme === 'brand' ? applyTheme({ theme: brandTheme }).reset : undefined), [theme]);
+
+  const chooseLocale = (next: string) => {
+    setLocale(next);
+    setDirection(rtlLocales.has(next) ? 'rtl' : 'ltr');
+  };
 
   const current = routes.find(route => route.path === path);
 
@@ -96,8 +167,16 @@ export default function App() {
         <span className={styles.crumb}>{current ? current.path : 'Choose a page'}</span>
         <Segmented label="Mode" options={Object.values(Mode)} value={mode} onChange={setMode} />
         <Segmented label="Revision" options={Object.values(Revision)} value={revision} onChange={setRevision} />
+        <Choice label="Density" options={Object.values(Density)} value={density} onChange={setDensity} />
+        <Choice label="Direction" options={['ltr', 'rtl'] as const} value={direction} onChange={setDirection} />
+        <Choice label="Locale" options={locales} value={locale} onChange={chooseLocale} />
+        <Choice label="Theme" options={['none', 'brand'] as const} value={theme} onChange={setTheme} />
       </header>
-      <main className={styles.sheet}>{current ? <current.Page /> : <p>Choose a page from the list.</p>}</main>
+      <main className={styles.sheet}>
+        <I18nProvider locale={locale} messages={allMessages}>
+          {current ? <current.Page /> : <p>Choose a page from the list.</p>}
+        </I18nProvider>
+      </main>
     </div>
   );
 }

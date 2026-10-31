@@ -22,6 +22,18 @@ describe('Icon', () => {
     expect(screen.getByRole('img', { name: 'Warning' })).toBeInTheDocument();
   });
 
+  test('marks icons that point along the reading direction for mirroring', () => {
+    const { container } = render(
+      <>
+        <Icon name="angle-right" />
+        <Icon name="search" />
+      </>
+    );
+    const [directional, neutral] = Array.from(container.children);
+    expect(directional.className).toMatch(/flip-in-rtl/);
+    expect(neutral.className).not.toMatch(/flip-in-rtl/);
+  });
+
   test('renders a custom svg', () => {
     render(<Icon svg={<svg data-testid="custom" />} />);
     expect(screen.getByTestId('custom')).toBeInTheDocument();
