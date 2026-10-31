@@ -1,0 +1,73 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+}
+
+.textarea {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-input);
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: ord.$size-control-height;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-input-horizontal;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+  color: ord.$color-text-body;
+
+  @include styles.with-motion {
+    transition-property: border-color, outline-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &::placeholder {
+    color: ord.$color-text-secondary;
+    opacity: 1;
+  }
+
+  &:focus {
+    @include styles.focus-ring;
+  }
+
+  &[readonly] {
+    background-color: ord.$color-background-control-read-only;
+  }
+
+  &:disabled {
+    @include styles.hatch;
+    border-color: ord.$color-border-disabled;
+    color: ord.$color-text-disabled;
+    cursor: default;
+  }
+}
+
+.resize-vertical {
+  resize: vertical;
+}
+
+.resize-none {
+  resize: none;
+}
+
+.invalid {
+  border-color: ord.$color-border-error;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+}
+
+.warning {
+  border-color: ord.$color-border-status-warning;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-status-warning;
+}

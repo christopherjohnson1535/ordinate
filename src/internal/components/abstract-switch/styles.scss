@@ -1,0 +1,71 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+  color: ord.$color-text-body;
+}
+
+// One line tall, so the drawn control lines up with the first line of the label.
+.control {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+}
+
+.native-input {
+  position: absolute;
+  z-index: 1;
+  inset-block: 0;
+  inset-inline: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin-block: 0;
+  margin-inline: 0;
+  opacity: 0;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:focus-visible + * {
+    @include styles.focus-ring;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.description {
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.disabled {
+  .label,
+  .description {
+    color: ord.$color-text-disabled;
+  }
+
+  .label {
+    cursor: default;
+  }
+}

@@ -1,0 +1,21 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+}
+
+.direction-vertical {
+  flex-direction: column;
+  gap: ord.$space-xs;
+}
+
+.direction-horizontal {
+  flex-flow: row wrap;
+  column-gap: ord.$space-l;
+  row-gap: ord.$space-xs;
+}

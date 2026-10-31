@@ -18,4 +18,5 @@ export const tokens: BordersDictionary = {
   borderRadiusAlert: '{borderRadiusContainer}',
   borderRadiusDropdown: '{borderRadiusInput}',
   borderRadiusToggle: '0px',
+  borderRadiusRadio: '50%',
 };

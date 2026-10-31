@@ -1,0 +1,62 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.box {
+  @include styles.border-radius(ord.$border-radius-checkbox);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: ord.$size-checkbox;
+  block-size: ord.$size-checkbox;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+  color: ord.$color-foreground-control-checked;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.root:not(.read-only):hover :enabled + .box-unchecked {
+  border-color: ord.$color-border-strong;
+}
+
+.box-checked,
+.box-indeterminate {
+  border-color: ord.$color-background-control-checked;
+  background-color: ord.$color-background-control-checked;
+}
+
+.read-only {
+  .box {
+    background-color: ord.$color-background-control-read-only;
+  }
+
+  .box-checked,
+  .box-indeterminate {
+    border-color: ord.$color-text-secondary;
+    background-color: ord.$color-text-secondary;
+  }
+}
+
+:disabled + .box {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+  background-color: ord.$color-background-control;
+}
+
+:disabled + .box-checked,
+:disabled + .box-indeterminate {
+  border-color: ord.$color-text-disabled;
+  background-color: ord.$color-text-disabled;
+}

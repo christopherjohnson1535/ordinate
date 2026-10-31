@@ -96,6 +96,7 @@ export const bordersTokenNames = [
   'borderRadiusAlert',
   'borderRadiusDropdown',
   'borderRadiusToggle',
+  'borderRadiusRadio',
 ] as const;
 
 export const typographyTokenNames = [

@@ -1,0 +1,77 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+}
+
+.circle {
+  @include styles.border-radius(ord.$border-radius-radio);
+  position: relative;
+  box-sizing: border-box;
+  inline-size: ord.$size-checkbox;
+  block-size: ord.$size-checkbox;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+
+  @include styles.with-motion {
+    transition-property: border-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &::after {
+    @include styles.border-radius(ord.$border-radius-radio);
+    content: '';
+    position: absolute;
+    inset-block: ord.$space-xxs;
+    inset-inline: ord.$space-xxs;
+    background-color: transparent;
+  }
+}
+
+.root:not(.read-only):hover :enabled + .circle:not(.checked) {
+  border-color: ord.$color-border-strong;
+}
+
+.checked {
+  border-color: ord.$color-background-control-checked;
+
+  &::after {
+    background-color: ord.$color-background-control-checked;
+  }
+}
+
+.read-only {
+  .circle {
+    background-color: ord.$color-background-control-read-only;
+  }
+
+  .checked {
+    border-color: ord.$color-text-secondary;
+
+    &::after {
+      background-color: ord.$color-text-secondary;
+    }
+  }
+}
+
+:disabled + .circle {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+}
+
+:disabled + .checked {
+  border-color: ord.$color-text-disabled;
+
+  &::after {
+    background-color: ord.$color-text-disabled;
+  }
+}

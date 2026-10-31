@@ -1,0 +1,95 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+$thumb-size: calc(#{ord.$size-toggle-height} - 2 * #{ord.$border-width-default} - 2 * #{ord.$space-xxxs});
+
+.root {
+  display: flex;
+}
+
+.track {
+  @include styles.border-radius(ord.$border-radius-toggle);
+  position: relative;
+  box-sizing: border-box;
+  inline-size: ord.$size-toggle-width;
+  block-size: ord.$size-toggle-height;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.thumb {
+  @include styles.border-radius(ord.$border-radius-toggle);
+  position: absolute;
+  inset-block-start: ord.$space-xxxs;
+  inset-inline-start: ord.$space-xxxs;
+  inline-size: $thumb-size;
+  block-size: $thumb-size;
+  background-color: ord.$color-border-control;
+
+  @include styles.with-motion {
+    transition-property: inset-inline-start, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.root:not(.read-only):hover :enabled + .track:not(.checked) {
+  border-color: ord.$color-border-strong;
+
+  .thumb {
+    background-color: ord.$color-border-strong;
+  }
+}
+
+.checked {
+  border-color: ord.$color-background-control-checked;
+  background-color: ord.$color-background-control-checked;
+
+  .thumb {
+    inset-inline-start: calc(100% - #{$thumb-size} - #{ord.$space-xxxs});
+    background-color: ord.$color-foreground-control-checked;
+  }
+}
+
+.read-only {
+  .track {
+    background-color: ord.$color-background-control-read-only;
+  }
+
+  .checked {
+    border-color: ord.$color-text-secondary;
+    background-color: ord.$color-text-secondary;
+  }
+}
+
+:disabled + .track {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+  background-color: ord.$color-background-control;
+
+  .thumb {
+    background-color: ord.$color-border-disabled;
+  }
+}
+
+:disabled + .checked {
+  border-color: ord.$color-text-disabled;
+  background-color: ord.$color-text-disabled;
+
+  .thumb {
+    background-color: ord.$color-foreground-control-checked;
+  }
+}
