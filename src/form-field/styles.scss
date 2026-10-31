@@ -12,37 +12,87 @@
   gap: ord.$space-xxs;
 }
 
+.label-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xs;
+}
+
 .label {
   @include styles.font-label;
   color: ord.$color-text-body;
 }
 
+.info {
+  @include styles.font-body;
+  font-size: ord.$font-size-description;
+}
+
 .description,
-.constraint {
+.hints {
   @include styles.font-body;
   font-size: ord.$font-size-description;
   color: ord.$color-text-secondary;
 }
 
-.control {
+.hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xs;
+}
+
+.character-count {
+  margin-inline-start: auto;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: ord.$space-xs;
   padding-block: ord.$space-xxs;
   padding-inline: 0;
 }
 
-.error {
+// The control and secondary control share the row 3 to 1. When the secondary control needs more
+// room than that leaves, it wraps below and both take the full width.
+.control {
+  flex: 3 1 0;
+  min-inline-size: 60%;
+
+  &:only-child {
+    flex: 0 1 75%;
+  }
+}
+
+.secondary-control {
+  flex: 1 1 0;
+  min-inline-size: fit-content;
+}
+
+.stretch > .control,
+.stretch > .secondary-control {
+  flex-basis: 100%;
+}
+
+.error,
+.warning {
   @include styles.font-body;
   display: flex;
   align-items: center;
   gap: ord.$space-xs;
   font-size: ord.$font-size-description;
+}
+
+.error {
   color: ord.$color-text-error;
 }
 
-.error-icon {
-  flex-shrink: 0;
-  inline-size: ord.$space-s;
-  block-size: ord.$space-s;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: ord.$border-width-control;
+.warning {
+  color: ord.$color-text-status-warning;
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
 }

@@ -6,18 +6,13 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
+// The root draws the field box so the search icon, inline label and clear button sit inside its border.
 .root {
-  display: block;
-}
-
-.input {
-  @include styles.font-body;
   @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
-  inline-size: 100%;
   min-block-size: ord.$size-control-height;
-  padding-block: 0;
-  padding-inline: ord.$space-input-horizontal;
   border-width: ord.$border-width-default;
   border-style: solid;
   border-color: ord.$color-border-control;
@@ -30,28 +25,108 @@
     transition-timing-function: ord.$motion-easing-standard;
   }
 
-  &::placeholder {
-    color: ord.$color-text-secondary;
-    opacity: 1;
-  }
-
-  &:focus {
+  &:has(.input:focus) {
     @include styles.focus-ring;
   }
+}
 
-  &[readonly] {
-    background-color: ord.$color-background-control-read-only;
-  }
-
-  &:disabled {
-    @include styles.hatch;
-    border-color: ord.$color-border-disabled;
-    color: ord.$color-text-disabled;
-    cursor: default;
-  }
+.read-only {
+  background-color: ord.$color-background-control-read-only;
 }
 
 .invalid {
   border-color: ord.$color-border-error;
   box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+}
+
+.warning {
+  border-color: ord.$color-border-status-warning;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-status-warning;
+}
+
+.disabled {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+  box-shadow: none;
+  color: ord.$color-text-disabled;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  align-self: stretch;
+}
+
+.inline-label {
+  @include styles.font-label;
+  padding-block: ord.$space-xxs 0;
+  padding-inline: ord.$space-input-horizontal;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-secondary;
+
+  .disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+.input {
+  @include styles.font-body;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding-block: 0;
+  padding-inline: ord.$space-input-horizontal;
+  border-width: 0;
+  background-color: transparent;
+  color: inherit;
+  outline-style: none;
+
+  &::placeholder {
+    color: ord.$color-text-secondary;
+    opacity: 1;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    appearance: none;
+  }
+
+  .inline-label + & {
+    padding-block: 0 ord.$space-xxs;
+  }
+
+  .root-search & {
+    padding-inline-start: ord.$space-xs;
+  }
+}
+
+.search-icon {
+  margin-inline-start: ord.$space-input-horizontal;
+  color: ord.$color-text-secondary;
+
+  .disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+// Scoped under the root so these win over the button's own size and colors, whichever stylesheet loads first.
+.root .clear-button {
+  inline-size: ord.$size-control-height-small;
+  min-block-size: ord.$size-control-height-small;
+  margin-inline-end: ord.$space-xxs;
+  border-color: transparent;
+  background-color: transparent;
+  color: ord.$color-text-secondary;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
+  }
 }

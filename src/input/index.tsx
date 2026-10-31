@@ -15,19 +15,29 @@ const Input = React.forwardRef(
       value,
       onChange,
       type = 'text',
+      inputMode,
+      step,
       placeholder,
+      inlineLabelText,
       disabled = false,
       readOnly = false,
+      autoFocus = false,
       ariaLabel,
       ariaRequired,
+      clearAriaLabel = 'Clear',
       name,
       autoComplete = true,
+      disableBrowserAutocorrect = false,
+      spellcheck,
       onFocus,
       onBlur,
+      onKeyDown,
+      onKeyUp,
       controlId,
       ariaLabelledby,
       ariaDescribedby,
       invalid,
+      warning,
       ...props
     }: InputProps,
     ref: React.Ref<InputProps.Ref>
@@ -38,19 +48,29 @@ const Input = React.forwardRef(
       value={value}
       onChange={onChange}
       type={type}
+      inputMode={inputMode}
+      step={step}
       placeholder={placeholder}
+      inlineLabelText={inlineLabelText}
       disabled={disabled}
       readOnly={readOnly}
+      autoFocus={autoFocus}
       ariaLabel={ariaLabel}
       ariaRequired={ariaRequired}
+      clearAriaLabel={clearAriaLabel}
       name={name}
       autoComplete={autoComplete}
+      disableBrowserAutocorrect={disableBrowserAutocorrect}
+      spellcheck={spellcheck}
       onFocus={onFocus}
       onBlur={onBlur}
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
       controlId={controlId}
       ariaLabelledby={ariaLabelledby}
       ariaDescribedby={ariaDescribedby}
       invalid={invalid}
+      warning={warning}
     />
   )
 );

@@ -16,3 +16,12 @@ test('renders on the server', () => {
   expect(html).toContain('Project name');
   expect(html).toContain('value="north-annex"');
 });
+
+test('renders the search and inline label variants on the server', () => {
+  const search = renderToString(<Input type="search" ariaLabel="Find" value="north" clearAriaLabel="Clear search" />);
+  expect(search).toContain('type="search"');
+  expect(search).toContain('aria-label="Clear search"');
+  const inline = renderToString(<Input inlineLabelText="Region" value="" />);
+  expect(inline).toContain('Region');
+  expect(inline).toContain('<label');
+});

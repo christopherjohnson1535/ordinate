@@ -16,6 +16,9 @@ export default function Modal({
   footer,
   children,
   size = 'medium',
+  position = 'center',
+  disableContentPaddings = false,
+  hideDismissButton = false,
   closeAriaLabel = 'Close',
   ...props
 }: ModalProps) {
@@ -27,6 +30,9 @@ export default function Modal({
       header={header}
       footer={footer}
       size={size}
+      position={position}
+      disableContentPaddings={disableContentPaddings}
+      hideDismissButton={hideDismissButton}
       closeAriaLabel={closeAriaLabel}
     >
       {children}

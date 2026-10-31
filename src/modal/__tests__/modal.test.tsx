@@ -89,6 +89,55 @@ describe('Modal', () => {
   });
 });
 
+describe('Modal options', () => {
+  test('hideDismissButton removes the close button but keeps other ways to dismiss', () => {
+    const onDismiss = vi.fn();
+    render(
+      <Modal
+        visible={true}
+        header="Delete project"
+        hideDismissButton={true}
+        onDismiss={event => onDismiss(event.detail)}
+      >
+        Content
+      </Modal>
+    );
+    expect(screen.queryByRole('button', { name: 'Close' })).toBeNull();
+    fireEvent(getDialog(), new Event('cancel', { cancelable: true }));
+    fireEvent.click(getDialog());
+    expect(onDismiss.mock.calls).toEqual([[{ reason: 'keyboard' }], [{ reason: 'overlay' }]]);
+  });
+
+  test('without a header or close button, there is no empty header', () => {
+    render(
+      <Modal visible={true} hideDismissButton={true}>
+        Content
+      </Modal>
+    );
+    expect(createWrapper().findModal()!.findHeader()).toBeNull();
+    expect(getDialog().querySelector('h2')).toBeNull();
+  });
+
+  test('the close button uses the built-in close icon', () => {
+    render(<Modal visible={true}>Content</Modal>);
+    expect(screen.getByRole('button', { name: 'Close' }).querySelector('svg')).not.toBeNull();
+  });
+
+  test('disableContentPaddings and position change the layout classes', () => {
+    const { rerender } = render(<Modal visible={true}>Content</Modal>);
+    const modal = createWrapper().findModal()!;
+    const contentClass = modal.findContent()!.getElement().className;
+    const dialogClass = getDialog().className;
+    rerender(
+      <Modal visible={true} disableContentPaddings={true} position="top">
+        Content
+      </Modal>
+    );
+    expect(modal.findContent()!.getElement().className).not.toBe(contentClass);
+    expect(getDialog().className).not.toBe(dialogClass);
+  });
+});
+
 describe('Modal test utilities and accessibility', () => {
   test('the wrapper reads the parts and dismisses', () => {
     const onDismiss = vi.fn();
@@ -102,14 +151,39 @@ describe('Modal test utilities and accessibility', () => {
     expect(modal.findHeader()!.getText()).toBe('Delete project');
     expect(modal.findContent()!.getText()).toBe('Content');
     expect(modal.findFooter()!.getText()).toBe('Actions');
-    modal.findDismissButton().click();
+    modal.findDismissButton()!.click();
     modal.pressEscape();
     expect(onDismiss.mock.calls).toEqual([[{ reason: 'closeButton' }], [{ reason: 'keyboard' }]]);
+  });
+
+  test('the wrapper reports a missing dismiss button', () => {
+    render(
+      <Modal visible={true} header="Delete project" hideDismissButton={true}>
+        Content
+      </Modal>
+    );
+    expect(createWrapper().findModal()!.findDismissButton()).toBeNull();
   });
 
   test('has no accessibility violations', async () => {
     render(
       <Modal visible={true} header="Delete project" footer={<button>Delete</button>}>
+        This cannot be undone.
+      </Modal>
+    );
+    await expectNoAxeViolations(document.body);
+  });
+
+  test('has no accessibility violations without the close button', async () => {
+    render(
+      <Modal
+        visible={true}
+        header="Delete project"
+        hideDismissButton={true}
+        position="top"
+        disableContentPaddings={true}
+        footer={<button>Cancel</button>}
+      >
         This cannot be undone.
       </Modal>
     );

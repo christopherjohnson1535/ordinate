@@ -15,11 +15,25 @@ const Button = React.forwardRef(
       children,
       variant = 'normal',
       disabled = false,
+      loading = false,
+      loadingText,
+      iconName,
+      iconAlign = 'left',
+      iconSvg,
+      wrapText = true,
       href,
+      target,
+      rel,
+      external = false,
+      externalIconAriaLabel = 'Opens in a new tab',
+      download,
       formAction = 'submit',
+      form,
       fullWidth = false,
       ariaLabel,
-      iconSvg,
+      ariaExpanded,
+      ariaHaspopup,
+      ariaControls,
       onClick,
       ...props
     }: ButtonProps,
@@ -30,11 +44,25 @@ const Button = React.forwardRef(
       ref={ref}
       variant={variant}
       disabled={disabled}
+      loading={loading}
+      loadingText={loadingText}
+      iconName={iconName}
+      iconAlign={iconAlign}
+      iconSvg={iconSvg}
+      wrapText={wrapText}
       href={href}
+      target={target}
+      rel={rel}
+      external={external}
+      externalIconAriaLabel={externalIconAriaLabel}
+      download={download}
       formAction={formAction}
+      form={form}
       fullWidth={fullWidth}
       ariaLabel={ariaLabel}
-      iconSvg={iconSvg}
+      ariaExpanded={ariaExpanded}
+      ariaHaspopup={ariaHaspopup}
+      ariaControls={ariaControls}
       onClick={onClick}
     >
       {children}

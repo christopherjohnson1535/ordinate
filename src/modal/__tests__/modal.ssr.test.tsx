@@ -15,3 +15,13 @@ test('renders on the server, closed until it mounts', () => {
   expect(html).toContain('Delete project');
   expect(html).not.toContain(' open=');
 });
+
+test('renders the layout options on the server', () => {
+  const html = renderToString(
+    <Modal visible={true} header="Delete project" position="top" disableContentPaddings={true} hideDismissButton={true}>
+      Content
+    </Modal>
+  );
+  expect(html).toContain('Delete project');
+  expect(html).not.toContain('aria-label="Close"');
+});

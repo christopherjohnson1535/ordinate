@@ -32,6 +32,22 @@ export interface ModalProps extends BaseComponentProps {
    */
   size?: ModalProps.Size;
   /**
+   * Where the modal sits in the viewport:
+   * * `center` keeps it vertically centered. Use it when the content does not change size.
+   * * `top` anchors it near the top so it grows downward. Use it when the content changes size,
+   *   so the modal does not jump while the user works in it.
+   */
+  position?: ModalProps.Position;
+  /**
+   * Removes the padding around the content, for content that brings its own, such as a full-bleed table.
+   */
+  disableContentPaddings?: boolean;
+  /**
+   * Hides the close button in the header, so the user closes the modal with an action in the footer.
+   * Escape and clicks outside the modal still call `onDismiss`.
+   */
+  hideDismissButton?: boolean;
+  /**
    * Accessible name of the close button.
    */
   closeAriaLabel?: string;
@@ -39,6 +55,8 @@ export interface ModalProps extends BaseComponentProps {
 
 export namespace ModalProps {
   export type Size = 'small' | 'medium' | 'large';
+
+  export type Position = 'center' | 'top';
 
   export type DismissReason = 'closeButton' | 'overlay' | 'keyboard';
 

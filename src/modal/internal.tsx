@@ -11,14 +11,6 @@ import styles from './styles.css.js';
 
 const bodyOpenClassName = 'ord-modal-open';
 
-function CloseIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" focusable="false">
-      <path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
 export function InternalModal({
   visible,
   onDismiss,
@@ -26,6 +18,9 @@ export function InternalModal({
   footer,
   children,
   size = 'medium',
+  position = 'center',
+  disableContentPaddings = false,
+  hideDismissButton = false,
   closeAriaLabel = 'Close',
   ...rest
 }: ModalProps) {
@@ -59,7 +54,7 @@ export function InternalModal({
     <dialog
       {...rest}
       ref={dialogRef}
-      className={clsx(styles.dialog, styles[`size-${size}`])}
+      className={clsx(styles.dialog, styles[`size-${size}`], styles[`position-${position}`])}
       aria-labelledby={header ? headingId : undefined}
       onCancel={event => {
         event.preventDefault();
@@ -72,22 +67,26 @@ export function InternalModal({
       }}
     >
       <div className={styles.container}>
-        <div className={styles.header}>
-          {header && (
-            <h2 id={headingId} className={styles.heading}>
-              {header}
-            </h2>
-          )}
-          <InternalButton
-            className={styles['close-button']}
-            variant="icon"
-            formAction="none"
-            ariaLabel={closeAriaLabel}
-            iconSvg={<CloseIcon />}
-            onClick={() => dismiss('closeButton')}
-          />
-        </div>
-        <div className={styles.content}>{children}</div>
+        {(header || !hideDismissButton) && (
+          <div className={clsx(styles.header, hideDismissButton && styles['header-without-dismiss'])}>
+            {header && (
+              <h2 id={headingId} className={styles.heading}>
+                {header}
+              </h2>
+            )}
+            {!hideDismissButton && (
+              <InternalButton
+                className={styles['close-button']}
+                variant="icon"
+                formAction="none"
+                iconName="close"
+                ariaLabel={closeAriaLabel}
+                onClick={() => dismiss('closeButton')}
+              />
+            )}
+          </div>
+        )}
+        <div className={clsx(styles.content, disableContentPaddings && styles['no-paddings'])}>{children}</div>
         {footer && <div className={styles.footer}>{footer}</div>}
       </div>
     </dialog>

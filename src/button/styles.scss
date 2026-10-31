@@ -15,15 +15,15 @@
   gap: ord.$space-xs;
   box-sizing: border-box;
   min-block-size: ord.$size-control-height;
-  padding-block: 0;
+  padding-block: ord.$space-xxs;
   padding-inline: ord.$space-button-horizontal;
   border-width: ord.$border-width-control;
   border-style: solid;
   border-color: ord.$color-border-control;
   background-color: ord.$color-background-button-normal;
   color: ord.$color-text-body;
+  text-align: center;
   text-decoration-line: none;
-  white-space: nowrap;
   cursor: pointer;
 
   @include styles.with-motion {
@@ -76,10 +76,47 @@
   padding-inline: 0;
 }
 
-.icon {
-  display: inline-flex;
+.no-wrap {
+  white-space: nowrap;
+}
+
+.content {
+  min-inline-size: 0;
+}
+
+.icon,
+.external-icon {
+  flex-shrink: 0;
+}
+
+.loading-indicator {
+  flex-shrink: 0;
   inline-size: ord.$size-icon;
   block-size: ord.$size-icon;
+  background-image: conic-gradient(transparent 0 25%, currentColor 25% 100%);
+  // Cuts the conic fill down to a ring as thick as an icon stroke, with the radius of the circular icons
+  // (6.5 of the 8 units from the center of the 16 unit grid). The soft edges keep it from breaking up at small sizes.
+  $ring: 81.25%;
+  $half-stroke: calc(#{ord.$border-width-icon} / 2);
+  $feather: calc(#{ord.$border-width-default} / 2);
+  mask-image: radial-gradient(
+    closest-side,
+    transparent calc(#{$ring} - #{$half-stroke} - #{$feather}),
+    currentColor calc(#{$ring} - #{$half-stroke} + #{$feather}),
+    currentColor calc(#{$ring} + #{$half-stroke} - #{$feather}),
+    transparent calc(#{$ring} + #{$half-stroke} + #{$feather})
+  );
+
+  @include styles.with-motion {
+    animation-name: loading-rotate;
+    animation-duration: ord.$motion-duration-rotation;
+    animation-timing-function: ord.$motion-easing-linear;
+    animation-iteration-count: infinite;
+  }
+}
+
+.loading-text {
+  @include styles.screenreader-only;
 }
 
 .full-width {
@@ -102,5 +139,28 @@
   &.variant-link {
     border-color: transparent;
     background-image: none;
+  }
+}
+
+.loading {
+  border-color: ord.$color-border-disabled;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-disabled;
+  cursor: default;
+
+  &:hover {
+    border-color: ord.$color-border-disabled;
+    background-color: ord.$color-background-button-normal;
+  }
+
+  &.variant-link {
+    border-color: transparent;
+    background-color: transparent;
+  }
+}
+
+@keyframes loading-rotate {
+  to {
+    transform: rotate(1turn);
   }
 }

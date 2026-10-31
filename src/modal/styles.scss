@@ -54,6 +54,12 @@
   inline-size: ord.$size-modal-large;
 }
 
+// The native dialog centers itself with auto margins; a fixed top margin anchors it and lets it grow downward.
+.position-top {
+  max-block-size: calc(100vh - #{ord.$space-xxl} - #{ord.$space-xl});
+  margin-block-start: ord.$space-xxl;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -64,11 +70,16 @@
   display: flex;
   align-items: center;
   gap: ord.$space-m;
+  min-block-size: ord.$size-control-height;
   padding-block: ord.$space-s;
   padding-inline: ord.$space-l ord.$space-s;
   border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
   border-block-end-color: ord.$color-border-divider;
+}
+
+.header-without-dismiss {
+  padding-inline-end: ord.$space-l;
 }
 
 .heading {
@@ -86,6 +97,11 @@
   padding-block: ord.$space-l;
   padding-inline: ord.$space-l;
   overflow: auto;
+}
+
+.no-paddings {
+  padding-block: 0;
+  padding-inline: 0;
 }
 
 .footer {

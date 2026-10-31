@@ -24,8 +24,12 @@ export default class ModalWrapper extends ComponentWrapper {
     return this.findByClassName(styles.footer);
   }
 
-  findDismissButton(): ButtonWrapper {
-    return new ButtonWrapper(this.findByClassName(styles['close-button'])!.getElement());
+  /**
+   * The close button in the header, or `null` when `hideDismissButton` is set.
+   */
+  findDismissButton(): ButtonWrapper | null {
+    const element = this.getElement().querySelector<HTMLElement>(`.${styles['close-button']}`);
+    return element ? new ButtonWrapper(element) : null;
   }
 
   /**

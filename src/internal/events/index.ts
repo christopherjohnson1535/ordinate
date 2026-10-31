@@ -1,5 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
+import type React from 'react';
 
 export type CancelableCustomEvent<Detail> = CustomEvent<Detail>;
 
@@ -36,4 +37,32 @@ export function fireCancelableEvent<Detail>(
     sourceEvent?.preventDefault();
   }
   return event.defaultPrevented;
+}
+
+export interface KeyDetail {
+  key: string;
+  ctrlKey: boolean;
+  shiftKey: boolean;
+  altKey: boolean;
+  metaKey: boolean;
+  /**
+   * Whether the key was pressed while an input method editor was composing text.
+   */
+  isComposing: boolean;
+}
+
+/**
+ * Calls `handler` with the key and modifiers of a React keyboard event.
+ * Calling `preventDefault()` in the handler prevents the native default.
+ */
+export function fireKeyboardEvent(
+  handler: CancelableEventHandler<KeyDetail> | undefined,
+  event: React.KeyboardEvent
+): boolean {
+  const { key, ctrlKey, shiftKey, altKey, metaKey } = event;
+  return fireCancelableEvent(
+    handler,
+    { key, ctrlKey, shiftKey, altKey, metaKey, isComposing: event.nativeEvent.isComposing },
+    event
+  );
 }

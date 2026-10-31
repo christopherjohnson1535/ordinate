@@ -49,6 +49,149 @@ describe('Input', () => {
   });
 });
 
+describe('Input attributes', () => {
+  test('passes the native hints', () => {
+    render(
+      <Input
+        ariaLabel="Capacity"
+        value="3"
+        type="number"
+        inputMode="numeric"
+        step={2}
+        spellcheck={false}
+        disableBrowserAutocorrect={true}
+      />
+    );
+    const input = screen.getByRole('spinbutton');
+    expect(input).toHaveAttribute('inputmode', 'numeric');
+    expect(input).toHaveAttribute('step', '2');
+    expect(input).toHaveAttribute('spellcheck', 'false');
+    expect(input).toHaveAttribute('autocorrect', 'off');
+    expect(input).toHaveAttribute('autocapitalize', 'off');
+  });
+
+  test('leaves autocorrect and spell check to the browser by default', () => {
+    render(<Input ariaLabel="Name" value="" />);
+    const input = screen.getByRole('textbox');
+    expect(input).not.toHaveAttribute('autocorrect');
+    expect(input).not.toHaveAttribute('autocapitalize');
+    expect(input).not.toHaveAttribute('spellcheck');
+  });
+
+  test('autoFocus focuses the input on mount', () => {
+    render(<Input ariaLabel="Name" value="" autoFocus={true} />);
+    expect(screen.getByRole('textbox')).toHaveFocus();
+  });
+
+  test('ariaLabel replaces the label from the form field', () => {
+    render(
+      <FormField label="Project name">
+        <Input value="" ariaLabel="Project name, required" />
+      </FormField>
+    );
+    expect(screen.getByRole('textbox', { name: 'Project name, required' })).toBeInTheDocument();
+  });
+});
+
+describe('Input key events', () => {
+  test('fires onKeyDown and onKeyUp with the key detail', () => {
+    const onKeyDown = vi.fn();
+    const onKeyUp = vi.fn();
+    render(
+      <Input
+        ariaLabel="Name"
+        value=""
+        onKeyDown={event => onKeyDown(event.detail)}
+        onKeyUp={event => onKeyUp(event.detail)}
+      />
+    );
+    const input = screen.getByRole('textbox');
+    fireEvent.keyDown(input, { key: 'Enter', ctrlKey: true });
+    fireEvent.keyUp(input, { key: 'a' });
+    expect(onKeyDown).toHaveBeenCalledWith({
+      key: 'Enter',
+      ctrlKey: true,
+      shiftKey: false,
+      altKey: false,
+      metaKey: false,
+      isComposing: false,
+    });
+    expect(onKeyUp).toHaveBeenCalledWith(expect.objectContaining({ key: 'a', ctrlKey: false }));
+  });
+
+  test('preventDefault in onKeyDown prevents the native default', () => {
+    render(<Input ariaLabel="Name" value="" onKeyDown={event => event.preventDefault()} />);
+    const keydown = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    screen.getByRole('textbox').dispatchEvent(keydown);
+    expect(keydown.defaultPrevented).toBe(true);
+  });
+});
+
+describe('Input search', () => {
+  function Search({ initial = 'north' }: { initial?: string }) {
+    const [value, setValue] = useState(initial);
+    return (
+      <Input
+        type="search"
+        ariaLabel="Find projects"
+        clearAriaLabel="Clear search"
+        value={value}
+        onChange={event => setValue(event.detail.value)}
+      />
+    );
+  }
+
+  test('shows a clear button only while there is a value', () => {
+    const { unmount } = render(<Search initial="" />);
+    expect(screen.queryByRole('button', { name: 'Clear search' })).toBeNull();
+    unmount();
+    render(<Search />);
+    expect(screen.getByRole('button', { name: 'Clear search' })).toBeInTheDocument();
+  });
+
+  test('the clear button empties the input and returns focus to it', () => {
+    render(<Search />);
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+    const input = screen.getByRole('searchbox');
+    expect(input).toHaveValue('');
+    expect(input).toHaveFocus();
+    expect(screen.queryByRole('button', { name: 'Clear search' })).toBeNull();
+  });
+
+  test('has no clear button when disabled or read-only', () => {
+    render(
+      <>
+        <Input type="search" ariaLabel="Disabled" value="north" disabled={true} />
+        <Input type="search" ariaLabel="Read-only" value="north" readOnly={true} />
+      </>
+    );
+    expect(screen.queryByRole('button')).toBeNull();
+  });
+
+  test('the clear button does not submit the form', () => {
+    const onSubmit = vi.fn((event: React.FormEvent) => event.preventDefault());
+    render(
+      <form onSubmit={onSubmit}>
+        <Search />
+      </form>
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+});
+
+describe('Input inline label', () => {
+  test('labels the input', () => {
+    render(<Input inlineLabelText="Region" value="us-mountain-1" />);
+    expect(screen.getByRole('textbox', { name: 'Region' })).toBeInTheDocument();
+  });
+
+  test('uses the controlId when given', () => {
+    render(<Input inlineLabelText="Region" value="" controlId="region" />);
+    expect(screen.getByRole('textbox', { name: 'Region' })).toHaveAttribute('id', 'region');
+  });
+});
+
 describe('FormField', () => {
   test('labels its control', () => {
     render(
@@ -76,7 +219,7 @@ describe('FormField', () => {
     );
     const input = screen.getByRole('textbox');
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input).toHaveAccessibleDescription('Enter at least 1 node. Number of nodes.');
+    expect(input).toHaveAccessibleDescription(/Enter at least 1 node\. Number of nodes\.$/);
   });
 
   test('uses the given controlId', () => {
@@ -122,9 +265,33 @@ describe('Input and FormField test utilities and accessibility', () => {
     expect(field.findControl()!.findInput()).not.toBeNull();
   });
 
+  test('the wrapper finds the search parts and clears the value', () => {
+    function Search() {
+      const [value, setValue] = useState('north');
+      return <Input type="search" ariaLabel="Find" value={value} onChange={event => setValue(event.detail.value)} />;
+    }
+    render(<Search />);
+    const input = createWrapper().findInput()!;
+    expect(input.findSearchIcon()).not.toBeNull();
+    input.findClearButton()!.click();
+    expect(input.getInputValue()).toBe('');
+    expect(input.findClearButton()).toBeNull();
+  });
+
+  test('the wrapper reads the inline label and state', () => {
+    render(<Input inlineLabelText="Region" value="us-mountain-1" readOnly={true} />);
+    const input = createWrapper().findInput()!;
+    expect(input.findInlineLabel()!.getText()).toBe('Region');
+    expect(input.isReadOnly()).toBe(true);
+    expect(input.isDisabled()).toBe(false);
+  });
+
   test('has no accessibility violations', async () => {
     const { container } = render(
       <form>
+        <Input type="search" ariaLabel="Find projects" value="north" />
+        <Input inlineLabelText="Region" value="us-mountain-1" />
+        <Input inlineLabelText="Zone" value="" disabled={true} />
         <FormField label="Project name" description="Shown in the console." constraintText="Lowercase only.">
           <Input value="north-annex" />
         </FormField>
