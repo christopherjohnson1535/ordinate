@@ -52,7 +52,6 @@
 }
 
 .invalid {
-  border-width: ord.$border-width-control;
-  border-style: dashed;
   border-color: ord.$color-border-error;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
 }

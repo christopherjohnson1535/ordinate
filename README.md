@@ -1,6 +1,6 @@
 # Ordinate
 
-Ordinate is a React component library drawn in the style of an engineering plate: fine ink rules, hatching instead of grey fills, dimensioned spacing. Import a component and it already looks and behaves like every other component in the system.
+Ordinate is a React component library with a quiet, precise console style: a light frame, content on white sheets, ink-colored rules, IBM Plex type and square corners. Import a component and it already looks and behaves like every other component in the system.
 
 Two things set it apart:
 
@@ -47,8 +47,11 @@ export default {
 
 - Button
 - FormField
+- Icon and IconProvider
 - Input
 - Modal
+
+Components are added in phases; phase 1 adds layout primitives, form controls and status components.
 
 ## Development
 
@@ -56,7 +59,7 @@ export default {
 npm install
 npm run build      # build lib/components
 npm start          # rebuild on change and serve the dev pages
-npm test           # unit tests and the token contract test
+npm test           # unit, accessibility, server-rendering and token contract tests
 npm run lint       # ESLint and Stylelint
 ```
 

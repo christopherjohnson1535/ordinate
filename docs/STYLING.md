@@ -40,11 +40,21 @@ The token contract test (`src/__tests__/token-contract.test.ts`) checks that eve
 
 Mode is not a theme. Each color token defines both a `light` and a `dark` value, which compile to `light-dark()`. `applyMode` sets `color-scheme` through a class: light, dark, or system to follow the operating system.
 
+## The look
+
+Revision 2026.1 is a quiet console style: a light grey frame holding the navigation, content on white sheets, ink-colored text and rules, IBM Plex Sans for the interface and IBM Plex Mono for code and data, square corners, and drafting blue used sparingly for accents and progress. Grey control borders keep forms light; strong ink borders are kept for things drawn like a plate, such as modals and title blocks.
+
 ## States
 
-- Focus: a second, dashed rule in drafting blue, set off the outline. Use the `focus-ring` mixin.
-- Disabled: hatched with the `hatch` mixin instead of greyed out.
-- Error: a dashed rule in the error color.
+- Focus: a solid 2 px ink outline, offset 2 px. Use the `focus-ring` mixin.
+- Hover: a raised grey background on controls and list items.
+- Selected: ink fill with white text for toggles and segmented controls; a grey background for navigation items.
+- Disabled: dimmed text and hatched with the `hatch` mixin.
+- Error: an error-colored border with a 2 px inset mark on the leading edge, and the message below the control.
+
+## Icons
+
+Icons are SVG files in `src/icon/icons/`, drawn on a 16 by 16 grid as open strokes. Do not set colors or stroke widths in the file: the `Icon` component sets the stroke to the current text color and keeps the line weight the same at every size. Give solid parts `class="filled"`. The build checks each file and turns the folder into the icon name list.
 
 ## Motion
 

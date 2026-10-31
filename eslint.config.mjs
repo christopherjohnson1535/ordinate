@@ -10,7 +10,15 @@ import globals from 'globals';
 import tsEslint from 'typescript-eslint';
 
 export default defineConfig(
-  globalIgnores(['lib', 'pages/dist', 'global-styles/lib', 'src/internal/generated', 'src/index.ts']),
+  globalIgnores([
+    'lib',
+    'pages/dist',
+    'global-styles/lib',
+    'src/internal/generated',
+    'src/icon/generated',
+    'src/index.ts',
+    'src/test-utils/dom/index.ts',
+  ]),
   eslint.configs.recommended,
   tsEslint.configs.recommended,
   reactHooksPlugin.configs.flat['recommended-latest'],

@@ -4,7 +4,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { rootDir, task } = require('../utils');
 
-const targets = ['lib', 'src/internal/generated', 'src/index.ts'];
+const targets = ['lib', 'src/internal/generated', 'src/icon/generated', 'src/index.ts', 'src/test-utils/dom/index.ts'];
 
 module.exports = task('clean', () =>
   Promise.all(targets.map(target => fs.rm(path.join(rootDir, target), { recursive: true, force: true })))

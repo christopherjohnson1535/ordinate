@@ -5,6 +5,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 
 import Button, { ButtonProps } from '../../../lib/components/button';
+import createWrapper from '../../../lib/components/test-utils/dom';
+import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 describe('Button', () => {
   test('renders a submit button by default', () => {
@@ -81,5 +83,38 @@ describe('Button', () => {
     render(<Button ref={ref}>Save</Button>);
     ref.current?.focus();
     expect(screen.getByRole('button')).toHaveFocus();
+  });
+});
+
+describe('Button test utilities and accessibility', () => {
+  test('the wrapper finds and clicks the button', () => {
+    const onClick = vi.fn();
+    render(<Button onClick={onClick}>Deploy</Button>);
+    const button = createWrapper().findButton()!;
+    button.click();
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(button.isDisabled()).toBe(false);
+  });
+
+  test('the wrapper reports a disabled link', () => {
+    render(
+      <Button href="/logs" disabled={true}>
+        View log
+      </Button>
+    );
+    expect(createWrapper().findButton()!.isDisabled()).toBe(true);
+  });
+
+  test('has no accessibility violations', async () => {
+    const { container } = render(
+      <>
+        <Button>Save</Button>
+        <Button variant="primary">Deploy</Button>
+        <Button href="/logs">View log</Button>
+        <Button disabled={true}>Unavailable</Button>
+        <Button variant="icon" ariaLabel="Add service" iconSvg={<svg />} />
+      </>
+    );
+    await expectNoAxeViolations(container);
   });
 });

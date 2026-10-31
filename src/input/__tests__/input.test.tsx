@@ -6,6 +6,8 @@ import { describe, expect, test, vi } from 'vitest';
 
 import FormField from '../../../lib/components/form-field';
 import Input, { InputProps } from '../../../lib/components/input';
+import createWrapper from '../../../lib/components/test-utils/dom';
+import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 describe('Input', () => {
   test('fires onChange with the new value', () => {
@@ -93,5 +95,47 @@ describe('FormField', () => {
       </FormField>
     );
     expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-invalid');
+  });
+});
+
+describe('Input and FormField test utilities and accessibility', () => {
+  test('the wrapper types into the input', () => {
+    function Controlled() {
+      const [value, setValue] = useState('');
+      return <Input ariaLabel="Name" value={value} onChange={event => setValue(event.detail.value)} />;
+    }
+    render(<Controlled />);
+    const input = createWrapper().findInput()!;
+    input.setInputValue('north-annex');
+    expect(input.getInputValue()).toBe('north-annex');
+  });
+
+  test('the wrapper reads the form field parts', () => {
+    render(
+      <FormField label="Capacity" description="Number of nodes." errorText="Enter at least 1 node.">
+        <Input value="0" />
+      </FormField>
+    );
+    const field = createWrapper().findFormField()!;
+    expect(field.findLabel()!.getText()).toBe('Capacity');
+    expect(field.findError()!.getText()).toBe('Enter at least 1 node.');
+    expect(field.findControl()!.findInput()).not.toBeNull();
+  });
+
+  test('has no accessibility violations', async () => {
+    const { container } = render(
+      <form>
+        <FormField label="Project name" description="Shown in the console." constraintText="Lowercase only.">
+          <Input value="north-annex" />
+        </FormField>
+        <FormField label="Capacity" errorText="Enter at least 1 node.">
+          <Input value="0" type="number" />
+        </FormField>
+        <FormField label="Region">
+          <Input value="us-mountain-1" readOnly={true} />
+        </FormField>
+      </form>
+    );
+    await expectNoAxeViolations(container);
   });
 });

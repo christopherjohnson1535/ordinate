@@ -13,18 +13,20 @@ ordinate/
 │   └── <component>/      *.page.tsx files for one component
 ├── src/                  Component source
 │   ├── <component>/
-│   │   ├── __tests__/    Unit tests, run against lib/components
+│   │   ├── __tests__/    Unit and server-rendering tests, run against lib/components
 │   │   ├── index.tsx     Public component: defaults and allowed props only
 │   │   ├── interfaces.ts Public props, documented
 │   │   ├── internal.tsx  Implementation, also used by other components
 │   │   └── styles.scss   Styles, compiled to scoped class names
+│   ├── icon/icons/       Built-in icon SVGs, one file per icon
+│   ├── test-utils/dom/   Test wrappers, one folder per component; index.ts is generated
 │   ├── internal/         Shared code that is not public API
 │   │   ├── base-component/  Base props and the revision CSS loaded by every component
 │   │   ├── context/      React contexts shared between components
 │   │   ├── events/       Custom event helpers for onX handlers
 │   │   ├── generated/    Generated from the style dictionary (git-ignored)
 │   │   └── styles/       Sass mixins and token variables
-│   └── __tests__/        Cross-component tests, including the token contract test
+│   └── __tests__/        Cross-component tests, the token contract test and the axe helper
 ├── style-dictionary/     Design tokens, one folder per revision
 │   ├── 2026.1/
 │   ├── 2026.2/

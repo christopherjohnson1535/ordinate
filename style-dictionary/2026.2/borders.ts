@@ -8,4 +8,7 @@ export const tokens: BordersDictionary = {
   borderRadiusButton: '6px',
   borderRadiusInput: '6px',
   borderRadiusContainer: '10px',
+  borderRadiusCheckbox: '3px',
+  borderRadiusBadge: '4px',
+  borderRadiusToggle: '9px',
 };

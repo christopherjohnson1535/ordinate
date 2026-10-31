@@ -18,10 +18,16 @@
   line-height: ord.$line-height-body;
 }
 
-@mixin font-display {
+@mixin font-heading {
   font-family: ord.$font-family-display;
-  font-weight: ord.$font-weight-body;
+  font-weight: ord.$font-weight-heading;
   line-height: ord.$line-height-heading;
+}
+
+@mixin font-code {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  font-weight: ord.$font-weight-body;
 }
 
 @mixin border-radius($radius) {
@@ -33,12 +39,12 @@
 
 @mixin focus-ring {
   outline-width: ord.$border-width-focus-ring;
-  outline-style: dashed;
+  outline-style: solid;
   outline-color: ord.$color-border-focus-ring;
   outline-offset: ord.$border-focus-ring-offset;
 }
 
-// Disabled controls are hatched rather than greyed out.
+// Disabled controls are hatched as well as dimmed, as on a drawing.
 @mixin hatch {
   background-image: repeating-linear-gradient(135deg, ord.$color-hatch 0 1px, transparent 1px 6px);
 }

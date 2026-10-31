@@ -1,0 +1,12 @@
+// Copyright Christopher Johnson. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { expect, test } from 'vitest';
+
+import Button from '../../../lib/components/button';
+
+test('renders on the server', () => {
+  expect(renderToString(<Button variant="primary">Save changes</Button>)).toContain('Save changes');
+  expect(renderToString(<Button href="/logs">View log</Button>)).toContain('href="/logs"');
+});

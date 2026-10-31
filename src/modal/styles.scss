@@ -15,9 +15,9 @@
   max-block-size: calc(100vh - 2 * #{ord.$space-xl});
   padding-block: 0;
   padding-inline: 0;
-  border-width: ord.$border-width-control;
+  border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-control;
+  border-color: ord.$color-border-strong;
   background-color: ord.$color-background-container;
   color: ord.$color-text-body;
 
@@ -72,7 +72,7 @@
 }
 
 .heading {
-  @include styles.font-display;
+  @include styles.font-heading;
   margin-block: 0;
   margin-inline: 0;
   font-size: ord.$font-size-heading-m;

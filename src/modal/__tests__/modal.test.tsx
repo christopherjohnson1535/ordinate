@@ -5,6 +5,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 
 import Modal from '../../../lib/components/modal';
+import createWrapper from '../../../lib/components/test-utils/dom';
+import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 function getDialog() {
   return document.querySelector('dialog') as HTMLDialogElement;
@@ -84,5 +86,33 @@ describe('Modal', () => {
       </Modal>
     );
     expect(screen.getByRole('button', { name: 'Delete' })).toBeInTheDocument();
+  });
+});
+
+describe('Modal test utilities and accessibility', () => {
+  test('the wrapper reads the parts and dismisses', () => {
+    const onDismiss = vi.fn();
+    render(
+      <Modal visible={true} header="Delete project" footer="Actions" onDismiss={event => onDismiss(event.detail)}>
+        Content
+      </Modal>
+    );
+    const modal = createWrapper().findModal()!;
+    expect(modal.isVisible()).toBe(true);
+    expect(modal.findHeader()!.getText()).toBe('Delete project');
+    expect(modal.findContent()!.getText()).toBe('Content');
+    expect(modal.findFooter()!.getText()).toBe('Actions');
+    modal.findDismissButton().click();
+    modal.pressEscape();
+    expect(onDismiss.mock.calls).toEqual([[{ reason: 'closeButton' }], [{ reason: 'keyboard' }]]);
+  });
+
+  test('has no accessibility violations', async () => {
+    render(
+      <Modal visible={true} header="Delete project" footer={<button>Delete</button>}>
+        This cannot be undone.
+      </Modal>
+    );
+    await expectNoAxeViolations(document.body);
   });
 });

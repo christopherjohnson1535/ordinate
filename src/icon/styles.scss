@@ -1,0 +1,91 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+
+  :global(svg) {
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: ord.$border-width-icon;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  // Keeps the line weight the same at every icon size, as on a drawing.
+  :global(svg *) {
+    vector-effect: non-scaling-stroke;
+  }
+
+  :global(.filled) {
+    fill: currentColor;
+    stroke: none;
+  }
+}
+
+.size-small {
+  inline-size: ord.$size-icon-small;
+  block-size: ord.$size-icon-small;
+}
+
+.size-normal {
+  inline-size: ord.$size-icon;
+  block-size: ord.$size-icon;
+}
+
+.size-medium {
+  inline-size: ord.$size-icon-medium;
+  block-size: ord.$size-icon-medium;
+}
+
+.size-big {
+  inline-size: ord.$size-icon-big;
+  block-size: ord.$size-icon-big;
+}
+
+.size-large {
+  inline-size: ord.$size-icon-large;
+  block-size: ord.$size-icon-large;
+}
+
+.size-inherit {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+.variant-subtle {
+  color: ord.$color-text-secondary;
+}
+
+.variant-disabled {
+  color: ord.$color-text-disabled;
+}
+
+.variant-error {
+  color: ord.$color-text-error;
+}
+
+.variant-warning {
+  color: ord.$color-text-status-warning;
+}
+
+.variant-success {
+  color: ord.$color-text-status-success;
+}
+
+.variant-info {
+  color: ord.$color-text-status-info;
+}
+
+.variant-link {
+  color: ord.$color-text-link;
+}
