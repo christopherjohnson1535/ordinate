@@ -1,0 +1,13 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Digits of equal width keep the separators still while the user types.
+.root {
+  display: block;
+
+  input {
+    font-variant-numeric: tabular-nums;
+  }
+}
