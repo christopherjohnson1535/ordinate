@@ -1,0 +1,289 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+$thumb: ord.$size-icon;
+$tick: ord.$space-xs;
+
+// The native range input takes the pointer and the keyboard; everything else is drawn behind it. The
+// drawn track is inset by half a thumb on each side, so its ends sit under the thumb's center at the
+// minimum and the maximum, and positions on the track match the native thumb.
+@mixin thumb {
+  @include styles.border-radius(ord.$border-radius-checkbox);
+  box-sizing: border-box;
+  inline-size: $thumb;
+  block-size: $thumb;
+  border-width: ord.$border-width-section;
+  border-style: solid;
+  border-color: ord.$color-background-control-checked;
+  background-color: ord.$color-background-container;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  color: ord.$color-text-body;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  block-size: ord.$size-control-height-small;
+}
+
+.track {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: calc(#{$thumb} / 2);
+}
+
+.rail,
+.fill {
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$border-width-section} / 2);
+  inset-inline-start: 0;
+  block-size: ord.$border-width-section;
+}
+
+.rail {
+  inline-size: 100%;
+  background-color: ord.$color-border-control;
+}
+
+.fill {
+  inline-size: calc(var(--slider-value) * 100%);
+  background-color: ord.$color-background-control-checked;
+}
+
+// Graduations hang below the rail like the marks of a scale rule.
+.tick {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: calc(var(--slider-tick) * 100%);
+  block-size: $tick;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-control;
+}
+
+.tick-reference {
+  block-size: ord.$space-s;
+  border-inline-start-color: ord.$color-border-strong;
+}
+
+.input {
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  inline-size: 100%;
+  block-size: $thumb;
+  margin-block: 0;
+  margin-inline: 0;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:focus {
+    outline-style: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    block-size: $thumb;
+    background-color: transparent;
+  }
+
+  &::-moz-range-track {
+    block-size: $thumb;
+    background-color: transparent;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+    appearance: none;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+
+  &:hover:enabled::-webkit-slider-thumb {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  &:hover:enabled::-moz-range-thumb {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  &:focus-visible::-webkit-slider-thumb {
+    @include styles.focus-ring;
+  }
+
+  &:focus-visible::-moz-range-thumb {
+    @include styles.focus-ring;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+// The current value, called out above the thumb while the slider is in use.
+.readout {
+  position: absolute;
+  inset-block-end: calc(50% + #{$thumb} / 2 + #{ord.$space-xxs});
+  inset-inline-start: calc(var(--slider-value) * 100%);
+  display: flex;
+  justify-content: center;
+  inline-size: 0;
+  visibility: hidden;
+
+  .control:hover &,
+  .control:has(.input:focus-visible) &,
+  .control:has(.input:active) & {
+    visibility: visible;
+  }
+
+  .disabled & {
+    visibility: hidden;
+  }
+}
+
+.readout-text {
+  @include styles.font-code;
+  unicode-bidi: plaintext;
+  padding-block: 0;
+  padding-inline: ord.$space-xxs;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  font-size: ord.$font-size-small;
+  white-space: nowrap;
+}
+
+.labels {
+  @include styles.font-code;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: ord.$space-xs;
+  margin-block-start: ord.$space-xxs;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-secondary;
+}
+
+// Formatted values such as "64 GiB" keep their own direction inside right-to-left text.
+.label-min,
+.label-max,
+.label-reference {
+  unicode-bidi: plaintext;
+  white-space: nowrap;
+}
+
+.label-track {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: calc(#{$thumb} / 2);
+}
+
+// A zero-width box centers the label on its position in either reading direction.
+.label-reference {
+  position: absolute;
+  inset-inline-start: calc(var(--slider-tick) * 100%);
+  display: flex;
+  justify-content: center;
+  inline-size: 0;
+  white-space: nowrap;
+}
+
+.invalid {
+  .fill {
+    background-color: ord.$color-border-error;
+  }
+
+  .input::-webkit-slider-thumb {
+    border-color: ord.$color-border-error;
+  }
+
+  .input::-moz-range-thumb {
+    border-color: ord.$color-border-error;
+  }
+}
+
+.warning {
+  .fill {
+    background-color: ord.$color-border-status-warning;
+  }
+
+  .input::-webkit-slider-thumb {
+    border-color: ord.$color-border-status-warning;
+  }
+
+  .input::-moz-range-thumb {
+    border-color: ord.$color-border-status-warning;
+  }
+}
+
+.read-only {
+  .fill {
+    background-color: ord.$color-text-secondary;
+  }
+
+  .input {
+    cursor: default;
+  }
+
+  .input::-webkit-slider-thumb {
+    border-color: ord.$color-text-secondary;
+    background-color: ord.$color-background-control-read-only;
+    cursor: default;
+  }
+
+  .input::-moz-range-thumb {
+    border-color: ord.$color-text-secondary;
+    background-color: ord.$color-background-control-read-only;
+    cursor: default;
+  }
+}
+
+.disabled {
+  .rail {
+    background-color: ord.$color-border-disabled;
+  }
+
+  .fill {
+    background-color: ord.$color-text-disabled;
+  }
+
+  .tick {
+    border-inline-start-color: ord.$color-border-disabled;
+  }
+
+  .labels {
+    color: ord.$color-text-disabled;
+  }
+
+  .input::-webkit-slider-thumb {
+    @include styles.hatch;
+    border-color: ord.$color-border-disabled;
+    cursor: default;
+  }
+
+  .input::-moz-range-thumb {
+    @include styles.hatch;
+    border-color: ord.$color-border-disabled;
+    cursor: default;
+  }
+}
