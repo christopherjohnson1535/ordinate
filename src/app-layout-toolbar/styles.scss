@@ -1,0 +1,64 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  box-sizing: border-box;
+  min-block-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-scaled-xs});
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-s;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  background-color: ord.$color-background-layout-main;
+  color: ord.$color-text-body;
+}
+
+.navigation-toggle {
+  flex-shrink: 0;
+}
+
+.breadcrumbs {
+  flex-grow: 1;
+  min-inline-size: 0;
+}
+
+.drawers {
+  display: flex;
+  flex-shrink: 0;
+  gap: ord.$space-xs;
+}
+
+// The trigger buttons are shared with the app layout's rails.
+.trigger {
+  position: relative;
+  display: inline-flex;
+}
+
+// Two classes, so the open state wins over the button's own variant and hover rules.
+.trigger-button.trigger-expanded,
+.trigger-button.trigger-expanded:hover {
+  border-color: ord.$color-background-button-primary;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+}
+
+.badge {
+  @include styles.border-radius(ord.$border-radius-badge);
+  position: absolute;
+  inset-block-start: ord.$space-xxs;
+  inset-inline-end: ord.$space-xxs;
+  inline-size: ord.$space-xs;
+  block-size: ord.$space-xs;
+  background-color: ord.$color-border-accent;
+  box-shadow: 0 0 0 ord.$border-width-section ord.$color-background-container;
+  pointer-events: none;
+}
