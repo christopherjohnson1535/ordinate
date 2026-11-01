@@ -1,0 +1,108 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+$column-gap: ord.$space-xl;
+// The narrowest a column may get before the grid drops a column.
+$column-min: calc(#{ord.$space-xxxl} * 3);
+
+.root {
+  @include styles.font-body;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+// Each column is at least a fraction of the width set by `columns`, or the minimum, whichever is wider. A
+// narrow container fits fewer columns, and a wide one never more than `columns`.
+.list {
+  --key-value-columns: 1;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      max(#{$column-min}, calc((100% - (var(--key-value-columns) - 1) * #{$column-gap}) / var(--key-value-columns))),
+      1fr
+    )
+  );
+  gap: ord.$space-scaled-l $column-gap;
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+.columns-2 {
+  --key-value-columns: 2;
+}
+
+.columns-3 {
+  --key-value-columns: 3;
+}
+
+.columns-4 {
+  --key-value-columns: 4;
+}
+
+.pair {
+  min-inline-size: 0;
+}
+
+.label {
+  @include styles.font-label;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xs;
+  margin-block-end: ord.$space-xxxs;
+  color: ord.$color-text-body;
+}
+
+.label-text {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+.info {
+  font-weight: ord.$font-weight-body;
+}
+
+.value {
+  margin-block: 0;
+  margin-inline: 0;
+  color: ord.$color-text-body-secondary;
+  overflow-wrap: break-word;
+}
+
+.group {
+  min-inline-size: 0;
+}
+
+// The title is ruled off from its pairs like the heading of a schedule on a drawing.
+.group-title {
+  @include styles.font-heading;
+  margin-block-end: ord.$space-scaled-s;
+  padding-block-end: ord.$space-xs;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  font-size: ord.$font-size-heading-xs;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.group-content {
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-m;
+  margin-block: 0;
+  margin-inline: 0;
+}
