@@ -5,6 +5,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import I18nProvider from '../../../lib/components/i18n';
+import Input from '../../../lib/components/input';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import TopNavigation, { TopNavigationProps } from '../../../lib/components/top-navigation';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
@@ -140,6 +141,64 @@ describe('TopNavigation', () => {
     expect(createWrapper(container).findTopNavigation()!.findSearch()).not.toBeNull();
   });
 
+  test('draws an Ordinate input in the search slot as a command line', () => {
+    const { container } = renderNavigation({
+      search: <Input type="search" value="" ariaLabel="Command line" placeholder="Go to" />,
+    });
+    const input = screen.getByRole('searchbox', { name: 'Command line' });
+    expect(input).toHaveAttribute('aria-keyshortcuts', '/');
+    expect(container.querySelector('kbd')).toHaveTextContent('/');
+    expect(container.querySelector('kbd')).toHaveAttribute('aria-hidden', 'true');
+    expect(container.querySelector('[class*="ord_input_search-icon"]')).toBeNull();
+    expect(container.querySelector('[class*="ord_input_prompt"]')).toHaveTextContent('\u203a');
+  });
+
+  test('pressing / outside a field moves focus to the command line', () => {
+    renderNavigation({ search: <Input type="search" value="" ariaLabel="Command line" /> });
+    const input = screen.getByRole('searchbox', { name: 'Command line' });
+    const notPrevented = fireEvent.keyDown(document.body, { key: '/' });
+    expect(notPrevented).toBe(false);
+    expect(input).toHaveFocus();
+  });
+
+  test('leaves / alone while the user types in another field or holds a modifier', () => {
+    render(
+      <>
+        <TopNavigation identity={identity} search={<Input type="search" value="" ariaLabel="Command line" />} />
+        <textarea aria-label="Notes" />
+      </>
+    );
+    const notes = screen.getByRole('textbox', { name: 'Notes' });
+    notes.focus();
+    expect(fireEvent.keyDown(notes, { key: '/' })).toBe(true);
+    expect(notes).toHaveFocus();
+    expect(fireEvent.keyDown(document.body, { key: '/', ctrlKey: true })).toBe(true);
+    expect(notes).toHaveFocus();
+  });
+
+  test('hides the key hint while the command line has a value, and drops the shortcut when disabled', () => {
+    const { container, rerender } = renderNavigation({
+      search: <Input type="search" value="web" ariaLabel="Command line" />,
+    });
+    expect(container.querySelector('kbd')).toBeNull();
+    rerender(
+      <TopNavigation
+        identity={identity}
+        search={<Input type="search" value="" disabled={true} ariaLabel="Command line" />}
+      />
+    );
+    expect(container.querySelector('kbd')).toBeNull();
+    expect(screen.getByRole('searchbox', { name: 'Command line' })).not.toHaveAttribute('aria-keyshortcuts');
+  });
+
+  test('an input outside the search slot is not a command line', () => {
+    const { container } = render(<Input type="search" value="" ariaLabel="Search" />);
+    expect(container.querySelector('kbd')).toBeNull();
+    expect(screen.getByRole('searchbox')).not.toHaveAttribute('aria-keyshortcuts');
+    fireEvent.keyDown(document.body, { key: '/' });
+    expect(screen.getByRole('searchbox')).not.toHaveFocus();
+  });
+
   test('collapses utility text to icons when the bar narrows', () => {
     // Identity 150, gap 0 and three icons of 36 fit; three utilities of 100 do not.
     barWidth = 300;
@@ -248,6 +307,11 @@ describe('TopNavigation', () => {
     expect(wrapper.findUtility(4)).toBeNull();
     expect(wrapper.findOverflowMenu()).toBeNull();
     expect(wrapper.findSearch()).toBeNull();
+  });
+
+  test('has no accessibility violations with a command line', async () => {
+    const { container } = renderNavigation({ search: <Input type="search" value="" ariaLabel="Command line" /> });
+    await expectNoAxeViolations(container);
   });
 
   test('has no accessibility violations, wide and narrow', async () => {

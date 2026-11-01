@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 
 import { ButtonDropdownProps } from '../button-dropdown/interfaces';
 import { InternalButtonDropdown } from '../button-dropdown/internal';
+import { CommandLineContext } from '../internal/context/command-line-context';
 import { CancelableCustomEvent, fireCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { TopNavigationProps } from './interfaces';
@@ -140,7 +141,11 @@ export function InternalTopNavigation({ identity, utilities = [], search, i18nSt
           {identityContent}
         </a>
       </div>
-      {search && <div className={styles.search}>{search}</div>}
+      {search && (
+        <div className={styles.search}>
+          <CommandLineContext.Provider value={true}>{search}</CommandLineContext.Provider>
+        </div>
+      )}
       {utilities.length > 0 && (
         <div className={styles.utilities}>
           {utilities.map((utility, index) =>

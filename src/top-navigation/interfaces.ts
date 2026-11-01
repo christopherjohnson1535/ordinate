@@ -10,7 +10,7 @@ import { CancelableEventHandler } from '../internal/events';
 
 export interface TopNavigationProps extends BaseComponentProps {
   /**
-   * The application's name and logo, shown at the start of the bar as a link to its home page:
+   * The application's name and logo, shown at the start of the command bar as a link to its home page:
    * * `href`: the URL of the home page.
    * * `title`: the name of the application.
    * * `logo`: an image with `src` and `alt`. Give it an `alt` when there is no `title`.
@@ -19,7 +19,7 @@ export interface TopNavigationProps extends BaseComponentProps {
    */
   identity: TopNavigationProps.Identity;
   /**
-   * Buttons and menus shown at the end of the bar, in order. As the bar narrows, utilities with
+   * Buttons and menus shown at the end of the bar, in order, as quiet text buttons. As the bar narrows, utilities with
    * an icon first drop their text, then move into an overflow menu, starting with the first one.
    *
    * Every utility can have:
@@ -44,6 +44,8 @@ export interface TopNavigationProps extends BaseComponentProps {
   utilities?: ReadonlyArray<TopNavigationProps.Utility>;
   /**
    * A search field shown between the identity and the utilities, such as an `Input` of type `search`.
+   * An Ordinate `Input` here is drawn as a command line, with a prompt mark, mono type and a `/` key
+   * hint, and pressing `/` anywhere outside a field moves focus to it.
    */
   search?: React.ReactNode;
   /**

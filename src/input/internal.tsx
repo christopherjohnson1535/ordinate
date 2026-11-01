@@ -1,10 +1,11 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useId, useImperativeHandle, useRef } from 'react';
+import React, { useEffect, useId, useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
 import { InternalIcon } from '../icon/internal';
+import { useCommandLine } from '../internal/context/command-line-context';
 import { useFormFieldContext } from '../internal/context/form-field-context';
 import { fireKeyboardEvent, fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
@@ -25,6 +26,41 @@ export interface InternalInputProps extends InputProps {
    * state of an autosuggest. Not part of the public API. They are applied last, so they win.
    */
   nativeInputAttributes?: React.InputHTMLAttributes<HTMLInputElement>;
+  /**
+   * Draws the input as a command line: a prompt mark, mono type and a `/` key hint, with `/`
+   * anywhere on the page moving focus to it. Defaults to whether the input sits in a container
+   * that asks for a command line, such as the search slot of the top navigation. Not part of the
+   * public API.
+   */
+  commandLine?: boolean;
+}
+
+const commandLineShortcut = '/';
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+  return target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName);
+}
+
+// Moves focus to the input when the user presses the shortcut outside any field.
+function useShortcutFocus(enabled: boolean, inputRef: React.RefObject<HTMLInputElement | null>) {
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      const modified = event.ctrlKey || event.metaKey || event.altKey;
+      if (event.key !== commandLineShortcut || modified || event.defaultPrevented || isTypingTarget(event.target)) {
+        return;
+      }
+      event.preventDefault();
+      inputRef.current?.focus();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [enabled, inputRef]);
 }
 
 export const InternalInput = React.forwardRef(
@@ -57,6 +93,7 @@ export const InternalInput = React.forwardRef(
       invalid,
       warning,
       nativeInputAttributes,
+      commandLine: commandLineProp,
       ...rest
     }: InternalInputProps,
     ref: React.Ref<InputProps.Ref>
@@ -73,6 +110,10 @@ export const InternalInput = React.forwardRef(
     const inputId = field.controlId ?? (inlineLabelText ? `${generatedId}input` : undefined);
     const isSearch = type === 'search';
     const showClearButton = isSearch && value !== '' && !disabled && !readOnly;
+    const commandLineFromContext = useCommandLine();
+    const commandLine = (commandLineProp ?? commandLineFromContext) && !inlineLabelText;
+    const shortcutEnabled = commandLine && !disabled && !readOnly;
+    useShortcutFocus(shortcutEnabled, inputRef);
 
     const clear = () => {
       inputRef.current?.focus();
@@ -85,13 +126,20 @@ export const InternalInput = React.forwardRef(
         className={clsx(
           styles.root,
           isSearch && styles['root-search'],
+          commandLine && styles['command-line'],
           field.invalid && styles.invalid,
           field.warning && !field.invalid && styles.warning,
           readOnly && !disabled && styles['read-only'],
           disabled && styles.disabled
         )}
       >
-        {isSearch && <InternalIcon className={styles['search-icon']} name="search" />}
+        {commandLine ? (
+          <span className={styles.prompt} aria-hidden="true">
+            {'\u203a'}
+          </span>
+        ) : (
+          isSearch && <InternalIcon className={styles['search-icon']} name="search" />
+        )}
         <div className={styles.main}>
           {inlineLabelText && (
             <label className={styles['inline-label']} htmlFor={inputId}>
@@ -121,6 +169,7 @@ export const InternalInput = React.forwardRef(
             aria-describedby={field.ariaDescribedby}
             aria-invalid={field.invalid ? 'true' : undefined}
             aria-required={ariaRequired ? 'true' : undefined}
+            aria-keyshortcuts={shortcutEnabled ? commandLineShortcut : undefined}
             onChange={event => fireNonCancelableEvent(onChange, { value: event.target.value })}
             onFocus={() => fireNonCancelableEvent(onFocus, null)}
             onBlur={() => fireNonCancelableEvent(onBlur, null)}
@@ -131,6 +180,11 @@ export const InternalInput = React.forwardRef(
             {...nativeInputAttributes}
           />
         </div>
+        {shortcutEnabled && value === '' && (
+          <kbd className={styles['key-hint']} aria-hidden="true">
+            {commandLineShortcut}
+          </kbd>
+        )}
         {showClearButton && (
           <InternalButton
             className={styles['clear-button']}

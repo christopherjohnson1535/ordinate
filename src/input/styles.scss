@@ -135,3 +135,43 @@
     color: ord.$color-text-body;
   }
 }
+
+// A command line: a prompt mark in place of the search icon, typed in mono like a terminal, with
+// the key that reaches it shown at the end while it is empty.
+.command-line {
+  .input {
+    font-family: ord.$font-family-mono;
+    font-size: ord.$font-size-code;
+    padding-inline-start: ord.$space-xs;
+  }
+}
+
+.prompt {
+  margin-inline-start: ord.$space-input-horizontal;
+  color: ord.$color-text-body;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-heading-m;
+  font-weight: ord.$font-weight-label;
+
+  .disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+.key-hint {
+  @include styles.border-radius(ord.$border-radius-badge);
+  flex-shrink: 0;
+  margin-inline-end: ord.$space-xs;
+  padding-block: 0;
+  padding-inline: ord.$space-xxs;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  color: ord.$color-text-secondary;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+
+  .root:has(.input:focus) & {
+    display: none;
+  }
+}

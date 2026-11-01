@@ -6,7 +6,9 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
-// A white strip ruled off from the page in ink, like the title block of a drawing.
+// A slim command bar: the name on the start side, a command line in the middle and quiet text
+// buttons at the end. It draws no ground of its own, only a thin ink rule underneath, so it reads
+// as the top margin of the drawing set below it.
 .root {
   position: relative;
   display: flex;
@@ -14,12 +16,11 @@
   gap: ord.$space-l;
   box-sizing: border-box;
   min-inline-size: 0;
-  padding-block: ord.$space-scaled-xs;
-  padding-inline: ord.$space-scaled-l;
-  border-block-end-width: ord.$border-width-section;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-scaled-m;
+  border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
   border-block-end-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
   color: ord.$color-text-body;
 }
 
@@ -32,7 +33,7 @@
 .identity-link {
   display: flex;
   align-items: center;
-  gap: ord.$space-s;
+  gap: ord.$space-xs;
   min-inline-size: 0;
   color: ord.$color-text-body;
   text-decoration-line: none;
@@ -52,13 +53,16 @@
   display: block;
   flex-shrink: 0;
   inline-size: auto;
-  max-block-size: ord.$size-icon-big;
+  max-block-size: ord.$size-icon-medium;
 }
 
 .title {
-  @include styles.font-heading;
   overflow: hidden;
+  font-family: ord.$font-family-headline;
   font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-headline;
+  line-height: ord.$line-height-heading;
+  letter-spacing: ord.$letter-spacing-headline;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -68,6 +72,11 @@
   flex: 1 1 auto;
   justify-content: center;
   min-inline-size: 0;
+
+  > * {
+    flex: 0 1 calc(#{ord.$space-xxxl} * 9);
+    min-inline-size: 0;
+  }
 }
 
 .utilities {
@@ -87,10 +96,12 @@
 .utility-slot .utility:not(.utility-primary) {
   border-color: transparent;
   background-color: transparent;
-  color: ord.$color-text-body;
+  color: ord.$color-text-body-secondary;
+  font-weight: ord.$font-weight-body;
 
   &:hover {
     background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
   }
 }
 
@@ -115,7 +126,7 @@
   inline-size: ord.$space-xs;
   block-size: ord.$space-xs;
   background-color: ord.$color-border-accent;
-  box-shadow: 0 0 0 ord.$border-width-section ord.$color-background-container;
+  box-shadow: 0 0 0 ord.$border-width-section ord.$color-background-layout-main;
   pointer-events: none;
 }
 
