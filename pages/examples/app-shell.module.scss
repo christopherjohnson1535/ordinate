@@ -1,0 +1,31 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The layout grid stands in for the application layout component that phase 3 adds.
+.frame {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-rows: auto minmax(560px, auto);
+  grid-template-areas:
+    'top top'
+    'side content';
+  border: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-layout-main);
+}
+
+.top {
+  grid-area: top;
+}
+
+.side {
+  grid-area: side;
+  border-inline-end: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-container);
+}
+
+.content {
+  grid-area: content;
+  padding: var(--ord-space-scaled-l) var(--ord-space-scaled-xl);
+}
