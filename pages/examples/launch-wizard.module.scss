@@ -1,0 +1,11 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The dev shell frames each page, so the wizard gets a region of fixed height and the layout
+// scrolls inside it (`disableBodyScroll`).
+.region {
+  block-size: 900px;
+  border: 1px solid var(--ord-color-border-divider);
+}
