@@ -1,0 +1,152 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.alignment-horizontal {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.alignment-vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.list {
+  display: contents;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+
+  .alignment-horizontal & {
+    max-inline-size: min(100%, #{ord.$size-panel-medium});
+  }
+}
+
+// Scoped under the group so these win over the token's own border, whichever stylesheet loads first.
+.root .token {
+  max-inline-size: 100%;
+
+  // The token's content column takes the free space, so the remove button sits at the far end.
+  > :first-child {
+    flex: 1;
+  }
+}
+
+.root .invalid {
+  border-color: ord.$color-border-error;
+  border-inline-start-width: ord.$border-width-section;
+}
+
+.root .warning {
+  border-color: ord.$color-border-status-warning;
+  border-inline-start-width: ord.$border-width-section;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: ord.$size-icon-big;
+  block-size: ord.$size-icon-big;
+  overflow: hidden;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-layout-main;
+  color: ord.$color-text-secondary;
+}
+
+.thumbnail-image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-icon,
+.spinner {
+  flex-shrink: 0;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.file-name {
+  display: block;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+  // Aligns with the page rather than with the name's own direction.
+  text-align: match-parent;
+}
+
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: ord.$space-s;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.file-size,
+.file-last-modified {
+  font-variant-numeric: tabular-nums;
+}
+
+.error-text,
+.warning-text {
+  @include styles.font-body;
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  font-size: ord.$font-size-description;
+}
+
+.error-text {
+  color: ord.$color-text-error;
+}
+
+.warning-text {
+  color: ord.$color-text-status-warning;
+}
+
+.message-icon {
+  flex-shrink: 0;
+}
+
+.root .toggle {
+  align-self: flex-start;
+  min-block-size: ord.$size-control-height-small;
+}

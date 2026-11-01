@@ -85,6 +85,13 @@ const messages: I18nProviderProps.Messages = {
       'file-input': {
         uploadButtonText: '{multiple, select, true {Choose files} other {Choose file}}',
       },
+      'file-token-group': {
+        errorIconAriaLabel: 'Error',
+        limitShowFewer: 'Show fewer',
+        limitShowMore: 'Show {count} more',
+        removeFileAriaLabel: 'Remove file {fileNumber}, {fileName}',
+        warningIconAriaLabel: 'Warning',
+      },
       flashbar: {
         ariaLabel: 'Notifications',
         notificationBarText: 'Notifications',
