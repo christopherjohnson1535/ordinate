@@ -122,6 +122,10 @@ const messages: I18nProviderProps.Messages = {
         scrollLeftAriaLabel: 'Scroll to previous tabs',
         scrollRightAriaLabel: 'Scroll to next tabs',
       },
+      'text-filter': {
+        filteringAriaLabel: 'Filter',
+        filteringClearAriaLabel: 'Clear filter',
+      },
       'top-navigation': {
         overflowMenuTriggerText: 'More',
       },

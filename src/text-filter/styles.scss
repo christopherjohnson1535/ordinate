@@ -1,0 +1,26 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs ord.$space-s;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.count {
+  @include styles.font-body;
+  flex-shrink: 0;
+  color: ord.$color-text-secondary;
+  white-space: nowrap;
+}
