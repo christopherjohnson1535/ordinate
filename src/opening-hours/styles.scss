@@ -1,0 +1,134 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: block;
+  color: ord.$color-text-body;
+}
+
+.table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: ord.$font-size-heading-s;
+}
+
+.caption {
+  padding-block-end: ord.$space-s;
+  font-family: ord.$font-family-headline;
+  font-size: ord.$font-size-headline-s;
+  font-weight: ord.$font-weight-headline;
+  line-height: ord.$line-height-headline;
+  letter-spacing: ord.$letter-spacing-headline;
+  text-align: start;
+}
+
+// A heavy rule opens the table, as on a printed timetable; hairlines part the days.
+.row {
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+
+  &:first-child {
+    border-block-start-width: ord.$border-width-head-rule;
+    border-block-start-style: solid;
+    border-block-start-color: ord.$color-border-strong;
+  }
+}
+
+.day,
+.hours {
+  padding-block: ord.$space-scaled-s;
+  vertical-align: baseline;
+}
+
+.day {
+  padding-inline-end: ord.$space-m;
+  font-weight: ord.$font-weight-label;
+  text-align: start;
+}
+
+.day-label {
+  margin-inline-end: ord.$space-xs;
+}
+
+.hours {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.value {
+  white-space: nowrap;
+
+  // Each time keeps its own word order, such as "8:00 AM", when the page reads right to left.
+  > time {
+    unicode-bidi: plaintext;
+  }
+}
+
+.note {
+  display: block;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.closed .value {
+  color: ord.$color-text-body-secondary;
+}
+
+.today {
+  .day,
+  .hours {
+    font-weight: ord.$font-weight-bold;
+  }
+}
+
+.today-marker {
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: inline-block;
+  padding-inline: ord.$space-xs;
+  background-color: ord.$color-background-marker;
+  color: ord.$color-text-on-marker;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  vertical-align: middle;
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
+}
+
+// A band of its own, like a sign in the window: light text on the inverted band color.
+.variant-inverted {
+  @include styles.border-radius(ord.$border-radius-section);
+  padding-block: ord.$space-scaled-l;
+  padding-inline: ord.$space-scaled-xl;
+  background-color: ord.$color-background-band-inverted;
+  color: ord.$color-text-band-inverted;
+
+  .row {
+    border-block-end-color: ord.$color-text-band-inverted-secondary;
+
+    &:first-child {
+      border-block-start-color: ord.$color-text-band-inverted;
+    }
+  }
+
+  .note {
+    color: ord.$color-text-band-inverted-secondary;
+  }
+
+  .closed .value {
+    color: ord.$color-text-band-inverted-accent;
+  }
+
+  .today-marker {
+    background-color: ord.$color-text-band-inverted-accent;
+    color: ord.$color-background-band-inverted;
+  }
+}

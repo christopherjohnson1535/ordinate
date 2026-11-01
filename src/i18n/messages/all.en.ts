@@ -239,6 +239,10 @@ const messages: I18nProviderProps.Messages = {
         tokenLimitShowFewer: 'Show fewer',
         tokenLimitShowMore: 'Show {count} more',
       },
+      'opening-hours': {
+        closedText: 'Closed',
+        todayText: 'Today',
+      },
       pagination: {
         nextPageLabel: 'Next page',
         pageLabel: '{openEnd, select, true {Page {pageNumber}} other {Page {pageNumber} of {pagesCount}}}',
