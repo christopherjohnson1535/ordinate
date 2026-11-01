@@ -1,0 +1,76 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lede {
+  max-inline-size: 640px;
+  margin-block: 0;
+  color: var(--ord-color-text-secondary);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.filter {
+  flex: 1 1 240px;
+  max-inline-size: 360px;
+}
+
+.counter,
+.empty {
+  margin-block: 0;
+  color: var(--ord-color-text-secondary);
+}
+
+.list {
+  margin-block: 0;
+  padding-inline: 0;
+  list-style: none;
+  border-block-start: 1px solid var(--ord-color-border-divider);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(8rem, 1.2fr) minmax(6rem, 1fr) 1fr 1fr 4rem;
+  align-items: center;
+  gap: 16px;
+  padding-block: 8px;
+  border-block-end: 1px solid var(--ord-color-border-divider-secondary);
+}
+
+.name {
+  font-weight: 500;
+}
+
+.id {
+  font-family: var(--ord-font-family-mono);
+  color: var(--ord-color-text-secondary);
+}
+
+.cpu {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .id,
+  .row > span:nth-child(4),
+  .row > span:nth-child(5) {
+    display: none;
+  }
+}
