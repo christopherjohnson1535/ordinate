@@ -96,3 +96,55 @@
   justify-content: center;
   margin-block-start: auto;
 }
+
+// Answer tiles, for one question per screen: a large label in the headline voice, the radio button
+// moved to the far corner, and an inverted fill once chosen.
+.answer {
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-l;
+  padding-inline: ord.$space-scaled-l;
+
+  > :first-child {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: ord.$space-m;
+  }
+
+  label {
+    font-family: ord.$font-family-headline;
+    font-size: ord.$font-size-heading-l;
+    font-weight: ord.$font-weight-headline;
+    line-height: ord.$line-height-headline;
+    letter-spacing: ord.$letter-spacing-headline;
+  }
+
+  label + * {
+    margin-block-start: ord.$space-xs;
+    font-size: ord.$font-size-body;
+  }
+
+  &:hover:not(.selected, .disabled, .read-only) {
+    border-color: ord.$color-border-strong;
+  }
+
+  &.selected:not(.read-only, .disabled) {
+    border-color: ord.$color-background-emphasis;
+    box-shadow: none;
+    background-color: ord.$color-background-emphasis;
+
+    &,
+    * {
+      color: ord.$color-text-on-emphasis;
+    }
+
+    // The drawn radio button follows the inversion, so the choice still reads without color.
+    input + * {
+      border-color: ord.$color-text-on-emphasis;
+      background-color: transparent;
+
+      &::after {
+        background-color: ord.$color-text-on-emphasis;
+      }
+    }
+  }
+}

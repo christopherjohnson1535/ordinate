@@ -1,9 +1,10 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useId, useImperativeHandle, useRef } from 'react';
+import React, { useContext, useId, useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
 import { FormFieldContext, useFormFieldContext } from '../internal/context/form-field-context';
+import { QuestionContext } from '../internal/context/question-context';
 import { fireNonCancelableEvent } from '../internal/events';
 import { warnOnce } from '../internal/logging';
 import { RadioButtonProps } from '../radio-button/interfaces';
@@ -32,9 +33,18 @@ function getColumns(columns: number | undefined, count: number): number {
   return columns;
 }
 
+export interface InternalTilesProps extends TilesProps {
+  /**
+   * `answer` draws large tiles with an inverted selected state, for one question per screen on a
+   * website. Not part of the public API: tiles placed in a `Journey` question take it on their own.
+   */
+  variant?: 'default' | 'answer';
+}
+
 export const InternalTiles = React.forwardRef(
   (
     {
+      variant,
       value,
       items = [],
       onChange,
@@ -47,12 +57,18 @@ export const InternalTiles = React.forwardRef(
       ariaLabelledby,
       ariaDescribedby,
       ...rest
-    }: TilesProps,
+    }: InternalTilesProps,
     ref: React.Ref<TilesProps.Ref>
   ) => {
     const generatedName = useId();
     const groupName = name ?? `ord-tiles-${generatedName}`;
     const field = useFormFieldContext({ ariaLabelledby, ariaDescribedby });
+    const question = useContext(QuestionContext);
+    const resolvedVariant = variant ?? (question ? 'answer' : 'default');
+    // A form field or an explicit label names the group first; inside a question, the question does.
+    const named = Boolean(ariaLabel || field.ariaLabelledby);
+    const groupLabelledby = named ? field.ariaLabelledby : question?.questionId;
+    const groupDescribedby = field.ariaDescribedby ?? (named ? undefined : question?.descriptionId);
 
     const buttonRefs = useRef<(RadioButtonProps.Ref | null)[]>([]);
     const focusableIndex = () => {
@@ -83,8 +99,8 @@ export const InternalTiles = React.forwardRef(
         role="radiogroup"
         className={styles.root}
         aria-label={ariaLabel}
-        aria-labelledby={field.ariaLabelledby}
-        aria-describedby={field.ariaDescribedby}
+        aria-labelledby={groupLabelledby}
+        aria-describedby={groupDescribedby}
         aria-required={ariaRequired ? 'true' : undefined}
         aria-controls={ariaControls}
         aria-readonly={readOnly ? 'true' : undefined}
@@ -97,6 +113,7 @@ export const InternalTiles = React.forwardRef(
                 key={item.value}
                 className={clsx(
                   styles.tile,
+                  resolvedVariant === 'answer' && styles.answer,
                   item.value === value && styles.selected,
                   item.disabled && styles.disabled,
                   readOnly && styles['read-only']
