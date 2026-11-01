@@ -16,12 +16,14 @@ import Header from '~components/header';
 import HelpPanel from '~components/help-panel';
 import Input from '~components/input';
 import KeyValuePairs from '~components/key-value-pairs';
+import Measure, { MeasureProps } from '~components/measure';
 import Pagination from '~components/pagination';
 import ProgressBar from '~components/progress-bar';
 import PropertyFilter, { PropertyFilterProps } from '~components/property-filter';
 import SideNavigation, { SideNavigationProps } from '~components/side-navigation';
 import SpaceBetween from '~components/space-between';
 import SplitPanel from '~components/split-panel';
+import Stamp from '~components/stamp';
 import StatusIndicator, { StatusIndicatorProps } from '~components/status-indicator';
 import Table, { TableProps } from '~components/table';
 import Tabs from '~components/tabs';
@@ -60,11 +62,11 @@ const statusTypes: Record<Status, StatusIndicatorProps.Type> = {
   Failed: 'error',
 };
 
-const metrics = [
-  { label: 'Nodes in service', value: '20', note: 'of 32' },
-  { label: 'Requests per minute', value: '4,210', note: 'last 24 h' },
-  { label: 'Slowest 5% of requests', value: '182 ms', note: 'target 200 ms' },
-  { label: 'Uptime', value: '99.98%', note: 'last 30 days' },
+const metrics: MeasureProps[] = [
+  { label: 'Nodes in service', value: 20, max: 32, unit: 'nodes' },
+  { label: 'Requests per minute', value: 4210, description: 'last 24 h' },
+  { label: 'Slowest 5% of requests', value: 182, unit: 'ms', max: 250, limit: 200, limitLabel: 'target 200 ms' },
+  { label: 'Uptime', value: '99.98%', current: 99.98, max: 100, description: 'last 30 days' },
 ];
 
 const columnDefinitions: TableProps.ColumnDefinition<Service>[] = [
@@ -228,13 +230,7 @@ function Overview() {
       <Container>
         <ColumnLayout columns={4} borders="vertical" variant="text-grid">
           {metrics.map(metric => (
-            <div key={metric.label}>
-              <Box variant="key-label">{metric.label}</Box>
-              <Box variant="value-large">{metric.value}</Box>
-              <Box variant="small" display="block" color="text-body-secondary">
-                {metric.note}
-              </Box>
-            </div>
+            <Measure key={String(metric.label)} {...metric} />
           ))}
         </ColumnLayout>
       </Container>
@@ -387,7 +383,7 @@ export default function Console() {
                     </SpaceBetween>
                   }
                 >
-                  North Annex
+                  North Annex <Stamp type="success">Running</Stamp>
                 </Header>
               }
             >
