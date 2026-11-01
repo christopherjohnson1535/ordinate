@@ -1,0 +1,131 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: block;
+}
+
+// Loaded content lays out as if the skeleton were not there.
+.loaded {
+  display: contents;
+}
+
+.loading-text {
+  @include styles.screenreader-only;
+}
+
+.width-full {
+  inline-size: 100%;
+}
+
+.width-large {
+  inline-size: 75%;
+}
+
+.width-medium {
+  inline-size: 50%;
+}
+
+.width-small {
+  inline-size: 25%;
+}
+
+.variant-heading {
+  font-size: ord.$font-size-heading-s;
+}
+
+// A line is as tall as a line of the text it stands for, with the bar centred like the x-height.
+.line {
+  display: flex;
+  align-items: center;
+  block-size: calc(1em * #{ord.$line-height-body});
+}
+
+.variant-heading .line {
+  block-size: calc(1em * #{ord.$line-height-heading});
+}
+
+.bar,
+.block {
+  position: relative;
+  overflow: hidden;
+}
+
+.bar {
+  @include styles.border-radius(ord.$border-radius-inline-code);
+  flex: 1 1 auto;
+  block-size: 0.75em;
+  background-color: ord.$color-background-item-selected;
+}
+
+.line:last-child:not(:first-child) .bar {
+  flex: 0 0 60%;
+}
+
+// An empty frame crossed corner to corner, the drafting mark for an area still to be filled in.
+.block {
+  @include styles.border-radius(ord.$border-radius-container);
+  box-sizing: border-box;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-control-read-only;
+  background-image:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.5px),
+      ord.$color-border-divider calc(50% - 0.5px) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 0.5px),
+      ord.$color-border-divider calc(50% - 0.5px) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    );
+}
+
+.height-small {
+  block-size: ord.$space-xxxl;
+}
+
+.height-medium {
+  block-size: calc(#{ord.$space-xxxl} * 2);
+}
+
+.height-large {
+  block-size: calc(#{ord.$space-xxxl} * 4);
+}
+
+// The shimmer is a band of paper colour sweeping back and forth across the shape. It only exists with
+// motion on, so a still page shows plain shapes. When motion is turned off at runtime the band stops
+// outside the shape, where it is clipped.
+.bar::after,
+.block::after {
+  @include styles.with-motion {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+    background-image: linear-gradient(90deg, transparent, ord.$color-background-container, transparent);
+    opacity: 0.7;
+    transform: translateX(-100%);
+    animation-name: shimmer;
+    animation-duration: ord.$motion-duration-rotation;
+    animation-timing-function: ord.$motion-easing-standard;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
