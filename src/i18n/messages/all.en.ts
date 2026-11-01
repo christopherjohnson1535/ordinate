@@ -197,6 +197,10 @@ const messages: I18nProviderProps.Messages = {
         preferencesConfirm: 'Confirm',
         preferencesCancel: 'Cancel',
       },
+      table: {
+        itemSelectionLabel: 'Select row {rowNumber}',
+        loadingText: 'Loading',
+      },
       'table-body-cell': {
         selectionAriaLabel: 'Select row',
       },

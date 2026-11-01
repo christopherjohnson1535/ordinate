@@ -1,0 +1,79 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  min-inline-size: 0;
+}
+
+.variant-full-page,
+.variant-embedded,
+.variant-borderless {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  color: ord.$color-text-body;
+}
+
+.header-area {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-s;
+}
+
+.header-area-outside {
+  padding-block-end: ord.$space-s;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-s;
+}
+
+.tools-filter {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.tools-end {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  margin-inline-start: auto;
+}
+
+// A short rule sets the preferences apart from the pagination, as in a title block.
+.tools-pagination + .tools-preferences {
+  padding-inline-start: ord.$space-s;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+.footer-outside {
+  padding-block: ord.$space-s;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.footer-slot,
+.header-slot {
+  min-inline-size: 0;
+}
+
+.loading,
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ord.$space-xs;
+  white-space: normal;
+}
