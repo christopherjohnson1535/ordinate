@@ -120,6 +120,7 @@ export const colorsTokenNames = [
   'colorTextStatusWarningOnInk',
   'colorTextStatusInfoOnInk',
   'colorTextStatusErrorOnInk',
+  'colorTextOrdinal',
 ] as const;
 
 export const bordersTokenNames = [

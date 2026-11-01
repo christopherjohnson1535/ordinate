@@ -36,14 +36,14 @@
   text-transform: uppercase;
 }
 
-// Large ordinals are a quiet decoration. The disabled text color still passes 3:1 at these sizes,
-// which is what large text needs.
+// Large ordinals are a quiet decoration. Their color passes 3:1 in both modes, which is what large
+// text needs.
 @mixin ordinal {
   font-family: ord.$font-family-headline;
   font-weight: ord.$font-weight-light;
   line-height: ord.$line-height-headline;
   font-variant-numeric: lining-nums tabular-nums;
-  color: ord.$color-text-disabled;
+  color: ord.$color-text-ordinal;
 }
 
 // Links inside a byline or caption keep the color of the text around them and show an underline.

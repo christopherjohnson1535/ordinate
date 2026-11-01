@@ -85,4 +85,6 @@ export const tokens: ColorsDictionary = {
   colorTextStatusWarningOnInk: { light: '{colorOchre400}', dark: '{colorOchre600}' },
   colorTextStatusInfoOnInk: { light: '{colorCyan400}', dark: '{colorBlue600}' },
   colorTextStatusErrorOnInk: { light: '{colorRed300}', dark: '{colorRed600}' },
+  // Large decorative numbers, such as the ordinal on a story card. Quiet, but at least 3:1 in both modes.
+  colorTextOrdinal: { light: '{colorGrey500}', dark: '{colorGrey500}' },
 };
