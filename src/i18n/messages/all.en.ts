@@ -56,6 +56,14 @@ const messages: I18nProviderProps.Messages = {
       modal: {
         closeAriaLabel: 'Close',
       },
+      multiselect: {
+        deselectAriaLabel: 'Remove {label}',
+        errorIconAriaLabel: 'Error',
+        selectAllText: 'Select all',
+        selectedCountText: '{count, plural, one {# option selected} other {# options selected}}',
+        tokenLimitShowFewer: 'Show fewer',
+        tokenLimitShowMore: 'Show {count} more',
+      },
       pagination: {
         nextPageLabel: 'Next page',
         pageLabel: '{openEnd, select, true {Page {pageNumber}} other {Page {pageNumber} of {pagesCount}}}',

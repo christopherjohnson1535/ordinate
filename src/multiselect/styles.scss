@@ -1,0 +1,18 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+}
+
+.dropdown {
+  inline-size: 100%;
+}
+
+.tokens {
+  margin-block-start: ord.$space-xs;
+}
