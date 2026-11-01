@@ -1,0 +1,135 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+.position-bottom {
+  inline-size: 100%;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-strong;
+}
+
+.position-side {
+  block-size: 100%;
+  max-inline-size: 100%;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-strong;
+}
+
+// At the bottom there is room for the actions beside the title; at the side they go below it,
+// so the title keeps the width it needs.
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: 'main actions buttons';
+  align-items: start;
+  gap: ord.$space-xs ord.$space-s;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-l ord.$space-scaled-xs;
+}
+
+.position-side > .header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'main buttons'
+    'actions actions';
+}
+
+.open > .header {
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+}
+
+.header-main {
+  grid-area: main;
+  min-inline-size: 0;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: ord.$space-xs;
+  min-block-size: ord.$size-control-height;
+}
+
+.heading {
+  @include styles.font-heading;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: ord.$font-size-heading-s;
+  overflow-wrap: anywhere;
+}
+
+.info {
+  @include styles.font-label;
+}
+
+.description {
+  padding-block-end: ord.$space-xxs;
+  color: ord.$color-text-secondary;
+  font-size: ord.$font-size-description;
+}
+
+.actions,
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-block-size: ord.$size-control-height;
+}
+
+.actions {
+  grid-area: actions;
+  flex-wrap: wrap;
+}
+
+.position-side > .header > .actions {
+  padding-block-end: ord.$space-xxs;
+}
+
+.header-buttons {
+  grid-area: buttons;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
+  overflow: auto;
+}
+
+// Shown in place of a closed side panel: a strip with one button to open it again.
+.side-rail {
+  align-items: center;
+  block-size: 100%;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-xs;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+  background-color: ord.$color-background-layout-main;
+}
+
+.preferences-button,
+.close-button,
+.collapsed {
+  flex-shrink: 0;
+}
