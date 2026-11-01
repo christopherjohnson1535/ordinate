@@ -4,6 +4,7 @@
 */
 
 @use '../../styles' as styles;
+@use '../../styles/layers';
 @use '../../styles/tokens' as ord;
 
 .root {
@@ -16,7 +17,7 @@
   position: absolute;
   inset-block-start: 100%;
   inset-inline-start: 0;
-  z-index: 1000;
+  z-index: layers.$overlay;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;

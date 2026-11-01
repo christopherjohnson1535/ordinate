@@ -4,6 +4,7 @@
 */
 
 @use '../../styles' as styles;
+@use '../../styles/layers';
 @use '../../styles/tokens' as ord;
 
 // The arrow is a triangle cut from a box. Its inner copy is inset by the border width
@@ -15,7 +16,7 @@ $inset: calc(#{ord.$border-width-default} * 1.414);
 .panel {
   @include styles.border-radius(ord.$border-radius-dropdown);
   position: fixed;
-  z-index: 1000;
+  z-index: layers.$overlay;
   display: block;
   box-sizing: border-box;
   border-width: ord.$border-width-default;

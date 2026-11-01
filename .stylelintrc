@@ -29,7 +29,8 @@
           "/^(padding|margin)(-[a-z]+)*$/": ["/^(ord\\.\\$[a-z0-9-]+|0|auto)( (ord\\.\\$[a-z0-9-]+|0|auto))*$/"],
           "/^(gap|row-gap|column-gap)$/": ["/^ord\\.\\$/"],
           "/^letter-spacing$/": ["/^ord\\.\\$/", "normal", "inherit"],
-          "/^opacity$/": ["/^ord\\.\\$/", "0", "1"]
+          "/^opacity$/": ["/^ord\\.\\$/", "0", "1"],
+          "/^z-index$/": ["/^[a-z-]+\\.\\$/", "0", "1", "-1", "auto"]
         }
       }
     }

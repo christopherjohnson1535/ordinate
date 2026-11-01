@@ -5,6 +5,10 @@
 // because the components' own Sass is not part of their published surface.
 @use '@ordinate/design-tokens' as ord;
 
+// Matches `$overlay` in the components' src/internal/styles/layers.scss: floating panels sit above
+// everything on the page.
+$z-index-overlay: 1000;
+
 @mixin font-body {
   font-family: ord.$font-family-base;
   font-size: ord.$font-size-body;

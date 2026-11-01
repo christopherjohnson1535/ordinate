@@ -4,11 +4,12 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/breakpoints';
 @use '../internal/styles/site' as site;
 @use '../internal/styles/tokens' as ord;
 
 // Matches the `xs` layout breakpoint: below it the brand and the columns stack.
-$side-by-side-min-width: 688px;
+$side-by-side-min-width: breakpoints.$xs;
 
 .root {
   min-inline-size: 0;

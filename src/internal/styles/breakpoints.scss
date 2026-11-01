@@ -1,0 +1,23 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The layout breakpoints for container queries. Custom properties cannot appear in a query
+// condition, so these are Sass values. `breakpointMinWidths` in src/internal/breakpoints.ts holds
+// the same widths for script, and src/internal/__tests__/breakpoints.test.ts keeps the two equal.
+$xxs: 465px;
+$xs: 688px;
+$s: 912px;
+$m: 1120px;
+$l: 1280px;
+$xl: 1840px;
+
+$all: (
+  xxs: $xxs,
+  xs: $xs,
+  s: $s,
+  m: $m,
+  l: $l,
+  xl: $xl,
+);

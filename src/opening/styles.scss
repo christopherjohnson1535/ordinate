@@ -4,11 +4,12 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/breakpoints';
 @use '../internal/styles/site' as site;
 @use '../internal/styles/tokens' as ord;
 
 // Matches the `xs` layout breakpoint: below it the media moves under the text.
-$two-column-min-width: 688px;
+$two-column-min-width: breakpoints.$xs;
 
 .root {
   min-inline-size: 0;

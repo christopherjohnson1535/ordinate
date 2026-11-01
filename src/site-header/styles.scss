@@ -4,12 +4,14 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/breakpoints';
+@use '../internal/styles/layers';
 @use '../internal/styles/tokens' as ord;
 
 // Matches the `xs` layout breakpoint: below it the links fold into the menu.
-$inline-links-min-width: 688px;
+$inline-links-min-width: breakpoints.$xs;
 // Matches the `xxs` layout breakpoint: below it the menu button shows only its icon.
-$menu-text-min-width: 465px;
+$menu-text-min-width: breakpoints.$xxs;
 
 .root {
   display: block;
@@ -19,7 +21,7 @@ $menu-text-min-width: 465px;
 .sticky {
   position: sticky;
   inset-block-start: 0;
-  z-index: 10;
+  z-index: layers.$site-header;
 }
 
 .notice {
@@ -158,7 +160,7 @@ $menu-text-min-width: 465px;
     inset-block-start: 100%;
     inset-inline: 0;
     // Above any sticky header further down the page, which shares the root stacking context.
-    z-index: 11;
+    z-index: layers.$site-header-menu;
     display: flex;
     flex-direction: column;
     align-items: stretch;

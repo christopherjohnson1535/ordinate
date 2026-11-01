@@ -1,0 +1,21 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Stacking order for elements that must clear other components, lowest first. A component that
+// only lifts one of its own parts over a sibling uses `z-index: 1` locally instead.
+
+// App layout: sticky notifications and the bottom split panel, then the toolbar, then the panels
+// that cover the content on narrow screens.
+$app-layout-sticky: 2;
+$app-layout-toolbar: 3;
+$app-layout-overlay: 4;
+
+// A sticky site header, and its open menu, which hangs over any sticky header further down.
+$site-header: 10;
+$site-header-menu: 11;
+
+// Dropdowns, floating panels and tooltips sit above everything on the page. The charts package
+// repeats this value in charts/src/internal/styles/index.scss.
+$overlay: 1000;

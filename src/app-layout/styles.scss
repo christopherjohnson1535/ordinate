@@ -5,6 +5,7 @@
 
 @use '../internal/styles' as styles;
 @use '../internal/styles/drawing';
+@use '../internal/styles/layers';
 @use '../internal/styles/tokens' as ord;
 
 // The offsets come from the component as custom properties: the height of a fixed header
@@ -38,7 +39,7 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
   grid-area: toolbar;
   position: sticky;
   inset-block-start: $header-offset;
-  z-index: 3;
+  z-index: layers.$app-layout-toolbar;
 }
 
 // The side columns stay in view while the page scrolls, each scrolling on its own.
@@ -116,7 +117,7 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
 .sticky-notifications {
   position: sticky;
   inset-block-start: $panel-top;
-  z-index: 2;
+  z-index: layers.$app-layout-sticky;
 }
 
 .notifications-top.sticky-notifications {
@@ -218,7 +219,7 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
   grid-area: split-bottom;
   position: sticky;
   inset-block-end: $footer-offset;
-  z-index: 2;
+  z-index: layers.$app-layout-sticky;
   display: flex;
   min-inline-size: 0;
 }
@@ -293,7 +294,7 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
     position: fixed;
     inset-block: $header-offset $footer-offset;
     inset-inline: 0;
-    z-index: 4;
+    z-index: layers.$app-layout-overlay;
     block-size: auto;
     inline-size: auto;
     border-inline-start-width: 0;

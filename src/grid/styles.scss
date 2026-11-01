@@ -3,17 +3,8 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
+@use '../internal/styles/breakpoints';
 @use '../internal/styles/tokens' as ord;
-
-// Keep in step with `breakpointMinWidths` in src/internal/breakpoints.ts.
-$breakpoints: (
-  xxs: 465px,
-  xs: 688px,
-  s: 912px,
-  m: 1120px,
-  l: 1280px,
-  xl: 1840px,
-);
 
 // The root is the container the columns measure, so a grid in a narrow panel lays out as it would
 // on a narrow screen.
@@ -42,7 +33,7 @@ $breakpoints: (
 // breakpoint falls back through the smaller ones.
 $column: var(--grid-column-default);
 $row: var(--grid-row-default);
-@each $name, $width in $breakpoints {
+@each $name, $width in breakpoints.$all {
   $column: var(--grid-column-#{$name}, #{$column});
   $row: var(--grid-row-#{$name}, #{$row});
 

@@ -1,11 +1,13 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
+import { breakpointMinWidths } from '../internal/breakpoints';
 import { AppLayoutProps } from './interfaces';
 
 /**
- * Below this width the side panels cover the content instead of sitting beside it.
+ * Below this width the side panels cover the content instead of sitting beside it. It is the `xs`
+ * layout breakpoint.
  */
-export const mobileBreakpoint = 688;
+export const mobileBreakpoint = breakpointMinWidths.xs;
 
 export const defaultNavigationWidth = 280;
 export const defaultToolsWidth = 290;

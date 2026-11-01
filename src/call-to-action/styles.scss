@@ -3,11 +3,12 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
+@use '../internal/styles/breakpoints';
 @use '../internal/styles/site' as site;
 @use '../internal/styles/tokens' as ord;
 
 // Matches the `xs` layout breakpoint: below it the actions move under the text.
-$side-by-side-min-width: 688px;
+$side-by-side-min-width: breakpoints.$xs;
 
 .root {
   min-inline-size: 0;

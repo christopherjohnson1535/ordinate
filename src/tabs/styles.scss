@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/layers';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -214,7 +215,7 @@
 // Positioned against the tab from script, in physical coordinates measured on screen.
 .tooltip {
   position: absolute;
-  z-index: 1000;
+  z-index: layers.$overlay;
   box-sizing: border-box;
   max-inline-size: calc(100% - #{ord.$space-m});
   margin-block-start: ord.$space-xxs;
