@@ -1,0 +1,97 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+.label {
+  @include styles.font-label;
+  overflow-wrap: break-word;
+}
+
+.description,
+.additional-info {
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+  overflow-wrap: break-word;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+}
+
+// The track is ruled at every tenth like a scale bar on a drawing; the fill covers the ticks it has passed.
+.track {
+  @include styles.border-radius(ord.$border-radius-badge);
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  block-size: ord.$space-s;
+  overflow: hidden;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0 calc(10% - 1px),
+    ord.$color-border-divider calc(10% - 1px) 10%
+  );
+}
+
+.fill {
+  block-size: 100%;
+  max-inline-size: 100%;
+  background-color: ord.$color-border-accent;
+
+  @include styles.with-motion {
+    transition-property: inline-size;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.percentage {
+  @include styles.font-code;
+  flex-shrink: 0;
+  min-inline-size: 4ch;
+  font-variant-numeric: tabular-nums;
+  color: ord.$color-text-body-secondary;
+  text-align: end;
+}
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs ord.$space-s;
+}
+
+.result-text {
+  overflow-wrap: break-word;
+}
+
+.result-button {
+  flex-shrink: 0;
+}
+
+// Drawn with the spacing of a key and its value in KeyValuePairs.
+.variant-key-value {
+  gap: ord.$space-xxxs;
+}
+
+.variant-flash .label {
+  font-weight: ord.$font-weight-heading;
+}
