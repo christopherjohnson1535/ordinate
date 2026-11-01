@@ -2,7 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
-import { applyDensity, applyMode, applyRevision, Density, disableMotion, Mode, Revision } from '../index';
+import {
+  applyDensity,
+  applyMode,
+  applyRevision,
+  applyStyle,
+  Density,
+  disableMotion,
+  Mode,
+  Revision,
+  Style,
+} from '../index';
 
 afterEach(() => {
   document.body.className = '';
@@ -83,5 +93,33 @@ describe('applyDensity', () => {
     applyDensity('roomy' as Density);
     expect(warn).toHaveBeenCalledOnce();
     expect(document.body.className).toBe('');
+  });
+});
+
+describe('applyStyle', () => {
+  test('keeps one style class, and console removes it', () => {
+    applyStyle(Style.Editorial);
+    expect(document.body.className).toBe('ord-style-editorial');
+    applyStyle(Style.Shopfront);
+    expect(document.body.className).toBe('ord-style-shopfront');
+    applyStyle(Style.Console);
+    expect(document.body.className).toBe('');
+  });
+
+  test('can scope a style to a subtree and leaves other classes alone', () => {
+    const section = document.createElement('section');
+    section.className = 'hero';
+    applyStyle(Style.Studio, section);
+    expect(section.className).toBe('hero ord-style-studio');
+    applyStyle(null, section);
+    expect(section.className).toBe('hero');
+  });
+
+  test('warns about an unsupported style and changes nothing', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    applyStyle(Style.Studio);
+    applyStyle('baroque' as Style);
+    expect(warn).toHaveBeenCalledOnce();
+    expect(document.body.className).toBe('ord-style-studio');
   });
 });

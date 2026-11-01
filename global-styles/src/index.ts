@@ -12,6 +12,18 @@ export enum Density {
   Compact = 'compact',
 }
 
+/**
+ * The voice of a page. `console` is the default for applications; the others are for websites.
+ */
+export enum Style {
+  Console = 'console',
+  Editorial = 'editorial',
+  Studio = 'studio',
+  Shopfront = 'shopfront',
+}
+
+const styleClassPrefix = 'ord-style-';
+
 // Keep in sync with the revisions exported from style-dictionary/index.ts.
 export enum Revision {
   V2026_1 = '2026.1',
@@ -72,6 +84,26 @@ export function applyDensity(density: Density | null, target: Element = document
     return;
   }
   target.classList.toggle('ord-compact-mode', density === Density.Compact);
+}
+
+/**
+ * Sets the style of every component inside `target`: `console` for applications, or
+ * `editorial`, `studio` or `shopfront` for websites. A style sits on top of the pinned
+ * revision. Passing `null` or `console` returns to the default.
+ */
+export function applyStyle(style: Style | null, target: Element = document.body): void {
+  if (style && !isSupported(Style, style)) {
+    console.warn(`[ordinate] Style "${style}" is not supported.`);
+    return;
+  }
+  for (const className of Array.from(target.classList)) {
+    if (className.startsWith(styleClassPrefix)) {
+      target.classList.remove(className);
+    }
+  }
+  if (style && style !== Style.Console) {
+    target.classList.add(`${styleClassPrefix}${style}`);
+  }
 }
 
 /**

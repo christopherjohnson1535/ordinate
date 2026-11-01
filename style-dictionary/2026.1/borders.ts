@@ -20,4 +20,6 @@ export const tokens: BordersDictionary = {
   borderRadiusToggle: '0px',
   borderRadiusRadio: '50%',
   borderRadiusInlineCode: '0px',
+  borderRadiusSection: '{borderRadiusContainer}',
+  borderRadiusAction: '{borderRadiusButton}',
 };

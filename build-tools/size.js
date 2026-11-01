@@ -4,6 +4,10 @@
 // Bundles each component the way an application would import it, measures the result and
 // compares it with the budgets in size-limits.json. Run `npm run build` first.
 //
+// Every component carries the shared token stylesheet (revisions, density and styles). It is
+// measured once, as its own row, and left out of each component's size, so adding a token
+// changes one budget instead of all of them.
+//
 //   npm run size              check every component against its budget
 //   npm run size -- --update  rewrite the budgets as the current size plus headroom
 const fs = require('node:fs');
@@ -15,6 +19,8 @@ const { rootDir } = require('./utils');
 const componentsDir = path.join(rootDir, 'lib', 'components');
 const limitsFile = path.join(rootDir, 'size-limits.json');
 const notEntries = new Set(['internal', 'test-utils']);
+const sharedEntry = path.join(componentsDir, 'internal', 'base-component', 'index.js');
+const sharedName = '(shared tokens)';
 const headroom = 1.15;
 const roundTo = 100;
 
@@ -31,9 +37,9 @@ function listEntries() {
 }
 
 // JavaScript and CSS both reach the user, so a component's size is the sum of the two outputs.
-async function measure(name) {
+async function measureEntry(entryPoint) {
   const result = await esbuild.build({
-    entryPoints: [path.join(componentsDir, name, 'index.js')],
+    entryPoints: [entryPoint],
     bundle: true,
     minify: true,
     write: false,
@@ -51,6 +57,12 @@ async function measure(name) {
     }),
     { minified: 0, gzip: 0 }
   );
+}
+
+const measure = name => measureEntry(path.join(componentsDir, name, 'index.js'));
+
+function withoutShared(size, shared) {
+  return { minified: Math.max(size.minified - shared.minified, 0), gzip: Math.max(size.gzip - shared.gzip, 0) };
 }
 
 function budgetFor(size) {
@@ -96,8 +108,10 @@ function printTable(rows) {
 
 async function main() {
   const update = process.argv.includes('--update');
-  const names = listEntries();
-  const sizes = await Promise.all(names.map(measure));
+  const components = listEntries();
+  const shared = await measureEntry(sharedEntry);
+  const names = [sharedName, ...components];
+  const sizes = [shared, ...(await Promise.all(components.map(measure))).map(size => withoutShared(size, shared))];
 
   if (update) {
     const limits = Object.fromEntries(

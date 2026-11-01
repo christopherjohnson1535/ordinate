@@ -27,4 +27,16 @@ export const tokens: TypographyDictionary = {
   fontWeightBold: '600',
   fontWeightHeavy: '700',
   fontSizeDisplayL: '32px',
+  fontFamilySerif: "'IBM Plex Serif', Georgia, serif",
+  fontFamilyCondensed: "'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif",
+  // Headlines on website layouts: openings, section titles, story and plate titles.
+  fontFamilyHeadline: '{fontFamilyDisplay}',
+  fontWeightHeadline: '{fontWeightHeading}',
+  fontSizeHeadlineS: '24px',
+  fontSizeHeadlineM: '36px',
+  fontSizeHeadlineL: '56px',
+  fontSizeHeadlineXl: 'clamp(48px, 7vw, 96px)',
+  lineHeightHeadline: '1.05',
+  letterSpacingHeadline: '-0.02em',
+  fontSizeLead: '20px',
 };

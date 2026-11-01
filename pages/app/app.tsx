@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { applyTheme } from '~components/theming';
-import { applyDensity, applyMode, applyRevision, Density, Mode, Revision } from '~global-styles';
+import { applyDensity, applyMode, applyRevision, applyStyle, Density, Mode, Revision, Style } from '~global-styles';
 
 import styles from './styles.module.scss';
 
@@ -105,12 +105,14 @@ export default function App() {
   const [mode, setMode] = useState<Mode>(Mode.Light);
   const [revision, setRevision] = useState<Revision>(Revision.V2026_1);
   const [density, setDensity] = useState<Density>(Density.Comfortable);
+  const [style, setStyle] = useState<Style>(Style.Console);
   const [direction, setDirection] = useState<Direction>('ltr');
   const [theme, setTheme] = useState<ThemeChoice>('none');
 
   useEffect(() => applyMode(mode), [mode]);
   useEffect(() => applyRevision(revision), [revision]);
   useEffect(() => applyDensity(density), [density]);
+  useEffect(() => applyStyle(style), [style]);
   useEffect(() => {
     document.documentElement.dir = direction;
   }, [direction]);
@@ -147,6 +149,7 @@ export default function App() {
         <span className={styles.crumb}>{current ? current.path : 'Choose a page'}</span>
         <Segmented label="Mode" options={Object.values(Mode)} value={mode} onChange={setMode} />
         <Segmented label="Revision" options={Object.values(Revision)} value={revision} onChange={setRevision} />
+        <Choice label="Style" options={Object.values(Style)} value={style} onChange={setStyle} />
         <Choice label="Density" options={Object.values(Density)} value={density} onChange={setDensity} />
         <Choice label="Direction" options={['ltr', 'rtl'] as const} value={direction} onChange={setDirection} />
         <Choice label="Theme" options={['none', 'brand'] as const} value={theme} onChange={setTheme} />

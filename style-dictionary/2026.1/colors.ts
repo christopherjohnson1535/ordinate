@@ -64,4 +64,13 @@ export const tokens: ColorsDictionary = {
   colorChartsCategorical6: { light: '#8A7A12', dark: '#A8922A' },
   colorChartsCategorical7: { light: '#A33A82', dark: '#CF6BAE' },
   colorChartsCategorical8: { light: '#3F8A3A', dark: '#5CA558' },
+  // Website bands and emphasis. The console style keeps them quiet; site styles change them.
+  colorBackgroundBandAccent: { light: '{colorGrey100}', dark: '{colorChalk800}' },
+  colorBackgroundBandInverted: { light: '{colorGrey900}', dark: '{colorTerminalDark}' },
+  colorTextBandInverted: { light: '{colorWhite}', dark: '{colorChalk100}' },
+  colorTextBandInvertedSecondary: { light: '{colorGrey250}', dark: '{colorChalk300}' },
+  colorBackgroundEmphasis: { light: '{colorGrey900}', dark: '{colorChalk100}' },
+  colorTextOnEmphasis: { light: '{colorWhite}', dark: '{colorChalk900}' },
+  colorBackgroundMarker: { light: '{colorGrey900}', dark: '{colorChalk100}' },
+  colorTextOnMarker: { light: '{colorWhite}', dark: '{colorChalk900}' },
 };

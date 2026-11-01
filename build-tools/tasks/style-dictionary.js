@@ -54,7 +54,7 @@ function renderDensity(revisions, resolveTokens) {
   return `${selectors.join(',\n')} {\n${lines.join('\n')}\n}\n`;
 }
 
-function renderRevisions(revisions, resolveTokens) {
+function renderRevisions(revisions, resolveTokens, styles, allTokenNames) {
   const [defaultRevision] = revisions;
   const blocks = revisions.map(revision => {
     const selectors = [`:global(.${revisionClassName(revision.id)})`];
@@ -70,7 +70,40 @@ function renderRevisions(revisions, resolveTokens) {
     ':global(.ord-system-mode) {\n  color-scheme: light dark;\n}\n',
     ...blocks,
     renderDensity(revisions, resolveTokens),
+    renderStyles(styles, revisions, allTokenNames),
   ].join('\n');
+}
+
+const referencePattern = /^\{([a-zA-Z0-9]+)\}$/;
+
+// Style values stay live: a reference becomes the referenced variable, so a style follows
+// whichever revision and mode it sits in.
+function styleValue(value) {
+  const live = part => {
+    const match = referencePattern.exec(part);
+    return match ? `var(${cssVariable(match[1])})` : part;
+  };
+  return typeof value === 'string' ? live(value) : `light-dark(${live(value.light)}, ${live(value.dark)})`;
+}
+
+function renderStyles(styles, revisions, allTokenNames) {
+  const known = new Set(allTokenNames);
+  const revisionSelectors = revisions.map(revision => `.${revisionClassName(revision.id)}`).join(', ');
+  return styles
+    .map(style => {
+      const lines = Object.entries(style.overrides).map(([name, value]) => {
+        if (!known.has(name)) {
+          throw new Error(`Style "${style.id}" overrides unknown token "${name}".`);
+        }
+        return `  ${cssVariable(name)}: ${styleValue(value)};`;
+      });
+      // The second selector reaches revision subtrees inside a styled area, which would
+      // otherwise reset the tokens to the revision's values.
+      const className = `ord-style-${style.id}`;
+      const selectors = [`:global(.${className})`, `:global(.${className} :is(${revisionSelectors}))`];
+      return `${selectors.join(',\n')} {\n${lines.join('\n')}\n}\n`;
+    })
+    .join('\n');
 }
 
 function renderTheming(revisions, themeableTokenNames) {
@@ -99,10 +132,13 @@ module.exports = task('style-dictionary', async () => {
       delete require.cache[cached];
     }
   }
-  const { revisions, resolveTokens, allTokenNames, themeableTokenNames } = require(entry);
+  const { revisions, styles, resolveTokens, allTokenNames, themeableTokenNames } = require(entry);
 
   await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(path.join(outputDir, 'revisions.scss'), renderRevisions(revisions, resolveTokens));
+  await fs.writeFile(
+    path.join(outputDir, 'revisions.scss'),
+    renderRevisions(revisions, resolveTokens, styles, allTokenNames)
+  );
   await fs.writeFile(path.join(outputDir, 'tokens.scss'), renderTokens(allTokenNames));
   await fs.mkdir(themingDir, { recursive: true });
   await fs.writeFile(path.join(themingDir, 'index.ts'), renderTheming(revisions, themeableTokenNames));

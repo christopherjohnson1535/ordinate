@@ -33,7 +33,11 @@ export function SaveBar() {
 }
 ```
 
-`applyRevision`, `applyMode` and `applyDensity` take an optional element, so a single page or section can try a newer revision before the whole application moves to it.
+### Applications and websites
+
+The same components build a console or a website. `applyStyle(Style.Editorial)` (or `Studio`, or `Shopfront`) gives every component the voice of a journal, a studio portfolio or a local shop, while `Style.Console`, the default, keeps the application look. See [Theming, styles, revisions and density](docs/THEMING.md).
+
+`applyRevision`, `applyMode`, `applyStyle` and `applyDensity` take an optional element, so a single page or section can try a newer revision before the whole application moves to it.
 
 ### Brand theme
 

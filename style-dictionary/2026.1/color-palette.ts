@@ -38,4 +38,10 @@ export const tokens: ColorPaletteDictionary = {
   colorOchre400: '#E3B55B',
   colorTerminal: '#17181A',
   colorTerminalDark: '#0F1011',
+  // Site styles: the shopfront style's cobalt and sunflower.
+  colorCobalt600: '#1A35C4',
+  colorCobalt700: '#132894',
+  colorCobalt300: '#8FA2FF',
+  colorSunflower400: '#F5C542',
+  colorSunflower100: '#FDF1C6',
 };

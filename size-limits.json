@@ -1,398 +1,402 @@
 {
+  "(shared tokens)": {
+    "minified": 27100,
+    "gzip": 3500
+  },
   "action-card": {
-    "minified": 61200,
-    "gzip": 10800
+    "minified": 43100,
+    "gzip": 8400
   },
   "alert": {
-    "minified": 84900,
-    "gzip": 17800
+    "minified": 69900,
+    "gzip": 16400
   },
   "anchor-navigation": {
-    "minified": 24600,
-    "gzip": 4800
+    "minified": 6300,
+    "gzip": 2400
   },
   "annotation-context": {
-    "minified": 1900,
-    "gzip": 900
+    "minified": 0,
+    "gzip": 0
   },
   "app-layout": {
-    "minified": 123100,
-    "gzip": 27800
-  },
-  "app-layout-toolbar": {
-    "minified": 97700,
-    "gzip": 21500
-  },
-  "attribute-editor": {
-    "minified": 99600,
-    "gzip": 22100
-  },
-  "autosuggest": {
-    "minified": 116800,
-    "gzip": 25400
-  },
-  "badge": {
-    "minified": 21600,
-    "gzip": 3400
-  },
-  "box": {
-    "minified": 50000,
-    "gzip": 8500
-  },
-  "breadcrumb-group": {
-    "minified": 87700,
-    "gzip": 18800
-  },
-  "button": {
-    "minified": 80900,
-    "gzip": 16800
-  },
-  "button-dropdown": {
-    "minified": 105300,
-    "gzip": 23500
-  },
-  "button-group": {
-    "minified": 126400,
-    "gzip": 28800
-  },
-  "calendar": {
-    "minified": 100600,
-    "gzip": 22100
-  },
-  "cards": {
-    "minified": 107300,
-    "gzip": 22500
-  },
-  "checkbox": {
-    "minified": 63600,
-    "gzip": 11400
-  },
-  "code-editor": {
-    "minified": 923000,
-    "gzip": 306100
-  },
-  "collection-preferences": {
-    "minified": 127600,
-    "gzip": 27200
-  },
-  "column-layout": {
-    "minified": 25400,
-    "gzip": 4500
-  },
-  "container": {
-    "minified": 22900,
-    "gzip": 3600
-  },
-  "content-layout": {
-    "minified": 23200,
-    "gzip": 3800
-  },
-  "control-group": {
-    "minified": 21900,
-    "gzip": 3400
-  },
-  "copy-to-clipboard": {
-    "minified": 98600,
-    "gzip": 21600
-  },
-  "date-input": {
-    "minified": 94800,
-    "gzip": 20800
-  },
-  "date-picker": {
-    "minified": 126400,
-    "gzip": 28900
-  },
-  "date-range-picker": {
-    "minified": 194900,
-    "gzip": 44000
-  },
-  "dialog": {
-    "minified": 85300,
-    "gzip": 17900
-  },
-  "divider": {
-    "minified": 21300,
-    "gzip": 3500
-  },
-  "drawer": {
-    "minified": 40100,
-    "gzip": 9400
-  },
-  "dropdown": {
-    "minified": 27800,
-    "gzip": 5400
-  },
-  "error-boundary": {
-    "minified": 92200,
-    "gzip": 19700
-  },
-  "expandable-section": {
-    "minified": 68600,
-    "gzip": 12000
-  },
-  "file-dropzone": {
-    "minified": 22700,
-    "gzip": 3900
-  },
-  "file-input": {
-    "minified": 84200,
-    "gzip": 17900
-  },
-  "file-token-group": {
-    "minified": 114000,
-    "gzip": 25200
-  },
-  "file-upload": {
-    "minified": 126000,
-    "gzip": 28000
-  },
-  "flashbar": {
-    "minified": 97100,
-    "gzip": 20600
-  },
-  "form": {
-    "minified": 58400,
-    "gzip": 10000
-  },
-  "form-field": {
-    "minified": 77100,
-    "gzip": 15800
-  },
-  "grid": {
-    "minified": 23400,
-    "gzip": 4000
-  },
-  "header": {
-    "minified": 22200,
-    "gzip": 3600
-  },
-  "help-panel": {
-    "minified": 45900,
-    "gzip": 10000
-  },
-  "hotspot": {
-    "minified": 106800,
-    "gzip": 23500
-  },
-  "i18n": {
-    "minified": 700,
-    "gzip": 400
-  },
-  "icon": {
-    "minified": 55300,
-    "gzip": 9100
-  },
-  "icon-provider": {
-    "minified": 400,
-    "gzip": 300
-  },
-  "input": {
-    "minified": 89000,
-    "gzip": 18600
-  },
-  "item-card": {
-    "minified": 25600,
-    "gzip": 4300
-  },
-  "key-value-pairs": {
-    "minified": 23300,
-    "gzip": 3900
-  },
-  "link": {
-    "minified": 77000,
-    "gzip": 15900
-  },
-  "list": {
-    "minified": 83900,
-    "gzip": 17900
-  },
-  "live-region": {
-    "minified": 20600,
-    "gzip": 3400
-  },
-  "modal": {
-    "minified": 86500,
-    "gzip": 18200
-  },
-  "multiselect": {
-    "minified": 144900,
-    "gzip": 32500
-  },
-  "navigable-group": {
-    "minified": 22100,
-    "gzip": 4200
-  },
-  "pagination": {
-    "minified": 77100,
-    "gzip": 15900
-  },
-  "panel-layout": {
-    "minified": 43000,
-    "gzip": 10300
-  },
-  "popover": {
-    "minified": 96400,
-    "gzip": 21200
-  },
-  "progress-bar": {
-    "minified": 93200,
-    "gzip": 19900
-  },
-  "prompt-input": {
-    "minified": 90800,
-    "gzip": 19200
-  },
-  "property-filter": {
-    "minified": 179500,
-    "gzip": 40000
-  },
-  "radio-button": {
-    "minified": 27000,
-    "gzip": 4800
-  },
-  "radio-group": {
-    "minified": 28700,
-    "gzip": 5400
-  },
-  "segmented-control": {
-    "minified": 61600,
-    "gzip": 11200
-  },
-  "select": {
-    "minified": 119200,
-    "gzip": 26100
-  },
-  "side-navigation": {
-    "minified": 84100,
-    "gzip": 17300
-  },
-  "skeleton": {
-    "minified": 40100,
-    "gzip": 9300
-  },
-  "slider": {
-    "minified": 33200,
-    "gzip": 5900
-  },
-  "space-between": {
-    "minified": 21400,
-    "gzip": 3500
-  },
-  "spinner": {
-    "minified": 21100,
-    "gzip": 3500
-  },
-  "split-panel": {
-    "minified": 131400,
-    "gzip": 28900
-  },
-  "status-indicator": {
-    "minified": 61100,
-    "gzip": 10500
-  },
-  "steps": {
-    "minified": 68100,
-    "gzip": 12200
-  },
-  "table": {
-    "minified": 125300,
-    "gzip": 28100
-  },
-  "table-body": {
-    "minified": 19400,
-    "gzip": 2900
-  },
-  "table-body-cell": {
-    "minified": 87800,
-    "gzip": 18200
-  },
-  "table-head": {
-    "minified": 19400,
-    "gzip": 2900
-  },
-  "table-header-cell": {
-    "minified": 94200,
-    "gzip": 19800
-  },
-  "table-root": {
-    "minified": 23200,
-    "gzip": 4300
-  },
-  "table-row": {
-    "minified": 20900,
-    "gzip": 3400
-  },
-  "tabs": {
-    "minified": 85200,
-    "gzip": 18200
-  },
-  "tag-editor": {
-    "minified": 144500,
-    "gzip": 32900
-  },
-  "text-content": {
-    "minified": 25000,
-    "gzip": 3600
-  },
-  "text-filter": {
-    "minified": 92000,
-    "gzip": 19700
-  },
-  "textarea": {
-    "minified": 25100,
-    "gzip": 4500
-  },
-  "theming": {
-    "minified": 3200,
-    "gzip": 1300
-  },
-  "tiles": {
-    "minified": 32600,
-    "gzip": 6200
-  },
-  "time-input": {
-    "minified": 94400,
-    "gzip": 20700
-  },
-  "toggle": {
-    "minified": 28500,
-    "gzip": 5000
-  },
-  "toggle-button": {
-    "minified": 82000,
-    "gzip": 17100
-  },
-  "token": {
-    "minified": 101300,
-    "gzip": 22100
-  },
-  "token-group": {
-    "minified": 104800,
-    "gzip": 23100
-  },
-  "tooltip": {
-    "minified": 31600,
-    "gzip": 6600
-  },
-  "top-navigation": {
-    "minified": 117100,
+    "minified": 108800,
     "gzip": 26500
   },
+  "app-layout-toolbar": {
+    "minified": 82700,
+    "gzip": 20100
+  },
+  "attribute-editor": {
+    "minified": 84600,
+    "gzip": 20700
+  },
+  "autosuggest": {
+    "minified": 101800,
+    "gzip": 24000
+  },
+  "badge": {
+    "minified": 3300,
+    "gzip": 1000
+  },
+  "box": {
+    "minified": 31600,
+    "gzip": 6100
+  },
+  "breadcrumb-group": {
+    "minified": 72700,
+    "gzip": 17500
+  },
+  "button": {
+    "minified": 65900,
+    "gzip": 15400
+  },
+  "button-dropdown": {
+    "minified": 90300,
+    "gzip": 22100
+  },
+  "button-group": {
+    "minified": 111400,
+    "gzip": 27400
+  },
+  "calendar": {
+    "minified": 85600,
+    "gzip": 20700
+  },
+  "cards": {
+    "minified": 92300,
+    "gzip": 21100
+  },
+  "checkbox": {
+    "minified": 45500,
+    "gzip": 9000
+  },
+  "code-editor": {
+    "minified": 902900,
+    "gzip": 303500
+  },
+  "collection-preferences": {
+    "minified": 112600,
+    "gzip": 25800
+  },
+  "column-layout": {
+    "minified": 7000,
+    "gzip": 2200
+  },
+  "container": {
+    "minified": 4500,
+    "gzip": 1200
+  },
+  "content-layout": {
+    "minified": 4800,
+    "gzip": 1500
+  },
+  "control-group": {
+    "minified": 3500,
+    "gzip": 1000
+  },
+  "copy-to-clipboard": {
+    "minified": 83600,
+    "gzip": 20300
+  },
+  "date-input": {
+    "minified": 79800,
+    "gzip": 19400
+  },
+  "date-picker": {
+    "minified": 111400,
+    "gzip": 27500
+  },
+  "date-range-picker": {
+    "minified": 179900,
+    "gzip": 42700
+  },
+  "dialog": {
+    "minified": 70300,
+    "gzip": 16500
+  },
+  "divider": {
+    "minified": 2900,
+    "gzip": 1100
+  },
+  "drawer": {
+    "minified": 24900,
+    "gzip": 8000
+  },
+  "dropdown": {
+    "minified": 9400,
+    "gzip": 3100
+  },
+  "error-boundary": {
+    "minified": 77100,
+    "gzip": 18300
+  },
+  "expandable-section": {
+    "minified": 50500,
+    "gzip": 9600
+  },
+  "file-dropzone": {
+    "minified": 4400,
+    "gzip": 1500
+  },
+  "file-input": {
+    "minified": 69200,
+    "gzip": 16500
+  },
+  "file-token-group": {
+    "minified": 99000,
+    "gzip": 23800
+  },
+  "file-upload": {
+    "minified": 111000,
+    "gzip": 26600
+  },
+  "flashbar": {
+    "minified": 82100,
+    "gzip": 19200
+  },
+  "form": {
+    "minified": 40300,
+    "gzip": 7600
+  },
+  "form-field": {
+    "minified": 62100,
+    "gzip": 14400
+  },
+  "grid": {
+    "minified": 5100,
+    "gzip": 1600
+  },
+  "header": {
+    "minified": 3900,
+    "gzip": 1300
+  },
+  "help-panel": {
+    "minified": 30700,
+    "gzip": 8500
+  },
+  "hotspot": {
+    "minified": 89700,
+    "gzip": 21600
+  },
+  "i18n": {
+    "minified": 0,
+    "gzip": 0
+  },
+  "icon": {
+    "minified": 37100,
+    "gzip": 6700
+  },
+  "icon-provider": {
+    "minified": 0,
+    "gzip": 0
+  },
+  "input": {
+    "minified": 74000,
+    "gzip": 17200
+  },
+  "item-card": {
+    "minified": 7200,
+    "gzip": 1900
+  },
+  "key-value-pairs": {
+    "minified": 5000,
+    "gzip": 1600
+  },
+  "link": {
+    "minified": 62000,
+    "gzip": 14500
+  },
+  "list": {
+    "minified": 68900,
+    "gzip": 16500
+  },
+  "live-region": {
+    "minified": 2200,
+    "gzip": 1100
+  },
+  "modal": {
+    "minified": 71500,
+    "gzip": 16800
+  },
+  "multiselect": {
+    "minified": 129800,
+    "gzip": 31100
+  },
+  "navigable-group": {
+    "minified": 3700,
+    "gzip": 1800
+  },
+  "pagination": {
+    "minified": 62100,
+    "gzip": 14500
+  },
+  "panel-layout": {
+    "minified": 27800,
+    "gzip": 8900
+  },
+  "popover": {
+    "minified": 81400,
+    "gzip": 19800
+  },
+  "progress-bar": {
+    "minified": 78200,
+    "gzip": 18600
+  },
+  "prompt-input": {
+    "minified": 75800,
+    "gzip": 17900
+  },
+  "property-filter": {
+    "minified": 164400,
+    "gzip": 38600
+  },
+  "radio-button": {
+    "minified": 8700,
+    "gzip": 2400
+  },
+  "radio-group": {
+    "minified": 10400,
+    "gzip": 3000
+  },
+  "segmented-control": {
+    "minified": 43500,
+    "gzip": 8900
+  },
+  "select": {
+    "minified": 104200,
+    "gzip": 24700
+  },
+  "side-navigation": {
+    "minified": 69100,
+    "gzip": 15900
+  },
+  "skeleton": {
+    "minified": 24900,
+    "gzip": 7900
+  },
+  "slider": {
+    "minified": 14800,
+    "gzip": 3600
+  },
+  "space-between": {
+    "minified": 3100,
+    "gzip": 1200
+  },
+  "spinner": {
+    "minified": 2700,
+    "gzip": 1100
+  },
+  "split-panel": {
+    "minified": 117100,
+    "gzip": 27600
+  },
+  "status-indicator": {
+    "minified": 43000,
+    "gzip": 8200
+  },
+  "steps": {
+    "minified": 49800,
+    "gzip": 9900
+  },
+  "table": {
+    "minified": 110200,
+    "gzip": 26700
+  },
+  "table-body": {
+    "minified": 1100,
+    "gzip": 600
+  },
+  "table-body-cell": {
+    "minified": 72700,
+    "gzip": 16800
+  },
+  "table-head": {
+    "minified": 1100,
+    "gzip": 600
+  },
+  "table-header-cell": {
+    "minified": 79100,
+    "gzip": 18400
+  },
+  "table-root": {
+    "minified": 4900,
+    "gzip": 2000
+  },
+  "table-row": {
+    "minified": 2600,
+    "gzip": 1100
+  },
+  "tabs": {
+    "minified": 70200,
+    "gzip": 16800
+  },
+  "tag-editor": {
+    "minified": 129500,
+    "gzip": 31500
+  },
+  "text-content": {
+    "minified": 6600,
+    "gzip": 1200
+  },
+  "text-filter": {
+    "minified": 77000,
+    "gzip": 18300
+  },
+  "textarea": {
+    "minified": 6800,
+    "gzip": 2100
+  },
+  "theming": {
+    "minified": 0,
+    "gzip": 0
+  },
+  "tiles": {
+    "minified": 14300,
+    "gzip": 3900
+  },
+  "time-input": {
+    "minified": 79400,
+    "gzip": 19300
+  },
+  "toggle": {
+    "minified": 10200,
+    "gzip": 2600
+  },
+  "toggle-button": {
+    "minified": 67000,
+    "gzip": 15700
+  },
+  "token": {
+    "minified": 86300,
+    "gzip": 20700
+  },
+  "token-group": {
+    "minified": 89800,
+    "gzip": 21800
+  },
+  "tooltip": {
+    "minified": 13300,
+    "gzip": 4300
+  },
+  "top-navigation": {
+    "minified": 102100,
+    "gzip": 25100
+  },
   "tree-view": {
-    "minified": 83700,
-    "gzip": 18100
+    "minified": 66700,
+    "gzip": 16200
   },
   "truncated-text": {
-    "minified": 33900,
-    "gzip": 7400
+    "minified": 15600,
+    "gzip": 5000
   },
   "tutorial-panel": {
-    "minified": 118500,
-    "gzip": 24400
+    "minified": 101400,
+    "gzip": 22500
   },
   "wizard": {
-    "minified": 121000,
-    "gzip": 25700
+    "minified": 103900,
+    "gzip": 23800
   }
 }

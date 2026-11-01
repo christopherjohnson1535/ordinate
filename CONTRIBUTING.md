@@ -50,6 +50,8 @@ Type-check the tests with `npx tsc -p test/browser`.
 
 `npm run size` bundles every entry in `lib/components/<name>/index.js` with esbuild, leaving out React, and prints its minified and gzipped size, JavaScript and CSS together, next to the budget in `size-limits.json`. It fails when a component is over either budget or has none.
 
+The token stylesheet every component carries (revisions, density and styles) is measured once, on its own `(shared tokens)` row, and left out of each component's size. Adding tokens or a style changes that one budget, not all of them.
+
 When a component grows on purpose, or you add one, run `npm run size -- --update`. It sets every budget to the current size plus 15%, so commit only the entries you meant to change and explain the growth in the pull request.
 
 ## Making a change

@@ -23,6 +23,7 @@ applyDensity(Density.Compact);
 | ---------------------------------- | ----------------------------------------------------------------------- |
 | `applyMode(mode, target?)`         | Light, dark or system mode. `null` returns to light.                    |
 | `applyRevision(revision, target?)` | Pins components inside `target` to a revision. `null` uses the default. |
+| `applyStyle(style, target?)`       | Console, editorial, studio or shopfront. `null` returns to console.     |
 | `applyDensity(density, target?)`   | Comfortable or compact density. `null` returns to comfortable.          |
 | `disableMotion(disabled, target?)` | Turns off component animation.                                          |
 

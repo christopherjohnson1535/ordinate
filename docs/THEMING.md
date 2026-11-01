@@ -1,11 +1,12 @@
-# Theming, revisions and density
+# Theming, styles, revisions and density
 
-Ordinate's appearance comes from three layers of design tokens. Each one answers a different question, and they combine in a fixed order.
+Ordinate's appearance comes from four layers of design tokens. Each one answers a different question, and they combine in a fixed order.
 
 | Layer    | Question                                  | Set with                    | Scope           |
 | -------- | ----------------------------------------- | --------------------------- | --------------- |
 | Revision | Which version of the design do we target? | `applyRevision`             | Page or subtree |
 | Mode     | Light, dark, or follow the system?        | `applyMode`, `applyDensity` | Page or subtree |
+| Style    | An application, or which kind of website? | `applyStyle`                | Page or subtree |
 | Theme    | What are this product's brand values?     | `applyTheme`                | Page or subtree |
 
 A component never reads a raw value. It reads a token such as `ord.$color-text-link`, which compiles to `var(--ord-color-text-link)`. The layers decide what that variable holds.
@@ -24,6 +25,23 @@ Two modes exist today, and both are set with classes on the page or on a subtree
 - **Density** is comfortable or compact. Tokens that respond to density hold a value for each. Most are the `space-scaled-*` spacings and control heights. Components use the scaled spacings for padding that should tighten in compact mode, and the static `space-*` spacings for gaps that should not.
 
 Density tokens are emitted as three variables: `--ord-x-comfortable`, `--ord-x-compact`, and `--ord-x`, which points at one of them. The compact class repoints `--ord-x` on its element and on any revision subtree inside it. That way each nested revision keeps its own compact values.
+
+## Styles
+
+A style sets the voice of a page. The same components serve a console and a neighbourhood shop's website; the style decides which one a page looks like.
+
+| Style       | For                            | What changes                                                                |
+| ----------- | ------------------------------ | --------------------------------------------------------------------------- |
+| `console`   | Applications, the default      | Nothing: the revision as published                                          |
+| `editorial` | Journals, blogs, newsletters   | Serif headlines, a very large type scale, printed-page rules                |
+| `studio`    | Portfolios, studios, practices | Light, oversized headlines; image-led layouts with catalogue captions       |
+| `shopfront` | Shops, cafés, local services   | Condensed headlines, cobalt and sunflower, rounded buttons, cards and bands |
+
+A style is data, like a revision: a list of token overrides in `style-dictionary/styles/`. It sits on top of the pinned revision and changes only the tokens it lists. Its references stay live (`{colorCobalt600}` becomes `var(--ord-color-cobalt600)`), so a style follows each revision and both color modes. Styles mostly set the website tokens (`font-*-headline`, `font-size-lead`, the `color-*-band-*`, `color-*-emphasis` and `color-*-marker` colors, `border-radius-section`, `border-radius-action`, `space-section-*`), which the console style keeps quiet, plus a few brand tokens such as the primary button.
+
+Mixing is allowed: an application can keep `console` for its signed-in screens and use `shopfront` on its public pages, or scope a style to one subtree.
+
+A theme still wins over a style for the tokens the theme sets.
 
 ## Themes
 

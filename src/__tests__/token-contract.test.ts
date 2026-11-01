@@ -7,7 +7,7 @@ import { describe, expect, test } from 'vitest';
 
 // The style dictionary compiles to CommonJS for the build tools, so load it with Node's own loader.
 const require = createRequire(import.meta.url);
-const { allTokenNames, resolveTokens, revisions } =
+const { allTokenNames, resolveTokens, revisions, styles } =
   require('../../lib/style-dictionary/index.js') as typeof import('../../style-dictionary/index');
 
 const generatedCss = fs.readFileSync(
@@ -79,5 +79,30 @@ describe('density', () => {
     expect(() => resolveTokens(broken)).not.toThrow();
     const both = { ...tokens, colorTextBody: { light: '{spaceScaledS}', dark: '#fff' } };
     expect(() => resolveTokens(both)).toThrow(/both mode and density/);
+  });
+});
+
+describe.each(styles.map(style => [style.id, style] as const))('style %s', (id, style) => {
+  const block = generatedCss.split('}').find(part => part.split('{')[0].includes(`.ord-style-${id}`)) ?? '';
+
+  test('overrides only tokens in the contract, and resolves against every revision', () => {
+    Object.keys(style.overrides).forEach(name => expect(allTokenNames).toContain(name));
+    revisions.forEach(revision => {
+      expect(() => resolveTokens({ ...revision.tokens, ...style.overrides })).not.toThrow();
+    });
+  });
+
+  test('ships every override, and reaches revision subtrees inside it', () => {
+    const selector = block.split('{')[0];
+    revisions.forEach(revision => expect(selector).toContain(`.ord-revision-${revision.id.replace(/\./g, '-')}`));
+    Object.keys(style.overrides).forEach(name => expect(block).toContain(`${toCssVariable(name)}:`));
+  });
+
+  test('keeps references live instead of copying revision values', () => {
+    expect(block).not.toMatch(/\{[a-zA-Z0-9]+\}/);
+    const references = Object.values(style.overrides).filter(value => typeof value === 'string' && value.startsWith('{'));
+    if (references.length) {
+      expect(block).toContain('var(--ord-');
+    }
   });
 });

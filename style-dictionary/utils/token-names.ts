@@ -36,6 +36,11 @@ export const colorPaletteTokenNames = [
   'colorTerminal',
   'colorTerminalDark',
   'colorRed300',
+  'colorCobalt600',
+  'colorCobalt700',
+  'colorCobalt300',
+  'colorSunflower400',
+  'colorSunflower100',
 ] as const;
 
 export const colorsTokenNames = [
@@ -98,6 +103,14 @@ export const colorsTokenNames = [
   'colorChartsCategorical6',
   'colorChartsCategorical7',
   'colorChartsCategorical8',
+  'colorBackgroundBandAccent',
+  'colorBackgroundBandInverted',
+  'colorTextBandInverted',
+  'colorTextBandInvertedSecondary',
+  'colorBackgroundEmphasis',
+  'colorTextOnEmphasis',
+  'colorBackgroundMarker',
+  'colorTextOnMarker',
 ] as const;
 
 export const bordersTokenNames = [
@@ -118,6 +131,8 @@ export const bordersTokenNames = [
   'borderRadiusToggle',
   'borderRadiusRadio',
   'borderRadiusInlineCode',
+  'borderRadiusSection',
+  'borderRadiusAction',
 ] as const;
 
 export const typographyTokenNames = [
@@ -145,6 +160,17 @@ export const typographyTokenNames = [
   'fontWeightBold',
   'fontWeightHeavy',
   'fontSizeDisplayL',
+  'fontFamilySerif',
+  'fontFamilyCondensed',
+  'fontFamilyHeadline',
+  'fontWeightHeadline',
+  'fontSizeHeadlineS',
+  'fontSizeHeadlineM',
+  'fontSizeHeadlineL',
+  'fontSizeHeadlineXl',
+  'lineHeightHeadline',
+  'letterSpacingHeadline',
+  'fontSizeLead',
 ] as const;
 
 export const spacingTokenNames = [
@@ -166,6 +192,8 @@ export const spacingTokenNames = [
   'spaceScaledM',
   'spaceScaledL',
   'spaceScaledXl',
+  'spaceSectionBlock',
+  'spaceSectionInline',
 ] as const;
 
 export const sizesTokenNames = [
