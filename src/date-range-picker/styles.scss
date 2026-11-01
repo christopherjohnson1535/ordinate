@@ -1,0 +1,205 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+}
+
+// The picker is taller than a list popup, so it may use all the room the dropdown measured.
+.dropdown > [role='dialog'] {
+  max-block-size: var(--dropdown-available-block-size, none);
+}
+
+.trigger {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: ord.$size-control-height;
+  padding-block: 0;
+  padding-inline: ord.$space-input-horizontal;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+  color: ord.$color-text-body;
+  text-align: start;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: border-color, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  &:disabled {
+    @include styles.hatch;
+    border-color: ord.$color-border-disabled;
+    box-shadow: none;
+    color: ord.$color-text-disabled;
+    cursor: default;
+  }
+}
+
+.trigger-open {
+  border-color: ord.$color-border-strong;
+}
+
+.read-only {
+  background-color: ord.$color-background-control-read-only;
+  cursor: default;
+}
+
+.invalid {
+  border-color: ord.$color-border-error;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+}
+
+.warning {
+  border-color: ord.$color-border-status-warning;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-status-warning;
+}
+
+.trigger-icon {
+  flex-shrink: 0;
+  color: ord.$color-text-secondary;
+
+  .trigger:disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+.trigger-text,
+.placeholder {
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: ord.$color-text-secondary;
+
+  .trigger:disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+.mode {
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+}
+
+.body {
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+}
+
+// As wide as the month grids, so the inputs and the note below share their width instead of widening the popup.
+.absolute {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-m;
+  inline-size: min-content;
+}
+
+.months {
+  display: flex;
+  gap: ord.$space-l;
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-xs;
+}
+
+.inputs,
+.inputs-date-only {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: ord.$space-scaled-s ord.$space-s;
+  padding-block-start: ord.$space-scaled-m;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.inputs-date-only {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+// Hooks for the test utilities; the inputs bring their own look.
+.start-date,
+.start-time,
+.end-date,
+.end-time {
+  min-inline-size: 0;
+}
+
+.constraint {
+  margin-block: 0;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.relative {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  min-inline-size: ord.$size-panel-medium;
+}
+
+.relative-heading {
+  @include styles.font-label;
+  color: ord.$color-text-body;
+}
+
+.custom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: ord.$space-s;
+  padding-inline-start: ord.$space-l;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-xs;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-error;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: ord.$space-xs;
+}
+
+.clear {
+  margin-inline-end: auto;
+}
