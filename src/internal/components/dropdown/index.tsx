@@ -62,13 +62,48 @@ export interface DropdownProps {
   ariaRole?: string;
   ariaLabel?: string;
   ariaLabelledby?: string;
+  /**
+   * Positions the popup against the viewport instead of the trigger's container, so that
+   * a container with hidden overflow, such as a table or a modal body, cannot clip it.
+   */
+  expandToViewport?: boolean;
   className?: string;
+}
+
+interface FixedPosition {
+  top?: number;
+  bottom?: number;
+  left: number;
+  minWidth: number;
 }
 
 interface Placement {
   above: boolean;
   alignEnd: boolean;
   availableBlockSize?: number;
+  fixed?: FixedPosition;
+}
+
+function isSamePlacement(a: Placement, b: Placement): boolean {
+  return (
+    a.above === b.above &&
+    a.alignEnd === b.alignEnd &&
+    a.availableBlockSize === b.availableBlockSize &&
+    a.fixed?.top === b.fixed?.top &&
+    a.fixed?.bottom === b.fixed?.bottom &&
+    a.fixed?.left === b.fixed?.left &&
+    a.fixed?.minWidth === b.fixed?.minWidth
+  );
+}
+
+function getFixedPosition(rect: DOMRect, width: number, above: boolean, alignEnd: boolean, rtl: boolean) {
+  const alignedToLeftEdge = alignEnd === rtl;
+  return {
+    top: above ? undefined : rect.bottom,
+    bottom: above ? window.innerHeight - rect.top : undefined,
+    left: alignedToLeftEdge ? rect.left : rect.right - width,
+    minWidth: rect.width,
+  };
 }
 
 // Aligns the popup to the trigger's end edge when that keeps it inside the viewport and the start edge does not.
@@ -84,7 +119,9 @@ function shouldAlignEnd(root: HTMLElement, popupWidth: number): boolean {
 /**
  * A popup positioned under its trigger, at least as wide as the trigger. It
  * opens above the trigger when there is not enough room below and more room
- * above. It holds no state of its own: the host decides when it is open.
+ * above, and lines up with the trigger's end edge when it would overflow the
+ * viewport from the start edge. It holds no state of its own: the host decides
+ * when it is open.
  */
 export function Dropdown({
   open,
@@ -99,6 +136,7 @@ export function Dropdown({
   ariaRole,
   ariaLabel,
   ariaLabelledby,
+  expandToViewport = false,
   className,
 }: DropdownProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -120,12 +158,17 @@ export function Dropdown({
       const spaceAbove = rect.top - viewportMargin;
       const above = popup.offsetHeight > spaceBelow && spaceAbove > spaceBelow;
       const availableBlockSize = Math.max(above ? spaceAbove : spaceBelow, 0);
-      const alignEnd = shouldAlignEnd(root, popup.offsetWidth);
-      setPlacement(current =>
-        current.above === above && current.alignEnd === alignEnd && current.availableBlockSize === availableBlockSize
-          ? current
-          : { above, alignEnd, availableBlockSize }
-      );
+
+      const rtl = getIsRtl(root);
+      const width = popup.offsetWidth;
+      const alignEnd = shouldAlignEnd(root, width);
+      const next: Placement = {
+        above,
+        alignEnd,
+        availableBlockSize,
+        fixed: expandToViewport ? getFixedPosition(rect, width, above, alignEnd, rtl) : undefined,
+      };
+      setPlacement(current => (isSamePlacement(current, next) ? current : next));
     };
     place();
     window.addEventListener('resize', place);
@@ -140,7 +183,7 @@ export function Dropdown({
       window.removeEventListener('scroll', place, true);
       observer?.disconnect();
     };
-  }, [open]);
+  }, [open, expandToViewport]);
 
   useEffect(() => {
     if (!open || !onOutsideClick) {
@@ -155,10 +198,17 @@ export function Dropdown({
     return () => document.removeEventListener('mousedown', handleMouseDown);
   }, [open, onOutsideClick]);
 
-  const popupStyle =
-    placement.availableBlockSize === undefined
-      ? undefined
-      : ({ '--dropdown-available-block-size': `${placement.availableBlockSize}px` } as React.CSSProperties);
+  const popupStyle: React.CSSProperties & Record<string, string | number | undefined> = {};
+  if (placement.availableBlockSize !== undefined) {
+    popupStyle['--dropdown-available-block-size'] = `${placement.availableBlockSize}px`;
+  }
+  if (expandToViewport && placement.fixed) {
+    // Measured from the viewport, so these are physical coordinates in either direction.
+    popupStyle.top = placement.fixed.top;
+    popupStyle.bottom = placement.fixed.bottom;
+    popupStyle.left = placement.fixed.left;
+    popupStyle.minWidth = minWidth === 'trigger' ? placement.fixed.minWidth : undefined;
+  }
 
   return (
     <div ref={rootRef} className={clsx(styles.root, className)}>
@@ -172,7 +222,8 @@ export function Dropdown({
             placement.alignEnd && styles['popup-align-end'],
             styles[`min-width-${minWidth}`],
             maxWidth && styles['fit-content'],
-            maxWidth && styles[`max-width-${maxWidth}`]
+            maxWidth && styles[`max-width-${maxWidth}`],
+            expandToViewport && styles['popup-fixed']
           )}
           style={popupStyle}
           role={ariaRole}

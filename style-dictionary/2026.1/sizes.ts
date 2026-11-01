@@ -20,4 +20,5 @@ export const tokens: SizesDictionary = {
   sizePanelSmall: '240px',
   sizePanelMedium: '320px',
   sizePanelLarge: '480px',
+  sizeDropdownMaxWidth: '360px',
 };

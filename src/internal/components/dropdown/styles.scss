@@ -53,6 +53,16 @@
   inset-inline-end: 0;
 }
 
+// The host sets the viewport coordinates and minimum width inline once it has measured the trigger.
+.popup-fixed {
+  position: fixed;
+  inset-block-start: auto;
+  inset-block-end: auto;
+  inset-inline-start: auto;
+  inset-inline-end: auto;
+  min-inline-size: 0;
+}
+
 .min-width-small {
   min-inline-size: ord.$size-panel-small;
 }

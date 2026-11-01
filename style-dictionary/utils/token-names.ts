@@ -170,6 +170,7 @@ export const sizesTokenNames = [
   'sizePanelSmall',
   'sizePanelMedium',
   'sizePanelLarge',
+  'sizeDropdownMaxWidth',
 ] as const;
 
 export const motionTokenNames = [
