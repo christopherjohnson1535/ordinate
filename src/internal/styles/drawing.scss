@@ -3,7 +3,8 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
-// Marks shared by the parts of the console drawn like a drawing set: schedules, callouts and sheet labels.
+// Marks shared by the parts of the console drawn like a drawing set: schedules, callouts, title blocks
+// and sheet labels.
 
 @use './index' as styles;
 @use './tokens' as ord;
@@ -64,4 +65,22 @@
   --ord-color-background-control-checked: #{ord.$color-text-on-ink};
   --ord-color-foreground-control-checked: #{ord.$color-background-ink};
   --ord-color-background-inline-code: transparent;
+}
+
+// The small lettering a draughtsman puts on the marks of a sheet: grid references, title block
+// labels, sheet codes in an index.
+@mixin font-caption {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+  letter-spacing: ord.$letter-spacing-caption;
+  text-transform: uppercase;
+}
+
+// An ink rule across the start of a block, the heavy line that opens a title block or a set.
+@mixin heavy-rule-block-start {
+  border-block-start-width: ord.$border-width-section;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-strong;
 }

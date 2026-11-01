@@ -184,6 +184,7 @@ export const typographyTokenNames = [
   'fontFamilyReading',
   'fontSizeReading',
   'lineHeightReading',
+  'fontSizeCaption',
   'letterSpacingCaption',
   'fontWeightPageHeading',
 ] as const;
