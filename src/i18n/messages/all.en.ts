@@ -212,6 +212,15 @@ const messages: I18nProviderProps.Messages = {
       input: {
         clearAriaLabel: 'Clear',
       },
+      journey: {
+        backButton: 'Back',
+        continueButton: 'Continue',
+        errorIconAriaLabel: 'Error',
+        finishButton: 'Finish',
+        loadingText: 'Loading',
+        optional: 'Optional',
+        questionCounterText: 'Question {questionNumber} of {questionsCount}',
+      },
       link: {
         externalIconAriaLabel: 'Opens in a new tab',
       },
