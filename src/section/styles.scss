@@ -1,0 +1,76 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  // In-page links land with a little room above the section instead of flush with the viewport.
+  scroll-margin-block-start: ord.$space-l;
+}
+
+.double-rule {
+  @include site.double-rule;
+  margin-block-end: ord.$space-scaled-xl;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-xl;
+  min-inline-size: 0;
+}
+
+.rule-top {
+  @include site.rule(start);
+  padding-block-start: ord.$space-scaled-xl;
+}
+
+.rule-bottom {
+  @include site.rule(end);
+  padding-block-end: ord.$space-scaled-xl;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: ord.$space-scaled-m ord.$space-l;
+}
+
+.titles {
+  display: flex;
+  flex: 1 1 ord.$size-panel-large;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  min-inline-size: 0;
+}
+
+.heading {
+  @include site.font-headline;
+  font-size: ord.$font-size-headline-m;
+}
+
+.description {
+  @include site.font-lead;
+  max-inline-size: ord.$size-section-narrow;
+  color: ord.$color-text-body-secondary;
+}
+
+.tone-inverted .description {
+  color: ord.$color-text-band-inverted-secondary;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+.content {
+  min-inline-size: 0;
+}
