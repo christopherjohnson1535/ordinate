@@ -65,3 +65,56 @@
   margin-block: 0;
   margin-inline: 0;
 }
+
+// The headline voice without a size: each component picks one of the `font-size-headline-*` tokens.
+@mixin font-headline {
+  margin-block: 0;
+  margin-inline: 0;
+  font-family: ord.$font-family-headline;
+  font-weight: ord.$font-weight-headline;
+  line-height: ord.$line-height-headline;
+  letter-spacing: ord.$letter-spacing-headline;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+// The larger paragraph under a headline.
+@mixin font-lead {
+  margin-block: 0;
+  margin-inline: 0;
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-lead;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+  text-wrap: pretty;
+}
+
+// Small mono facts such as an issue number, a date or a catalogue caption.
+@mixin font-meta {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+  text-transform: uppercase;
+}
+
+// A single ink rule on one block edge.
+@mixin rule($edge) {
+  border-block-#{$edge}-width: ord.$border-width-section;
+  border-block-#{$edge}-style: solid;
+  border-block-#{$edge}-color: ord.$color-border-strong;
+}
+
+// A printed double rule, thick over thin, drawn by an empty element or a pseudo-element of its own.
+@mixin double-rule {
+  display: block;
+  box-sizing: content-box;
+  block-size: 0;
+  padding-block-start: ord.$space-xxxs;
+  border-block-start-width: ord.$border-width-section;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-strong;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-strong;
+}

@@ -1,0 +1,81 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.band {
+  @include styles.font-body;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+.tone-accent,
+.tone-inverted {
+  @include styles.border-radius(ord.$border-radius-section);
+}
+
+// Two tinted bands in a row stay two plates instead of merging into one block.
+.tone-accent + .tone-accent,
+.tone-accent + .tone-inverted,
+.tone-inverted + .tone-accent,
+.tone-inverted + .tone-inverted {
+  margin-block-start: ord.$space-xs;
+}
+
+.tone-accent {
+  background-color: ord.$color-background-band-accent;
+}
+
+.tone-inverted {
+  background-color: ord.$color-background-band-inverted;
+  color: ord.$color-text-band-inverted;
+
+  // The band's own colors resolve in the page's mode; everything inside resolves to dark values.
+  > .inner {
+    color-scheme: dark;
+  }
+}
+
+.spacing-none {
+  padding-block: 0;
+}
+
+.spacing-small {
+  padding-block: ord.$space-section-block-small;
+}
+
+.spacing-default {
+  padding-block: ord.$space-section-block;
+}
+
+.spacing-large {
+  padding-block: ord.$space-section-block-large;
+}
+
+.inner {
+  box-sizing: content-box;
+  min-inline-size: 0;
+  margin-inline: auto;
+  padding-inline: ord.$space-section-inline;
+}
+
+.width-narrow {
+  max-inline-size: ord.$size-section-narrow;
+}
+
+.width-default {
+  max-inline-size: ord.$size-section-default;
+}
+
+.width-wide {
+  max-inline-size: ord.$size-section-wide;
+}
+
+.width-full {
+  padding-inline: 0;
+}

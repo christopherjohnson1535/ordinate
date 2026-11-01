@@ -23,4 +23,6 @@ export const tokens: SpacingDictionary = {
   spaceScaledXl: { comfortable: '32px', compact: '24px' },
   spaceSectionBlock: { comfortable: '80px', compact: '56px' },
   spaceSectionInline: 'clamp(16px, 4vw, 56px)',
+  spaceSectionBlockSmall: { comfortable: '40px', compact: '28px' },
+  spaceSectionBlockLarge: { comfortable: '128px', compact: '88px' },
 };

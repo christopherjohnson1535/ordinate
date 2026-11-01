@@ -1,0 +1,75 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.logo {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.drawing {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.fine {
+  stroke-width: 0.75;
+}
+
+.ground {
+  stroke-width: 2.5;
+}
+
+.hatch {
+  stroke-width: 0.75;
+}
+
+.dimension {
+  stroke-width: 0.5;
+}
+
+.label {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--ord-font-family-mono);
+  font-size: 9px;
+  text-anchor: middle;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+.caption {
+  font-family: var(--ord-font-family-mono);
+  font-size: 12px;
+  color: var(--ord-color-text-secondary);
+}
+
+// Each example sits in a hairline frame so bands with the page background still show their edges.
+.frame {
+  min-inline-size: 0;
+  border: 1px dashed var(--ord-color-border-divider);
+}
+
+.narrow {
+  max-inline-size: 375px;
+}

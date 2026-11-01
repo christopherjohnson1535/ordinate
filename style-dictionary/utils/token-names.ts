@@ -199,6 +199,8 @@ export const spacingTokenNames = [
   'spaceScaledXl',
   'spaceSectionBlock',
   'spaceSectionInline',
+  'spaceSectionBlockSmall',
+  'spaceSectionBlockLarge',
 ] as const;
 
 export const sizesTokenNames = [
@@ -220,6 +222,10 @@ export const sizesTokenNames = [
   'sizePanelMedium',
   'sizePanelLarge',
   'sizeDropdownMaxWidth',
+  'sizeSectionNarrow',
+  'sizeSectionDefault',
+  'sizeSectionWide',
+  'rotateMarker',
 ] as const;
 
 export const motionTokenNames = [

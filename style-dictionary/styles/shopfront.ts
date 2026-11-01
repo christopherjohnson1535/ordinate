@@ -26,7 +26,7 @@ export const style: Style = {
     colorTextAccent: cobalt,
     colorBackgroundControlChecked: cobalt,
     colorForegroundControlChecked: onCobalt,
-    colorBackgroundBandAccent: { light: '{colorSunflower100}', dark: '{colorChalk800}' },
+    colorBackgroundBandAccent: { light: '{colorSunflower100}', dark: '{colorChalk700}' },
     colorBackgroundMarker: { light: '{colorSunflower400}', dark: '{colorSunflower400}' },
     colorTextOnMarker: { light: '{colorGrey900}', dark: '{colorGrey900}' },
     colorTextBandInvertedAccent: { light: '{colorSunflower400}', dark: '{colorSunflower400}' },
@@ -42,6 +42,7 @@ export const style: Style = {
     borderRadiusBadge: '999px',
     borderRadiusToggle: '999px',
     borderRadiusDropdown: '12px',
+    rotateMarker: '-2deg',
     // Derived radii are resolved per revision, so they are pointed back at the container here.
     borderRadiusModal: '{borderRadiusContainer}',
     borderRadiusAlert: '{borderRadiusContainer}',

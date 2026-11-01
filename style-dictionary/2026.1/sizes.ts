@@ -21,4 +21,10 @@ export const tokens: SizesDictionary = {
   sizePanelMedium: '320px',
   sizePanelLarge: '480px',
   sizeDropdownMaxWidth: '360px',
+  // The widest a website section's content grows before it centers in the band.
+  sizeSectionNarrow: '720px',
+  sizeSectionDefault: '1200px',
+  sizeSectionWide: '1440px',
+  // How far markers such as an opening's badge tilt. The console keeps them level.
+  rotateMarker: '0deg',
 };

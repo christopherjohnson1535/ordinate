@@ -239,6 +239,9 @@ const messages: I18nProviderProps.Messages = {
         tokenLimitShowFewer: 'Show fewer',
         tokenLimitShowMore: 'Show {count} more',
       },
+      opening: {
+        navigationAriaLabel: 'Sections',
+      },
       'opening-hours': {
         closedText: 'Closed',
         todayText: 'Today',
@@ -301,6 +304,13 @@ const messages: I18nProviderProps.Messages = {
       'side-navigation': {
         ariaLabel: 'Side navigation',
         externalIconAriaLabel: 'Opens in a new tab',
+      },
+      'site-footer': {
+        navigationAriaLabel: 'Footer',
+      },
+      'site-header': {
+        menuButtonText: 'Menu',
+        navigationAriaLabel: 'Main',
       },
       skeleton: {
         loadingText: 'Loading',
