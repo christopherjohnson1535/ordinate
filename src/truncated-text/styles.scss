@@ -1,0 +1,37 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+
+.root {
+  display: block;
+  min-inline-size: 0;
+}
+
+// The tooltip wraps the text in inline-block spans. They have to pass the available width down,
+// or the text runs past the edge instead of being cut.
+.root > span,
+.root > span > span:first-child {
+  display: block;
+  min-inline-size: 0;
+}
+
+.text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.multi-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
