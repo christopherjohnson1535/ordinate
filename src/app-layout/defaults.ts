@@ -21,6 +21,10 @@ export const minContentHeight = 160;
 
 export const minDrawerSize = 240;
 
+export const notesMarginWidth = 320;
+// Notifications move into the margin only when the sheet beside them keeps at least this width.
+export const minSheetWidthBesideNotes = 640;
+
 /**
  * The help panel shares its place with the drawers under this ID.
  */

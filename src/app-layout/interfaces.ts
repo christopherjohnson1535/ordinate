@@ -8,9 +8,16 @@ import { NonCancelableEventHandler } from '../internal/events';
 
 export interface AppLayoutProps extends BaseComponentProps {
   /**
-   * The main content of the page, shown on a white sheet.
+   * The main content of the page, drawn on a framed sheet: a heavy ink border, grid reference
+   * letters along its top edge and, when `titleBlock` is set, a title block along its foot.
    */
   content?: React.ReactNode;
+  /**
+   * The strip of labelled cells pinned to the foot of the sheet, usually a `TitleBlock` naming the
+   * project, the sheet and its revision. It stays at the bottom of the sheet when the content is
+   * short.
+   */
+  titleBlock?: React.ReactNode;
   /**
    * The kind of page, which sets a sensible maximum content width and which side panels
    * start open when their state is not controlled:
@@ -30,7 +37,8 @@ export interface AppLayoutProps extends BaseComponentProps {
    */
   variant?: AppLayoutProps.Variant;
   /**
-   * The navigation, usually a `SideNavigation`.
+   * The navigation, usually a `SideNavigation`. It sits on the grey frame beside the sheet, like
+   * the index of a drawing set.
    */
   navigation?: React.ReactNode;
   /**
@@ -58,9 +66,17 @@ export interface AppLayoutProps extends BaseComponentProps {
    */
   breadcrumbs?: React.ReactNode;
   /**
-   * Notifications for the page, usually a `Flashbar`. Shown above the breadcrumbs.
+   * Notifications for the page, usually a `Flashbar`. Shown as notes in the margin beside the
+   * sheet, or above the breadcrumbs (see `notificationsPosition`).
    */
   notifications?: React.ReactNode;
+  /**
+   * Where the notifications go:
+   * * `margin` (the default): in a column beside the sheet, like notes in the margin of a drawing.
+   *   Layouts too narrow for the column put them above the breadcrumbs instead.
+   * * `top`: above the breadcrumbs, across the width of the content.
+   */
+  notificationsPosition?: AppLayoutProps.NotificationsPosition;
   /**
    * Keeps the notifications in view while the content scrolls.
    */
@@ -187,6 +203,8 @@ export namespace AppLayoutProps {
   export type ContentType = 'default' | 'table' | 'cards' | 'form' | 'wizard' | 'dashboard';
 
   export type Variant = 'default' | 'toolbar';
+
+  export type NotificationsPosition = 'margin' | 'top';
 
   export type SplitPanelPosition = 'bottom' | 'side';
 

@@ -110,6 +110,78 @@ describe('AppLayout regions', () => {
   });
 });
 
+describe('AppLayout sheet', () => {
+  test('frames the content on a sheet with grid reference letters', () => {
+    simulateWidth(960);
+    renderLayout();
+    const layout = getLayout();
+    expect(layout.findSheet()!.getElement()).toContainElement(layout.findContent()!.getElement());
+    expect(layout.findGridReferenceLetters().map(letter => letter.getText())).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
+  });
+
+  test('counts the grid reference letters from the width, leaving out I and O', () => {
+    simulateWidth(1600);
+    renderLayout();
+    const letters = getLayout()
+      .findGridReferenceLetters()
+      .map(letter => letter.getText());
+    expect(letters).toHaveLength(10);
+    expect(letters).not.toContain('I');
+    expect(letters.at(-1)).toBe('K');
+  });
+
+  test('hides the grid reference letters from assistive technology', () => {
+    renderLayout();
+    const strip = getLayout().findGridReferenceLetters()[0].getElement().parentElement!;
+    expect(strip).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  test('pins the title block to the foot of the sheet, after the content', () => {
+    renderLayout({ titleBlock: <p>Sheet A-02</p> });
+    const layout = getLayout();
+    const slot = layout.findTitleBlockSlot()!.getElement();
+    expect(slot).toHaveTextContent('Sheet A-02');
+    expect(slot.parentElement).toBe(layout.findSheet()!.getElement());
+    expect(slot.previousElementSibling).toContainElement(layout.findContent()!.getElement());
+  });
+
+  test('renders no title block slot without a title block', () => {
+    renderLayout();
+    expect(getLayout().findTitleBlockSlot()).toBeNull();
+  });
+});
+
+describe('AppLayout notifications position', () => {
+  test('puts the notifications in the margin beside the sheet by default, first in reading order', () => {
+    renderLayout({ notifications: 'Maintenance tonight' });
+    const layout = getLayout();
+    expect(layout.isNotificationsInMargin()).toBe(true);
+    const notes = layout.findNotifications()!.getElement();
+    expect(notes.nextElementSibling).toBe(layout.findSheet()!.getElement());
+  });
+
+  test('puts the notifications above the breadcrumbs with the top position', () => {
+    renderLayout({ notifications: 'Maintenance tonight', breadcrumbs: 'Home', notificationsPosition: 'top' });
+    const layout = getLayout();
+    expect(layout.isNotificationsInMargin()).toBe(false);
+    expect(layout.findNotifications()!.getElement().nextElementSibling).toBe(layout.findBreadcrumbs()!.getElement());
+  });
+
+  test('falls back to the top when the content column is too narrow for the margin', () => {
+    simulateWidth(1200);
+    vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(800);
+    renderLayout({ notifications: 'Maintenance tonight' });
+    expect(getLayout().isNotificationsInMargin()).toBe(false);
+    expect(screen.getByRole('region', { name: 'Notifications' })).toHaveTextContent('Maintenance tonight');
+  });
+
+  test('falls back to the top on narrow screens', () => {
+    simulateWidth(400);
+    renderLayout({ notifications: 'Maintenance tonight' });
+    expect(getLayout().isNotificationsInMargin()).toBe(false);
+  });
+});
+
 describe('AppLayout navigation', () => {
   test('starts open and collapses to a rail, moving focus between the toggles', () => {
     renderLayout();
@@ -353,6 +425,7 @@ describe('AppLayout accessibility', () => {
     const { container } = renderLayout({
       breadcrumbs: <nav aria-label="Breadcrumbs">Home</nav>,
       notifications: 'Maintenance tonight',
+      titleBlock: <p>Sheet A-02</p>,
       toolsOpen: true,
       drawers,
     });

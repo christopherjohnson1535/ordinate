@@ -13,6 +13,7 @@ const AppLayout = React.forwardRef(
   (
     {
       content,
+      titleBlock,
       contentType = 'default',
       variant = 'default',
       navigation,
@@ -22,6 +23,7 @@ const AppLayout = React.forwardRef(
       navigationWidth,
       breadcrumbs,
       notifications,
+      notificationsPosition = 'margin',
       stickyNotifications = false,
       tools,
       toolsOpen,
@@ -53,6 +55,7 @@ const AppLayout = React.forwardRef(
       {...getBaseProps(props)}
       ref={ref}
       content={content}
+      titleBlock={titleBlock}
       contentType={contentType}
       variant={variant}
       navigation={navigation}
@@ -62,6 +65,7 @@ const AppLayout = React.forwardRef(
       navigationWidth={navigationWidth}
       breadcrumbs={breadcrumbs}
       notifications={notifications}
+      notificationsPosition={notificationsPosition}
       stickyNotifications={stickyNotifications}
       tools={tools}
       toolsOpen={toolsOpen}

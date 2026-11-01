@@ -60,8 +60,36 @@ export default class AppLayoutWrapper extends ComponentWrapper {
     return this.findByClassName(styles.notifications);
   }
 
+  /**
+   * Whether the notifications are drawn in the margin column beside the sheet rather than above it.
+   */
+  isNotificationsInMargin(): boolean {
+    return this.findNotifications()?.getElement().classList.contains(styles['notifications-margin']) ?? false;
+  }
+
   findContent(): ElementWrapper | null {
     return this.findByClassName(styles.content);
+  }
+
+  /**
+   * The framed sheet that holds the content, its grid reference letters and the title block.
+   */
+  findSheet(): ElementWrapper | null {
+    return this.findByClassName(styles.sheet);
+  }
+
+  /**
+   * The grid reference letters along the top edge of the sheet, in order.
+   */
+  findGridReferenceLetters(): ElementWrapper[] {
+    return this.findAllByClassName(styles['grid-reference-cell']);
+  }
+
+  /**
+   * The slot at the foot of the sheet that holds the `titleBlock`, or `null` when it is not set.
+   */
+  findTitleBlockSlot(): ElementWrapper | null {
+    return this.findByClassName(styles['title-block']);
   }
 
   /**

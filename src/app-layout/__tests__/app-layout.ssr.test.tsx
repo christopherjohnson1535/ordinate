@@ -24,9 +24,12 @@ test('renders the wide layout on the server', () => {
         },
       ]}
       content="Page content"
+      titleBlock="Sheet A-02"
     />
   );
   expect(html).toContain('aria-label="Navigation drawer"');
+  expect(html).toContain('Sheet A-02');
+  expect(html).toMatch(/aria-hidden="true"><span[^>]*>A<\/span>/);
   expect(html).toContain('<main');
   expect(html).toContain('aria-label="Help panel"');
   expect(html).toContain('aria-label="Activity"');

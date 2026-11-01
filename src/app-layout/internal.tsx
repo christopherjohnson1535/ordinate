@@ -18,9 +18,12 @@ import {
   getContentTypeDefaults,
   minContentHeight,
   minDrawerSize,
+  minSheetWidthBesideNotes,
+  notesMarginWidth,
   splitPanelLimits,
   toolsDrawerId,
 } from './defaults';
+import { GridReference } from './grid-reference';
 import { AppLayoutProps } from './interfaces';
 import { ActivePanel, NavigationPanel, NavigationRail, PanelDefinition, PanelRail } from './panels';
 import { useLayoutGeometry, useMeasuredHeight } from './use-layout-geometry';
@@ -33,6 +36,7 @@ export const InternalAppLayout = React.forwardRef(
   (
     {
       content,
+      titleBlock,
       contentType = 'default',
       variant = 'default',
       navigation,
@@ -42,6 +46,7 @@ export const InternalAppLayout = React.forwardRef(
       navigationWidth = defaultNavigationWidth,
       breadcrumbs,
       notifications,
+      notificationsPosition = 'margin',
       stickyNotifications = false,
       tools,
       toolsOpen: toolsOpenProp,
@@ -100,6 +105,7 @@ export const InternalAppLayout = React.forwardRef(
     const [drawerSizes, setDrawerSizes] = useState<Record<string, number>>({});
     const [toolbarRef, toolbarHeight] = useMeasuredHeight();
     const [contentAreaWidth, setContentAreaWidth] = useState(0);
+    const [mainWidth, setMainWidth] = useState(0);
 
     const hasNavigation = !navigationHide && navigation !== undefined;
     const hasTools = !toolsHide && tools !== undefined;
@@ -191,9 +197,11 @@ export const InternalAppLayout = React.forwardRef(
 
     // The side split panel may take the content's width beyond its minimum, so the space it can use is
     // the content column plus whatever the panel already takes.
-    useResizeObserver(mainRef, () =>
-      setContentAreaWidth((mainRef.current?.offsetWidth ?? 0) + (splitPanelSideRef.current?.offsetWidth ?? 0))
-    );
+    useResizeObserver(mainRef, () => {
+      const width = mainRef.current?.offsetWidth ?? 0;
+      setMainWidth(width);
+      setContentAreaWidth(width + (splitPanelSideRef.current?.offsetWidth ?? 0));
+    });
 
     useEffect(() => {
       const target = pendingFocus.current;
@@ -300,9 +308,27 @@ export const InternalAppLayout = React.forwardRef(
       '--ord-app-layout-footer-offset': `${disableBodyScroll ? 0 : geometry.footerHeight}px`,
       '--ord-app-layout-panel-top': `${panelTop}px`,
       '--ord-app-layout-min-content-width': `${minContentWidth}px`,
+      '--ord-app-layout-notes-width': `${notesMarginWidth}px`,
     } as React.CSSProperties;
 
     const effectiveMaxContentWidth = maxContentWidth ?? defaults.maxContentWidth;
+
+    // Until the layout is measured, the margin counts as available, as the side split panel does.
+    const marginFits = mainWidth === 0 || mainWidth >= minSheetWidthBesideNotes + notesMarginWidth;
+    const notesInMargin = Boolean(notifications) && notificationsPosition === 'margin' && !isMobile && marginFits;
+    const notificationsRegion = notifications && (
+      <div
+        role="region"
+        aria-label={i18n('notifications', ariaLabels?.notifications)}
+        className={clsx(
+          styles.notifications,
+          notesInMargin ? styles['notifications-margin'] : styles['notifications-top'],
+          stickyNotifications && styles['sticky-notifications']
+        )}
+      >
+        {notifications}
+      </div>
+    );
 
     return (
       <div
@@ -369,29 +395,24 @@ export const InternalAppLayout = React.forwardRef(
         )}
 
         <main ref={mainRef} className={styles.main} inert={overlayOpen}>
-          {notifications && (
-            <div
-              role="region"
-              aria-label={i18n('notifications', ariaLabels?.notifications)}
-              className={clsx(styles.notifications, stickyNotifications && styles['sticky-notifications'])}
-            >
-              {notifications}
-            </div>
-          )}
+          {!notesInMargin && notificationsRegion}
           {breadcrumbs && !toolbarVisible && <div className={styles.breadcrumbs}>{breadcrumbs}</div>}
-          <div
-            className={clsx(
-              styles.sheet,
-              disableContentPaddings && styles['no-paddings'],
-              (notifications || (breadcrumbs && !toolbarVisible)) && styles['sheet-below-frame'],
-              hasNavigation && !isMobile && styles['sheet-after-navigation']
-            )}
-          >
-            <div
-              className={styles.content}
-              style={effectiveMaxContentWidth === undefined ? undefined : { maxInlineSize: effectiveMaxContentWidth }}
-            >
-              {content}
+          {/* The notes come first in reading order, though they are drawn in the margin after the sheet. */}
+          <div className={clsx(styles.drawing, notesInMargin && styles['drawing-with-notes'])}>
+            {notesInMargin && notificationsRegion}
+            <div className={styles.sheet}>
+              <GridReference />
+              <div className={clsx(styles['sheet-body'], disableContentPaddings && styles['no-paddings'])}>
+                <div
+                  className={styles.content}
+                  style={
+                    effectiveMaxContentWidth === undefined ? undefined : { maxInlineSize: effectiveMaxContentWidth }
+                  }
+                >
+                  {content}
+                </div>
+              </div>
+              {titleBlock && <div className={styles['title-block']}>{titleBlock}</div>}
             </div>
           </div>
         </main>

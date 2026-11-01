@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 // The offsets come from the component as custom properties: the height of a fixed header
@@ -12,8 +13,11 @@ $header-offset: var(--ord-app-layout-header-offset, 0px);
 $footer-offset: var(--ord-app-layout-footer-offset, 0px);
 $panel-top: var(--ord-app-layout-panel-top, 0px);
 $rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
+$notes-width: var(--ord-app-layout-notes-width, 320px);
 
-// A tinted frame holds the navigation and the rails; the content sits on a white sheet.
+// A drawing set: the grey frame holds the index (the navigation), the rails and the margin notes,
+// and the content sits on a white sheet framed in heavy ink, lettered along its top edge and
+// closed by a title block along its foot.
 .root {
   @include styles.font-body;
   position: relative;
@@ -89,62 +93,106 @@ $rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
 
 .panel-rail {
   grid-area: rail;
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
 }
 
 .main {
   grid-area: main;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   min-inline-size: 0;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
 }
 
 .notifications {
-  padding-block: ord.$space-scaled-s 0;
-  padding-inline: ord.$space-scaled-l;
+  min-inline-size: 0;
+}
+
+.notifications-top {
+  margin-block-end: ord.$space-scaled-s;
 }
 
 .sticky-notifications {
   position: sticky;
   inset-block-start: $panel-top;
   z-index: 2;
+}
+
+.notifications-top.sticky-notifications {
   padding-block-end: ord.$space-scaled-s;
+  margin-block-end: 0;
   background-color: ord.$color-background-layout-main;
 }
 
 .breadcrumbs {
-  padding-block: ord.$space-scaled-s;
-  padding-inline: ord.$space-scaled-l;
+  padding-block: 0 ord.$space-scaled-s;
 }
 
-.notifications + .sheet {
-  margin-block-start: ord.$space-scaled-s;
+// The sheet, with the margin column beside it when the notifications are drawn there.
+.drawing {
+  display: grid;
+  flex-grow: 1;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'sheet';
+  gap: ord.$space-scaled-m;
 }
 
-.sticky-notifications + .sheet {
-  margin-block-start: 0;
+.drawing-with-notes {
+  grid-template-columns: minmax(0, 1fr) $notes-width;
+  grid-template-areas: 'sheet notes';
+}
+
+.notifications-margin {
+  grid-area: notes;
+  align-self: start;
+  min-inline-size: 0;
 }
 
 .sheet {
+  @include styles.border-radius(ord.$border-radius-container);
+  grid-area: sheet;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  border-width: ord.$border-width-section;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+}
+
+// Grid reference letters along the top edge, each division closed by a tick.
+.grid-reference {
+  @include drawing.font-caption;
+  display: flex;
+  flex-shrink: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-strong;
+  color: ord.$color-text-secondary;
+  user-select: none;
+}
+
+.grid-reference-cell {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  overflow: hidden;
+  padding-block: ord.$space-xxxs;
+  text-align: center;
+
+  & + & {
+    border-inline-start-width: ord.$border-width-default;
+    border-inline-start-style: solid;
+    border-inline-start-color: ord.$color-border-divider;
+  }
+}
+
+.sheet-body {
   flex-grow: 1;
   box-sizing: border-box;
   padding-block: ord.$space-scaled-l;
   padding-inline: ord.$space-scaled-l;
-  background-color: ord.$color-background-container;
-}
-
-.sheet-below-frame {
-  border-block-start-width: ord.$border-width-default;
-  border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-divider;
-}
-
-.sheet-after-navigation {
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
 }
 
 .no-paddings {
@@ -154,6 +202,10 @@ $rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
 
 .content {
   margin-inline: auto;
+}
+
+.title-block {
+  flex-shrink: 0;
 }
 
 .split-panel-bottom {
@@ -178,7 +230,7 @@ $rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
   max-inline-size: 100vw;
   border-inline-start-width: ord.$border-width-default;
   border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
+  border-inline-start-color: ord.$color-border-strong;
   background-color: ord.$color-background-container;
 }
 
@@ -242,13 +294,21 @@ $rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
     background-color: ord.$color-background-container;
   }
 
-  .sheet {
+  // The index keeps the grey ground of the frame when it covers the content.
+  .navigation.overlay {
+    background-color: ord.$color-background-layout-main;
+  }
+
+  .main {
+    padding-inline: ord.$space-scaled-xs;
+  }
+
+  .sheet-body {
     padding-inline: ord.$space-scaled-m;
   }
 
-  .notifications,
-  .breadcrumbs {
-    padding-inline: ord.$space-scaled-m;
+  .no-paddings {
+    padding-inline: 0;
   }
 
   &.disable-body-scroll .overlay {
