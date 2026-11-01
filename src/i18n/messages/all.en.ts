@@ -202,6 +202,11 @@ const messages: I18nProviderProps.Messages = {
       token: {
         dismissLabel: 'Remove',
       },
+      'token-group': {
+        dismissLabel: 'Remove {label}',
+        limitShowFewer: 'Show fewer',
+        limitShowMore: 'Show {count} more',
+      },
       'top-navigation': {
         overflowMenuTriggerText: 'More',
       },
