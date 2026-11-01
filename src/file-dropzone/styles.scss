@@ -1,0 +1,50 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// A dashed outline, like the boundary of an area left open on a drawing for something to be placed.
+.root {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-block-size: calc(#{ord.$size-control-height} * 2);
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-l;
+  border-width: ord.$border-width-control;
+  border-style: dashed;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-secondary;
+  text-align: center;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color, color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.page-dragging {
+  border-color: ord.$color-border-accent;
+  color: ord.$color-text-body;
+}
+
+.active {
+  border-style: solid;
+  background-color: ord.$color-background-highlight;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
