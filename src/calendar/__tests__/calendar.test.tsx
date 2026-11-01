@@ -179,12 +179,15 @@ describe('Calendar', () => {
     const onChange = vi.fn();
     render(<Controlled value="2026-03" granularity="month" onChangeSpy={onChange} />);
     expect(wrapper().findTitle().getText()).toBe('2026');
-    expect(screen.getByRole('gridcell', { name: 'This month, March 2026' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('gridcell', { name: 'This month, Mar, March 2026' })).toHaveAttribute(
+      'aria-selected',
+      'true'
+    );
     act(() => wrapper().findFocusableDate()!.focus());
     press('ArrowDown');
-    expect(focusedLabel()).toBe('June 2026');
+    expect(focusedLabel()).toBe('Jun, June 2026');
     press('PageDown');
-    expect(focusedLabel()).toBe('June 2027');
+    expect(focusedLabel()).toBe('Jun, June 2027');
     press('Enter');
     expect(onChange).toHaveBeenLastCalledWith('2027-06');
     expect(screen.getByRole('button', { name: 'Next year' })).toBeInTheDocument();

@@ -63,6 +63,15 @@ interface CellProps extends SharedGridProps {
   className?: string;
 }
 
+// Voice control users name a cell by what it shows, so the accessible name must contain the
+// visible text as a word: a month shown as "Jan" is named "Jan, January 2026".
+function includesWord(label: string, word: string): boolean {
+  return label
+    .toLocaleLowerCase()
+    .split(/[\s,.]+/)
+    .includes(word.toLocaleLowerCase());
+}
+
 function GridCell({
   date,
   label,
@@ -83,7 +92,8 @@ function GridCell({
   const enabled = isEnabled(date);
   const state = getCellState(date);
   const reason = enabled ? undefined : getDisabledReason?.(date);
-  const name = isCurrent && currentAriaLabel ? `${currentAriaLabel}, ${label}` : label;
+  const named = includesWord(label, text) ? label : `${text}, ${label}`;
+  const name = isCurrent && currentAriaLabel ? `${currentAriaLabel}, ${named}` : named;
   return (
     <td
       role="gridcell"
