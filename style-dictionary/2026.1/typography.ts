@@ -48,4 +48,6 @@ export const tokens: TypographyDictionary = {
   letterSpacingCaption: '0.08em',
   // Page titles drawn like a sheet heading: light and large. Site styles keep their headline weight.
   fontWeightPageHeading: '{fontWeightLight}',
+  // Tracking for short labels set in capitals, such as stamps.
+  letterSpacingCaps: '0.12em',
 };

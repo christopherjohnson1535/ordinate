@@ -1,0 +1,104 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// A rubber stamp: ink only, no fill, so it reads as pressed onto whatever paper it sits on. Every
+// type's ink keeps 4.5:1 against both the container and the layout background in both modes.
+.stamp {
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: inline-flex;
+  box-sizing: border-box;
+  max-inline-size: 100%;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-xxxs;
+  border-width: ord.$border-width-section;
+  border-style: solid;
+  border-color: currentColor;
+  background-color: transparent;
+  font-family: ord.$font-family-mono;
+  font-weight: ord.$font-weight-bold;
+  line-height: ord.$line-height-heading;
+  letter-spacing: ord.$letter-spacing-caps;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+// The inner rule of the double frame.
+.text {
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: block;
+  min-inline-size: 0;
+  overflow: hidden;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: currentColor;
+  // Tracking adds space after the last letter; the same space before the first keeps the text centred.
+  text-indent: ord.$letter-spacing-caps;
+  text-overflow: ellipsis;
+}
+
+.size-small {
+  font-size: ord.$font-size-small;
+
+  .text {
+    padding-inline: ord.$space-xxs;
+  }
+}
+
+.size-medium {
+  font-size: ord.$font-size-body;
+
+  .text {
+    padding-block: ord.$space-xxxs;
+    padding-inline: ord.$space-xs;
+  }
+}
+
+// A slight tilt, the way a stamp lands when pressed by hand. It leans the other way in
+// right-to-left layout, so the stamp still rises toward the end of the line.
+.rotation-slight {
+  transform: rotate(-2deg);
+
+  &:dir(rtl) {
+    transform: rotate(2deg);
+  }
+}
+
+.type-success {
+  color: ord.$color-text-status-success;
+}
+
+.type-warning {
+  color: ord.$color-text-status-warning;
+}
+
+.type-error {
+  color: ord.$color-text-error;
+}
+
+.type-info {
+  color: ord.$color-text-status-info;
+}
+
+.type-neutral {
+  color: ord.$color-text-body-secondary;
+}
+
+// Not issued yet: a single dashed rule.
+.type-draft {
+  border-style: dashed;
+  color: ord.$color-text-secondary;
+
+  .text {
+    border-color: transparent;
+  }
+}
+
+.rotation-none {
+  transform: none;
+}

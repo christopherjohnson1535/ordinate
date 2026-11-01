@@ -351,6 +351,10 @@
     "minified": 117100,
     "gzip": 27600
   },
+  "stamp": {
+    "minified": 4000,
+    "gzip": 1200
+  },
   "status-indicator": {
     "minified": 43000,
     "gzip": 8200

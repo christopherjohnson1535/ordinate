@@ -187,6 +187,7 @@ export const typographyTokenNames = [
   'fontSizeCaption',
   'letterSpacingCaption',
   'fontWeightPageHeading',
+  'letterSpacingCaps',
 ] as const;
 
 export const spacingTokenNames = [
