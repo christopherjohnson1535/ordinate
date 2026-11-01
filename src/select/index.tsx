@@ -37,6 +37,7 @@ const Select = React.forwardRef(
       ariaLabelledby,
       ariaDescribedby,
       invalid,
+      warning,
       ...props
     }: SelectProps,
     ref: React.Ref<SelectProps.Ref>
@@ -69,6 +70,7 @@ const Select = React.forwardRef(
       ariaLabelledby={ariaLabelledby}
       ariaDescribedby={ariaDescribedby}
       invalid={invalid}
+      warning={warning}
     />
   )
 );

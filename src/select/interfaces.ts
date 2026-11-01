@@ -2,8 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 
-import { IconProps } from '../icon/interfaces';
 import { BaseComponentProps } from '../internal/base-component';
+import {
+  FilteringType as SharedFilteringType,
+  LoadItemsDetail as SharedLoadItemsDetail,
+  OptionDefinition,
+  OptionGroupDefinition,
+  OptionsDefinition,
+  StatusType as SharedStatusType,
+} from '../internal/components/option-list/interfaces';
 import { FormFieldControlProps } from '../internal/context/form-field-context';
 import { NonCancelableEventHandler } from '../internal/events';
 
@@ -126,38 +133,21 @@ export interface SelectProps extends BaseComponentProps, FormFieldControlProps {
 }
 
 export namespace SelectProps {
-  export type FilteringType = 'none' | 'auto' | 'manual';
+  export type FilteringType = SharedFilteringType;
 
-  export type StatusType = 'pending' | 'loading' | 'finished' | 'error';
+  export type StatusType = SharedStatusType;
 
-  export interface Option {
-    value?: string;
-    label?: string;
-    description?: string;
-    labelTag?: string;
-    tags?: ReadonlyArray<string>;
-    filteringTags?: ReadonlyArray<string>;
-    disabled?: boolean;
-    iconName?: IconProps.Name;
-    iconAriaLabel?: string;
-    lang?: string;
-  }
+  export interface Option extends OptionDefinition {}
 
-  export interface OptionGroup extends Option {
-    options: ReadonlyArray<Option>;
-  }
+  export interface OptionGroup extends OptionGroupDefinition {}
 
-  export type Options = ReadonlyArray<Option | OptionGroup>;
+  export type Options = OptionsDefinition;
 
   export interface ChangeDetail {
     selectedOption: Option;
   }
 
-  export interface LoadItemsDetail {
-    filteringText: string;
-    firstPage: boolean;
-    samePage: boolean;
-  }
+  export interface LoadItemsDetail extends SharedLoadItemsDetail {}
 
   export interface Ref {
     /**

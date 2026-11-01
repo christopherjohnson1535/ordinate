@@ -4,17 +4,19 @@ import ButtonWrapper from '../button';
 import { ComponentWrapper, ElementWrapper } from '../core';
 
 import dropdownStyles from '../../../internal/components/dropdown/styles.css.js';
+import optionListStyles from '../../../internal/components/option-list/styles.css.js';
+import selectBaseStyles from '../../../internal/components/select-base/styles.css.js';
 import selectStyles from '../../../select/styles.css.js';
 
 export default class SelectWrapper extends ComponentWrapper {
   static rootSelector = `.${selectStyles.root}`;
 
   findTrigger(): ElementWrapper<HTMLButtonElement> {
-    return this.findByClassName<HTMLButtonElement>(selectStyles.trigger)!;
+    return this.findByClassName<HTMLButtonElement>(selectBaseStyles.trigger)!;
   }
 
   findPlaceholder(): ElementWrapper | null {
-    return this.findByClassName(selectStyles.placeholder);
+    return this.findByClassName(selectBaseStyles.placeholder);
   }
 
   /**
@@ -25,34 +27,34 @@ export default class SelectWrapper extends ComponentWrapper {
   }
 
   findFilteringInput(): ElementWrapper<HTMLInputElement> | null {
-    return this.findByClassName<HTMLInputElement>(selectStyles['filter-input']);
+    return this.findByClassName<HTMLInputElement>(selectBaseStyles['filter-input']);
   }
 
   /**
    * Returns the options in the open list, in order, including disabled ones.
    */
   findOptions(): ElementWrapper[] {
-    return this.findAllByClassName(selectStyles.option);
+    return this.findAllByClassName(optionListStyles.option);
   }
 
   findSelectedOption(): ElementWrapper | null {
-    return this.findByClassName(selectStyles['option-selected']);
+    return this.findByClassName(optionListStyles['option-selected']);
   }
 
   findHighlightedOption(): ElementWrapper | null {
-    return this.findByClassName(selectStyles['option-highlighted']);
+    return this.findByClassName(optionListStyles['option-highlighted']);
   }
 
   findGroups(): ElementWrapper[] {
-    return this.findAllByClassName(selectStyles['group-label']);
+    return this.findAllByClassName(optionListStyles['group-label']);
   }
 
   findStatus(): ElementWrapper | null {
-    return this.findByClassName(selectStyles.status);
+    return this.findByClassName(optionListStyles.status);
   }
 
   findErrorRecoveryButton(): ButtonWrapper | null {
-    const element = this.findByClassName(selectStyles.recovery);
+    const element = this.findByClassName(optionListStyles.recovery);
     return element ? new ButtonWrapper(element.getElement()) : null;
   }
 

@@ -1,0 +1,128 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.trigger {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: ord.$size-control-height;
+  padding-block: 0;
+  padding-inline: ord.$space-input-horizontal;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+  color: ord.$color-text-body;
+  text-align: start;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: border-color, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  &:disabled {
+    @include styles.hatch;
+    border-color: ord.$color-border-disabled;
+    box-shadow: none;
+    color: ord.$color-text-disabled;
+    cursor: default;
+  }
+}
+
+.trigger-open {
+  border-color: ord.$color-border-strong;
+}
+
+.read-only {
+  background-color: ord.$color-background-control-read-only;
+  cursor: default;
+}
+
+.invalid {
+  border-color: ord.$color-border-error;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+}
+
+.warning {
+  border-color: ord.$color-border-status-warning;
+  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-status-warning;
+}
+
+.trigger-content {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.trigger-label-icon {
+  flex-shrink: 0;
+}
+
+.trigger-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  overflow: hidden;
+  color: ord.$color-text-secondary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .trigger:disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+.trigger-icon {
+  @include styles.with-motion {
+    transition-property: transform;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  .trigger-open & {
+    transform: rotate(180deg);
+  }
+}
+
+.filter-input {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-input);
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: ord.$size-control-height;
+  padding-block: 0;
+  padding-inline: ord.$space-input-horizontal;
+  border-width: 0;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+
+  &::placeholder {
+    color: ord.$color-text-secondary;
+    opacity: 1;
+  }
+
+  &:focus {
+    outline-width: 0;
+  }
+}

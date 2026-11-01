@@ -1,31 +1,35 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { SelectProps } from './interfaces';
+import { OptionDefinition, OptionGroupDefinition, OptionsDefinition } from './interfaces';
 
 export interface GroupItem {
   type: 'group';
-  option: SelectProps.OptionGroup;
+  option: OptionGroupDefinition;
   disabled: boolean;
 }
 
 export interface OptionItem {
   type: 'option';
-  option: SelectProps.Option;
-  group: SelectProps.OptionGroup | null;
+  option: OptionDefinition;
+  group: OptionGroupDefinition | null;
   disabled: boolean;
+  /**
+   * A row the host adds that is not one of the options, such as "Select all". It is set off from the options by a rule.
+   */
+  extra?: boolean;
 }
 
 export type ListItem = GroupItem | OptionItem;
 
-export function isGroup(option: SelectProps.Option | SelectProps.OptionGroup): option is SelectProps.OptionGroup {
+export function isGroup(option: OptionDefinition | OptionGroupDefinition): option is OptionGroupDefinition {
   return 'options' in option && Array.isArray(option.options);
 }
 
-export function getLabel(option: SelectProps.Option): string {
+export function getLabel(option: OptionDefinition): string {
   return option.label ?? option.value ?? '';
 }
 
-function matches(option: SelectProps.Option, text: string): boolean {
+function matches(option: OptionDefinition, text: string): boolean {
   const searchable = [
     option.label,
     option.value,
@@ -41,7 +45,7 @@ function matches(option: SelectProps.Option, text: string): boolean {
  * Flattens options and groups into the rows of the list. With `filteringText`,
  * an option is kept when it or its group matches.
  */
-export function flattenOptions(options: SelectProps.Options, filteringText = ''): ListItem[] {
+export function flattenOptions(options: OptionsDefinition, filteringText = ''): ListItem[] {
   const text = filteringText.trim().toLowerCase();
   const items: ListItem[] = [];
   for (const entry of options) {
@@ -63,7 +67,11 @@ export function flattenOptions(options: SelectProps.Options, filteringText = '')
   return items;
 }
 
-export function isSameOption(a: SelectProps.Option, b: SelectProps.Option | null): boolean {
+export function getOptionItems(items: ReadonlyArray<ListItem>): OptionItem[] {
+  return items.filter((item): item is OptionItem => item.type === 'option');
+}
+
+export function isSameOption(a: OptionDefinition, b: OptionDefinition | null | undefined): boolean {
   if (!b) {
     return false;
   }
@@ -71,4 +79,16 @@ export function isSameOption(a: SelectProps.Option, b: SelectProps.Option | null
     return a.value === b.value;
   }
   return a === b;
+}
+
+/**
+ * Returns the index of the first option from `start` in the direction of `step` that can be chosen, or -1.
+ */
+export function findEnabled(options: ReadonlyArray<OptionItem>, start: number, step: 1 | -1): number {
+  for (let index = start; index >= 0 && index < options.length; index += step) {
+    if (!options[index].disabled) {
+      return index;
+    }
+  }
+  return -1;
 }
