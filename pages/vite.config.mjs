@@ -1,5 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
@@ -22,6 +23,12 @@ export default defineConfig({
       { find: /^@ordinate\/components\//, replacement: `${path.resolve(root, '../lib/components')}/` },
       { find: /^@ordinate\/design-tokens$/, replacement: path.resolve(root, '../lib/design-tokens/index.js') },
     ],
+  },
+  server: {
+    fs: {
+      // A git worktree may link node_modules to another checkout; fonts load from wherever it points.
+      allow: [path.resolve(root, '..'), fs.realpathSync(path.resolve(root, '../node_modules'))],
+    },
   },
   build: {
     outDir: 'dist',
