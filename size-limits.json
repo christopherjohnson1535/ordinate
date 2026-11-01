@@ -1,15 +1,15 @@
 {
   "(shared tokens)": {
-    "minified": 27100,
-    "gzip": 3500
+    "minified": 29600,
+    "gzip": 3700
   },
   "action-card": {
     "minified": 43100,
     "gzip": 8400
   },
   "alert": {
-    "minified": 69900,
-    "gzip": 16400
+    "minified": 70400,
+    "gzip": 16600
   },
   "anchor-navigation": {
     "minified": 6300,
@@ -20,20 +20,24 @@
     "gzip": 0
   },
   "app-layout": {
-    "minified": 108800,
-    "gzip": 26500
+    "minified": 109300,
+    "gzip": 26700
   },
   "app-layout-toolbar": {
-    "minified": 82700,
-    "gzip": 20100
+    "minified": 83200,
+    "gzip": 20300
+  },
+  "article": {
+    "minified": 14000,
+    "gzip": 2500
   },
   "attribute-editor": {
-    "minified": 84600,
-    "gzip": 20700
+    "minified": 85000,
+    "gzip": 20900
   },
   "autosuggest": {
-    "minified": 101800,
-    "gzip": 24000
+    "minified": 102300,
+    "gzip": 24200
   },
   "badge": {
     "minified": 3300,
@@ -44,40 +48,44 @@
     "gzip": 6100
   },
   "breadcrumb-group": {
-    "minified": 72700,
-    "gzip": 17500
+    "minified": 73200,
+    "gzip": 17600
   },
   "button": {
-    "minified": 65900,
-    "gzip": 15400
+    "minified": 66300,
+    "gzip": 15600
   },
   "button-dropdown": {
-    "minified": 90300,
-    "gzip": 22100
+    "minified": 90800,
+    "gzip": 22300
   },
   "button-group": {
-    "minified": 111400,
-    "gzip": 27400
+    "minified": 111900,
+    "gzip": 27600
   },
   "calendar": {
-    "minified": 85600,
-    "gzip": 20700
+    "minified": 86100,
+    "gzip": 20900
+  },
+  "call-to-action": {
+    "minified": 8200,
+    "gzip": 2200
   },
   "cards": {
-    "minified": 92300,
-    "gzip": 21100
+    "minified": 92700,
+    "gzip": 21200
   },
   "checkbox": {
     "minified": 45500,
     "gzip": 9000
   },
   "code-editor": {
-    "minified": 902900,
-    "gzip": 303500
+    "minified": 903400,
+    "gzip": 303600
   },
   "collection-preferences": {
-    "minified": 112600,
-    "gzip": 25800
+    "minified": 113100,
+    "gzip": 26000
   },
   "column-layout": {
     "minified": 7000,
@@ -96,72 +104,76 @@
     "gzip": 1000
   },
   "copy-to-clipboard": {
-    "minified": 83600,
-    "gzip": 20300
+    "minified": 84000,
+    "gzip": 20400
   },
   "date-input": {
-    "minified": 79800,
-    "gzip": 19400
+    "minified": 80200,
+    "gzip": 19600
   },
   "date-picker": {
-    "minified": 111400,
-    "gzip": 27500
+    "minified": 111900,
+    "gzip": 27600
   },
   "date-range-picker": {
-    "minified": 179900,
-    "gzip": 42700
+    "minified": 180400,
+    "gzip": 42800
   },
   "dialog": {
-    "minified": 70300,
-    "gzip": 16500
+    "minified": 70800,
+    "gzip": 16600
   },
   "divider": {
     "minified": 2900,
     "gzip": 1100
   },
   "drawer": {
-    "minified": 24900,
-    "gzip": 8000
+    "minified": 25400,
+    "gzip": 8100
   },
   "dropdown": {
     "minified": 9400,
     "gzip": 3100
   },
   "error-boundary": {
-    "minified": 77100,
-    "gzip": 18300
+    "minified": 77600,
+    "gzip": 18500
   },
   "expandable-section": {
     "minified": 50500,
     "gzip": 9600
+  },
+  "figure": {
+    "minified": 2700,
+    "gzip": 1000
   },
   "file-dropzone": {
     "minified": 4400,
     "gzip": 1500
   },
   "file-input": {
-    "minified": 69200,
-    "gzip": 16500
+    "minified": 69700,
+    "gzip": 16600
   },
   "file-token-group": {
-    "minified": 99000,
-    "gzip": 23800
+    "minified": 99500,
+    "gzip": 24000
   },
   "file-upload": {
-    "minified": 111000,
-    "gzip": 26600
+    "minified": 111500,
+    "gzip": 26800
   },
   "flashbar": {
-    "minified": 82100,
-    "gzip": 19200
+    "minified": 82600,
+    "gzip": 19300
   },
   "form": {
     "minified": 40300,
     "gzip": 7600
   },
   "form-field": {
-    "minified": 62100,
-    "gzip": 14400
+    "minified": 62600,
+    "gzip": 14600
   },
   "grid": {
     "minified": 5100,
@@ -172,12 +184,16 @@
     "gzip": 1300
   },
   "help-panel": {
-    "minified": 30700,
-    "gzip": 8500
+    "minified": 31200,
+    "gzip": 8700
   },
   "hotspot": {
-    "minified": 89700,
-    "gzip": 21600
+    "minified": 90200,
+    "gzip": 21700
+  },
+  "how-it-works": {
+    "minified": 4500,
+    "gzip": 1500
   },
   "i18n": {
     "minified": 0,
@@ -191,89 +207,133 @@
     "minified": 0,
     "gzip": 0
   },
+  "index-list": {
+    "minified": 11000,
+    "gzip": 3100
+  },
   "input": {
-    "minified": 74000,
-    "gzip": 17200
+    "minified": 74400,
+    "gzip": 17400
   },
   "item-card": {
     "minified": 7200,
     "gzip": 1900
+  },
+  "journey": {
+    "minified": 75300,
+    "gzip": 18000
   },
   "key-value-pairs": {
     "minified": 5000,
     "gzip": 1600
   },
   "link": {
-    "minified": 62000,
-    "gzip": 14500
+    "minified": 62400,
+    "gzip": 14700
   },
   "list": {
-    "minified": 68900,
-    "gzip": 16500
+    "minified": 69400,
+    "gzip": 16700
   },
   "live-region": {
     "minified": 2200,
     "gzip": 1100
   },
+  "media": {
+    "minified": 4700,
+    "gzip": 1700
+  },
+  "menu-tile": {
+    "minified": 8100,
+    "gzip": 2200
+  },
   "modal": {
-    "minified": 71500,
-    "gzip": 16800
+    "minified": 71900,
+    "gzip": 17000
   },
   "multiselect": {
-    "minified": 129800,
-    "gzip": 31100
+    "minified": 130300,
+    "gzip": 31200
   },
   "navigable-group": {
     "minified": 3700,
     "gzip": 1800
   },
+  "opening": {
+    "minified": 36100,
+    "gzip": 10100
+  },
+  "opening-hours": {
+    "minified": 29100,
+    "gzip": 9300
+  },
   "pagination": {
-    "minified": 62100,
-    "gzip": 14500
+    "minified": 62600,
+    "gzip": 14600
   },
   "panel-layout": {
-    "minified": 27800,
-    "gzip": 8900
+    "minified": 28300,
+    "gzip": 9000
+  },
+  "plate": {
+    "minified": 6500,
+    "gzip": 2100
   },
   "popover": {
-    "minified": 81400,
-    "gzip": 19800
+    "minified": 81900,
+    "gzip": 19900
   },
   "progress-bar": {
-    "minified": 78200,
-    "gzip": 18600
+    "minified": 78700,
+    "gzip": 18700
   },
   "prompt-input": {
-    "minified": 75800,
-    "gzip": 17900
+    "minified": 76200,
+    "gzip": 18000
   },
   "property-filter": {
-    "minified": 164400,
-    "gzip": 38600
+    "minified": 164900,
+    "gzip": 38800
+  },
+  "pull-quote": {
+    "minified": 4000,
+    "gzip": 1200
   },
   "radio-button": {
     "minified": 8700,
-    "gzip": 2400
+    "gzip": 2500
   },
   "radio-group": {
     "minified": 10400,
     "gzip": 3000
+  },
+  "section": {
+    "minified": 8900,
+    "gzip": 2300
   },
   "segmented-control": {
     "minified": 43500,
     "gzip": 8900
   },
   "select": {
-    "minified": 104200,
-    "gzip": 24700
+    "minified": 104700,
+    "gzip": 24900
   },
   "side-navigation": {
-    "minified": 69100,
-    "gzip": 15900
+    "minified": 69600,
+    "gzip": 16000
+  },
+  "site-footer": {
+    "minified": 32500,
+    "gzip": 9600
+  },
+  "site-header": {
+    "minified": 72100,
+    "gzip": 16500
   },
   "skeleton": {
-    "minified": 24900,
-    "gzip": 7900
+    "minified": 25400,
+    "gzip": 8100
   },
   "slider": {
     "minified": 14800,
@@ -288,8 +348,8 @@
     "gzip": 1100
   },
   "split-panel": {
-    "minified": 117100,
-    "gzip": 27600
+    "minified": 117500,
+    "gzip": 27800
   },
   "status-indicator": {
     "minified": 43000,
@@ -299,29 +359,33 @@
     "minified": 49800,
     "gzip": 9900
   },
+  "story-card": {
+    "minified": 7500,
+    "gzip": 2200
+  },
   "style-scope": {
     "minified": 1600,
     "gzip": 700
   },
   "table": {
-    "minified": 110200,
-    "gzip": 26700
+    "minified": 110700,
+    "gzip": 26900
   },
   "table-body": {
     "minified": 1100,
     "gzip": 600
   },
   "table-body-cell": {
-    "minified": 72700,
-    "gzip": 16800
+    "minified": 73200,
+    "gzip": 17000
   },
   "table-head": {
     "minified": 1100,
     "gzip": 600
   },
   "table-header-cell": {
-    "minified": 79100,
-    "gzip": 18400
+    "minified": 79600,
+    "gzip": 18600
   },
   "table-root": {
     "minified": 4900,
@@ -332,20 +396,24 @@
     "gzip": 1100
   },
   "tabs": {
-    "minified": 70200,
-    "gzip": 16800
+    "minified": 70700,
+    "gzip": 17000
   },
   "tag-editor": {
-    "minified": 129500,
-    "gzip": 31500
+    "minified": 129900,
+    "gzip": 31700
+  },
+  "testimonial": {
+    "minified": 4600,
+    "gzip": 1400
   },
   "text-content": {
     "minified": 6600,
     "gzip": 1200
   },
   "text-filter": {
-    "minified": 77000,
-    "gzip": 18300
+    "minified": 77500,
+    "gzip": 18500
   },
   "textarea": {
     "minified": 6800,
@@ -356,51 +424,51 @@
     "gzip": 0
   },
   "tiles": {
-    "minified": 14300,
-    "gzip": 3900
+    "minified": 16400,
+    "gzip": 4200
   },
   "time-input": {
-    "minified": 79400,
-    "gzip": 19300
+    "minified": 79900,
+    "gzip": 19500
   },
   "toggle": {
     "minified": 10200,
     "gzip": 2600
   },
   "toggle-button": {
-    "minified": 67000,
-    "gzip": 15700
+    "minified": 67500,
+    "gzip": 15900
   },
   "token": {
-    "minified": 86300,
-    "gzip": 20700
+    "minified": 86800,
+    "gzip": 20900
   },
   "token-group": {
-    "minified": 89800,
-    "gzip": 21800
+    "minified": 90300,
+    "gzip": 21900
   },
   "tooltip": {
     "minified": 13300,
     "gzip": 4300
   },
   "top-navigation": {
-    "minified": 102100,
-    "gzip": 25100
+    "minified": 102600,
+    "gzip": 25200
   },
   "tree-view": {
-    "minified": 66700,
-    "gzip": 16200
+    "minified": 67200,
+    "gzip": 16300
   },
   "truncated-text": {
     "minified": 15600,
     "gzip": 5000
   },
   "tutorial-panel": {
-    "minified": 101400,
-    "gzip": 22500
+    "minified": 101900,
+    "gzip": 22600
   },
   "wizard": {
-    "minified": 103900,
-    "gzip": 23800
+    "minified": 104400,
+    "gzip": 23900
   }
 }
