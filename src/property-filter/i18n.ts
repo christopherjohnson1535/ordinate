@@ -31,6 +31,8 @@ const operatorKeys: Record<Operator, TextKey> = {
 export interface PropertyFilterStrings {
   filteringAriaLabel: string;
   filteringPlaceholder: string;
+  addConditionPlaceholder: string;
+  queryStartText: string;
   operatorName(operator: Operator): string;
   operationText(operation: PropertyFilterProps.Operation): string;
   tokenOperatorAriaLabel: string;
@@ -78,6 +80,8 @@ export function usePropertyFilterStrings(
   return {
     filteringAriaLabel: i18n('filteringAriaLabel', props.filteringAriaLabel) ?? '',
     filteringPlaceholder: i18n('filteringPlaceholder', props.filteringPlaceholder) ?? '',
+    addConditionPlaceholder: text('addConditionPlaceholder'),
+    queryStartText: text('queryStartText'),
     operatorName: operator => text(operatorKeys[operator]),
     operationText: operation => text(operation === 'and' ? 'operationAndText' : 'operationOrText'),
     tokenOperatorAriaLabel: text('tokenOperatorAriaLabel'),

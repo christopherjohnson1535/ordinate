@@ -262,6 +262,7 @@ const messages: I18nProviderProps.Messages = {
         actionButtonAriaLabel: 'Send',
       },
       'property-filter': {
+        addConditionPlaceholder: 'add a condition…',
         allPropertiesLabel: 'All properties',
         applyActionText: 'Apply',
         cancelActionText: 'Cancel',
@@ -290,6 +291,7 @@ const messages: I18nProviderProps.Messages = {
         operatorText: 'Operator',
         operatorsText: 'Operators',
         propertyText: 'Property',
+        queryStartText: 'where',
         removeTokenButtonAriaLabel: 'Remove filter, {token}',
         tokenAriaLabel:
           '{hasProperty, select, true {{propertyLabel} {operator} {value}} other {{showOperator, select, true {{operator} {value}} other {{value}}}}}',

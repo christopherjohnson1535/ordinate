@@ -240,9 +240,30 @@ describe('PropertyFilter tokens', () => {
     expect(onQuery).toHaveBeenCalledWith({ ...twoTokens, operation: 'or' });
   });
 
-  test('hideOperations hides the operation', () => {
+  test('hideOperations writes the operation as text without a control', () => {
     render(<Controlled query={twoTokens} hideOperations={true} />);
-    expect(wrapper().findTokens()[1].findTokenOperation()).toBeNull();
+    const token = wrapper().findTokens()[1];
+    expect(token.findTokenOperation()).toBeNull();
+    expect(token.getElement()).toHaveTextContent(/^and/);
+  });
+
+  test('reads as a query line: "where", the filters joined by the operation, then the input', () => {
+    render(<Controlled query={twoTokens} countText="2 matches" />);
+    const list = screen.getByRole('list');
+    const query = list.parentElement!;
+    expect(query).toContainElement(getInput());
+    expect(list.compareDocumentPosition(getInput()) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(query).toHaveTextContent(/^where\s*Status=Running.*and\s*web/);
+    expect(getInput()).toHaveAttribute('placeholder', 'add a condition…');
+    expect(getInput()).toHaveAttribute('type', 'text');
+    expect(wrapper().findResultsCount()!.getText()).toBe('2 matches');
+  });
+
+  test('without filters the line is a search field with the given placeholder', () => {
+    render(<Controlled filteringPlaceholder="Find instances" />);
+    expect(screen.queryByText('where')).toBeNull();
+    expect(getInput()).toHaveAttribute('placeholder', 'Find instances');
+    expect(getInput()).toHaveAttribute('type', 'search');
   });
 
   test('removing a filter fires onChange and moves focus to the next filter, then to the input', () => {
@@ -314,6 +335,8 @@ describe('PropertyFilter tokens', () => {
         query={twoTokens}
         i18nStrings={{
           clearFiltersText: 'Reset',
+          queryStartText: 'when',
+          addConditionPlaceholder: 'and also…',
           operationAndText: 'all',
           operatorEqualsText: 'is',
           tokenAriaLabel: token => `${token.propertyLabel ?? 'Any'} ${token.operatorText} ${token.value}`,
@@ -326,6 +349,8 @@ describe('PropertyFilter tokens', () => {
     expect(tokens[0].findLabel().getElement()).toHaveAccessibleName('Status is Running');
     expect(tokens[1].findRemoveButton().getElement()).toHaveAccessibleName('Drop web');
     expect(tokens[1].findTokenOperation()!.findTrigger().getText()).toBe('all');
+    expect(screen.getByText('when')).toBeInTheDocument();
+    expect(getInput()).toHaveAttribute('placeholder', 'and also…');
   });
 });
 

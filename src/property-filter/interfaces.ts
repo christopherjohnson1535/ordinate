@@ -35,7 +35,8 @@ export interface PropertyFilterProps extends BaseComponentProps {
    */
   filteringOptions?: ReadonlyArray<PropertyFilterProps.FilteringOption>;
   /**
-   * Hint text shown while the input is empty.
+   * Hint text shown while the input is empty and there are no filters. Once there are filters, the input
+   * reads "add a condition…" (`i18nStrings.addConditionPlaceholder`).
    */
   filteringPlaceholder?: string;
   /**
@@ -52,7 +53,8 @@ export interface PropertyFilterProps extends BaseComponentProps {
    */
   disableFreeTextFiltering?: boolean;
   /**
-   * Hides the control between filters that switches the operation between `and` and `or`.
+   * Writes the operation between filters as plain text, without the control that switches it between
+   * `and` and `or`.
    */
   hideOperations?: boolean;
   /**
@@ -129,6 +131,8 @@ export interface PropertyFilterProps extends BaseComponentProps {
    *   `operatorDoesNotEqualText`, `operatorContainsText`, `operatorDoesNotContainText`,
    *   `operatorGreaterText`, `operatorGreaterOrEqualText`, `operatorLessText`, `operatorLessOrEqualText`,
    *   `operatorStartsWithText` and `operatorDoesNotStartWithText`.
+   * * `queryStartText`: the word that opens the query line before the first filter, "where".
+   * * `addConditionPlaceholder`: the hint in the input once there are filters, "add a condition…".
    * * `operationAndText` and `operationOrText`: the names of the two operations.
    * * `tokenOperatorAriaLabel`: accessible name of the control that switches the operation.
    * * `groupPropertiesText`, `groupValuesText` and `operatorsText`: headings in the suggestions.
@@ -216,6 +220,8 @@ export namespace PropertyFilterProps {
   }
 
   export interface I18nStrings {
+    queryStartText?: string;
+    addConditionPlaceholder?: string;
     operatorEqualsText?: string;
     operatorDoesNotEqualText?: string;
     operatorContainsText?: string;

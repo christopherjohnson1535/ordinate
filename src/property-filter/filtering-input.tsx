@@ -24,6 +24,11 @@ export interface FilteringInputStatus {
 }
 
 export interface FilteringInputProps {
+  /**
+   * `search` shows a search icon and a clear button. The query line drops them once it holds filters,
+   * where the input reads as the next condition.
+   */
+  type: 'search' | 'text';
   value: string;
   onChange(value: string): void;
   /**
@@ -61,6 +66,7 @@ export interface FilteringInputProps {
 export const FilteringInput = React.forwardRef(
   (
     {
+      type,
       value,
       onChange,
       options,
@@ -187,7 +193,7 @@ export const FilteringInput = React.forwardRef(
     const input = (
       <InternalInput
         ref={inputRef}
-        type="search"
+        type={type}
         value={value}
         onChange={event => handleChange(event.detail.value)}
         placeholder={placeholder}

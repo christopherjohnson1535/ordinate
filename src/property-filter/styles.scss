@@ -4,21 +4,16 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// The height inside a filter's border, so every segment fills the filter.
-$token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-width-default});
+// The height inside a chip's border, so every part of the chip fills it.
+$token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-xxxs});
 
 .root {
   display: flex;
-  flex-direction: column;
-  gap: ord.$space-scaled-s;
-}
-
-.search-row {
-  display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: ord.$space-xs ord.$space-s;
 }
 
@@ -27,8 +22,58 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
   max-inline-size: 100%;
 }
 
+// The query line: one ruled line holding the conditions, the input for the next one and the result count,
+// set in mono like a line of a specification.
+.query {
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xxs ord.$space-xs;
+  box-sizing: border-box;
+  min-inline-size: min(100%, 16rem);
+  min-block-size: ord.$size-control-height;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-s ord.$space-xs;
+
+  // Once the conditions wrap, the lines need room between them and the rule.
+  &:has(.token-list > :nth-child(2)) {
+    padding-block: ord.$space-xxs;
+  }
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-control;
+  color: ord.$color-text-body;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-body;
+
+  &:has(input:focus) {
+    @include styles.focus-ring;
+  }
+
+  .disabled > & {
+    @include styles.hatch;
+    border-color: ord.$color-border-disabled;
+    color: ord.$color-text-disabled;
+  }
+}
+
+.query-word,
+.operation-text {
+  @include styles.font-code;
+  flex-shrink: 0;
+  font-size: ord.$font-size-body;
+  color: ord.$color-text-secondary;
+
+  .disabled & {
+    color: inherit;
+  }
+}
+
 .search {
-  flex: 1 1 auto;
+  flex: 1 1 10rem;
   min-inline-size: 0;
 }
 
@@ -36,22 +81,39 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
   display: block;
 }
 
+// The input continues the line, so it gives up its own box and focus ring to the query line. The input's
+// classes are scoped to it, so it is reached through its structure.
+.query .filtering-input div:has(> div > input[role='combobox']) {
+  min-block-size: $token-inner-height;
+  border-width: 0;
+  background-color: transparent;
+  background-image: none;
+  outline-style: none;
+  box-shadow: none;
+}
+
+// Without filters the line is a plain search field and keeps the input's own icon and padding.
+.query:has(input[type='search']) {
+  padding-inline-start: 0;
+}
+
+.query input[role='combobox'] {
+  font-family: ord.$font-family-mono;
+
+  &:not([type='search']) {
+    padding-inline: 0;
+  }
+}
+
 .dropdown {
   inline-size: 100%;
 }
 
 .count {
-  @include styles.font-body;
+  @include styles.font-code;
   flex-shrink: 0;
   color: ord.$color-text-secondary;
   white-space: nowrap;
-}
-
-.tokens {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: ord.$space-xs;
 }
 
 .token-list {
@@ -63,58 +125,60 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
   list-style: none;
 }
 
-// A filter reads like a callout tag on a drawing: ruled segments for the operation, the filter and its
-// remove button, divided by hairlines.
 .token {
-  @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+// Each condition is an ink chip: the filter as text, then a remove mark.
+.token-chip {
+  @include styles.border-radius(ord.$border-radius-badge);
+  @include drawing.on-ink;
   display: flex;
   align-items: stretch;
   box-sizing: border-box;
+  min-inline-size: 0;
   max-inline-size: 100%;
-  min-block-size: ord.$size-control-height-small;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
-  background-color: ord.$color-background-container;
-  color: ord.$color-text-body;
-}
-
-.token-disabled {
-  @include styles.hatch;
-  border-color: ord.$color-border-disabled;
-  color: ord.$color-text-disabled;
-}
-
-.operation {
-  display: flex;
-  flex-shrink: 0;
-  border-inline-end-width: ord.$border-width-default;
-  border-inline-end-style: solid;
-  border-inline-end-color: ord.$color-border-divider;
-}
-
-// Scoped under the token so the select's trigger shrinks to the token's height, whichever stylesheet loads first.
-.token .operation [aria-haspopup='listbox'] {
-  @include styles.font-label;
-  @include styles.border-radius(0);
-  border-start-start-radius: ord.$border-radius-input;
-  border-end-start-radius: ord.$border-radius-input;
   min-block-size: $token-inner-height;
-  padding-inline: ord.$space-xs ord.$space-xxs;
+
+  .token-disabled & {
+    @include styles.hatch;
+    background-color: transparent;
+    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-disabled;
+    color: ord.$color-text-disabled;
+  }
+}
+
+// Focus is drawn inside the chip, in the chip's text color. The transparent outline stays for forced colors,
+// where box shadows are not drawn.
+@mixin chip-focus {
+  outline-width: ord.$border-width-focus-ring;
+  outline-style: solid;
+  outline-color: transparent;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 ord.$border-width-focus-ring ord.$color-text-on-ink;
+}
+
+// Scoped under the token so the select's trigger reads as a word of the line, whichever stylesheet loads first.
+.token .operation [aria-haspopup='listbox'] {
+  @include styles.font-code;
+  @include styles.border-radius(0);
+  min-block-size: $token-inner-height;
+  padding-inline: 0;
   border-width: 0;
   background-color: transparent;
   box-shadow: none;
   color: ord.$color-text-secondary;
-  font-size: ord.$font-size-small;
+  font-size: ord.$font-size-body;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: ord.$border-focus-ring-offset;
 
   &:hover:not(:disabled) {
-    background-color: ord.$color-background-item-hover;
     color: ord.$color-text-body;
-  }
-
-  &:focus-visible {
-    outline-offset: 0;
   }
 
   &:disabled {
@@ -123,31 +187,37 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
   }
 }
 
+.operation {
+  display: flex;
+  flex-shrink: 0;
+}
+
 .token-button {
-  @include styles.font-body;
+  @include styles.font-code;
   @include styles.border-radius(0);
   display: flex;
   align-items: center;
-  gap: ord.$space-xxs;
+  gap: ord.$space-xs;
   box-sizing: border-box;
   min-inline-size: 0;
   max-inline-size: 100%;
   min-block-size: $token-inner-height;
   padding-block: 0;
-  padding-inline: ord.$space-xs;
+  padding-inline: ord.$space-xs ord.$space-xxs;
   border-width: 0;
   background-color: transparent;
   color: inherit;
+  font-size: ord.$font-size-body;
   text-align: start;
   cursor: pointer;
 
-  &:hover:not(:disabled) {
-    background-color: ord.$color-background-item-hover;
+  &:hover:not(:disabled) .token-value {
+    text-decoration-line: underline;
+    text-underline-offset: ord.$border-focus-ring-offset;
   }
 
   &:focus-visible {
-    @include styles.focus-ring;
-    outline-offset: 0;
+    @include chip-focus;
   }
 
   &:disabled {
@@ -156,13 +226,10 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
 }
 
 .token-property {
-  @include styles.font-label;
   flex-shrink: 0;
-  font-size: ord.$font-size-body;
 }
 
 .token-operator {
-  @include styles.font-code;
   flex-shrink: 0;
   color: ord.$color-text-secondary;
 
@@ -180,42 +247,40 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
 // Scoped under the token so these win over the button's own size and colors, whichever stylesheet loads first.
 .token .token-remove {
   @include styles.border-radius(0);
-  border-start-end-radius: ord.$border-radius-input;
-  border-end-end-radius: ord.$border-radius-input;
   flex-shrink: 0;
   align-self: stretch;
-  inline-size: ord.$size-control-height-small;
+  inline-size: $token-inner-height;
   min-block-size: 0;
   border-width: 0;
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
   background-color: transparent;
   color: ord.$color-text-secondary;
 
   &:hover:not(:disabled) {
-    background-color: ord.$color-background-item-hover;
+    background-color: transparent;
     color: ord.$color-text-body;
   }
 
   &:focus-visible {
-    outline-offset: 0;
+    @include chip-focus;
   }
 
   &:disabled {
     background-image: none;
-    color: ord.$color-text-disabled;
+    color: inherit;
   }
 }
 
-.tokens .token-toggle {
-  min-block-size: ord.$size-control-height-small;
+.query .token-toggle {
+  @include styles.font-code;
+  font-size: ord.$font-size-small;
 }
 
 .actions {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: ord.$space-xs;
+  min-block-size: ord.$size-control-height;
 }
 
 .editor {
@@ -233,9 +298,7 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$border-
   padding-block-start: ord.$space-scaled-xs;
 }
 
-// Matches the filters' height, so the row reads as one line.
+// Matches the query line's height, so the row reads as one line.
 .actions .clear-button {
   flex-shrink: 0;
-  min-block-size: ord.$size-control-height-small;
-  padding-block: 0;
 }

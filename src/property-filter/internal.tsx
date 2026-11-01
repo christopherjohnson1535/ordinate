@@ -1,6 +1,7 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React, { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
+import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
 import { InputProps } from '../input/interfaces';
@@ -146,14 +147,53 @@ export const InternalPropertyFilter = React.forwardRef(
     };
 
     const showCount = Boolean(countText) && tokens.length > 0;
+    const hasTokens = tokens.length > 0;
 
+    // The filters read as one query line: "where status = running and image ^ web", then the input for the
+    // next condition and the result count, all on the same ruled line.
     return (
-      <div {...rest} className={styles.root}>
-        <div className={styles['search-row']}>
-          {customControl && <div className={styles['custom-control']}>{customControl}</div>}
+      <div {...rest} className={clsx(styles.root, disabled && styles.disabled)}>
+        {customControl && <div className={styles['custom-control']}>{customControl}</div>}
+        <div ref={tokensRef} className={styles.query}>
+          {hasTokens && (
+            <>
+              <span className={styles['query-word']}>{strings.queryStartText}</span>
+              <ul id={tokensId} className={styles['token-list']}>
+                {visibleTokens.map((token, index) => (
+                  <FilterToken
+                    // Filters are identified by position: editing one must keep its popover trigger in place for focus.
+                    key={index}
+                    ref={element => {
+                      tokenRefs.current[index] = element;
+                    }}
+                    token={token}
+                    settings={settings}
+                    operation={index > 0 ? operation : undefined}
+                    operationChangeable={!hideOperations}
+                    onOperationChange={next => changeQuery(tokens, next)}
+                    onChange={next => changeQuery(tokens.map((entry, position) => (position === index ? next : entry)))}
+                    onRemove={() => removeToken(index)}
+                  />
+                ))}
+              </ul>
+              {hiddenCount > 0 && (
+                <InternalButton
+                  className={styles['token-toggle']}
+                  variant="link"
+                  formAction="none"
+                  ariaExpanded={showAllTokens}
+                  ariaControls={tokensId}
+                  onClick={() => setShowAllTokens(current => !current)}
+                >
+                  {showAllTokens ? strings.tokenLimitShowFewer : strings.tokenLimitShowMore(hiddenCount)}
+                </InternalButton>
+              )}
+            </>
+          )}
           <div className={styles.search}>
             <FilteringInput
               ref={inputRef}
+              type={hasTokens ? 'text' : 'search'}
               value={text}
               onChange={changeText}
               options={suggestions.options}
@@ -172,7 +212,7 @@ export const InternalPropertyFilter = React.forwardRef(
               onSubmit={() => typedToken && addToken(typedToken)}
               onLoadItems={page => loadItemsForText(text, page)}
               status={status}
-              placeholder={strings.filteringPlaceholder}
+              placeholder={hasTokens ? strings.addConditionPlaceholder : strings.filteringPlaceholder}
               ariaLabel={strings.filteringAriaLabel}
               disabled={disabled}
               expandToViewport={expandToViewport}
@@ -182,49 +222,18 @@ export const InternalPropertyFilter = React.forwardRef(
             <span className={styles.count}>{showCount ? countText : ''}</span>
           </InternalLiveRegion>
         </div>
-        {tokens.length > 0 && (
-          <div ref={tokensRef} className={styles.tokens}>
-            <ul id={tokensId} className={styles['token-list']}>
-              {visibleTokens.map((token, index) => (
-                <FilterToken
-                  // Filters are identified by position: editing one must keep its popover trigger in place for focus.
-                  key={index}
-                  ref={element => {
-                    tokenRefs.current[index] = element;
-                  }}
-                  token={token}
-                  settings={settings}
-                  operation={index > 0 && !hideOperations ? operation : undefined}
-                  onOperationChange={next => changeQuery(tokens, next)}
-                  onChange={next => changeQuery(tokens.map((entry, position) => (position === index ? next : entry)))}
-                  onRemove={() => removeToken(index)}
-                />
-              ))}
-            </ul>
-            {hiddenCount > 0 && (
+        {hasTokens && (
+          <div className={styles.actions}>
+            {customFilterActions ?? (
               <InternalButton
-                className={styles['token-toggle']}
-                variant="link"
+                className={styles['clear-button']}
                 formAction="none"
-                ariaExpanded={showAllTokens}
-                ariaControls={tokensId}
-                onClick={() => setShowAllTokens(current => !current)}
+                disabled={disabled}
+                onClick={clearFilters}
               >
-                {showAllTokens ? strings.tokenLimitShowFewer : strings.tokenLimitShowMore(hiddenCount)}
+                {strings.clearFiltersText}
               </InternalButton>
             )}
-            <div className={styles.actions}>
-              {customFilterActions ?? (
-                <InternalButton
-                  className={styles['clear-button']}
-                  formAction="none"
-                  disabled={disabled}
-                  onClick={clearFilters}
-                >
-                  {strings.clearFiltersText}
-                </InternalButton>
-              )}
-            </div>
           </div>
         )}
       </div>
