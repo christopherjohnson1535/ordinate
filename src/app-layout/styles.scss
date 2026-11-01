@@ -125,6 +125,12 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
   background-color: ord.$color-background-layout-main;
 }
 
+.notifications-empty,
+.notifications-top.sticky-notifications.notifications-empty {
+  padding-block: 0;
+  margin-block-end: 0;
+}
+
 .breadcrumbs {
   padding-block: 0 ord.$space-scaled-s;
 }

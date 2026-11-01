@@ -106,6 +106,10 @@ export const InternalAppLayout = React.forwardRef(
     const [toolbarRef, toolbarHeight] = useMeasuredHeight();
     const [contentAreaWidth, setContentAreaWidth] = useState(0);
     const [mainWidth, setMainWidth] = useState(0);
+    // Applications often pass a Flashbar with no messages. Measuring what the notifications render keeps an
+    // empty Flashbar from taking the margin column or adding a gap above the content.
+    const [notesContent, setNotesContent] = useState<HTMLDivElement | null>(null);
+    const [notesHeight, setNotesHeight] = useState<number | undefined>(undefined);
 
     const hasNavigation = !navigationHide && navigation !== undefined;
     const hasTools = !toolsHide && tools !== undefined;
@@ -202,6 +206,20 @@ export const InternalAppLayout = React.forwardRef(
       setMainWidth(width);
       setContentAreaWidth(width + (splitPanelSideRef.current?.offsetWidth ?? 0));
     });
+
+    useEffect(() => {
+      if (!notesContent) {
+        return;
+      }
+      const measure = () => setNotesHeight(notesContent.offsetHeight);
+      measure();
+      if (typeof ResizeObserver === 'undefined') {
+        return;
+      }
+      const observer = new ResizeObserver(measure);
+      observer.observe(notesContent);
+      return () => observer.disconnect();
+    }, [notesContent]);
 
     useEffect(() => {
       const target = pendingFocus.current;
@@ -315,7 +333,10 @@ export const InternalAppLayout = React.forwardRef(
 
     // Until the layout is measured, the margin counts as available, as the side split panel does.
     const marginFits = mainWidth === 0 || mainWidth >= minSheetWidthBesideNotes + notesMarginWidth;
-    const notesInMargin = Boolean(notifications) && notificationsPosition === 'margin' && !isMobile && marginFits;
+    // Until the notifications are measured, they count as present.
+    const notesEmpty = notesHeight === 0;
+    const notesInMargin =
+      Boolean(notifications) && !notesEmpty && notificationsPosition === 'margin' && !isMobile && marginFits;
     const notificationsRegion = notifications && (
       <div
         role="region"
@@ -323,10 +344,11 @@ export const InternalAppLayout = React.forwardRef(
         className={clsx(
           styles.notifications,
           notesInMargin ? styles['notifications-margin'] : styles['notifications-top'],
-          stickyNotifications && styles['sticky-notifications']
+          stickyNotifications && styles['sticky-notifications'],
+          notesEmpty && styles['notifications-empty']
         )}
       >
-        {notifications}
+        <div ref={setNotesContent}>{notifications}</div>
       </div>
     );
 

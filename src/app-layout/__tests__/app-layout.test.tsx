@@ -5,6 +5,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import AppLayout, { AppLayoutProps } from '../../../lib/components/app-layout';
+import Flashbar from '../../../lib/components/flashbar';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
@@ -153,6 +154,8 @@ describe('AppLayout sheet', () => {
 
 describe('AppLayout notifications position', () => {
   test('puts the notifications in the margin beside the sheet by default, first in reading order', () => {
+    // jsdom has no layout; give the notifications a height so they count as shown.
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(60);
     renderLayout({ notifications: 'Maintenance tonight' });
     const layout = getLayout();
     expect(layout.isNotificationsInMargin()).toBe(true);
@@ -173,6 +176,14 @@ describe('AppLayout notifications position', () => {
     renderLayout({ notifications: 'Maintenance tonight' });
     expect(getLayout().isNotificationsInMargin()).toBe(false);
     expect(screen.getByRole('region', { name: 'Notifications' })).toHaveTextContent('Maintenance tonight');
+  });
+
+  test('keeps the margin free when the notifications render nothing, such as an empty Flashbar', () => {
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(0);
+    renderLayout({ notifications: <Flashbar items={[]} /> });
+    const layout = getLayout();
+    expect(layout.isNotificationsInMargin()).toBe(false);
+    expect(layout.findNotifications()).not.toBeNull();
   });
 
   test('falls back to the top on narrow screens', () => {

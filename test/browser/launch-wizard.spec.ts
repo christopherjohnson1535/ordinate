@@ -32,7 +32,8 @@ test('fills in the checklist, skipping the optional items, and launches', async 
   await next.click();
 
   await expect(page.getByRole('heading', { name: 'Configure networking' })).toBeVisible();
-  await expect(page.getByText('2 of 2 required items checked')).toBeVisible();
+  // The status line's live announcer can hold the same words, so match the visible line.
+  await expect(page.getByText('2 of 2 required items checked').first()).toBeVisible();
   await expect(page.getByText('eu-west-1 · Reserved')).toBeVisible();
   await expect(page.getByText('eu-west-1', { exact: true }).first()).toBeVisible();
 
