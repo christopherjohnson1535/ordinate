@@ -43,6 +43,7 @@
 .tile {
   padding: 16px;
   border: 1px solid var(--ord-color-border-control);
+  border-radius: var(--ord-border-radius-container);
   background-color: var(--ord-color-background-container);
   color: var(--ord-color-text-body);
   font: inherit;

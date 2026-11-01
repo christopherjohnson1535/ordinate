@@ -29,6 +29,7 @@
 .cell {
   padding: 12px;
   border: 1px solid var(--ord-color-border-divider);
+  border-radius: var(--ord-border-radius-container);
   background-color: var(--ord-color-background-container);
   font-family: var(--ord-font-family-mono);
   font-size: 13px;

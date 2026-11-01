@@ -7,6 +7,7 @@
   block-size: calc(100vh - 220px);
   min-block-size: 420px;
   border: 1px solid var(--ord-color-border-divider);
+  border-radius: var(--ord-border-radius-container);
   background-color: var(--ord-color-background-container);
 }
 

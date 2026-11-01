@@ -30,5 +30,6 @@
 .sheet {
   padding: 20px;
   border: 1px solid var(--ord-color-border-strong);
+  border-radius: var(--ord-border-radius-container);
   background-color: var(--ord-color-background-container);
 }
