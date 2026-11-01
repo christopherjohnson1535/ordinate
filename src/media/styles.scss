@@ -1,0 +1,104 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.border-radius(ord.$border-radius-section);
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+.ratio-1-1 {
+  aspect-ratio: 1;
+}
+
+.ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.ratio-3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+.ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.ratio-4-5 {
+  aspect-ratio: 4 / 5;
+}
+
+.image,
+.slot,
+.slot > :where(img, video, svg, iframe, picture, canvas) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.slot > :where(iframe) {
+  border-width: 0;
+}
+
+.fit-cover :is(.image, .slot > :where(img, video, picture > img)) {
+  object-fit: cover;
+}
+
+// A fitted image leaves space in the frame, so the frame gets a quiet fill to keep its shape.
+.fit-contain {
+  background-color: ord.$color-background-control-read-only;
+
+  :is(.image, .slot > :where(img, video, picture > img)) {
+    object-fit: contain;
+  }
+}
+
+.slot > picture > img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ratio-auto .image,
+.ratio-auto .slot,
+.ratio-auto .slot > * {
+  block-size: auto;
+}
+
+// The empty frame is hatched and outlined with a dashed rule, the way a drawing marks where a
+// picture will be pasted in.
+.placeholder {
+  @include styles.hatch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: ord.$space-s;
+  padding-inline: ord.$space-s;
+  border-width: ord.$border-width-default;
+  border-style: dashed;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+
+  &.ratio-auto {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+.placeholder-text {
+  @include site.catalogue-label;
+  max-inline-size: 100%;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-xs;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-secondary;
+  text-align: center;
+  overflow-wrap: break-word;
+}
