@@ -111,7 +111,7 @@
   @include styles.border-radius(ord.$border-radius-badge);
   position: absolute;
   inset-block-start: calc(50% - #{ord.$space-xs} - #{ord.$space-xxxs});
-  inset-inline-start: calc(#{ord.$space-button-horizontal} + #{ord.$size-icon} / 2 + #{ord.$space-xxxs});
+  inset-inline-start: calc(#{ord.$space-button-horizontal} + #{ord.$size-icon} / 2 + #{ord.$space-xxs});
   inline-size: ord.$space-xs;
   block-size: ord.$space-xs;
   background-color: ord.$color-border-accent;
@@ -120,7 +120,7 @@
 }
 
 .badge-centered {
-  inset-inline-start: calc(50% + #{ord.$space-xxxs});
+  inset-inline-start: calc(50% + #{ord.$space-xxs});
 }
 
 .menu-header {
