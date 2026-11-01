@@ -1,0 +1,128 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-container);
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-l;
+  padding-inline: ord.$space-scaled-l;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ord.$space-xs ord.$space-s;
+}
+
+.title {
+  @include site.reset-block;
+  @include site.headline;
+  font-size: ord.$font-size-headline-s;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.badge {
+  @include styles.border-radius(ord.$border-radius-badge);
+  @include styles.font-label;
+  flex: 0 0 auto;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-s;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-background-marker;
+  background-color: ord.$color-background-marker;
+  color: ord.$color-text-on-marker;
+  font-size: ord.$font-size-small;
+  white-space: nowrap;
+}
+
+.description {
+  color: ord.$color-text-body-secondary;
+  overflow-wrap: break-word;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  margin-block: ord.$space-scaled-xs 0;
+  margin-inline: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+  font-size: ord.$font-size-heading-s;
+}
+
+.item-value {
+  font-weight: ord.$font-weight-label;
+}
+
+.item-description {
+  max-inline-size: 48ch;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+  overflow-wrap: break-word;
+}
+
+.footer {
+  margin-block-start: auto;
+  padding-block-start: ord.$space-scaled-m;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+// The hairline stays, because in some styles and modes the accent color is close to the page.
+.tone-accent {
+  background-color: ord.$color-background-band-accent;
+
+  .footer {
+    border-block-start-color: ord.$color-border-control;
+  }
+}
+
+// On the emphasis color every part takes the matching text color, so it reads in each style and
+// mode. The badge keeps its marker fill and gains an outline, which keeps it visible when the
+// marker and emphasis colors are the same, as in the console style.
+.tone-emphasis {
+  border-color: transparent;
+  background-color: ord.$color-background-emphasis;
+  color: ord.$color-text-on-emphasis;
+
+  .description,
+  .item-description {
+    color: inherit;
+  }
+
+  .badge {
+    border-color: ord.$color-text-on-emphasis;
+  }
+
+  .footer {
+    border-block-start-color: currentColor;
+  }
+}
