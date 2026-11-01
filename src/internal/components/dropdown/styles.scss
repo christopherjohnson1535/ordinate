@@ -21,6 +21,7 @@
   flex-direction: column;
   box-sizing: border-box;
   min-inline-size: 100%;
+  max-inline-size: calc(100vw - 2 * #{ord.$space-xs});
   max-block-size: min(
     #{ord.$size-dropdown-max-height},
     var(--dropdown-available-block-size, #{ord.$size-dropdown-max-height})
@@ -45,6 +46,40 @@
   inset-block-end: 100%;
   margin-block-start: 0;
   margin-block-end: ord.$space-xxxs;
+}
+
+.popup-align-end {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
+.min-width-small {
+  min-inline-size: ord.$size-panel-small;
+}
+
+.min-width-medium {
+  min-inline-size: ord.$size-panel-medium;
+}
+
+.min-width-large {
+  min-inline-size: ord.$size-panel-large;
+}
+
+// An absolutely positioned popup would otherwise wrap its content at the trigger's width.
+.fit-content {
+  inline-size: max-content;
+}
+
+.max-width-small {
+  max-inline-size: min(#{ord.$size-panel-small}, calc(100vw - 2 * #{ord.$space-xs}));
+}
+
+.max-width-medium {
+  max-inline-size: min(#{ord.$size-panel-medium}, calc(100vw - 2 * #{ord.$space-xs}));
+}
+
+.max-width-large {
+  max-inline-size: min(#{ord.$size-panel-large}, calc(100vw - 2 * #{ord.$space-xs}));
 }
 
 .header {

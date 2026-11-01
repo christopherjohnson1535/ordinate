@@ -1,0 +1,11 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Shrinks to the trigger, so `minWidth="trigger"` measures the trigger and not the whole row.
+.root {
+  display: inline-block;
+  max-inline-size: 100%;
+  vertical-align: top;
+}
