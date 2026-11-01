@@ -100,7 +100,9 @@ describe.each(styles.map(style => [style.id, style] as const))('style %s', (id, 
 
   test('keeps references live instead of copying revision values', () => {
     expect(block).not.toMatch(/\{[a-zA-Z0-9]+\}/);
-    const references = Object.values(style.overrides).filter(value => typeof value === 'string' && value.startsWith('{'));
+    const references = Object.values(style.overrides).filter(
+      value => typeof value === 'string' && value.startsWith('{')
+    );
     if (references.length) {
       expect(block).toContain('var(--ord-');
     }
