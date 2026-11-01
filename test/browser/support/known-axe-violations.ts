@@ -22,10 +22,6 @@ export const knownAxeViolations: Record<string, Record<string, string>> = {
     'scrollable-region-focusable':
       'Content of a fitHeight container scrolls inside it but cannot take focus when nothing in it can.',
   },
-  'property-filter/permutations': {
-    'label-content-name-mismatch':
-      'Token buttons show "State = Running" but are named "State Equals Running", which voice control cannot match.',
-  },
   'radio-group/permutations': {
     'color-contrast':
       'The description of a disabled item uses the disabled text color. WCAG exempts inactive controls, ' +

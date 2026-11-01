@@ -217,13 +217,13 @@ describe('PropertyFilter tokens', () => {
     const tokens = wrapper().findTokens();
     expect(tokens).toHaveLength(2);
     expect(tokens[0].findLabel().getText()).toBe('Status=Running');
-    expect(tokens[0].findLabel().getElement()).toHaveAccessibleName('Status Equals Running');
+    expect(tokens[0].findLabel().getElement()).toHaveAccessibleName('Status = Running');
     expect(tokens[0].findLabel().getElement()).toHaveAttribute('aria-haspopup', 'dialog');
     expect(tokens[0].findTokenOperation()).toBeNull();
     expect(tokens[1].findLabel().getText()).toBe('web');
-    expect(tokens[1].findLabel().getElement()).toHaveAccessibleName('Contains web');
+    expect(tokens[1].findLabel().getElement()).toHaveAccessibleName('web');
     expect(tokens[1].findTokenOperation()!.findTrigger().getElement()).toHaveAccessibleName('Combine filters with and');
-    expect(tokens[1].findRemoveButton().getElement()).toHaveAccessibleName('Remove filter, Contains web');
+    expect(tokens[1].findRemoveButton().getElement()).toHaveAccessibleName('Remove filter, web');
   });
 
   test('shows the key of a property that is not in the list', () => {

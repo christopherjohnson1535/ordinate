@@ -67,7 +67,10 @@ export function usePropertyFilterStrings(
     i18n('tokenAriaLabel', undefined, {
       hasProperty: token.propertyLabel === undefined ? 'false' : 'true',
       propertyLabel: token.propertyLabel ?? '',
-      operatorText: token.operatorText,
+      // The name repeats the visible text, operator symbol included, so voice control users can say
+      // what they see. Screen readers announce the symbols themselves.
+      operator: token.operator,
+      showOperator: token.propertyLabel !== undefined || token.operator !== ':' ? 'true' : 'false',
       value: token.value,
     }) ??
     '';

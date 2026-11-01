@@ -140,7 +140,7 @@ export interface PropertyFilterProps extends BaseComponentProps {
    * * `allPropertiesLabel`: the editor's property option for a free text filter.
    * * `applyActionText` and `cancelActionText`: the editor's buttons.
    * * `dismissAriaLabel`: accessible name of the editor's close button.
-   * * `tokenAriaLabel`: returns the accessible name of a filter, such as "Status equals running".
+   * * `tokenAriaLabel`: returns the accessible name of a filter, such as "Status = running". Keep the visible text in it so voice control users can name the filter by what they see.
    * * `removeTokenButtonAriaLabel`: returns the accessible name of a filter's remove button.
    * * `tokenLimitShowMore` and `tokenLimitShowFewer`: the buttons that show and hide filters past `tokenLimit`.
    * * `errorIconAriaLabel`: accessible name of the icon next to `filteringErrorText`.
