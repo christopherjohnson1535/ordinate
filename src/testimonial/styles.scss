@@ -1,0 +1,90 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include site.reset-block;
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-container);
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-l;
+  padding-inline: ord.$space-scaled-l;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+// The hairline stays, because in some styles and modes the accent color is close to the page.
+.tone-accent {
+  background-color: ord.$color-background-band-accent;
+}
+
+// A one-line-tall box for a large mark, so it adds little height above the quote.
+.mark {
+  @include site.headline;
+  font-size: ord.$font-size-headline-m;
+  display: block;
+  block-size: 0.5lh;
+  line-height: ord.$line-height-headline;
+  color: ord.$color-text-accent;
+  user-select: none;
+}
+
+.quote {
+  @include site.reset-block;
+  max-inline-size: 60ch;
+  font-size: ord.$font-size-lead;
+  line-height: ord.$line-height-heading;
+  overflow-wrap: break-word;
+
+  > p {
+    @include site.reset-block;
+  }
+
+  > p + p {
+    margin-block-start: ord.$space-xs;
+  }
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  margin-block-start: auto;
+  padding-block-start: ord.$space-xs;
+}
+
+.media {
+  @include styles.border-radius(ord.$border-radius-section);
+  flex: 0 0 auto;
+  inline-size: ord.$size-icon-large;
+  overflow: hidden;
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.name {
+  @include styles.font-label;
+  overflow-wrap: break-word;
+}
+
+.detail {
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+  overflow-wrap: break-word;
+}
