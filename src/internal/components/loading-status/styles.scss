@@ -1,0 +1,15 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  color: ord.$color-text-secondary;
+}

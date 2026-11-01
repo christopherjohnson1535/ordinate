@@ -1,0 +1,84 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+// The handle straddles the panel edge, so the hit area is wider than the rule it draws.
+.handle {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  color: ord.$color-text-secondary;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: transparent;
+
+    @include styles.with-motion {
+      transition-property: background-color;
+      transition-duration: ord.$motion-duration-responsive;
+      transition-timing-function: ord.$motion-easing-standard;
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: ord.$color-text-body;
+
+    &::before {
+      background-color: ord.$color-border-strong;
+    }
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .grip {
+      @include styles.focus-ring;
+    }
+  }
+}
+
+.edge-block-start {
+  inset-block-start: calc(-1 * #{ord.$space-xs} / 2);
+  inset-inline: 0;
+  block-size: ord.$space-xs;
+  cursor: row-resize;
+
+  &::before {
+    inset-inline: 0;
+    inset-block-start: calc(50% - #{ord.$border-width-section} / 2);
+    block-size: ord.$border-width-section;
+  }
+
+  .grip {
+    transform: rotate(90deg);
+  }
+}
+
+.edge-inline-start {
+  inset-inline-start: calc(-1 * #{ord.$space-xs} / 2);
+  inset-block: 0;
+  inline-size: ord.$space-xs;
+  cursor: col-resize;
+
+  &::before {
+    inset-block: 0;
+    inset-inline-start: calc(50% - #{ord.$border-width-section} / 2);
+    inline-size: ord.$border-width-section;
+  }
+}
+
+.grip {
+  position: relative;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-xxxs;
+  background-color: ord.$color-background-container;
+}
