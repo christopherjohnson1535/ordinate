@@ -68,7 +68,8 @@ describe('CodeEditor with CodeMirror', { timeout: engineTimeout * 2 }, () => {
     expect(onChange).toHaveBeenLastCalledWith('const answer = 42;');
     expect(getView().state.doc.toString()).toBe('const answer = 42;');
     expect(content).toHaveTextContent('const answer = 42;');
-    expect(createWrapper().findCodeEditor()!.findCursorPosition()!.getText()).toBe('Ln 1, Col 19');
+    // The status bar follows the selection on the next render, which can lag under load.
+    await waitFor(() => expect(createWrapper().findCodeEditor()!.findCursorPosition()!.getText()).toBe('Ln 1, Col 19'));
   });
 
   test('applies a new value from the parent without reporting it as a change', async () => {

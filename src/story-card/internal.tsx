@@ -32,7 +32,7 @@ export function InternalStoryCard({
         </div>
       )}
       {kicker && <div className={clsx(styles.kicker, raiseInteractiveClassName)}>{kicker}</div>}
-      <Heading level={headingLevel} className={styles.title}>
+      <Heading level={headingLevel} defaultLevel={3} className={styles.title}>
         {href ? (
           <StretchedLink href={href} onFollow={event => fireCancelableEvent(onFollow, { href }, event)}>
             {title}

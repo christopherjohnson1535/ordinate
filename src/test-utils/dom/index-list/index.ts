@@ -14,7 +14,7 @@ export class IndexListItemWrapper extends ComponentWrapper {
   /**
    * Returns the row's link, when the item has an `href`.
    */
-  findLink(): ElementWrapper<HTMLAnchorElement> | null {
+  findLabelLink(): ElementWrapper<HTMLAnchorElement> | null {
     return this.findLabel().find<HTMLAnchorElement>('a');
   }
 
@@ -37,7 +37,7 @@ export default class IndexListWrapper extends ComponentWrapper {
   /**
    * Returns the `<ol>` or `<ul>` element.
    */
-  findList(): ElementWrapper<HTMLOListElement | HTMLUListElement> {
+  findListElement(): ElementWrapper<HTMLOListElement | HTMLUListElement> {
     return this.findByClassName<HTMLOListElement | HTMLUListElement>(styles.list)!;
   }
 

@@ -22,7 +22,7 @@ export function InternalMenuTile({
   return (
     <div {...rest} className={clsx(styles.root, styles[`tone-${tone}`])}>
       <div className={styles.header}>
-        <Heading level={headingLevel} className={styles.title}>
+        <Heading level={headingLevel} defaultLevel={3} className={styles.title}>
           {title}
         </Heading>
         {badge && <span className={styles.badge}>{badge}</span>}

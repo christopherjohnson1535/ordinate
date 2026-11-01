@@ -27,7 +27,7 @@ describe('IndexList', () => {
     const element = screen.getByRole('list', { name: 'Prices' });
     expect(element.tagName).toBe('UL');
     expect(within(element).getAllByRole('listitem')).toHaveLength(3);
-    expect(list().findList().getElement()).toBe(element);
+    expect(list().findListElement().getElement()).toBe(element);
   });
 
   test('ordered renders an ol and numbers rows from 1, hidden from screen readers', () => {
@@ -86,9 +86,9 @@ describe('IndexList', () => {
   test('a row with href links its label', () => {
     render(<IndexList items={contents} />);
     const [tide, , letters] = list().findItems();
-    expect(tide.findLink()!.getElement()).toHaveAttribute('href', '/tide');
+    expect(tide.findLabelLink()!.getElement()).toHaveAttribute('href', '/tide');
     expect(screen.getByRole('link', { name: 'What the tide leaves behind' })).toBeInTheDocument();
-    expect(letters.findLink()).toBeNull();
+    expect(letters.findLabelLink()).toBeNull();
   });
 
   test('fires onFollow with the row id, and preventDefault stops navigation', () => {
@@ -111,7 +111,7 @@ describe('IndexList', () => {
 
   test('row links are reachable with the keyboard', () => {
     render(<IndexList items={contents} />);
-    list().findItems()[1].findLink()!.focus();
+    list().findItems()[1].findLabelLink()!.focus();
     expect(screen.getByRole('link', { name: 'The last sail maker' })).toHaveFocus();
   });
 

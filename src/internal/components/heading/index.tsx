@@ -7,8 +7,8 @@ export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface HeadingProps {
   /**
-   * The level chosen by the page. Levels outside 1 to 6 are clamped, so the heading is never lost
-   * from the page outline. A missing or non-numeric level falls back to `defaultLevel`.
+   * The level chosen by the page. A missing level, or one outside 1 to 6 such as a typo in plain
+   * JavaScript, falls back to `defaultLevel`, so a heading is still rendered.
    */
   level: number | undefined;
   defaultLevel?: HeadingLevel;
@@ -17,10 +17,8 @@ export interface HeadingProps {
 }
 
 function resolveLevel(level: number | undefined, defaultLevel: HeadingLevel): HeadingLevel {
-  if (typeof level !== 'number' || !Number.isFinite(level)) {
-    return defaultLevel;
-  }
-  return Math.min(6, Math.max(1, Math.round(level))) as HeadingLevel;
+  const valid = level !== undefined && Number.isInteger(level) && level >= 1 && level <= 6;
+  return valid ? (level as HeadingLevel) : defaultLevel;
 }
 
 /**
