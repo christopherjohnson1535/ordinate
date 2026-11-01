@@ -1,0 +1,30 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: block;
+  color: ord.$color-text-body;
+}
+
+.step {
+  min-inline-size: 0;
+}
+
+.header {
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-label;
+  overflow-wrap: anywhere;
+}
+
+.details {
+  margin-block-start: ord.$space-xxxs;
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  overflow-wrap: anywhere;
+}
