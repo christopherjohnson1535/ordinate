@@ -67,7 +67,9 @@ export default {
 
 ## Components
 
-- **Layout and content:** Box, Container, Divider, ExpandableSection, Header, KeyValuePairs, SpaceBetween, TextContent
+- **Layout:** AppLayout, AppLayoutToolbar, ColumnLayout, Container, ContentLayout, Drawer, Grid, HelpPanel, PanelLayout, SpaceBetween, SplitPanel
+- **Content:** Box, Divider, ExpandableSection, Header, KeyValuePairs, TextContent, TruncatedText
+- **Collections:** ActionCard, Cards, CollectionPreferences, ItemCard, List, PropertyFilter, Table (and TableRoot, TableHead, TableHeaderCell, TableBody, TableRow, TableBodyCell), TextFilter, Token, TokenGroup
 - **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
 - **Forms:** Autosuggest, Checkbox, Form, FormField, Input, Multiselect, RadioButton, RadioGroup, Select, Slider, Textarea, Tiles, Toggle
 - **Navigation:** BreadcrumbGroup, Pagination, SideNavigation, Tabs, TopNavigation
@@ -75,7 +77,7 @@ export default {
 - **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, ProgressBar, Skeleton, Spinner, StatusIndicator
 - **Icons:** Icon, IconProvider
 
-More components arrive in phases. Phase 3 adds tables, cards, collections and the application layout.
+More components arrive in phases. Phase 4 adds dates, files and advanced inputs.
 
 ## Development
 
