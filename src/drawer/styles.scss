@@ -1,0 +1,63 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// Fills the drawer's scroll area, so the footer can stick to the bottom of a short drawer too.
+.root {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-block-size: 100%;
+  color: ord.$color-text-body;
+}
+
+// The end padding leaves room for the close button that the app layout places in the corner.
+.header {
+  @include styles.font-heading;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l ord.$space-xxl;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  font-size: ord.$font-size-heading-s;
+  overflow-wrap: break-word;
+}
+
+.content {
+  flex-grow: 1;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
+}
+
+.no-paddings {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+.loading {
+  flex-grow: 1;
+  align-items: flex-start;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
+}
+
+.footer {
+  position: sticky;
+  inset-block-end: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-l;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+}
