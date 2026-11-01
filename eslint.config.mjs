@@ -19,6 +19,7 @@ export default defineConfig(
     'src/icon/generated',
     'src/index.ts',
     'src/test-utils/dom/index.ts',
+    'test-results',
   ]),
   eslint.configs.recommended,
   tsEslint.configs.recommended,
@@ -74,12 +75,21 @@ export default defineConfig(
   {
     files: [
       '**/*.mjs',
+      'playwright.config.ts',
+      'test/browser/**',
       'src/**/__tests__/**',
       'global-styles/src/**/__tests__/**',
       'collection-hooks/src/**/__tests__/**',
     ],
     languageOptions: {
       globals: { ...globals.node },
+    },
+  },
+  {
+    // Playwright fixtures hand their value to a callback named `use`, which is not the React hook.
+    files: ['test/browser/**'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
     },
   }
 );

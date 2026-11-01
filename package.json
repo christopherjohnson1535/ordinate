@@ -21,6 +21,7 @@
     "build:pages": "vite build --config pages/vite.config.mjs",
     "test": "npm run test:unit",
     "test:unit": "vitest run --config vitest.unit.config.mjs",
+    "test:browser": "playwright test",
     "lint": "npm-run-all --parallel lint:*",
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint --ignore-path .gitignore \"{src,pages}/**/*.scss\"",

@@ -5,6 +5,8 @@ lib
 pages/dist
 global-styles/lib
 collection-hooks/lib
+# test output
+test-results
 # generated sources
 src/index.ts
 src/internal/generated

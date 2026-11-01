@@ -2,6 +2,7 @@ lib
 pages/dist
 global-styles/lib
 collection-hooks/lib
+test-results
 src/internal/generated
 src/icon/generated
 src/test-utils/dom/index.ts
