@@ -1,0 +1,22 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// Two classes, so the pressed state wins over the button's own variant and hover rules.
+.toggle-button.pressed,
+.toggle-button.pressed:hover {
+  border-color: ord.$color-background-button-primary;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+}
+
+.toggle-button.pressed:disabled,
+.toggle-button.pressed[aria-disabled='true'] {
+  border-color: ord.$color-border-disabled;
+  background-color: ord.$color-background-item-selected;
+  color: ord.$color-text-disabled;
+}
