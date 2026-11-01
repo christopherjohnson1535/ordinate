@@ -40,6 +40,9 @@ const messages: I18nProviderProps.Messages = {
         ariaLabel: 'More actions',
         externalIconAriaLabel: 'Opens in a new tab',
       },
+      cards: {
+        loadingText: 'Loading',
+      },
       'collection-preferences': {
         title: 'Preferences',
         confirmLabel: 'Confirm',
