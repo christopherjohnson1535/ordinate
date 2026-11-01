@@ -1,0 +1,120 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles/tokens' as ord;
+
+$line-box: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+
+.root {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+// The marker box is one line of body text tall, so a marker centred in it lines up with the
+// first line of the head.
+.marker-icon {
+  --step-marker-inline-size: #{ord.$size-icon};
+  --step-marker-block-size: #{$line-box};
+}
+
+.marker-balloon {
+  --step-marker-inline-size: #{ord.$size-icon-medium};
+  --step-marker-block-size: max(#{ord.$size-icon-medium}, #{$line-box});
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--step-marker-inline-size) minmax(0, 1fr);
+  align-content: start;
+  align-items: start;
+  column-gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.marker {
+  display: flex;
+  grid-row: 1;
+  grid-column: 1;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--step-marker-block-size);
+}
+
+.head {
+  display: flex;
+  grid-row: 1;
+  grid-column: 2;
+  align-items: center;
+  min-inline-size: 0;
+  min-block-size: var(--step-marker-block-size);
+}
+
+.head-with-marker {
+  grid-column: 1 / span 2;
+}
+
+.details {
+  grid-row: 2;
+  grid-column: 2 / -1;
+  min-inline-size: 0;
+}
+
+.connector {
+  border-width: 0;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+}
+
+// A dashed line, like a hidden line on a drawing, for the part of the path not taken yet.
+.connector-upcoming {
+  border-style: dashed;
+  border-color: ord.$color-border-control;
+}
+
+.orientation-vertical {
+  display: flex;
+  flex-direction: column;
+
+  > .item:not(:last-child) {
+    padding-block-end: ord.$space-scaled-m;
+  }
+
+  .connector {
+    position: absolute;
+    inset-block-start: calc(var(--step-marker-block-size) + #{ord.$space-xxs});
+    inset-block-end: ord.$space-xxs;
+    inset-inline-start: calc((var(--step-marker-inline-size) - #{ord.$border-width-default}) / 2);
+    border-inline-start-width: ord.$border-width-default;
+  }
+}
+
+.orientation-horizontal {
+  display: flex;
+
+  > .item {
+    flex: 1 1 0;
+    grid-template-columns: var(--step-marker-inline-size) minmax(0, max-content) minmax(ord.$space-l, 1fr);
+    padding-inline-end: ord.$space-xs;
+  }
+
+  > .item:last-child {
+    flex: 0 1 auto;
+    grid-template-columns: var(--step-marker-inline-size) minmax(0, max-content);
+    padding-inline-end: 0;
+  }
+
+  .connector {
+    position: relative;
+    inset-block-start: calc((var(--step-marker-block-size) - #{ord.$border-width-default}) / 2);
+    grid-row: 1;
+    grid-column: 3;
+    align-self: start;
+    border-block-start-width: ord.$border-width-default;
+  }
+}
