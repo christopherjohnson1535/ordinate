@@ -32,15 +32,18 @@ function type(view: EditorView, text: string) {
   });
 }
 
+// The first test pays for importing CodeMirror cold, which can take several seconds on a busy machine.
+const engineTimeout = 15000;
+
 async function renderEditor(element: React.ReactElement) {
   const result = render(element);
   await waitFor(() => expect(createWrapper().findCodeEditor()!.findEditorContent()).not.toBeNull(), {
-    timeout: 5000,
+    timeout: engineTimeout,
   });
   return result;
 }
 
-describe('CodeEditor with CodeMirror', () => {
+describe('CodeEditor with CodeMirror', { timeout: engineTimeout * 2 }, () => {
   test('loads CodeMirror, takes typing and reads the value back', async () => {
     const onChange = vi.fn();
     function Controlled() {
