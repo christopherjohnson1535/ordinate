@@ -1,0 +1,98 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+  container-type: inline-size;
+}
+
+.grid {
+  display: grid;
+  gap: ord.$space-s;
+}
+
+@for $count from 1 through 4 {
+  .columns-#{$count} {
+    grid-template-columns: repeat($count, minmax(0, 1fr));
+  }
+}
+
+// Tiles narrower than about a phone's width cannot fit a label and description side by side, so they stack.
+@container (max-inline-size: 30rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.tile {
+  @include styles.border-radius(ord.$border-radius-container);
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-s;
+  box-sizing: border-box;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: border-color, box-shadow, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover:not(.selected, .disabled, .read-only) {
+    background-color: ord.$color-background-button-normal-hover;
+  }
+
+  // The focus ring goes around the whole tile instead of the small radio circle.
+  &:has(input:focus-visible) {
+    @include styles.focus-ring;
+  }
+
+  input:focus-visible + * {
+    outline-style: none;
+  }
+
+  label {
+    font-weight: ord.$font-weight-label;
+  }
+}
+
+// A second hairline drawn inside the border doubles its weight without moving the content.
+.selected {
+  border-color: ord.$color-border-strong;
+  box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-strong;
+}
+
+.read-only {
+  background-color: ord.$color-background-control-read-only;
+  cursor: default;
+
+  &.selected {
+    border-color: ord.$color-text-secondary;
+    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-text-secondary;
+  }
+}
+
+.disabled {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+  color: ord.$color-text-disabled;
+  cursor: default;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  margin-block-start: auto;
+}
