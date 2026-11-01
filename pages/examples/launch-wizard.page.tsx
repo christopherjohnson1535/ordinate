@@ -77,7 +77,7 @@ function buildTutorial(draft: Draft, completed: boolean): AnnotationContextProps
         steps: [
           {
             title: 'Choose a region',
-            content: 'Go to step 2 and pick the region closest to the people who use the project.',
+            content: 'Open item 2 and pick the region closest to the people who use the project.',
             hotspotId: 'launch-region',
             warningAlert: draft.region ? undefined : 'No region is selected yet.',
           },
@@ -88,7 +88,8 @@ function buildTutorial(draft: Draft, completed: boolean): AnnotationContextProps
         steps: [
           {
             title: 'Check the summary',
-            content: 'The last step lists everything you chose. Use Edit on a section to go back to it.',
+            content:
+              'The summary beside the checklist lists everything you chose. Use Change on an item to go back to it.',
             hotspotId: 'launch-review',
           },
         ],
@@ -97,15 +98,27 @@ function buildTutorial(draft: Draft, completed: boolean): AnnotationContextProps
   };
 }
 
-function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, showErrors: boolean) {
-  const nameError =
-    showErrors && !/^[a-z0-9-]+$/.test(draft.name) ? 'Use lowercase letters, numbers and hyphens.' : undefined;
-  const regionError = showErrors && !draft.region ? 'Choose a region.' : undefined;
+const tierLabels: Record<string, string> = { standard: 'Standard', reserved: 'Reserved' };
+
+const isValidName = (name: string) => /^[a-z0-9-]+$/.test(name);
+
+function stepIsValid(index: number, draft: Draft) {
+  return (index !== 0 || isValidName(draft.name)) && (index !== 1 || Boolean(draft.region));
+}
+
+// `checked` holds the items the user has moved on from or tried to move on from. Their problems are
+// shown, on the fields and as a revision cloud around the item.
+function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, checked: ReadonlySet<number>) {
+  const showErrors = (index: number) => checked.has(index) && !stepIsValid(index, draft);
+  const nameError = showErrors(0) ? 'Use lowercase letters, numbers and hyphens.' : undefined;
+  const regionError = showErrors(1) ? 'Choose a region.' : undefined;
 
   const steps: WizardProps.Step[] = [
     {
       title: 'Describe the project',
       description: 'Names cannot be changed after launch.',
+      summary: draft.name ? [draft.name, draft.summary].filter(Boolean).join(' · ') : undefined,
+      errorText: nameError && 'Enter a valid project name before you launch.',
       content: (
         <Container>
           <SpaceBetween size="l">
@@ -131,6 +144,8 @@ function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, showErr
     },
     {
       title: 'Choose where it runs',
+      summary: [draft.region?.label ?? 'No region', tierLabels[draft.tier]].join(' · '),
+      errorText: regionError && 'Choose a region before you launch.',
       content: (
         <Container>
           <SpaceBetween size="l">
@@ -160,6 +175,8 @@ function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, showErr
     },
     {
       title: 'Configure networking',
+      description: 'Private, reachable from inside the network, unless you change it.',
+      summary: draft.publicEndpoint ? `Public · ${draft.allowedRange || 'any address'}` : 'Private',
       isOptional: true,
       content: (
         <Container>
@@ -180,6 +197,8 @@ function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, showErr
     },
     {
       title: 'Set owners',
+      description: 'Teams paged when the project is unhealthy.',
+      summary: draft.owners.map(owner => owner.label).join(', ') || 'No owners',
       isOptional: true,
       content: (
         <Container>
@@ -194,63 +213,90 @@ function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, showErr
         </Container>
       ),
     },
-    {
-      title: 'Review and launch',
-      content: (
-        <Hotspot hotspotId="launch-review">
-          <SpaceBetween size="l">
-            <Container header={<Header>Project</Header>}>
-              <KeyValuePairs
-                columns={3}
-                items={[
-                  { label: 'Name', value: draft.name || '-' },
-                  { label: 'Region', value: draft.region?.label ?? '-' },
-                  { label: 'Tier', value: draft.tier === 'reserved' ? 'Reserved' : 'Standard' },
-                ]}
-              />
-            </Container>
-            <Container header={<Header>Networking and owners</Header>}>
-              <KeyValuePairs
-                columns={3}
-                items={[
-                  { label: 'Public endpoint', value: draft.publicEndpoint ? 'On' : 'Off' },
-                  { label: 'Allowed range', value: draft.allowedRange || 'Any' },
-                  { label: 'Owners', value: draft.owners.map(owner => owner.label).join(', ') || 'None' },
-                ]}
-              />
-            </Container>
-          </SpaceBetween>
-        </Hotspot>
-      ),
-    },
   ];
-  const stepIsValid = (index: number) =>
-    (index !== 0 || /^[a-z0-9-]+$/.test(draft.name)) && (index !== 1 || Boolean(draft.region));
-  return { steps, stepIsValid };
+  return steps;
 }
 
-// The phase 5 gate: a five-step wizard with guided help, built only from Ordinate.
+function Summary({ draft }: { draft: Draft }) {
+  return (
+    <Hotspot hotspotId="launch-review">
+      <Container header={<Header>Summary</Header>}>
+        <KeyValuePairs
+          columns={1}
+          items={[
+            { label: 'Name', value: draft.name || '-' },
+            { label: 'Region', value: draft.region?.label ?? '-' },
+            { label: 'Tier', value: tierLabels[draft.tier] },
+            { label: 'Public endpoint', value: draft.publicEndpoint ? 'On' : 'Off' },
+            { label: 'Owners', value: draft.owners.map(owner => owner.label).join(', ') || 'None' },
+          ]}
+        />
+      </Container>
+    </Hotspot>
+  );
+}
+
+// The title block of the sheet, as in the corner of a drawing.
+function TitleBlock({ draft, revisions }: { draft: Draft; revisions: number }) {
+  const rows = [
+    ['Project', draft.name || 'untitled'],
+    ['Sheet', 'Launch checklist'],
+    ['Region', draft.region?.label ?? '-'],
+    ['Revisions', revisions > 0 ? `△${revisions} open` : 'None open'],
+  ];
+  return (
+    <dl className={styles['title-block']}>
+      {rows.map(([label, value]) => (
+        <div key={label} className={styles['title-block-row']}>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+// The phase 5 gate: a launch checklist with guided help, built only from Ordinate.
 export default function LaunchWizard() {
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const [showErrors, setShowErrors] = useState(false);
+  const [checked, setChecked] = useState<ReadonlySet<number>>(new Set());
   const [toolsOpen, setToolsOpen] = useState(true);
   const [tutorialActive, setTutorialActive] = useState(false);
   const [tutorialCompleted, setTutorialCompleted] = useState(false);
   const [flashes, setFlashes] = useState<FlashbarProps.MessageDefinition[]>([]);
 
   const update = (patch: Partial<Draft>) => setDraft(current => ({ ...current, ...patch }));
-  const { steps, stepIsValid } = useSteps(draft, update, showErrors);
+  const steps = useSteps(draft, update, checked);
   const tutorial = buildTutorial(draft, tutorialCompleted);
+  const revisions = steps.filter(step => step.errorText).length;
 
+  // Items open in any order. Leaving an item checks it; Next also stays on it until it is valid.
   const navigate: WizardProps['onNavigate'] = event => {
-    const { requestedStepIndex } = event.detail;
-    if (requestedStepIndex > activeStepIndex && !stepIsValid(activeStepIndex)) {
-      setShowErrors(true);
+    const { requestedStepIndex, reason } = event.detail;
+    setChecked(current => new Set(current).add(activeStepIndex));
+    if (reason === 'next' && !stepIsValid(activeStepIndex, draft)) {
       return;
     }
-    setShowErrors(false);
     setActiveStepIndex(requestedStepIndex);
+  };
+
+  const launch = () => {
+    const requiredItems = [0, 1];
+    if (!requiredItems.every(index => stepIsValid(index, draft))) {
+      setChecked(new Set(requiredItems));
+      return;
+    }
+    setFlashes([
+      {
+        id: 'launched',
+        type: 'success',
+        header: `${draft.name} is launching`,
+        content: 'Nodes start in the order you chose. This takes about two minutes.',
+        dismissible: true,
+        onDismiss: () => setFlashes([]),
+      },
+    ]);
   };
 
   return (
@@ -277,23 +323,18 @@ export default function LaunchWizard() {
               steps={steps}
               activeStepIndex={activeStepIndex}
               onNavigate={navigate}
-              allowSkipTo={true}
               submitButtonText="Launch project"
               onCancel={() => {
                 setDraft(emptyDraft);
+                setChecked(new Set());
                 setActiveStepIndex(0);
               }}
-              onSubmit={() =>
-                setFlashes([
-                  {
-                    id: 'launched',
-                    type: 'success',
-                    header: `${draft.name} is launching`,
-                    content: 'Nodes start in the order you chose. This takes about two minutes.',
-                    dismissible: true,
-                    onDismiss: () => setFlashes([]),
-                  },
-                ])
+              onSubmit={launch}
+              aside={
+                <>
+                  <Summary draft={draft} />
+                  <TitleBlock draft={draft} revisions={revisions} />
+                </>
               }
             />
           }

@@ -28,10 +28,17 @@
   flex-direction: column;
   gap: 12px;
 
-  h2 {
+  h3 {
     margin-block: 0;
     font-size: 16px;
   }
+}
+
+.variant-heading {
+  margin-block: 16px 0;
+  padding-block-end: 8px;
+  border-block-end: 1px solid var(--ord-color-border-strong);
+  font-size: 20px;
 }
 
 .narrow {

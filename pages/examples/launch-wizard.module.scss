@@ -9,3 +9,39 @@
   block-size: 900px;
   border: 1px solid var(--ord-color-border-divider);
 }
+
+.title-block {
+  display: grid;
+  margin: 0;
+  border: 2px solid var(--ord-color-border-strong);
+  border-radius: var(--ord-border-radius-container);
+  background-color: var(--ord-color-background-container);
+  font-family: var(--ord-font-family-mono);
+  font-size: var(--ord-font-size-small);
+}
+
+.title-block-row {
+  display: grid;
+  grid-template-columns: 7em minmax(0, 1fr);
+
+  & + & {
+    border-block-start: 1px solid var(--ord-color-border-strong);
+  }
+
+  dt,
+  dd {
+    margin: 0;
+    padding: 6px 8px;
+  }
+
+  dt {
+    border-inline-end: 1px solid var(--ord-color-border-strong);
+    color: var(--ord-color-text-body-secondary);
+    text-transform: uppercase;
+  }
+
+  dd {
+    overflow-wrap: anywhere;
+    color: var(--ord-color-text-body);
+  }
+}

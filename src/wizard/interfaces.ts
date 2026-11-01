@@ -7,23 +7,35 @@ import { NonCancelableEventHandler } from '../internal/events';
 
 export interface WizardProps extends BaseComponentProps {
   /**
-   * The steps of the flow, in order. The last step's primary button submits the flow.
+   * How the flow is laid out:
+   * * `checklist` (the default): a checklist sheet. Every step is an item on one sheet, numbered in
+   *   the margin, and items can be filled in any order. The open item shows its content, checked
+   *   items fold to a one-line summary with a Change button, and the sheet is submitted from its
+   *   footer once every required item has been opened and no item has an error.
+   * * `steps`: one step at a time, with the list of steps beside it and previous and next buttons.
+   *   The last step's primary button submits the flow.
+   */
+  variant?: WizardProps.Variant;
+  /**
+   * The steps of the flow, in order.
    */
   steps: ReadonlyArray<WizardProps.Step>;
   /**
-   * The index of the step shown, starting at 0. Set it together with `onNavigate` to control the
-   * wizard, for example to validate a step before moving on. Without it the wizard moves between
-   * steps on its own.
+   * The index of the step shown, starting at 0: the open item of a checklist. Set it together with
+   * `onNavigate` to control the wizard, for example to validate a step before moving on. Without it
+   * the wizard moves between steps on its own.
    */
   activeStepIndex?: number;
   /**
-   * Called when the user asks for another step: with the next or previous button, a step in the
-   * navigation, or the skip button. `detail.requestedStepIndex` is the step asked for and
-   * `detail.reason` says how.
+   * Called when the user asks for another step. `detail.requestedStepIndex` is the step asked for
+   * and `detail.reason` says how: `next` or `previous` from those buttons, `step` from a step in the
+   * navigation or from an item's Open or Change button in a checklist, and `skip` from the skip
+   * button or a skipped-to step.
    */
   onNavigate?: NonCancelableEventHandler<WizardProps.NavigateDetail>;
   /**
-   * Called when the user chooses the primary button on the last step.
+   * Called when the user chooses the submit button: the primary button on the last step, or the
+   * button in the footer of a checklist.
    */
   onSubmit?: NonCancelableEventHandler;
   /**
@@ -31,18 +43,20 @@ export interface WizardProps extends BaseComponentProps {
    */
   onCancel?: NonCancelableEventHandler;
   /**
-   * Shows the primary button as loading and stops navigation, while the next step is checked or
-   * prepared, for example by a request to a server.
+   * Shows the next button as loading and stops navigation and submitting, while the next step is
+   * checked or prepared, for example by a request to a server.
    */
   isLoadingNextStep?: boolean;
   /**
    * Lets the user skip ahead past optional steps: a skip button jumps to the next required step,
    * and a later step in the navigation can be chosen when every step between the farthest step
    * reached and it is optional. Choosing one fires `onNavigate` with the reason `skip`.
+   * A checklist lets every item be opened at any time, so it does not use this.
    */
   allowSkipTo?: boolean;
   /**
-   * Text of the primary button on the last step, such as "Create cluster".
+   * Text of the submit button, such as "Create cluster". It defaults to "Submit" in the `steps`
+   * variant and to "Issue" on a checklist.
    */
   submitButtonText?: string;
   /**
@@ -50,12 +64,19 @@ export interface WizardProps extends BaseComponentProps {
    */
   secondaryActions?: React.ReactNode;
   /**
+   * A side column beside the checklist sheet, such as a summary of the choices so far and a title
+   * block. It moves below the sheet when the wizard is narrow. Only shown on a checklist.
+   */
+  aside?: React.ReactNode;
+  /**
    * Replaces the built-in labels of the wizard.
    */
   i18nStrings?: WizardProps.I18nStrings;
 }
 
 export namespace WizardProps {
+  export type Variant = 'checklist' | 'steps';
+
   export interface Step {
     /**
      * The name of the step, shown as its heading and in the navigation.
@@ -74,11 +95,18 @@ export namespace WizardProps {
      */
     content: React.ReactNode;
     /**
-     * An error for the whole step, shown above the buttons. Say what went wrong and what to do.
+     * One line shown for a checked item of a checklist, such as the values chosen. Defaults to "Done".
+     */
+    summary?: React.ReactNode;
+    /**
+     * An error for the whole step. Say what went wrong and what to do. The `steps` variant shows it
+     * above the buttons; a checklist circles the item with a revision cloud, numbers it in the
+     * footer's count of open errors, and cannot be submitted until it is cleared.
      */
     errorText?: React.ReactNode;
     /**
      * Marks the step as optional. It is labelled as such, and with `allowSkipTo` it can be skipped.
+     * A checklist can be submitted without opening it.
      */
     isOptional?: boolean;
   }
@@ -111,7 +139,7 @@ export namespace WizardProps {
     previousButton?: string;
     nextButton?: string;
     /**
-     * Text of the primary button on the last step. `submitButtonText` takes precedence.
+     * Text of the submit button. `submitButtonText` takes precedence.
      */
     submitButton?: string;
     /**
@@ -126,5 +154,41 @@ export namespace WizardProps {
      * Announced while `isLoadingNextStep` is set.
      */
     loadingNextStepText?: string;
+    /**
+     * Accessible name of the list of items on a checklist.
+     */
+    checklistAriaLabel?: string;
+    /**
+     * Summary of a checked item that has no `summary`.
+     */
+    doneSummary?: string;
+    /**
+     * Text of the button that reopens a checked item.
+     */
+    changeButton?: string;
+    /**
+     * Accessible name of the button that reopens a checked item, given the step and its number.
+     */
+    changeButtonAriaLabel?: (step: Step, stepNumber: number) => string;
+    /**
+     * Text of the button that opens an item not opened yet.
+     */
+    openButton?: string;
+    /**
+     * Accessible name of the button that opens an item not opened yet, given the step and its number.
+     */
+    openButtonAriaLabel?: (step: Step, stepNumber: number) => string;
+    /**
+     * The count of required items checked, at the start of a checklist's footer.
+     */
+    checkedStatusText?: (checkedCount: number, requiredCount: number) => string;
+    /**
+     * The count of items with an error, drawn after a revision mark in a checklist's footer.
+     */
+    openErrorsMarkText?: (errorCount: number) => string;
+    /**
+     * The count of items with an error, as read by screen readers.
+     */
+    openErrorsText?: (errorCount: number) => string;
   }
 }

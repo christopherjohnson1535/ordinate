@@ -10,6 +10,7 @@ import { InternalWizard } from './internal';
 export type { WizardProps };
 
 export default function Wizard({
+  variant = 'checklist',
   steps,
   activeStepIndex,
   onNavigate,
@@ -19,12 +20,14 @@ export default function Wizard({
   allowSkipTo = false,
   submitButtonText,
   secondaryActions,
+  aside,
   i18nStrings,
   ...props
 }: WizardProps) {
   return (
     <InternalWizard
       {...getBaseProps(props)}
+      variant={variant}
       steps={steps}
       activeStepIndex={activeStepIndex}
       onNavigate={onNavigate}
@@ -34,6 +37,7 @@ export default function Wizard({
       allowSkipTo={allowSkipTo}
       submitButtonText={submitButtonText}
       secondaryActions={secondaryActions}
+      aside={aside}
       i18nStrings={i18nStrings}
     />
   );

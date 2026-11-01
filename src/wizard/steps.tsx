@@ -1,6 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
@@ -12,40 +12,20 @@ import { fireNonCancelableEvent } from '../internal/events';
 import { useContainerWidth } from '../internal/hooks/use-container-width';
 import { useControllable } from '../internal/hooks/use-controllable';
 import { useInternalI18n } from '../internal/i18n/context';
-import { warnOnce } from '../internal/logging';
 import { InternalSpaceBetween } from '../space-between/internal';
 import { WizardProps } from './interfaces';
 import { WizardNavigation } from './navigation';
-import { findSkipToTargetIndex, NavigationState, StepStatus } from './utils';
+import { useFocusHeadingOnStepChange } from './use-focus-heading';
+import { clampIndex, findSkipToTargetIndex, NavigationState, StepStatus } from './utils';
 
 import styles from './styles.css.js';
 
-function clampIndex(index: number, count: number): number {
-  return Math.min(Math.max(index, 0), Math.max(count - 1, 0));
-}
+export type StepsWizardProps = Omit<WizardProps, 'variant' | 'aside'>;
 
 /**
- * Moves focus to the step's heading whenever the step changes, so keyboard and screen reader users
- * start reading the new step from its top.
+ * One step at a time, with the list of steps beside it and previous and next buttons.
  */
-function useFocusHeadingOnStepChange(activeStepIndex: number) {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const shownIndex = useRef(activeStepIndex);
-  useEffect(() => {
-    if (shownIndex.current === activeStepIndex) {
-      return;
-    }
-    shownIndex.current = activeStepIndex;
-    const heading = headerRef.current?.querySelector<HTMLElement>('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      heading.tabIndex = -1;
-      heading.focus();
-    }
-  }, [activeStepIndex]);
-  return headerRef;
-}
-
-export function InternalWizard({
+export function StepsWizard({
   steps,
   activeStepIndex: controlledActiveStepIndex,
   onNavigate,
@@ -57,7 +37,7 @@ export function InternalWizard({
   secondaryActions,
   i18nStrings,
   ...rest
-}: WizardProps) {
+}: StepsWizardProps) {
   const i18n = useInternalI18n('wizard');
   const [currentIndex, setCurrentIndex] = useControllable(controlledActiveStepIndex, 0);
   const activeStepIndex = clampIndex(currentIndex, steps.length);
@@ -76,11 +56,6 @@ export function InternalWizard({
   const [navigationExpanded, setNavigationExpanded] = useState(false);
 
   const headerRef = useFocusHeadingOnStepChange(activeStepIndex);
-
-  if (steps.length === 0) {
-    warnOnce('Wizard', 'The wizard needs at least one step.');
-    return null;
-  }
 
   const navigate = (requestedStepIndex: number, reason: WizardProps.NavigateReason) => {
     setCurrentIndex(requestedStepIndex);
@@ -160,7 +135,7 @@ export function InternalWizard({
   );
 
   return (
-    <div {...rest} ref={rootRef} className={clsx(styles.root, collapsed && styles.collapsed)}>
+    <div {...rest} ref={rootRef} className={clsx(styles.root, styles['variant-steps'], collapsed && styles.collapsed)}>
       <nav className={styles.navigation} aria-label={navigationAriaLabel}>
         {collapsed ? (
           <InternalExpandableSection

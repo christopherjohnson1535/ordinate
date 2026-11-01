@@ -7,34 +7,146 @@ import ExpandableSectionWrapper from '../expandable-section';
 import formStyles from '../../../form/styles.css.js';
 import styles from '../../../wizard/styles.css.js';
 
+function wrapButton(parent: ElementWrapper, className: string): ButtonWrapper | null {
+  const element = parent.findByClassName(className);
+  return element ? new ButtonWrapper(element.getElement()) : null;
+}
+
+/**
+ * One item of a checklist sheet.
+ */
+export class WizardItemWrapper extends ComponentWrapper {
+  static rootSelector = `.${styles.item}`;
+
+  findTitle(): ElementWrapper {
+    return this.findByClassName(styles['item-title'])!;
+  }
+
+  /**
+   * The one line shown while the item is folded: its summary once checked, or its description before.
+   */
+  findSummary(): ElementWrapper | null {
+    return this.findByClassName(styles['item-summary']);
+  }
+
+  /**
+   * The content of the item, shown while it is open.
+   */
+  findContent(): ElementWrapper | null {
+    return this.findByClassName(styles.content);
+  }
+
+  /**
+   * The item's error, while it has one.
+   */
+  findError(): ElementWrapper | null {
+    return this.findByClassName(styles['item-error-text']);
+  }
+
+  /**
+   * The button that reopens a checked item.
+   */
+  findChangeButton(): ButtonWrapper | null {
+    return wrapButton(this, styles['change-button']);
+  }
+
+  /**
+   * The button that opens an item not opened yet.
+   */
+  findOpenButton(): ButtonWrapper | null {
+    return wrapButton(this, styles['open-button']);
+  }
+
+  /**
+   * The button that moves on to the next item, shown in the open item.
+   */
+  findNextButton(): ButtonWrapper | null {
+    return wrapButton(this, styles['next-button']);
+  }
+
+  isActive(): boolean {
+    return this.getElement().classList.contains(styles['item-active']);
+  }
+
+  /**
+   * Whether the item has been opened and left without an error.
+   */
+  isChecked(): boolean {
+    const classes = this.getElement().classList;
+    return classes.contains(styles['item-visited']) && !classes.contains(styles['item-has-error']);
+  }
+
+  isOptional(): boolean {
+    return this.getElement().classList.contains(styles['item-optional']);
+  }
+}
+
 export default class WizardWrapper extends ComponentWrapper {
   static rootSelector = `.${styles.root}`;
 
   private wrapButton(className: string): ButtonWrapper | null {
-    const element = this.findByClassName(className);
-    return element ? new ButtonWrapper(element.getElement()) : null;
+    return wrapButton(this, className);
   }
 
   /**
-   * The heading area of the active step: its title, info and description.
+   * The heading area of the active step: its title, info and description. On a checklist, the open
+   * item's heading.
    */
   findHeader(): ElementWrapper {
     return this.findByClassName(styles['step-header'])!;
   }
 
+  /**
+   * The content of the active step, or of the open item of a checklist.
+   */
   findContent(): ElementWrapper {
     return this.findByClassName(styles.content)!;
   }
 
   /**
-   * The error of the active step, while it has one.
+   * The error of the active step, while it has one. On a checklist, the open item's error.
    */
   findError(): ElementWrapper | null {
-    return this.findByClassName(formStyles['error-text']);
+    return this.findActiveItem()?.findError() ?? this.findByClassName(formStyles['error-text']);
   }
 
   findSecondaryActions(): ElementWrapper | null {
-    return this.findByClassName(formStyles['secondary-actions']);
+    return this.findByClassName(styles['secondary-actions']) ?? this.findByClassName(formStyles['secondary-actions']);
+  }
+
+  /**
+   * The items of a checklist, in order.
+   */
+  findItems(): WizardItemWrapper[] {
+    return this.findAllComponents(WizardItemWrapper);
+  }
+
+  /**
+   * The item of a checklist with this number, counted from 1.
+   */
+  findItem(stepNumber: number): WizardItemWrapper | null {
+    return this.findItems()[stepNumber - 1] ?? null;
+  }
+
+  /**
+   * The open item of a checklist.
+   */
+  findActiveItem(): WizardItemWrapper | null {
+    return this.findItems().find(item => item.isActive()) ?? null;
+  }
+
+  /**
+   * The line in a checklist's footer that counts the checked items and the open errors.
+   */
+  findStatusLine(): ElementWrapper | null {
+    return this.findByClassName(styles['status-line']);
+  }
+
+  /**
+   * The side column of a checklist.
+   */
+  findAside(): ElementWrapper | null {
+    return this.findByClassName(styles.aside);
   }
 
   findCancelButton(): ButtonWrapper {
@@ -49,7 +161,8 @@ export default class WizardWrapper extends ComponentWrapper {
   }
 
   /**
-   * The next button, or the submit button on the last step.
+   * The next button, or the submit button on the last step. On a checklist, the submit button in the
+   * footer.
    */
   findPrimaryButton(): ButtonWrapper {
     return this.wrapButton(styles['primary-button'])!;

@@ -6,6 +6,7 @@ import Box from '~components/box';
 import Container from '~components/container';
 import FormField from '~components/form-field';
 import Input from '~components/input';
+import KeyValuePairs from '~components/key-value-pairs';
 import Wizard, { WizardProps } from '~components/wizard';
 
 import styles from './styles.module.scss';
@@ -14,6 +15,7 @@ function makeSteps(count: number, optional: number[] = []): WizardProps.Step[] {
   return Array.from({ length: count }, (_, index) => ({
     title: ['Source', 'Destination', 'Schedule', 'Filters', 'Review'][index] ?? `Step ${index + 1}`,
     description: index === 0 ? 'Where the files are copied from.' : undefined,
+    summary: index === 0 ? 's3://survey-plates/2026' : undefined,
     isOptional: optional.includes(index),
     content: (
       <Container>
@@ -50,24 +52,93 @@ export default function WizardPermutations() {
     <div className={styles.page}>
       <h1>Wizard permutations</h1>
 
-      <section className={styles.section}>
-        <h2>Narrow: the navigation collapses into a disclosure</h2>
-        <div className={styles.narrow}>
-          <Uncontrolled steps={makeSteps(4, [2])} />
-        </div>
-      </section>
+      <h2 className={styles['variant-heading']}>Checklist sheet (the default)</h2>
 
       <section className={styles.section}>
-        <h2>Skipping: every step after the first is optional</h2>
-        <div className={styles.wide}>
-          <Uncontrolled steps={makeSteps(5, [1, 2, 3])} allowSkipTo={true} submitButtonText="Start copying" />
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2>A step error, while loading the next step</h2>
+        <h3>Open the first item, optional items in dashed boxes, with an aside</h3>
         <div className={styles.wide}>
           <Uncontrolled
+            steps={makeSteps(5, [2, 3])}
+            submitButtonText="Start copying"
+            aside={
+              <Container header={<Box variant="h3">Title block</Box>}>
+                <KeyValuePairs
+                  columns={1}
+                  items={[
+                    { label: 'Job', value: 'Copy survey plates' },
+                    { label: 'Sheet', value: '1 of 1' },
+                  ]}
+                />
+              </Container>
+            }
+          />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h3>Errors on a checked item and on the open item</h3>
+        <div className={styles.wide}>
+          <Uncontrolled
+            steps={makeSteps(4, [3]).map((step, index) =>
+              index === 0
+                ? { ...step, errorText: 'The source bucket is empty.' }
+                : index === 2
+                  ? { ...step, errorText: 'Choose a time at least 10 minutes from now.' }
+                  : step
+            )}
+            activeStepIndex={2}
+          />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h3>Narrow, while loading the next item</h3>
+        <div className={styles.narrow}>
+          <Uncontrolled steps={makeSteps(3, [2])} isLoadingNextStep={true} aside={<Box>Aside below the sheet</Box>} />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h3>Replaced labels, a single item</h3>
+        <div className={styles.wide}>
+          <Uncontrolled
+            steps={makeSteps(1)}
+            i18nStrings={{
+              cancelButton: 'Discard',
+              submitButton: 'Finish',
+              checkedStatusText: (checked, required) => `${checked}/${required} done`,
+              stepNumberLabel: stepNumber => `Part ${stepNumber}`,
+            }}
+          />
+        </div>
+      </section>
+
+      <h2 className={styles['variant-heading']}>Steps</h2>
+
+      <section className={styles.section}>
+        <h3>Narrow: the navigation collapses into a disclosure</h3>
+        <div className={styles.narrow}>
+          <Uncontrolled variant="steps" steps={makeSteps(4, [2])} />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h3>Skipping: every step after the first is optional</h3>
+        <div className={styles.wide}>
+          <Uncontrolled
+            variant="steps"
+            steps={makeSteps(5, [1, 2, 3])}
+            allowSkipTo={true}
+            submitButtonText="Start copying"
+          />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h3>A step error, while loading the next step</h3>
+        <div className={styles.wide}>
+          <Uncontrolled
+            variant="steps"
             steps={makeSteps(3).map((step, index) =>
               index === 1 ? { ...step, errorText: 'The destination bucket does not exist. Check the name.' } : step
             )}
@@ -78,9 +149,10 @@ export default function WizardPermutations() {
       </section>
 
       <section className={styles.section}>
-        <h2>Replaced labels, a single step</h2>
+        <h3>Replaced labels, a single step</h3>
         <div className={styles.wide}>
           <Uncontrolled
+            variant="steps"
             steps={makeSteps(1)}
             i18nStrings={{
               cancelButton: 'Discard',

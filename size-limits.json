@@ -472,7 +472,7 @@
     "gzip": 22500
   },
   "wizard": {
-    "minified": 103900,
-    "gzip": 23800
+    "minified": 118300,
+    "gzip": 27000
   }
 }

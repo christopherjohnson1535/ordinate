@@ -5,7 +5,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import createWrapper from '../../../lib/components/test-utils/dom';
-import Wizard, { WizardProps } from '../../../lib/components/wizard';
+import BaseWizard, { WizardProps } from '../../../lib/components/wizard';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 const steps: WizardProps.Step[] = [
@@ -15,6 +15,11 @@ const steps: WizardProps.Step[] = [
   { title: 'Set up notifications', isOptional: true, content: <p>Notification fields</p> },
   { title: 'Review', content: <p>Review</p> },
 ];
+
+// These tests cover the step-by-step layout; wizard-checklist.test.tsx covers the default checklist.
+function Wizard(props: WizardProps) {
+  return <BaseWizard variant="steps" {...props} />;
+}
 
 const wrapper = () => createWrapper().findWizard()!;
 const navigationButton = (title: string) =>
@@ -40,7 +45,7 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe('Wizard', () => {
+describe('Wizard, steps variant', () => {
   test('renders the first step with its heading, description and content', () => {
     render(<Wizard steps={steps} />);
     expect(screen.getByRole('heading', { level: 1, name: 'Name the cluster' })).toBeInTheDocument();

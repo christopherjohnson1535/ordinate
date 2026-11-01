@@ -8,11 +8,14 @@
 
 .root {
   @include styles.font-body;
+  color: ord.$color-text-body;
+}
+
+.variant-steps {
   display: grid;
   grid-template-columns: ord.$size-panel-small minmax(0, 1fr);
   align-items: start;
   column-gap: ord.$space-xl;
-  color: ord.$color-text-body;
 }
 
 .collapsed {
@@ -159,4 +162,243 @@
 .previous-button,
 .primary-button {
   flex-shrink: 0;
+}
+
+// The checklist sheet: every item on one ruled sheet, numbered in a margin, with a footer that
+// counts what is checked and issues the sheet.
+.variant-checklist {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: ord.$space-l;
+}
+
+.with-aside {
+  grid-template-columns: minmax(0, 1fr) ord.$size-panel-medium;
+}
+
+.sheet {
+  @include styles.border-radius(ord.$border-radius-container);
+  min-inline-size: 0;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+}
+
+.items {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+// Wide enough for the item number and the word "optional" in small capitals.
+$margin-width: calc(#{ord.$space-xxxl} + #{ord.$space-xs});
+
+.item {
+  display: grid;
+  grid-template-columns: $margin-width minmax(0, 1fr);
+}
+
+// The margin rule runs the full height of the sheet; the rules between items stop at it.
+.item-margin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ord.$space-xxs;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-xxs;
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
+  border-inline-end-color: ord.$color-border-strong;
+}
+
+.item + .item .item-body {
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.item-marker {
+  @include styles.border-radius(ord.$border-radius-checkbox);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: ord.$size-icon-medium;
+  block-size: ord.$size-icon-medium;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  line-height: ord.$line-height-heading;
+  font-variant-numeric: tabular-nums;
+}
+
+.item-active .item-marker {
+  border-color: ord.$color-background-button-primary;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+}
+
+.item-visited .item-marker {
+  border-color: ord.$color-border-strong;
+}
+
+.item-optional.item-unvisited .item-marker {
+  border-style: dashed;
+  color: ord.$color-text-secondary;
+}
+
+.item-has-error:not(.item-active) .item-marker {
+  border-color: ord.$color-border-error;
+  color: ord.$color-text-error;
+}
+
+.item-optional-label {
+  color: ord.$color-text-secondary;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  line-height: ord.$line-height-body;
+  text-align: center;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.item-body {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-xs;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-container;
+}
+
+.item-active .item-body {
+  gap: ord.$space-scaled-s;
+  padding-block-end: ord.$space-scaled-l;
+}
+
+.item-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xxs ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.item-title {
+  @include styles.font-heading;
+  margin-block: 0;
+  font-size: ord.$font-size-heading-s;
+  overflow-wrap: anywhere;
+}
+
+.item-active .item-title {
+  font-size: ord.$font-size-heading-m;
+}
+
+.item-action {
+  margin-inline-start: auto;
+}
+
+.change-button,
+.open-button,
+.next-button {
+  flex-shrink: 0;
+}
+
+.item-marker-check {
+  display: flex;
+}
+
+.item-description {
+  color: ord.$color-text-body-secondary;
+}
+
+// A checked item folds to one line.
+.item-summary {
+  overflow: hidden;
+  color: ord.$color-text-body-secondary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-unvisited .item-summary {
+  color: ord.$color-text-secondary;
+}
+
+.item-error {
+  display: flex;
+  align-items: baseline;
+  gap: ord.$space-xs;
+  color: ord.$color-text-error;
+}
+
+.item-error-mark {
+  flex-shrink: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-bold;
+}
+
+.item-error-text {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.item-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: ord.$space-s ord.$space-m;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-container;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-strong;
+}
+
+.status-line {
+  color: ord.$color-text-body-secondary;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-variant-numeric: tabular-nums;
+}
+
+.status-errors {
+  color: ord.$color-text-error;
+}
+
+.secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xs;
+}
+
+.footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs ord.$space-m;
+  margin-inline-start: auto;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-l;
+  min-inline-size: 0;
 }

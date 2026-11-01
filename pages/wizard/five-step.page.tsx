@@ -14,6 +14,7 @@ import Input from '~components/input';
 import KeyValuePairs from '~components/key-value-pairs';
 import Link from '~components/link';
 import RadioGroup from '~components/radio-group';
+import SegmentedControl from '~components/segmented-control';
 import Select, { SelectProps } from '~components/select';
 import SpaceBetween from '~components/space-between';
 import StatusIndicator from '~components/status-indicator';
@@ -95,9 +96,10 @@ function InfoLink() {
   );
 }
 
-// The phase 5 gate's wizard: five steps with forms, an optional step, a review built from key-value
-// pairs, loading on next and validation errors.
+// The phase 5 gate's wizard: five steps with forms, optional steps, a review built from key-value
+// pairs, loading on next and validation errors, as a checklist sheet or step by step.
 export default function WizardFiveStep() {
+  const [variant, setVariant] = useState<WizardProps.Variant>('checklist');
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(initialDraft);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -135,6 +137,7 @@ export default function WizardFiveStep() {
   const steps: WizardProps.Step[] = [
     {
       title: 'Name the cluster',
+      summary: [draft.name || 'No name', draft.region?.label].filter(Boolean).join(' · '),
       info: <InfoLink />,
       description: 'Choose where the cluster runs. You cannot move it to another region later.',
       errorText: activeStepIndex === 0 ? errorText : undefined,
@@ -169,6 +172,7 @@ export default function WizardFiveStep() {
     },
     {
       title: 'Choose capacity',
+      summary: `${tiers.find(tier => tier.value === draft.tier)?.label} · ${draft.nodes} nodes`,
       info: <InfoLink />,
       description: 'Capacity is checked against your quota before you continue.',
       errorText: activeStepIndex === 1 ? errorText : undefined,
@@ -202,6 +206,7 @@ export default function WizardFiveStep() {
     },
     {
       title: 'Add tags',
+      summary: draft.tags.map(tag => `${tag.key}=${tag.value}`).join(', ') || 'No tags',
       info: <InfoLink />,
       description: 'Tags help you find the cluster and split its cost. You can add them later.',
       isOptional: true,
@@ -248,6 +253,7 @@ export default function WizardFiveStep() {
     },
     {
       title: 'Set up notifications',
+      summary: draft.notify ? draft.email || 'No address' : 'Off',
       info: <InfoLink />,
       description: 'Choose who hears about changes to the cluster.',
       isOptional: true,
@@ -351,8 +357,17 @@ export default function WizardFiveStep() {
   return (
     <div className={styles.page}>
       <div className={styles.controls}>
+        <SegmentedControl
+          label="Layout"
+          selectedId={variant}
+          options={[
+            { id: 'checklist', text: 'Checklist' },
+            { id: 'steps', text: 'Steps' },
+          ]}
+          onChange={event => setVariant(event.detail.selectedId as WizardProps.Variant)}
+        />
         <Toggle checked={allowSkipTo} onChange={event => setAllowSkipTo(event.detail.checked)}>
-          Allow skipping optional steps
+          Allow skipping optional steps (steps layout)
         </Toggle>
         <Box variant="small" color="text-body-secondary">
           Events: {log.join(', ') || 'none'}
@@ -369,6 +384,7 @@ export default function WizardFiveStep() {
         </Alert>
       )}
       <Wizard
+        variant={variant}
         steps={steps}
         activeStepIndex={activeStepIndex}
         allowSkipTo={allowSkipTo}
@@ -387,6 +403,18 @@ export default function WizardFiveStep() {
           setActiveStepIndex(0);
         }}
         onSubmit={() => setSubmitted('created')}
+        aside={
+          <Container header={<Header>Summary</Header>}>
+            <KeyValuePairs
+              columns={1}
+              items={[
+                { label: 'Name', value: draft.name || '-' },
+                { label: 'Region', value: draft.region?.label ?? '-' },
+                { label: 'Nodes', value: draft.nodes },
+              ]}
+            />
+          </Container>
+        }
       />
     </div>
   );
