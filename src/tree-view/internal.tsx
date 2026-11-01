@@ -153,6 +153,9 @@ export function InternalTreeView<T>({
   const renderNode = (node: TreeNode<T>) => {
     const rendered = renderItem(node.item, node.index);
     const contentId = `${baseId}-${node.id}-content`;
+    const secondaryId = `${baseId}-${node.id}-secondary`;
+    // The secondary text is visible, so it is part of the name voice control users can speak.
+    const labelIds = rendered.secondaryContent ? `${contentId} ${secondaryId}` : contentId;
     const label = plainLabel(rendered);
     const toggleLabel = node.expanded
       ? i18n('collapseButtonLabel', i18nStrings?.collapseButtonLabel?.(node.item), {
@@ -182,7 +185,7 @@ export function InternalTreeView<T>({
         aria-posinset={node.index + 1}
         aria-expanded={node.hasChildren ? node.expanded : undefined}
         aria-label={rendered.announcementLabel}
-        aria-labelledby={rendered.announcementLabel === undefined ? contentId : undefined}
+        aria-labelledby={rendered.announcementLabel === undefined ? labelIds : undefined}
         tabIndex={node.id === tabStopId ? 0 : -1}
         onFocus={event => {
           if ((event.target as Element).closest('[role="treeitem"]') === event.currentTarget) {
@@ -217,7 +220,9 @@ export function InternalTreeView<T>({
               {rendered.content}
             </span>
             {rendered.secondaryContent && (
-              <span className={styles['secondary-content']}>{rendered.secondaryContent}</span>
+              <span id={secondaryId} className={styles['secondary-content']}>
+                {rendered.secondaryContent}
+              </span>
             )}
           </span>
           {rendered.actions && (

@@ -22,6 +22,11 @@ export const knownAxeViolations: Record<string, Record<string, string>> = {
     'scrollable-region-focusable':
       'Content of a fitHeight container scrolls inside it but cannot take focus when nothing in it can.',
   },
+  'tree-view/simple': {
+    'label-content-name-mismatch':
+      'An expanded parent item contains its child items, so its visible text includes theirs, while its name is ' +
+      'its own row. This follows the WAI-ARIA tree pattern; naming a parent by all of its children would be worse.',
+  },
   'radio-group/permutations': {
     'color-contrast':
       'The description of a disabled item uses the disabled text color. WCAG exempts inactive controls, ' +
