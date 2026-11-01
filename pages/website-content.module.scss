@@ -1,0 +1,93 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Layout helpers shared by the dev pages of the website content components.
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  max-inline-size: 1200px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  > h2 {
+    margin-block: 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ord-color-text-secondary);
+  }
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+  align-items: start;
+}
+
+.columns-wide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  align-items: start;
+}
+
+// Columns divided by thin rules, like the back pages of a journal.
+.ruled-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-block: 0;
+  margin-inline: 0;
+  padding-inline-start: 0;
+  list-style: none;
+
+  > * {
+    padding-inline: 24px;
+    border-inline-start: 1px solid var(--ord-color-border-divider);
+  }
+
+  > :first-child {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.measure {
+  max-inline-size: 720px;
+}
+
+.narrow {
+  inline-size: 320px;
+  max-inline-size: 100%;
+  padding-block: 16px;
+  padding-inline: 16px;
+  outline: 1px dashed var(--ord-color-border-control);
+}
+
+.prose {
+  max-inline-size: 640px;
+  margin-block: 0;
+  line-height: 1.6;
+}

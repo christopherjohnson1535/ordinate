@@ -1,0 +1,67 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Type shared by the website components. Every value comes from the site tokens, so each style
+// (console, editorial, studio, shopfront) gives the same markup its own voice.
+
+@use './tokens' as ord;
+
+@mixin headline {
+  font-family: ord.$font-family-headline;
+  font-weight: ord.$font-weight-headline;
+  line-height: ord.$line-height-headline;
+  letter-spacing: ord.$letter-spacing-headline;
+  overflow-wrap: break-word;
+}
+
+// The small mono caption of a printed catalogue: "Plate I", "Fig. 2", a place and a year.
+@mixin catalogue-label {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+// A short label above a title, such as a section name or a reading time.
+@mixin kicker {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  line-height: ord.$line-height-body;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// Large ordinals are a quiet decoration. The disabled text color still passes 3:1 at these sizes,
+// which is what large text needs.
+@mixin ordinal {
+  font-family: ord.$font-family-headline;
+  font-weight: ord.$font-weight-light;
+  line-height: ord.$line-height-headline;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: ord.$color-text-disabled;
+}
+
+// Links inside a byline or caption keep the color of the text around them and show an underline.
+@mixin quiet-links {
+  a {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: ord.$border-width-default;
+    text-underline-offset: ord.$space-xxxs;
+
+    &:hover {
+      color: ord.$color-text-link-hover;
+    }
+  }
+}
+
+@mixin reset-block {
+  margin-block: 0;
+  margin-inline: 0;
+}

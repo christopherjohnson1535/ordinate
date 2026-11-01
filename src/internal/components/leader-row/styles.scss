@@ -1,0 +1,41 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles/tokens' as ord;
+
+// The leader and the value line up with the last line of a label that wraps.
+.row {
+  display: flex;
+  align-items: last baseline;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.label {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+// An empty flex item takes its baseline from its bottom edge, so the dots sit on the baseline like
+// printed full stops. They are drawn in the text color at reduced strength, which keeps them quiet
+// on any background, including emphasis tiles and inverted bands.
+.leader {
+  flex: 1 1 0;
+  min-inline-size: ord.$space-l;
+  block-size: ord.$border-width-section;
+  background-image: radial-gradient(circle closest-side, currentColor 92%, transparent);
+  // Spacing whole dots across the leader keeps both ends flush with the label and the value.
+  background-repeat: space no-repeat;
+  background-position: center;
+  background-size: ord.$space-xs 100%;
+  opacity: 0.55;
+}
+
+.value {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

@@ -1,0 +1,36 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.link {
+  color: inherit;
+  text-decoration-line: none;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxs;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+  }
+
+  &:hover {
+    text-decoration-line: underline;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+// Only the interactive elements are lifted, so plain text around them still follows the card's link.
+.raise-interactive :is(a[href], button, input, select, textarea, [tabindex]) {
+  position: relative;
+  z-index: 1;
+}
