@@ -37,9 +37,10 @@ function PartsList() {
   const sortingState: TableHeaderCellProps.SortingState = descending ? 'descending' : 'ascending';
 
   return (
-    <TableRoot ariaLabel="Parts list" layout="fixed">
+    <TableRoot caption="Parts list" layout="fixed">
       <TableHead>
         <TableRow>
+          <TableHeaderCell rowTagColumn={true} />
           <TableHeaderCell
             selectionType="multi"
             selected={allSelected}
@@ -65,6 +66,7 @@ function PartsList() {
           const isSelected = selected.includes(part.number);
           return (
             <TableRow key={part.number} selected={isSelected}>
+              <TableBodyCell rowTag={`P${parts.indexOf(part) + 1}`} />
               <TableBodyCell
                 selectionType="multi"
                 selected={isSelected}
@@ -141,7 +143,7 @@ export default function TablePartsComposition() {
         <h2>Sticky header in a scrolling area</h2>
         {/* Keyboard users can only scroll this area once it can take focus. */}
         <div className={styles.scroller} tabIndex={0} role="region" aria-label="Long list, scrolls">
-          <TableRoot ariaLabel="Long list" stickyHeader={true}>
+          <TableRoot caption="Long list" stickyHeader={true}>
             <TableHead>
               <TableRow>
                 <TableHeaderCell>Row</TableHeaderCell>

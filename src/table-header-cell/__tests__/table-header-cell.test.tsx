@@ -181,6 +181,34 @@ describe('TableHeaderCell selection', () => {
 });
 
 describe('TableHeaderCell accessibility', () => {
+  test('rowTagColumn heads the tag column with "Tag", or with the given heading', () => {
+    const TagTable = ({ heading }: { heading?: string }) => (
+      <TableRoot ariaLabel="Parts">
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell data-testid="tag" rowTagColumn={true} sortingState="ascending" resizable={true}>
+              {heading}
+            </TableHeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableBodyCell rowTag="S1" />
+          </TableRow>
+        </TableBody>
+      </TableRoot>
+    );
+    const { rerender } = render(<TagTable />);
+    const header = screen.getByRole('columnheader', { name: 'Tag' });
+    expect(header).toBe(screen.getByTestId('tag'));
+    expect(header).not.toHaveAttribute('aria-sort');
+    const wrapper = createWrapper().findTableHeaderCell()!;
+    expect(wrapper.findSortingButton()).toBeNull();
+    expect(wrapper.findResizer()).toBeNull();
+    rerender(<TagTable heading="Ref." />);
+    expect(screen.getByRole('columnheader', { name: 'Ref.' })).toBeInTheDocument();
+  });
+
   test('has no accessibility violations', async () => {
     const { container } = render(
       <Example sortingState="ascending" resizable={true} width={120} selection={{ selectionType: 'multi' }} />

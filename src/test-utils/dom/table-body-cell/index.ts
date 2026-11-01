@@ -16,6 +16,13 @@ export default class TableBodyCellWrapper extends ComponentWrapper {
   }
 
   /**
+   * The circled tag of a row tag cell.
+   */
+  findRowTag(): ElementWrapper | null {
+    return this.find(`:scope > .${styles.tag}`);
+  }
+
+  /**
    * Whether the cell is the header of its row.
    */
   isRowHeader(): boolean {

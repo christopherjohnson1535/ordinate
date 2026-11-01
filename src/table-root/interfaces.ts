@@ -10,6 +10,12 @@ export interface TableRootProps extends BaseComponentProps {
    */
   children?: React.ReactNode;
   /**
+   * A short title drawn in small mono capitals above the header row, such as "Schedule of services".
+   * It is the table's `<caption>`, so it also names the table for screen readers unless `ariaLabel`
+   * or `ariaLabelledby` is set.
+   */
+  caption?: React.ReactNode;
+  /**
    * Accessible name of the table, for a table without a visible heading to point to with `ariaLabelledby`.
    */
   ariaLabel?: string;

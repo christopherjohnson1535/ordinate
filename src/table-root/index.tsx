@@ -11,6 +11,7 @@ export type { TableRootProps };
 
 export default function TableRoot({
   children,
+  caption,
   ariaLabel,
   ariaLabelledby,
   ariaDescribedby,
@@ -26,6 +27,7 @@ export default function TableRoot({
   return (
     <InternalTableRoot
       {...getBaseProps(props)}
+      caption={caption}
       ariaLabel={ariaLabel}
       ariaLabelledby={ariaLabelledby}
       ariaDescribedby={ariaDescribedby}

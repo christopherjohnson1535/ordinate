@@ -21,6 +21,7 @@ export default function TableHeaderCell({
   onResize,
   onResizeEnd,
   resizerRoleDescription,
+  rowTagColumn = false,
   selectionType,
   selected = false,
   indeterminate = false,
@@ -42,6 +43,7 @@ export default function TableHeaderCell({
       onResize={onResize}
       onResizeEnd={onResizeEnd}
       resizerRoleDescription={resizerRoleDescription}
+      rowTagColumn={rowTagColumn}
       selectionType={selectionType}
       selected={selected}
       indeterminate={indeterminate}

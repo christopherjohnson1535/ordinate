@@ -61,6 +61,11 @@ export interface TableHeaderCellProps extends BaseComponentProps {
    */
   resizerRoleDescription?: string;
   /**
+   * Turns the cell into the heading of a narrow row tag column, the column of `TableBodyCell`s with a
+   * `rowTag`. The heading reads "Tag" unless you pass your own in `children`.
+   */
+  rowTagColumn?: boolean;
+  /**
    * Turns the cell into the heading of a selection column. `multi` shows a checkbox that selects or
    * clears every row. `single` shows nothing, but still names the column for screen readers.
    */

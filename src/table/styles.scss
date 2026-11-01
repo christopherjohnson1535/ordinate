@@ -19,6 +19,24 @@
   color: ord.$color-text-body;
 }
 
+// A schedule is framed by a heavy ink rule. Two classes, so the frame wins over the container's own
+// border whichever stylesheet loads first.
+.sheet.sheet {
+  border-width: ord.$border-width-section;
+  border-color: ord.$color-border-strong;
+}
+
+@mixin end-corners($radius) {
+  border-end-start-radius: $radius;
+  border-end-end-radius: $radius;
+}
+
+// When the rows end the sheet, the scrolling area takes the sheet's inner corners, so a shaded last row
+// stays inside rounded corners.
+.rows-end-sheet {
+  @include end-corners(calc(#{ord.$border-radius-container} - #{ord.$border-width-section}));
+}
+
 .header-area {
   display: flex;
   flex-direction: column;

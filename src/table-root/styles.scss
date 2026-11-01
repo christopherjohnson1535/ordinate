@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -25,6 +26,25 @@
   border-collapse: separate;
   border-spacing: 0;
   color: ord.$color-text-body;
+}
+
+// Set above the columns like the title of a schedule on a drawing.
+.caption {
+  @include drawing.mono-caption;
+  padding-block: ord.$space-scaled-s ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-m;
+  caption-side: top;
+  color: ord.$color-text-secondary;
+  text-align: start;
+}
+
+.caption-inset-container {
+  padding-inline: ord.$space-container;
+}
+
+.caption-inset-flush {
+  padding-block-start: 0;
+  padding-inline: 0;
 }
 
 .layout-fixed {

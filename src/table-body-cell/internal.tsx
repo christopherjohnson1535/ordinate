@@ -27,6 +27,7 @@ export function InternalTableBodyCell({
   isRowHeader = false,
   verticalAlign = 'middle',
   colSpan,
+  rowTag,
   selectionType,
   selected = false,
   selectionDisabled = false,
@@ -38,8 +39,9 @@ export function InternalTableBodyCell({
   ...rest
 }: InternalTableBodyCellProps) {
   const i18n = useInternalI18n('table-body-cell');
-  const { wrapLines, layout, edgeInset } = useTableContext();
-  const Tag = isRowHeader && !selectionType ? 'th' : 'td';
+  const { wrapLines, layout, edgeInset, ruleWeight } = useTableContext();
+  const isRowTag = rowTag !== undefined && !selectionType;
+  const Tag = isRowHeader && !selectionType && !isRowTag ? 'th' : 'td';
 
   return (
     <Tag
@@ -48,10 +50,12 @@ export function InternalTableBodyCell({
       colSpan={colSpan}
       className={clsx(
         styles.root,
+        styles[`rules-${ruleWeight}`],
         styles[`align-${verticalAlign}`],
         selectionType && styles.selection,
+        isRowTag && styles['row-tag'],
         message && styles.message,
-        !selectionType && !message && (wrapLines ? styles.wrap : styles['no-wrap']),
+        !selectionType && !isRowTag && !message && (wrapLines ? styles.wrap : styles['no-wrap']),
         layout === 'fixed' && !message && styles.truncate,
         edgeInset !== 'cell' && styles[`inset-${edgeInset}`],
         className
@@ -66,6 +70,8 @@ export function InternalTableBodyCell({
           ariaLabel={i18n('selectionAriaLabel', selectionAriaLabel)}
           onChange={onSelectionChange}
         />
+      ) : isRowTag ? (
+        <span className={styles.tag}>{rowTag}</span>
       ) : (
         children
       )}

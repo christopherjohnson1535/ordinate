@@ -338,6 +338,7 @@ const messages: I18nProviderProps.Messages = {
       'table-header-cell': {
         allItemsSelectionLabel: 'Select all rows',
         resizerRoleDescription: 'resize handle',
+        rowTagColumnLabel: 'Tag',
         selectionGroupLabel: 'Row selection',
       },
       tabs: {

@@ -50,6 +50,12 @@ describe('TableRoot', () => {
     expect(screen.getAllByRole('rowheader').map(cell => cell.textContent)).toEqual(['Base plate', 'Hex bolt']);
   });
 
+  test('caption renders a native caption that names the table', () => {
+    render(<Parts ariaLabel={undefined} caption="Parts list" />);
+    expect(screen.getByRole('table', { name: 'Parts list' })).toBeInTheDocument();
+    expect(createWrapper().findTableRoot()!.findCaption()!.getText()).toBe('Parts list');
+  });
+
   test('passes id and data attributes to the wrapper', () => {
     render(<Parts id="parts" data-testid="parts" />);
     expect(screen.getByTestId('parts')).toHaveAttribute('id', 'parts');

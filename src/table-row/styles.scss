@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -26,9 +27,10 @@
   background-color: ord.$color-background-item-hover;
 }
 
+// The selected row is drawn in solid ink, as a schedule marks the item a detail refers to.
 .selected,
 .selected:hover {
-  background-color: ord.$color-background-item-selected;
+  @include drawing.on-ink;
 }
 
 .message {

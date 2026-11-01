@@ -47,6 +47,7 @@ export function InternalTableHeaderCell({
   onResize,
   onResizeEnd,
   resizerRoleDescription,
+  rowTagColumn = false,
   selectionType,
   selected = false,
   indeterminate = false,
@@ -57,12 +58,13 @@ export function InternalTableHeaderCell({
   ...rest
 }: InternalTableHeaderCellProps) {
   const i18n = useInternalI18n('table-header-cell');
-  const { edgeInset } = useTableContext();
+  const { edgeInset, ruleWeight } = useTableContext();
   const cellRef = useRef<HTMLTableCellElement>(null);
   const labelId = useId();
 
   const cellClassName = clsx(
     styles.root,
+    styles[`rules-${ruleWeight}`],
     edgeInset !== 'cell' && styles[`inset-${edgeInset}`],
     selectionType && styles.selection,
     className
@@ -83,6 +85,16 @@ export function InternalTableHeaderCell({
         ) : (
           <span className={styles['screenreader-only']}>{i18n('selectionGroupLabel', selectionAriaLabel)}</span>
         )}
+      </th>
+    );
+  }
+
+  if (rowTagColumn) {
+    return (
+      <th {...rest} scope="col" className={clsx(cellClassName, styles['row-tag-column'])}>
+        <span className={styles.heading}>
+          <span className={styles.label}>{children ?? i18n('rowTagColumnLabel', undefined)}</span>
+        </span>
       </th>
     );
   }

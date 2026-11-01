@@ -349,6 +349,62 @@ describe('Table resizable columns', () => {
   });
 });
 
+describe('Table schedule', () => {
+  const tagOf = (item: Part) => `S${parts.indexOf(item) + 1}`;
+
+  test('shows the caption above the columns and names the table with it', () => {
+    render(<Parts caption="Schedule of parts" />);
+    expect(table().findCaption()!.getText()).toBe('Schedule of parts');
+    expect(screen.getByRole('table', { name: 'Schedule of parts' })).toBeInTheDocument();
+  });
+
+  test('the table label wins over the caption as the name', () => {
+    render(<Parts caption="Schedule of parts" ariaLabels={{ tableLabel: 'Parts' }} />);
+    expect(screen.getByRole('table', { name: 'Parts' })).toBeInTheDocument();
+  });
+
+  test('rowTag adds a first column of tags, each read once', () => {
+    const rowTag = vi.fn(tagOf);
+    render(<Parts rowTag={rowTag} sortingColumn={columns[0]} />);
+    expect(rowTag).toHaveBeenCalledWith(parts[1], 1);
+    expect(
+      table()
+        .findColumnHeaders()
+        .map(header => header.getElement().textContent)
+    ).toEqual(['Tag', 'Part no.', 'Name', 'Quantity']);
+    expect(table().findRowTag(2)!.getText()).toBe('S2');
+    expect(table().findBodyCell(2, 1)!.findRowTag()!.getText()).toBe('S2');
+    expect(table().findBodyCell(2, 1)!.isRowHeader()).toBe(false);
+    const row = screen.getAllByRole('row')[2];
+    expect(row.textContent!.match(/S2/g)).toHaveLength(1);
+    expect(screen.getByRole('cell', { name: 'S2' })).toBeInTheDocument();
+    expect(screen.getAllByRole('rowheader').map(cell => cell.textContent)).toEqual(parts.map(part => part.name));
+  });
+
+  test('without rowTag there is no tag column', () => {
+    render(<Parts />);
+    expect(table().findRowTag(1)).toBeNull();
+    expect(screen.queryByRole('columnheader', { name: 'Tag' })).toBeNull();
+  });
+
+  test('keeps selection working next to the tag column', () => {
+    const onChange = vi.fn();
+    render(<SelectableParts rowTag={tagOf} onChange={onChange} />);
+    expect(table().findBodyCell(1, 2)!.findSelectionControl()).not.toBeNull();
+    table().findRowSelectionArea(3)!.click();
+    expect(onChange).toHaveBeenLastCalledWith([parts[2]]);
+    expect(table().findSelectedRows()).toHaveLength(1);
+    expect(table().findSelectedRows()[0].findRowTag()!.getText()).toBe('S3');
+    table().findSelectAllTrigger()!.click();
+    expect(table().findSelectedRows()).toHaveLength(parts.length);
+  });
+
+  test('the empty message spans the tag column too', () => {
+    render(<Parts items={[]} empty="No parts" rowTag={tagOf} selectionType="multi" />);
+    expect(screen.getByText('No parts').closest('td')).toHaveAttribute('colspan', '5');
+  });
+});
+
 describe('Table accessibility', () => {
   test('has no accessibility violations', async () => {
     const { container } = render(
@@ -359,6 +415,19 @@ describe('Table accessibility', () => {
         sortingColumn={columns[0]}
         resizableColumns={true}
         footer="Updated hourly."
+      />
+    );
+    await expectNoAxeViolations(container);
+  });
+
+  test('has no accessibility violations as a schedule with a caption and row tags', async () => {
+    const { container } = render(
+      <Parts
+        caption="Schedule of parts"
+        rowTag={item => `S${parts.indexOf(item) + 1}`}
+        selectionType="single"
+        selectedItems={[parts[2]]}
+        sortingColumn={columns[0]}
       />
     );
     await expectNoAxeViolations(container);

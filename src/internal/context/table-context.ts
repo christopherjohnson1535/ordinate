@@ -14,6 +14,11 @@ export interface TableContextValue {
    * with the padding of a surrounding container, and `flush` with the edges of the table.
    */
   edgeInset: 'cell' | 'container' | 'flush';
+  /**
+   * How strongly the table is ruled. `heavy` draws a schedule: a thick ink rule under the header row.
+   * `light` keeps the rules thin, for a table set inside another sheet.
+   */
+  ruleWeight: 'heavy' | 'light';
 }
 
 export const TableContext = createContext<TableContextValue>({
@@ -21,6 +26,7 @@ export const TableContext = createContext<TableContextValue>({
   stripedRows: false,
   layout: 'auto',
   edgeInset: 'cell',
+  ruleWeight: 'heavy',
 });
 
 export function useTableContext(): TableContextValue {

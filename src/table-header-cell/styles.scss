@@ -4,23 +4,50 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// The ink rule under the header row is the strongest line in the table, like the rule under the
-// title row of a drawing's parts list.
+// The header row of a schedule: column labels in small mono capitals over a heavy ink rule, the
+// strongest line in the table, with thin upright rules between the columns.
 .root {
-  @include styles.font-label;
+  @include drawing.mono-caption;
   position: relative;
   box-sizing: border-box;
-  padding-block: ord.$space-scaled-xs;
+  padding-block: ord.$space-scaled-s ord.$space-scaled-xs;
   padding-inline: ord.$space-scaled-m;
-  border-block-end-width: ord.$border-width-default;
+  border-block-end-width: ord.$border-width-section;
   border-block-end-style: solid;
   border-block-end-color: ord.$color-border-strong;
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
+  border-inline-end-color: ord.$color-border-divider;
   background-color: ord.$color-background-container;
   color: ord.$color-text-body;
   text-align: start;
   vertical-align: bottom;
+
+  &:last-child {
+    border-inline-end-width: 0;
+  }
+}
+
+// A table set inside another sheet keeps its rules thin.
+.rules-light {
+  border-block-end-width: ord.$border-width-default;
+  border-inline-end-color: ord.$color-border-divider-secondary;
+}
+
+// The tag column is ruled off from the data in ink, like the reference column of a schedule.
+.row-tag-column {
+  inline-size: calc(#{ord.$size-control-height-small} + 2 * #{ord.$space-scaled-s});
+  padding-inline: ord.$space-scaled-s;
+  border-inline-end-color: ord.$color-border-strong;
+  white-space: nowrap;
+
+  &.inset-container:first-child,
+  &.inset-flush:first-child {
+    padding-inline-start: ord.$space-scaled-s;
+  }
 }
 
 .inset-container {
@@ -64,7 +91,9 @@
   background-color: transparent;
   color: inherit;
   font: inherit;
+  letter-spacing: inherit;
   text-align: start;
+  text-transform: inherit;
   cursor: pointer;
 
   &:focus-visible {
@@ -119,12 +148,20 @@
     inset-inline-end: 0;
     border-inline-end-width: ord.$border-width-default;
     border-inline-end-style: solid;
+    border-inline-end-color: transparent;
+  }
+
+  // Between columns the column rule already marks the handle; the last column has no rule of its own.
+  .root:last-child > &::after {
     border-inline-end-color: ord.$color-border-divider;
   }
 
   &:hover::after,
   &:focus-visible::after,
-  &.resizer-active::after {
+  &.resizer-active::after,
+  .root:last-child > &:hover::after,
+  .root:last-child > &:focus-visible::after,
+  .root:last-child > &.resizer-active::after {
     inset-block: 0;
     border-inline-end-width: ord.$border-width-section;
     border-inline-end-color: ord.$color-border-strong;

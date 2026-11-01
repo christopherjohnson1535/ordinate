@@ -41,6 +41,19 @@ export interface TableProps<T = unknown> extends BaseComponentProps {
    */
   header?: React.ReactNode;
   /**
+   * A short title drawn in small mono capitals directly above the column headings, like the title of a
+   * schedule on a drawing: "Schedule of services". It is the table's caption, so it also names the table
+   * for screen readers unless `ariaLabels.tableLabel` is set.
+   */
+  caption?: React.ReactNode;
+  /**
+   * Returns a short reference for each row, such as "S1", drawn in a circle in a narrow first column.
+   * Use it to point at a row from elsewhere on the page, for example from a split panel's `headerTag`.
+   * Receives the item and its index in `items`. Keep tags stable across sorting and paging, for example
+   * by deriving them from the item rather than from the index.
+   */
+  rowTag?: (item: T, index: number) => string;
+  /**
    * A filter control shown below the header, such as a text filter.
    */
   filter?: React.ReactNode;
@@ -126,9 +139,12 @@ export interface TableProps<T = unknown> extends BaseComponentProps {
    */
   contentDensity?: TableProps.ContentDensity;
   /**
-   * - `container` draws the table on its own sheet, with the header and footer inside it.
-   * - `full-page` is for a table that is the main content of a page: the header sits above the sheet.
-   * - `embedded` is for a table placed inside another container: no sheet of its own.
+   * The table is drawn as a schedule: column labels in small mono capitals, a heavy ink rule under them,
+   * thin rules between the columns and the selected row in solid ink.
+   *
+   * - `container` draws the table on its own sheet, framed by a heavy ink rule, with the header and footer inside it.
+   * - `full-page` is for a table that is the main content of a page: the header sits above the framed sheet.
+   * - `embedded` is for a table placed inside another container: no sheet of its own, and thin rules only.
    * - `borderless` looks the same as `embedded`.
    */
   variant?: TableProps.Variant;

@@ -4,8 +4,10 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// Figures line up in columns, as they do in a schedule.
 .root {
   @include styles.font-body;
   box-sizing: border-box;
@@ -13,9 +15,22 @@
   padding-inline: ord.$space-scaled-m;
   border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider-secondary;
+  border-block-end-color: ord.$color-border-divider;
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
+  border-inline-end-color: ord.$color-border-divider;
   color: ord.$color-text-body;
+  font-variant-numeric: tabular-nums;
   text-align: start;
+
+  &:last-child {
+    border-inline-end-width: 0;
+  }
+}
+
+.rules-light {
+  border-block-end-color: ord.$color-border-divider-secondary;
+  border-inline-end-color: ord.$color-border-divider-secondary;
 }
 
 // The outer rule belongs to whatever surrounds the table, such as a container.
@@ -75,6 +90,25 @@ tr:last-child > .root {
   &.inset-flush:first-child {
     padding-inline-start: 0;
   }
+}
+
+// The tag column is ruled off from the data in ink, like the reference column of a schedule.
+.row-tag {
+  inline-size: calc(#{ord.$size-control-height-small} + 2 * #{ord.$space-scaled-s});
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-s;
+  border-inline-end-color: ord.$color-border-strong;
+  white-space: nowrap;
+
+  &.inset-container:first-child,
+  &.inset-flush:first-child {
+    padding-inline-start: ord.$space-scaled-s;
+  }
+}
+
+.tag {
+  @include drawing.circled-tag(ord.$size-control-height-small);
+  border-width: ord.$border-width-icon;
 }
 
 .message {

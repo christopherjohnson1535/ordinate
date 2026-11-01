@@ -9,7 +9,7 @@ import rowStyles from '../../../table-row/styles.css.js';
 
 /**
  * Finders shared by the table root and the configured table. Row and column indexes start at 1, and
- * the selection column, when there is one, counts as column 1.
+ * the row tag and selection columns, when there are any, count as columns in that order.
  */
 export abstract class TableGridWrapper extends ComponentWrapper {
   /**
@@ -66,6 +66,26 @@ export abstract class TableGridWrapper extends ComponentWrapper {
    * The select-all checkbox, with multiple selection.
    */
   findSelectAllTrigger(): ElementWrapper<HTMLInputElement> | null {
-    return this.findColumnHeaders()[0]?.findSelectionControl() ?? null;
+    for (const header of this.findColumnHeaders()) {
+      const control = header.findSelectionControl();
+      if (control) {
+        return control;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * The table's caption, or `null` when it has none.
+   */
+  findCaption(): ElementWrapper<HTMLTableCaptionElement> | null {
+    return this.findNativeTable()?.find<HTMLTableCaptionElement>(':scope > caption') ?? null;
+  }
+
+  /**
+   * The circled tag of a row, such as "S1", or `null` when the table has no row tags.
+   */
+  findRowTag(rowIndex: number): ElementWrapper | null {
+    return this.findRows()[rowIndex - 1]?.findRowTag() ?? null;
   }
 }

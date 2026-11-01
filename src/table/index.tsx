@@ -17,6 +17,8 @@ export default function Table<T>({
   loadingText,
   empty,
   header,
+  caption,
+  rowTag,
   filter,
   pagination,
   preferences,
@@ -55,6 +57,8 @@ export default function Table<T>({
       loadingText={loadingText}
       empty={empty}
       header={header}
+      caption={caption}
+      rowTag={rowTag}
       filter={filter}
       pagination={pagination}
       preferences={preferences}

@@ -12,8 +12,9 @@ import { columnDefinitions, Instance, makeInstances, notesColumn } from './data'
 
 import styles from './styles.module.scss';
 
-const items = makeInstances(5);
+const items = makeInstances(6);
 const sortingColumn = columnDefinitions[0];
+const rowTag = (item: Instance) => `S${items.indexOf(item) + 1}`;
 
 function Example(props: Partial<TableProps<Instance>> & { title: string }) {
   const { title, ...rest } = props;
@@ -51,6 +52,20 @@ export default function TablePermutations() {
 
       <Example title="Container" footer={<a href="#all">View all instances</a>} />
       <Example
+        title="Schedule: caption, row tags and a selected row"
+        caption="Schedule of instances"
+        rowTag={rowTag}
+        selectionType="single"
+        selectedItems={[items[2]]}
+      />
+      <Example
+        title="Row tags with multiple selection and resizable columns"
+        rowTag={rowTag}
+        selectionType="multi"
+        selectedItems={[items[0], items[5]]}
+        resizableColumns={true}
+      />
+      <Example
         title="Multiple selection"
         selectionType="multi"
         selectedItems={[items[0], items[2]]}
@@ -73,6 +88,10 @@ export default function TablePermutations() {
         <Container header={<Header>Fleet</Header>}>
           <Table
             variant="embedded"
+            caption="Schedule of instances"
+            rowTag={rowTag}
+            selectionType="single"
+            selectedItems={[items[1]]}
             items={items.slice(0, 3)}
             columnDefinitions={columnDefinitions.slice(0, 4)}
             header={<Header variant="h3">Instances</Header>}
@@ -82,7 +101,17 @@ export default function TablePermutations() {
       </section>
 
       <Example title="Borderless" variant="borderless" />
-      <Example title="Full page" variant="full-page" header={<Header variant="h1">Instances</Header>} />
+      <Example
+        title="Full page"
+        variant="full-page"
+        caption="Schedule of instances"
+        rowTag={rowTag}
+        header={
+          <Header variant="h1" code="Sheet A-02">
+            Instances
+          </Header>
+        }
+      />
     </article>
   );
 }

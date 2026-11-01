@@ -3,6 +3,7 @@
 import { ComponentWrapper, ElementWrapper } from '../core';
 
 import selectionStyles from '../../../internal/components/table-selection-control/styles.css.js';
+import cellStyles from '../../../table-body-cell/styles.css.js';
 import styles from '../../../table-row/styles.css.js';
 
 export default class TableRowWrapper extends ComponentWrapper {
@@ -20,6 +21,13 @@ export default class TableRowWrapper extends ComponentWrapper {
    */
   findSelectionControl(): ElementWrapper<HTMLInputElement> | null {
     return this.find<HTMLInputElement>(`:scope > * > .${selectionStyles.root} input`);
+  }
+
+  /**
+   * The circled tag of the row, such as "S1".
+   */
+  findRowTag(): ElementWrapper | null {
+    return this.find(`:scope > .${cellStyles['row-tag']} > .${cellStyles.tag}`);
   }
 
   isSelected(): boolean {

@@ -30,6 +30,8 @@ export function InternalTable<T>({
   loadingText,
   empty,
   header,
+  caption,
+  rowTag,
   filter,
   pagination,
   preferences,
@@ -72,7 +74,7 @@ export function InternalTable<T>({
     onColumnWidthsChange,
   });
 
-  const columnCount = visibleColumns.length + (selectionType ? 1 : 0);
+  const columnCount = visibleColumns.length + (selectionType ? 1 : 0) + (rowTag ? 1 : 0);
   const rowNumberOffset = firstIndex ?? 1;
   const selectionState = { selectedItems };
   const hasSheet = variant === 'container' || variant === 'full-page';
@@ -89,6 +91,7 @@ export function InternalTable<T>({
 
   const headerRow = (
     <InternalTableRow ariaRowindex={firstIndex !== undefined ? 1 : undefined}>
+      {rowTag && <InternalTableHeaderCell rowTagColumn={true} />}
       {selectionType && (
         <InternalTableHeaderCell
           selectionType={selectionType}
@@ -149,6 +152,7 @@ export function InternalTable<T>({
         ariaRowindex={firstIndex !== undefined ? firstIndex + index + 1 : undefined}
         onClick={onRowClick ? () => fireNonCancelableEvent(onRowClick, { rowIndex: index, item }) : undefined}
       >
+        {rowTag && <InternalTableBodyCell rowTag={rowTag(item, index)} />}
         {selectionType && (
           <InternalTableBodyCell
             selectionType={selectionType}
@@ -186,6 +190,7 @@ export function InternalTable<T>({
   const table = (
     <InternalTableRoot
       tableRef={tableRef}
+      caption={caption}
       ariaLabel={ariaLabels?.tableLabel}
       ariaRowcount={totalItemsCount !== undefined ? totalItemsCount + 1 : undefined}
       stickyHeader={stickyHeader}
@@ -196,6 +201,8 @@ export function InternalTable<T>({
       layout={widths.layout}
       minInlineSize={widths.minTableWidth}
       edgeInset={hasSheet ? 'container' : 'flush'}
+      ruleWeight={hasSheet ? 'heavy' : 'light'}
+      className={hasSheet && !footer ? styles['rows-end-sheet'] : undefined}
     >
       <InternalTableHead>{headerRow}</InternalTableHead>
       <InternalTableBody>{bodyRows}</InternalTableBody>
@@ -229,7 +236,7 @@ export function InternalTable<T>({
     return (
       <InternalContainer
         {...rest}
-        className={clsx(styles.root, styles[`variant-${variant}`])}
+        className={clsx(styles.root, styles[`variant-${variant}`], styles.sheet)}
         header={headerArea}
         footer={footerSlot}
         disableContentPaddings={true}
@@ -244,7 +251,7 @@ export function InternalTable<T>({
     <div {...rest} className={clsx(styles.root, styles[`variant-${variant}`])}>
       {headerArea}
       {variant === 'full-page' ? (
-        <InternalContainer footer={footerSlot} disableContentPaddings={true}>
+        <InternalContainer className={styles.sheet} footer={footerSlot} disableContentPaddings={true}>
           {table}
         </InternalContainer>
       ) : (

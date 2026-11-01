@@ -33,8 +33,10 @@ export function useStickyHeader(enabled: boolean, verticalOffset: number, stuckC
     const update = () => {
       const areaTop = scrollParent ? scrollParent.getBoundingClientRect().top + scrollParent.clientTop : 0;
       const tableRect = table.getBoundingClientRect();
-      const travel = Math.max(tableRect.height - head.offsetHeight, 0);
-      const offset = Math.min(Math.max(areaTop + verticalOffset - tableRect.top, 0), travel);
+      // A caption sits above the head inside the table, so the head starts lower than the table does.
+      const headTop = tableRect.top + head.offsetTop;
+      const travel = Math.max(tableRect.height - head.offsetTop - head.offsetHeight, 0);
+      const offset = Math.min(Math.max(areaTop + verticalOffset - headTop, 0), travel);
       head.style.transform = offset > 0 ? `translateY(${offset}px)` : '';
       head.classList.toggle(stuckClassName, offset > 0);
     };

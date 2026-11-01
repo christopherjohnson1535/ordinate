@@ -23,6 +23,10 @@ export interface InternalTableRootProps extends TableRootProps {
    */
   edgeInset?: TableContextValue['edgeInset'];
   /**
+   * How strongly the rows and columns are ruled.
+   */
+  ruleWeight?: TableContextValue['ruleWeight'];
+  /**
    * The narrowest the table may get, in pixels, so a fixed layout keeps room for its flexible column.
    */
   minInlineSize?: number;
@@ -31,6 +35,7 @@ export interface InternalTableRootProps extends TableRootProps {
 
 export function InternalTableRoot({
   children,
+  caption,
   ariaLabel,
   ariaLabelledby,
   ariaDescribedby,
@@ -42,6 +47,7 @@ export function InternalTableRoot({
   contentDensity = 'comfortable',
   layout = 'auto',
   edgeInset = 'cell',
+  ruleWeight = 'heavy',
   minInlineSize,
   className,
   tableRef: externalTableRef,
@@ -60,8 +66,8 @@ export function InternalTableRoot({
   useResizeObserver(tableRef, checkScrollable);
 
   const context = useMemo<TableContextValue>(
-    () => ({ wrapLines, stripedRows, layout, edgeInset }),
-    [wrapLines, stripedRows, layout, edgeInset]
+    () => ({ wrapLines, stripedRows, layout, edgeInset, ruleWeight }),
+    [wrapLines, stripedRows, layout, edgeInset, ruleWeight]
   );
 
   return (
@@ -85,6 +91,7 @@ export function InternalTableRoot({
         aria-describedby={ariaDescribedby}
         aria-rowcount={ariaRowcount}
       >
+        {caption && <caption className={clsx(styles.caption, styles[`caption-inset-${edgeInset}`])}>{caption}</caption>}
         <TableContext.Provider value={context}>{children}</TableContext.Provider>
       </table>
     </div>

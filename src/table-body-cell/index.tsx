@@ -14,6 +14,7 @@ export default function TableBodyCell({
   isRowHeader = false,
   verticalAlign = 'middle',
   colSpan,
+  rowTag,
   selectionType,
   selected = false,
   selectionDisabled = false,
@@ -28,6 +29,7 @@ export default function TableBodyCell({
       isRowHeader={isRowHeader}
       verticalAlign={verticalAlign}
       colSpan={colSpan}
+      rowTag={rowTag}
       selectionType={selectionType}
       selected={selected}
       selectionDisabled={selectionDisabled}

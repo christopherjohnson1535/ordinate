@@ -120,6 +120,25 @@ describe('TableBodyCell', () => {
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
 
+  test('rowTag draws the tag in place of the content, as plain text in a data cell', () => {
+    render(<Example rowTag="S1" isRowHeader={true} />);
+    expect(screen.getByRole('cell', { name: 'S1' })).toBe(screen.getByTestId('cell'));
+    expect(cell().findRowTag()!.getText()).toBe('S1');
+    expect(cell().getElement()).toHaveClass(styles['row-tag']);
+    expect(screen.queryByText('Base plate')).toBeNull();
+  });
+
+  test('a selection cell ignores rowTag', () => {
+    render(<Example rowTag="S1" selectionType="multi" />);
+    expect(cell().findRowTag()).toBeNull();
+    expect(cell().findSelectionControl()).not.toBeNull();
+  });
+
+  test('has no accessibility violations as a row tag cell', async () => {
+    const { container } = render(<Example rowTag="S1" />);
+    await expectNoAxeViolations(container);
+  });
+
   test('has no accessibility violations', async () => {
     const { container } = render(<Example isRowHeader={true} />);
     await expectNoAxeViolations(container);

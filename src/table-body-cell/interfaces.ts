@@ -26,6 +26,13 @@ export interface TableBodyCellProps extends BaseComponentProps {
    */
   colSpan?: number;
   /**
+   * Turns the cell into the row's tag cell: a short reference such as "S1", drawn in a circle in a narrow
+   * column, so the row can be pointed to from elsewhere on the page, such as a split panel. The tag is
+   * plain text, read once by screen readers. Pair the column with a `TableHeaderCell` that sets
+   * `rowTagColumn`. Ignored when `selectionType` is set.
+   */
+  rowTag?: string;
+  /**
    * Turns the cell into a selection cell holding a checkbox (`multi`) or a radio button (`single`).
    */
   selectionType?: TableBodyCellProps.SelectionType;
