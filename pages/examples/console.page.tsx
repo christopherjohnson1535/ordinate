@@ -14,17 +14,20 @@ import ContentLayout from '~components/content-layout';
 import Flashbar, { FlashbarProps } from '~components/flashbar';
 import Header from '~components/header';
 import HelpPanel from '~components/help-panel';
+import Input from '~components/input';
 import KeyValuePairs from '~components/key-value-pairs';
 import Pagination from '~components/pagination';
 import ProgressBar from '~components/progress-bar';
 import PropertyFilter, { PropertyFilterProps } from '~components/property-filter';
-import SideNavigation from '~components/side-navigation';
+import SideNavigation, { SideNavigationProps } from '~components/side-navigation';
 import SpaceBetween from '~components/space-between';
 import SplitPanel from '~components/split-panel';
 import StatusIndicator, { StatusIndicatorProps } from '~components/status-indicator';
 import Table, { TableProps } from '~components/table';
 import Tabs from '~components/tabs';
 import TextContent from '~components/text-content';
+import TitleBlock from '~components/title-block';
+import TopNavigation from '~components/top-navigation';
 
 import styles from './console.module.scss';
 
@@ -88,6 +91,40 @@ const contentDisplayOptions = columnDefinitions.map(({ id, header }) => ({
   label: String(header),
   alwaysVisible: id === 'name',
 }));
+
+// The index of the drawing set: sheets numbered A-01 onwards, account pages in a second set.
+const sheets: SideNavigationProps.Item[] = [
+  { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
+  { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
+  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03' },
+  { type: 'link', text: 'Logs', href: '#/logs', code: 'A-04' },
+  { type: 'link', text: 'Settings', href: '#/settings', code: 'A-05' },
+  { type: 'divider' },
+  {
+    type: 'section-group',
+    title: 'Account',
+    code: 'Set B',
+    items: [
+      { type: 'link', text: 'People and access', href: '#/people', code: 'B-01' },
+      { type: 'link', text: 'Billing', href: '#/billing', code: 'B-02' },
+    ],
+  },
+];
+
+function findSheet(items: ReadonlyArray<SideNavigationProps.Item>, href: string): SideNavigationProps.Link | undefined {
+  for (const item of items) {
+    if (item.type === 'link' && item.href === href) {
+      return item;
+    }
+    if (item.type === 'section-group') {
+      const found = findSheet(item.items, href);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return undefined;
+}
 
 function EmptyState({ title }: { title: string }) {
   return (
@@ -236,6 +273,8 @@ export default function Console() {
     position: 'side',
   });
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [command, setCommand] = useState('');
+  const sheet = findSheet(sheets, activeHref);
   const [flashes, setFlashes] = useState<FlashbarProps.MessageDefinition[]>([
     {
       id: 'vault-store',
@@ -250,122 +289,150 @@ export default function Console() {
 
   return (
     <div className={styles.region}>
-      <AppLayout
-        disableBodyScroll={true}
-        contentType="table"
-        navigation={
-          <SideNavigation
-            header={{ text: 'North Annex', href: '#/' }}
-            activeHref={activeHref}
-            onFollow={event => {
-              event.preventDefault();
-              if (event.detail.href) {
-                setActiveHref(event.detail.href);
-              }
-            }}
-            items={[
-              { type: 'link', text: 'Overview', href: '#/overview' },
-              { type: 'link', text: 'Services', href: '#/services' },
-              { type: 'link', text: 'Deployments', href: '#/deployments' },
-              { type: 'link', text: 'Logs', href: '#/logs' },
-              { type: 'link', text: 'Settings', href: '#/settings' },
-              { type: 'divider' },
-              { type: 'link', text: 'People and access', href: '#/people' },
-              { type: 'link', text: 'Billing', href: '#/billing' },
-            ]}
+      <TopNavigation
+        identity={{ href: '#/', title: 'Annex Console', onFollow: event => event.preventDefault() }}
+        search={
+          <Input
+            type="search"
+            value={command}
+            placeholder="Go to a service, sheet or command"
+            ariaLabel="Command line"
+            onChange={event => setCommand(event.detail.value)}
           />
         }
-        breadcrumbs={
-          <BreadcrumbGroup
-            items={[
-              { text: 'Projects', href: '#/projects' },
-              { text: 'North Annex', href: '#/projects/north-annex' },
-            ]}
-            onFollow={event => event.preventDefault()}
-          />
-        }
-        notifications={<Flashbar items={flashes} />}
-        tools={
-          <HelpPanel header="Services">
-            <p>Each service runs one image on a set of nodes. Restart a service to roll its nodes one at a time.</p>
-          </HelpPanel>
-        }
-        toolsOpen={toolsOpen}
-        onToolsChange={event => setToolsOpen(event.detail.open)}
-        splitPanelOpen={splitPanelOpen}
-        onSplitPanelToggle={event => setSplitPanelOpen(event.detail.open)}
-        splitPanelPreferences={splitPanelPreferences}
-        onSplitPanelPreferencesChange={event => setSplitPanelPreferences(event.detail)}
-        splitPanel={
-          selectedService && (
-            <SplitPanel
-              header={selectedService.name}
-              headerTag={serviceTag(selectedService)}
-              headerDescription="maxUnavailable 0, maxSurge 1"
-            >
-              <ServiceDetail service={selectedService} />
-            </SplitPanel>
-          )
-        }
-        content={
-          <ContentLayout
-            header={
-              <Header
-                variant="h1"
-                code="Sheet A-02"
-                description="North Annex, production · us-mountain-1"
-                actions={
-                  <SpaceBetween direction="horizontal" size="xs">
-                    <Button>Preview changes</Button>
-                    <Button variant="primary">Deploy</Button>
-                  </SpaceBetween>
-                }
-              >
-                North Annex
-              </Header>
-            }
-          >
-            <SpaceBetween size="l">
-              <Overview />
-              <Tabs
-                activeTabId={activeTabId}
-                onChange={event => setActiveTabId(event.detail.activeTabId)}
-                tabs={[
-                  {
-                    id: 'services',
-                    label: 'Services',
-                    content: <ServicesTable selected={selectedService} onSelect={setSelectedService} />,
-                  },
-                  {
-                    id: 'deployments',
-                    label: 'Deployments',
-                    content: (
-                      <Container>
-                        <Box color="text-body-secondary">web:v2 is rolling out; see the Rollout panel.</Box>
-                      </Container>
-                    ),
-                  },
-                  {
-                    id: 'logs',
-                    label: 'Logs',
-                    content: (
-                      <Container header={<Header>vault-store</Header>}>
-                        <TextContent>
-                          <pre>
-                            {'14:02:11 health check failed: connection refused\n'}
-                            {'14:02:41 health check failed: connection refused\n'}
-                            {'14:03:11 marked unhealthy after 3 failures'}
-                          </pre>
-                        </TextContent>
-                      </Container>
-                    ),
-                  },
-                ]}
-              />
-            </SpaceBetween>
-          </ContentLayout>
-        }
+        utilities={[
+          { type: 'button', text: 'Docs', href: '#/docs' },
+          {
+            type: 'menu-dropdown',
+            text: 'Dana Ruiz',
+            description: 'dana@annex.example',
+            items: [
+              { id: 'profile', text: 'Profile' },
+              { id: 'signout', text: 'Sign out' },
+            ],
+          },
+        ]}
       />
+      <div className={styles.layout}>
+        <AppLayout
+          disableBodyScroll={true}
+          contentType="table"
+          navigation={
+            <SideNavigation
+              header={{ text: 'North Annex', href: '#/' }}
+              activeHref={activeHref}
+              onFollow={event => {
+                event.preventDefault();
+                if (event.detail.href) {
+                  setActiveHref(event.detail.href);
+                }
+              }}
+              items={sheets}
+            />
+          }
+          breadcrumbs={
+            <BreadcrumbGroup
+              items={[
+                { text: 'Projects', href: '#/projects' },
+                { text: 'North Annex', href: '#/projects/north-annex' },
+              ]}
+              onFollow={event => event.preventDefault()}
+            />
+          }
+          notifications={<Flashbar items={flashes} />}
+          titleBlock={
+            <TitleBlock
+              ariaLabel="Sheet"
+              items={[
+                { label: 'Project', value: 'North Annex, production' },
+                { label: 'Sheet', value: sheet ? `${sheet.code} ${sheet.text}` : 'A-02 Services' },
+                { label: 'Revision', value: '△2, 31 Oct 2026' },
+                { label: 'Checked', value: 'D. Ruiz' },
+              ]}
+            />
+          }
+          tools={
+            <HelpPanel header="Services">
+              <p>Each service runs one image on a set of nodes. Restart a service to roll its nodes one at a time.</p>
+            </HelpPanel>
+          }
+          toolsOpen={toolsOpen}
+          onToolsChange={event => setToolsOpen(event.detail.open)}
+          splitPanelOpen={splitPanelOpen}
+          onSplitPanelToggle={event => setSplitPanelOpen(event.detail.open)}
+          splitPanelPreferences={splitPanelPreferences}
+          onSplitPanelPreferencesChange={event => setSplitPanelPreferences(event.detail)}
+          splitPanel={
+            selectedService && (
+              <SplitPanel
+                header={selectedService.name}
+                headerTag={serviceTag(selectedService)}
+                headerDescription="maxUnavailable 0, maxSurge 1"
+              >
+                <ServiceDetail service={selectedService} />
+              </SplitPanel>
+            )
+          }
+          content={
+            <ContentLayout
+              header={
+                <Header
+                  variant="h1"
+                  code="Sheet A-02"
+                  description="North Annex, production · us-mountain-1"
+                  actions={
+                    <SpaceBetween direction="horizontal" size="xs">
+                      <Button>Preview changes</Button>
+                      <Button variant="primary">Deploy</Button>
+                    </SpaceBetween>
+                  }
+                >
+                  North Annex
+                </Header>
+              }
+            >
+              <SpaceBetween size="l">
+                <Overview />
+                <Tabs
+                  activeTabId={activeTabId}
+                  onChange={event => setActiveTabId(event.detail.activeTabId)}
+                  tabs={[
+                    {
+                      id: 'services',
+                      label: 'Services',
+                      content: <ServicesTable selected={selectedService} onSelect={setSelectedService} />,
+                    },
+                    {
+                      id: 'deployments',
+                      label: 'Deployments',
+                      content: (
+                        <Container>
+                          <Box color="text-body-secondary">web:v2 is rolling out; see the Rollout panel.</Box>
+                        </Container>
+                      ),
+                    },
+                    {
+                      id: 'logs',
+                      label: 'Logs',
+                      content: (
+                        <Container header={<Header>vault-store</Header>}>
+                          <TextContent>
+                            <pre>
+                              {'14:02:11 health check failed: connection refused\n'}
+                              {'14:02:41 health check failed: connection refused\n'}
+                              {'14:03:11 marked unhealthy after 3 failures'}
+                            </pre>
+                          </TextContent>
+                        </Container>
+                      ),
+                    },
+                  ]}
+                />
+              </SpaceBetween>
+            </ContentLayout>
+          }
+        />
+      </div>
     </div>
   );
 }

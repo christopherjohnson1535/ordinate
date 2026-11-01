@@ -21,11 +21,20 @@
 
 .side {
   grid-area: side;
-  border-inline-end: 1px solid var(--ord-color-border-divider);
+}
+
+// A framed sheet, as the app layout draws one: heavy ink border, title block along the foot.
+.content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  margin-block: var(--ord-space-scaled-s) var(--ord-space-scaled-m);
+  margin-inline-end: var(--ord-space-scaled-m);
+  border: 2px solid var(--ord-color-border-strong);
   background-color: var(--ord-color-background-container);
 }
 
-.content {
-  grid-area: content;
+.body {
+  flex: 1;
   padding: var(--ord-space-scaled-l) var(--ord-space-scaled-xl);
 }

@@ -96,3 +96,20 @@ test('closes and reopens the split panel', async ({ devPage }) => {
   await open.click();
   await expect(panel.getByRole('progressbar', { name: 'web:v2 is rolling out' })).toBeVisible();
 });
+
+test('follows the sheet index, names the sheet in the title block and reaches the command line with /', async ({
+  devPage,
+  page,
+}) => {
+  const titleBlock = devPage.content.locator('dl[aria-label="Sheet"]');
+  await expect(titleBlock).toContainText('A-02 Services');
+
+  const billing = devPage.content.getByRole('link', { name: 'B-02 Billing' });
+  await billing.click();
+  await expect(billing).toHaveAttribute('aria-current', 'page');
+  await expect(titleBlock).toContainText('B-02 Billing');
+
+  await page.locator('body').click({ position: { x: 1, y: 1 } });
+  await page.keyboard.press('/');
+  await expect(devPage.content.getByRole('searchbox', { name: 'Command line' })).toBeFocused();
+});

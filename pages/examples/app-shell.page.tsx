@@ -20,6 +20,7 @@ import SpaceBetween from '~components/space-between';
 import StatusIndicator from '~components/status-indicator';
 import Tabs from '~components/tabs';
 import TextContent from '~components/text-content';
+import TitleBlock from '~components/title-block';
 import TopNavigation from '~components/top-navigation';
 
 import styles from './app-shell.module.scss';
@@ -219,71 +220,83 @@ export default function AppShell() {
           activeHref={activeHref}
           onFollow={navigate}
           items={[
-            { type: 'link', text: 'Dashboard', href: '#/dashboard' },
-            { type: 'link', text: 'Projects', href: '#/projects' },
+            { type: 'link', text: 'Dashboard', href: '#/dashboard', code: 'A-01' },
+            { type: 'link', text: 'Projects', href: '#/projects', code: 'A-02' },
             {
               type: 'section',
               text: 'Networking',
+              code: 'Set B',
               items: [
-                { type: 'link', text: 'Endpoints', href: '#/endpoints' },
-                { type: 'link', text: 'Firewalls', href: '#/firewalls' },
+                { type: 'link', text: 'Endpoints', href: '#/endpoints', code: 'B-01' },
+                { type: 'link', text: 'Firewalls', href: '#/firewalls', code: 'B-02' },
               ],
             },
             { type: 'divider' },
-            { type: 'link', text: 'Billing', href: '#/billing' },
-            { type: 'link', text: 'Documentation', href: '#/docs', external: true },
+            { type: 'link', text: 'Billing', href: '#/billing', code: 'C-01' },
+            { type: 'link', text: 'Documentation', href: '#/docs', code: 'C-02', external: true },
           ]}
         />
       </div>
       <div className={styles.content}>
-        <SpaceBetween size="l">
-          <Flashbar items={flashes} />
-          <BreadcrumbGroup
-            items={[
-              { text: 'Compute', href: '#/' },
-              { text: 'Projects', href: '#/projects' },
-              { text: 'north-annex', href: '#/projects/north-annex' },
-            ]}
-            onFollow={navigate}
-          />
-          <Header
-            variant="h1"
-            description="Production environment for the annex."
-            actions={
-              <SpaceBetween direction="horizontal" size="xs">
-                <ButtonDropdown
-                  items={[
-                    { id: 'restart', text: 'Restart', disabled: status === 'restarting' },
-                    { id: 'snapshot', text: 'Take snapshot' },
-                    { id: 'delete', text: 'Delete project' },
-                  ]}
-                  onItemClick={event => {
-                    if (event.detail.id === 'restart') {
-                      restart();
-                    }
-                  }}
-                >
-                  Actions
-                </ButtonDropdown>
-                <Button variant="primary" href="#examples/settings-form">
-                  Edit settings
-                </Button>
-              </SpaceBetween>
-            }
-          >
-            north-annex
-          </Header>
-          <Tabs
-            activeTabId={activeTabId}
-            onChange={event => setActiveTabId(event.detail.activeTabId)}
-            tabs={[
-              { id: 'details', label: 'Details', content: <DetailsTab status={status} /> },
-              { id: 'activity', label: 'Activity', content: <ActivityTab /> },
-              { id: 'connect', label: 'Connect', content: <ConnectTab /> },
-              { id: 'logs', label: 'Logs', disabled: true, disabledReason: 'Logs are turned off for this project.' },
-            ]}
-          />
-        </SpaceBetween>
+        <div className={styles.body}>
+          <SpaceBetween size="l">
+            <Flashbar items={flashes} />
+            <BreadcrumbGroup
+              items={[
+                { text: 'Compute', href: '#/' },
+                { text: 'Projects', href: '#/projects' },
+                { text: 'north-annex', href: '#/projects/north-annex' },
+              ]}
+              onFollow={navigate}
+            />
+            <Header
+              variant="h1"
+              description="Production environment for the annex."
+              actions={
+                <SpaceBetween direction="horizontal" size="xs">
+                  <ButtonDropdown
+                    items={[
+                      { id: 'restart', text: 'Restart', disabled: status === 'restarting' },
+                      { id: 'snapshot', text: 'Take snapshot' },
+                      { id: 'delete', text: 'Delete project' },
+                    ]}
+                    onItemClick={event => {
+                      if (event.detail.id === 'restart') {
+                        restart();
+                      }
+                    }}
+                  >
+                    Actions
+                  </ButtonDropdown>
+                  <Button variant="primary" href="#examples/settings-form">
+                    Edit settings
+                  </Button>
+                </SpaceBetween>
+              }
+            >
+              north-annex
+            </Header>
+            <Tabs
+              activeTabId={activeTabId}
+              onChange={event => setActiveTabId(event.detail.activeTabId)}
+              tabs={[
+                { id: 'details', label: 'Details', content: <DetailsTab status={status} /> },
+                { id: 'activity', label: 'Activity', content: <ActivityTab /> },
+                { id: 'connect', label: 'Connect', content: <ConnectTab /> },
+                { id: 'logs', label: 'Logs', disabled: true, disabledReason: 'Logs are turned off for this project.' },
+              ]}
+            />
+          </SpaceBetween>
+        </div>
+        <TitleBlock
+          ariaLabel="Sheet"
+          items={[
+            { label: 'Project', value: 'north-annex' },
+            { label: 'Sheet', value: 'A-02 Projects' },
+            { label: 'Revision', value: '△3' },
+            { label: 'Checked', value: 'D. Ruiz' },
+          ]}
+        />
       </div>
     </div>
   );
