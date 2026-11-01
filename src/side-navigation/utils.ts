@@ -47,3 +47,22 @@ export function containsHref(items: ReadonlyArray<SideNavigationProps.Item>, hre
     return 'items' in item && containsHref(item.items, href);
   });
 }
+
+/**
+ * Whether any link, at any depth, carries a code, so every link keeps a column for one.
+ */
+export function containsCode(items: ReadonlyArray<SideNavigationProps.Item>): boolean {
+  return items.some(item => {
+    switch (item.type) {
+      case 'divider':
+        return false;
+      case 'link':
+        return Boolean(item.code);
+      case 'section':
+      case 'section-group':
+        return containsCode(item.items);
+      default:
+        return Boolean(item.code) || containsCode(item.items);
+    }
+  });
+}

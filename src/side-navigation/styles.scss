@@ -4,7 +4,12 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
+
+// The index of a drawing set: sheet codes in a column, the current sheet inked solid, sets
+// lettered in small capitals and broken apart by ink rules. It draws no ground of its own, so it
+// sits on the grey frame of an app layout.
 
 .root {
   @include styles.font-body;
@@ -12,27 +17,29 @@
   box-sizing: border-box;
   min-inline-size: 0;
   padding-block: 0 ord.$space-scaled-m;
-  padding-inline: 0;
+  padding-inline: ord.$space-s;
   color: ord.$color-text-body-secondary;
 }
 
 .header {
   margin-block-end: ord.$space-scaled-s;
-  padding-block: ord.$space-scaled-m;
-  padding-inline: ord.$space-m;
-  border-block-end-width: ord.$border-width-default;
+  padding-block: ord.$space-scaled-m ord.$space-scaled-xs;
+  padding-inline: ord.$space-xs;
+  border-block-end-width: ord.$border-width-section;
   border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
+  border-block-end-color: ord.$color-border-strong;
 }
 
 .header-link {
-  @include styles.font-heading;
   display: inline-flex;
   align-items: center;
   gap: ord.$space-xs;
   max-inline-size: 100%;
   color: ord.$color-text-body;
+  font-family: ord.$font-family-headline;
   font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-headline;
+  line-height: ord.$line-height-heading;
   text-decoration-line: none;
 
   &:focus-visible {
@@ -65,35 +72,32 @@
 .link-row {
   display: flex;
   align-items: center;
-  gap: ord.$space-xs;
-  padding-inline-end: ord.$space-s;
+  gap: ord.$space-xxs;
 }
 
-// Every link carries a transparent rule on its leading edge, so marking the current page
-// inks the rule without moving the text.
 .link {
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
   flex: 1 1 auto;
+  align-items: baseline;
+  gap: ord.$space-xs;
   min-inline-size: 0;
   padding-block: ord.$space-scaled-xxs;
-  padding-inline: ord.$space-m 0;
-  border-inline-start-width: ord.$border-width-section;
-  border-inline-start-style: solid;
-  border-inline-start-color: transparent;
+  padding-inline: ord.$space-xs;
   color: ord.$color-text-body-secondary;
   text-decoration-line: none;
   text-decoration-thickness: ord.$border-width-default;
   text-underline-offset: ord.$space-xxxs;
-  overflow-wrap: anywhere;
 
   @include styles.with-motion {
-    transition-property: color, border-color;
+    transition-property: color, background-color;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
   }
 
   &:hover {
+    background-color: ord.$color-background-item-hover;
     color: ord.$color-text-body;
-    text-decoration-line: underline;
   }
 
   &:focus-visible {
@@ -102,14 +106,42 @@
   }
 }
 
-.link-active {
-  border-inline-start-color: ord.$color-border-strong;
-  color: ord.$color-text-body;
+// The current sheet is inked solid, like the filled box against its number in a printed index.
+.link-active,
+.link-active:hover {
+  background-color: ord.$color-background-control-checked;
+  color: ord.$color-foreground-control-checked;
   font-weight: ord.$font-weight-label;
 }
 
-.external-icon {
-  vertical-align: baseline;
+// Mono figures are all one width, so a fixed column keeps every text starting on the same line.
+.code {
+  @include drawing.font-caption;
+  flex: 0 0 auto;
+  min-inline-size: 6ch;
+  color: ord.$color-text-secondary;
+
+  .link-active & {
+    color: inherit;
+  }
+}
+
+.text {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+
+  .link:hover & {
+    text-decoration-line: underline;
+  }
+}
+
+.external-mark {
+  font-family: ord.$font-family-mono;
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
 }
 
 .info {
@@ -118,32 +150,53 @@
   align-items: center;
 }
 
+// With codes, nesting indents the text only, so the codes stay in one column.
 .nested {
   padding-inline-start: ord.$space-m;
+
+  .has-codes & {
+    padding-inline-start: 0;
+  }
+
+  .has-codes & .text {
+    padding-inline-start: ord.$space-s;
+  }
 }
 
-.section {
-  margin-block-start: ord.$space-scaled-xs;
+.section,
+.section-group {
+  margin-block-start: ord.$space-scaled-s;
+}
+
+.set-label {
+  @include drawing.font-caption;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.set-code {
+  color: ord.$color-text-body;
 }
 
 .section-toggle {
-  @include styles.font-label;
   display: flex;
-  align-items: center;
-  gap: ord.$space-xxxs;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: ord.$space-xs;
   box-sizing: border-box;
   inline-size: 100%;
   padding-block: ord.$space-scaled-xxs;
-  padding-inline: ord.$space-xs ord.$space-s;
+  padding-inline: ord.$space-xs;
   border-width: 0;
   background-color: transparent;
-  color: ord.$color-text-body;
-  font-weight: ord.$font-weight-heading;
+  color: ord.$color-text-secondary;
+  font-family: inherit;
+  font-size: inherit;
   text-align: start;
   cursor: pointer;
 
   &:hover {
-    color: ord.$color-text-link-hover;
+    color: ord.$color-text-body;
   }
 
   &:focus-visible {
@@ -152,27 +205,16 @@
   }
 }
 
-.caret {
+.toggle-mark {
   flex-shrink: 0;
-  color: ord.$color-text-secondary;
-}
-
-// Section links line up with the section title past the caret: the toggle's start padding,
-// caret and gap add up to this padding plus a link's leading rule and padding.
-.section-items {
-  padding-inline-start: ord.$space-xs;
-}
-
-.section-group {
-  margin-block-start: ord.$space-scaled-s;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-body;
 }
 
 .section-group-title {
-  @include styles.font-label;
   padding-block: ord.$space-scaled-xxs;
-  padding-inline: ord.$space-m;
+  padding-inline: ord.$space-xs;
   color: ord.$color-text-secondary;
-  font-size: ord.$font-size-small;
 }
 
 .expand-toggle {
@@ -200,11 +242,12 @@
   }
 }
 
+// A set break: an ink rule across the index between two sets of sheets.
 .divider {
   margin-block: ord.$space-scaled-s;
-  margin-inline: ord.$space-m;
+  margin-inline: 0;
   border-width: 0;
   border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-divider;
+  border-block-start-color: ord.$color-border-strong;
 }

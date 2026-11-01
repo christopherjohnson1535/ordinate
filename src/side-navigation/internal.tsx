@@ -3,12 +3,11 @@
 import React, { createContext, useContext, useId, useState } from 'react';
 import clsx from 'clsx';
 
-import { InternalIcon } from '../icon/internal';
 import { fireCancelableEvent, fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { isPlainLeftClick } from '../internal/link-click';
 import { SideNavigationProps } from './interfaces';
-import { containsHref, splitAtDividers } from './utils';
+import { containsCode, containsHref, splitAtDividers } from './utils';
 
 import styles from './styles.css.js';
 
@@ -16,6 +15,10 @@ type Expandable = SideNavigationProps.Section | SideNavigationProps.ExpandableLi
 
 interface NavigationContextValue {
   activeHref?: string;
+  /**
+   * Some link carries a code, so every link keeps the code column and the texts line up.
+   */
+  hasCodes: boolean;
   idPrefix: string;
   externalIconAriaLabel: (item: SideNavigationProps.Link) => string | undefined;
   follow: (event: React.MouseEvent, detail: SideNavigationProps.FollowDetail) => boolean;
@@ -41,9 +44,32 @@ interface ItemProps<T extends SideNavigationProps.Item> {
   path: string;
 }
 
+// Marks drawn as type rather than icons, the way an index on a sheet is lettered.
+function ToggleMark({ expanded }: { expanded: boolean }) {
+  return (
+    <span className={styles['toggle-mark']} aria-hidden="true">
+      {expanded ? '\u2212' : '+'}
+    </span>
+  );
+}
+
+function SetLabel({ code, text }: { code?: string; text: string }) {
+  return (
+    <span className={styles['set-label']}>
+      {code && (
+        <>
+          <span className={styles['set-code']}>{code}</span> <span aria-hidden="true">{'\u00b7'}</span>{' '}
+        </>
+      )}
+      <span>{text}</span>
+    </span>
+  );
+}
+
 function NavLink({
   text,
   href,
+  code,
   external = false,
   type,
   info,
@@ -53,6 +79,7 @@ function NavLink({
 }: {
   text: string;
   href: string;
+  code?: string;
   external?: boolean;
   type: SideNavigationProps.FollowType;
   info?: React.ReactNode;
@@ -60,7 +87,7 @@ function NavLink({
   onFollowed?: () => void;
   children?: React.ReactNode;
 }) {
-  const { activeHref, follow, externalIconAriaLabel } = useNavigation();
+  const { activeHref, hasCodes, follow, externalIconAriaLabel } = useNavigation();
   const active = href === activeHref;
   return (
     <div className={styles['link-row']}>
@@ -77,18 +104,23 @@ function NavLink({
           }
         }}
       >
-        {text}
-        {external && item && (
+        {hasCodes && (
           <>
-            {' '}
-            <InternalIcon
-              className={styles['external-icon']}
-              name="external"
-              size="inherit"
-              ariaLabel={externalIconAriaLabel(item)}
-            />
+            <span className={styles.code}>{code}</span>{' '}
           </>
         )}
+        <span className={styles.text}>
+          {text}
+          {external && item && (
+            <>
+              {' '}
+              <span className={styles['external-mark']} aria-hidden="true">
+                {'\u2197'}
+              </span>
+              <span className={styles['screenreader-only']}>{externalIconAriaLabel(item)}</span>
+            </>
+          )}
+        </span>
       </a>
       {info && <span className={styles.info}>{info}</span>}
       {children}
@@ -109,8 +141,8 @@ function Section({ item, path }: ItemProps<SideNavigationProps.Section>) {
         aria-controls={contentId}
         onClick={() => setExpanded(path, item, !expanded)}
       >
-        <InternalIcon className={styles.caret} name={expanded ? 'angle-down' : 'angle-right'} />
-        <span>{item.text}</span>
+        <SetLabel code={item.code} text={item.text} />
+        <ToggleMark expanded={expanded} />
       </button>
       <div id={contentId} className={styles['section-items']} hidden={!expanded}>
         <ItemList items={item.items} path={path} />
@@ -125,7 +157,7 @@ function SectionGroup({ item, path }: ItemProps<SideNavigationProps.SectionGroup
   return (
     <li className={clsx(styles.item, styles['section-group'])}>
       <div id={titleId} className={styles['section-group-title']}>
-        {item.title}
+        <SetLabel code={item.code} text={item.title} />
       </div>
       <div role="group" aria-labelledby={titleId}>
         <ItemList items={item.items} path={path} />
@@ -137,7 +169,7 @@ function SectionGroup({ item, path }: ItemProps<SideNavigationProps.SectionGroup
 function LinkGroup({ item, path }: ItemProps<SideNavigationProps.LinkGroup>) {
   return (
     <li className={clsx(styles.item, styles['link-group'])}>
-      <NavLink text={item.text} href={item.href} type="link-group" info={item.info} />
+      <NavLink text={item.text} href={item.href} code={item.code} type="link-group" info={item.info} />
       <div className={styles.nested}>
         <ItemList items={item.items} path={path} />
       </div>
@@ -154,6 +186,7 @@ function ExpandableLinkGroup({ item, path }: ItemProps<SideNavigationProps.Expan
       <NavLink
         text={item.text}
         href={item.href}
+        code={item.code}
         type="expandable-link-group"
         // Following the group's own link opens it, so the pages under it come into view.
         onFollowed={() => !expanded && setExpanded(path, item, true)}
@@ -166,7 +199,7 @@ function ExpandableLinkGroup({ item, path }: ItemProps<SideNavigationProps.Expan
           aria-controls={contentId}
           onClick={() => setExpanded(path, item, !expanded)}
         >
-          <InternalIcon name={expanded ? 'angle-down' : 'angle-right'} />
+          <ToggleMark expanded={expanded} />
         </button>
       </NavLink>
       <div id={contentId} className={styles.nested} hidden={!expanded}>
@@ -184,6 +217,7 @@ function Item({ item, path }: ItemProps<Exclude<SideNavigationProps.Item, SideNa
           <NavLink
             text={item.text}
             href={item.href}
+            code={item.code}
             external={item.external}
             type="link"
             info={item.info}
@@ -241,8 +275,10 @@ export function InternalSideNavigation({
   const follow = (event: React.MouseEvent, detail: SideNavigationProps.FollowDetail) =>
     fireCancelableEvent(onFollow, detail, event);
 
+  const hasCodes = containsCode(items);
   const context: NavigationContextValue = {
     activeHref,
+    hasCodes,
     idPrefix,
     externalIconAriaLabel: item => i18n('externalIconAriaLabel', item.externalIconAriaLabel ?? externalIconAriaLabel),
     follow,
@@ -254,7 +290,11 @@ export function InternalSideNavigation({
   };
 
   return (
-    <nav {...rest} className={styles.root} aria-label={i18n('ariaLabel', ariaLabel)}>
+    <nav
+      {...rest}
+      className={clsx(styles.root, hasCodes && styles['has-codes'])}
+      aria-label={i18n('ariaLabel', ariaLabel)}
+    >
       {header && (
         <div className={styles.header}>
           <a

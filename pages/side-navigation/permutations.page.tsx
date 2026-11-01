@@ -57,7 +57,50 @@ const items: SideNavigationProps.Item[] = [
   { type: 'link', text: 'Documentation', href: 'https://example.com/docs', external: true },
 ];
 
+// Codes number the sheets like a drawing index, and section codes letter the sets.
+const sheetIndex: SideNavigationProps.Item[] = [
+  { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
+  { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
+  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03', info: <Badge color="blue">2</Badge> },
+  {
+    type: 'link-group',
+    text: 'Logs',
+    href: '#/logs',
+    code: 'A-04',
+    items: [
+      { type: 'link', text: 'Requests', href: '#/logs/requests', code: 'A-04a' },
+      { type: 'link', text: 'Audit trail', href: '#/logs/audit' },
+    ],
+  },
+  { type: 'divider' },
+  {
+    type: 'section',
+    text: 'Account',
+    code: 'Set B',
+    items: [
+      { type: 'link', text: 'People and access', href: '#/people', code: 'B-01' },
+      { type: 'link', text: 'Billing', href: '#/billing', code: 'B-02' },
+    ],
+  },
+  {
+    type: 'section-group',
+    title: 'Reference',
+    code: 'Set C',
+    items: [
+      {
+        type: 'expandable-link-group',
+        text: 'Guides',
+        href: '#/guides',
+        code: 'C-01',
+        items: [{ type: 'link', text: 'Rolling out an image', href: '#/guides/rollout', code: 'C-01a' }],
+      },
+      { type: 'link', text: 'Status page', href: 'https://example.com/status', code: 'C-02', external: true },
+    ],
+  },
+];
+
 export default function SideNavigationPermutations() {
+  const [indexHref, setIndexHref] = useState('#/services');
   const [activeHref, setActiveHref] = useState('#/nodes');
   const [changes, setChanges] = useState<string[]>([]);
 
@@ -90,6 +133,23 @@ export default function SideNavigationPermutations() {
           </div>
           <p className={styles.note}>Current: {activeHref}</p>
           <p className={styles.note}>Changes: {changes.join(', ') || 'none'}</p>
+        </section>
+
+        <section className={styles.section}>
+          <h2>Sheet index with codes and sets</h2>
+          <div className={styles.frame}>
+            <SideNavigation
+              header={{ text: 'North Annex', href: '#/' }}
+              items={sheetIndex}
+              activeHref={indexHref}
+              onFollow={event => {
+                if (!event.detail.external) {
+                  event.preventDefault();
+                  setIndexHref(event.detail.href);
+                }
+              }}
+            />
+          </div>
         </section>
 
         <section className={styles.section}>

@@ -22,6 +22,14 @@ export default class SideNavigationWrapper extends ComponentWrapper {
     return this.findLinks().find(link => link.getElement().getAttribute('href') === href) ?? null;
   }
 
+  /**
+   * Returns the code of every link, in order, while any link has one. Links without a code
+   * return an empty code, so the list lines up with `findLinks()`.
+   */
+  findLinkCodes(): ElementWrapper[] {
+    return this.findAllByClassName(styles.code);
+  }
+
   findActiveLink(): ElementWrapper<HTMLAnchorElement> | null {
     return this.findByClassName<HTMLAnchorElement>(styles['link-active']);
   }

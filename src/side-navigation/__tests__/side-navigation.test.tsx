@@ -186,6 +186,79 @@ describe('SideNavigation', () => {
   });
 });
 
+describe('SideNavigation sheet index', () => {
+  const indexed: SideNavigationProps.Item[] = [
+    { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
+    { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
+    { type: 'link', text: 'Notes', href: '#/notes' },
+    { type: 'divider' },
+    {
+      type: 'section',
+      text: 'Account',
+      code: 'Set B',
+      items: [{ type: 'link', text: 'Billing', href: '#/billing', code: 'B-01' }],
+    },
+    {
+      type: 'section-group',
+      title: 'Reference',
+      code: 'Set C',
+      items: [
+        {
+          type: 'expandable-link-group',
+          text: 'Guides',
+          href: '#/guides',
+          code: 'C-01',
+          items: [{ type: 'link', text: 'Rollouts', href: '#/guides/rollouts', code: 'C-01a' }],
+        },
+      ],
+    },
+  ];
+
+  test('shows each code before its link text, as part of the link', () => {
+    render(<SideNavigation items={indexed} activeHref="#/services" />);
+    expect(screen.getByRole('link', { name: 'A-01 Overview' })).toHaveAttribute('href', '#/overview');
+    expect(wrapper().findActiveLink()!.getText()).toBe('A-02 Services');
+    expect(
+      wrapper()
+        .findLinkCodes()
+        .map(code => code.getText())
+    ).toEqual(['A-01', 'A-02', '', 'B-01', 'C-01', 'C-01a']);
+  });
+
+  test('keeps a code column for links without a code when other links have one', () => {
+    render(<SideNavigation items={indexed} />);
+    expect(screen.getByRole('link', { name: 'Notes' })).toBeInTheDocument();
+    expect(wrapper().findLinkByHref('#/notes')!.findAll('span')).toHaveLength(2);
+  });
+
+  test('draws no code column when no link has a code', () => {
+    render(<SideNavigation items={items} />);
+    expect(wrapper().findLinkCodes()).toHaveLength(0);
+  });
+
+  test('letters sections and section groups with their set code', () => {
+    render(<SideNavigation items={indexed} />);
+    expect(screen.getByRole('button', { name: 'Set B Account' })).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('group', { name: 'Set C Reference' })).toBeInTheDocument();
+  });
+
+  test('draws expand state and external links as type marks hidden from assistive technology', () => {
+    const { container } = render(<SideNavigation items={items} />);
+    expect(container.querySelector('svg')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Compute' }).querySelector('[aria-hidden="true"]')).toHaveTextContent(
+      '\u2212'
+    );
+    expect(screen.getByRole('button', { name: 'Storage' }).querySelector('[aria-hidden="true"]')).toHaveTextContent(
+      '+'
+    );
+  });
+
+  test('has no accessibility violations with codes and sets', async () => {
+    const { container } = render(<SideNavigation header={header} items={indexed} activeHref="#/guides/rollouts" />);
+    await expectNoAxeViolations(container);
+  });
+});
+
 describe('SideNavigation test utilities and accessibility', () => {
   test('the wrapper finds links and toggles', () => {
     render(<SideNavigation header={header} items={items} />);
