@@ -1,0 +1,17 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The fallback is drawn by Alert. Its parts get their own classes so the test utilities can find them.
+.root {
+  display: block;
+}
+
+// An error message can hold long unbroken text, such as a request ID.
+.header,
+.description,
+.feedback-link,
+.refresh-button {
+  overflow-wrap: anywhere;
+}
