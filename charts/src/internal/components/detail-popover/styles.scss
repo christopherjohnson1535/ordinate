@@ -1,0 +1,123 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '@ordinate/design-tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+  min-inline-size: ord.$size-panel-small;
+}
+
+.size-small {
+  max-inline-size: ord.$size-panel-small;
+}
+
+.size-medium {
+  max-inline-size: ord.$size-panel-medium;
+}
+
+.size-large {
+  max-inline-size: ord.$size-panel-large;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ord.$space-xs;
+  padding-block-end: ord.$space-scaled-xs;
+  margin-block-end: ord.$space-scaled-xs;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+}
+
+.title {
+  @include styles.font-label;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.dismiss {
+  flex: none;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: ord.$space-m;
+
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.row-emphasized {
+  .key-text,
+  .value {
+    font-weight: ord.$font-weight-bold;
+  }
+}
+
+.row-dimmed {
+  opacity: 0.5;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+  color: ord.$color-text-body-secondary;
+
+  // Swatches sit on the text's center line rather than its baseline.
+  align-self: center;
+}
+
+.key-text {
+  overflow-wrap: anywhere;
+}
+
+.value {
+  @include styles.font-numeric;
+  flex: none;
+  font-size: ord.$font-size-body;
+  color: ord.$color-text-body;
+  text-align: end;
+}
+
+.summary {
+  padding-block-start: ord.$space-scaled-xxs;
+  margin-block-start: ord.$space-xxs;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+
+  .key-text,
+  .value {
+    font-weight: ord.$font-weight-label;
+  }
+}
+
+.footer {
+  display: block;
+  padding-block-start: ord.$space-scaled-xs;
+  margin-block-start: ord.$space-scaled-xs;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}

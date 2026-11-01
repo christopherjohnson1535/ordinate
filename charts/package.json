@@ -1,0 +1,17 @@
+{
+  "name": "@ordinate/charts",
+  "version": "0.1.0",
+  "description": "Line, area, bar, mixed and pie charts for Ordinate, drawn in SVG with patterns that read without color.",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "build": "cd .. && gulp charts"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  }
+}

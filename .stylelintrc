@@ -6,7 +6,7 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.scss"],
+      "files": ["src/**/*.scss", "charts/src/**/*.scss"],
       "rules": {
         "property-disallowed-list": ["border", "border-radius", "margin", "padding"],
         "csstools/use-logical": "always",

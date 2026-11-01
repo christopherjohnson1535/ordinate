@@ -1,0 +1,127 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '@ordinate/design-tokens' as ord;
+
+// The arrow is a triangle cut from a box. Its inner copy is inset by the border width
+// measured across a 45 degree edge, so the outline keeps the panel's line weight.
+$arrow-depth: ord.$space-xs;
+$arrow-breadth: calc(2 * #{ord.$space-xs});
+$inset: calc(#{ord.$border-width-default} * 1.414);
+
+.panel {
+  @include styles.border-radius(ord.$border-radius-dropdown);
+  position: fixed;
+  z-index: 1000;
+  display: block;
+  box-sizing: border-box;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  white-space: normal;
+  text-align: start;
+
+  &[hidden] {
+    display: none;
+  }
+
+  @include styles.with-motion {
+    animation-name: panel-enter;
+    animation-duration: ord.$motion-duration-responsive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.variant-sheet {
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+
+  > .arrow {
+    background-color: ord.$color-border-strong;
+
+    &::after {
+      background-color: ord.$color-background-container;
+    }
+  }
+}
+
+.variant-inverse {
+  border-color: ord.$color-background-tooltip;
+  background-color: ord.$color-background-tooltip;
+  color: ord.$color-text-tooltip;
+
+  > .arrow,
+  > .arrow::after {
+    background-color: ord.$color-background-tooltip;
+  }
+}
+
+// Top and left come from the positioning hook in screen coordinates, so only sizes and
+// shapes are set here. Clip paths are in screen coordinates too, so they need no mirroring.
+.arrow {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+  }
+}
+
+.arrow-top,
+.arrow-bottom {
+  inline-size: $arrow-breadth;
+  block-size: $arrow-depth;
+}
+
+.arrow-left,
+.arrow-right {
+  inline-size: $arrow-depth;
+  block-size: $arrow-breadth;
+}
+
+// The panel is above the trigger, so the arrow hangs from its bottom edge and points down.
+.arrow-top {
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+  &::after {
+    clip-path: polygon(#{$inset} 0, calc(100% - #{$inset}) 0, 50% calc(100% - #{$inset}));
+  }
+}
+
+.arrow-bottom {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+
+  &::after {
+    clip-path: polygon(50% #{$inset}, calc(100% - #{$inset}) 100%, #{$inset} 100%);
+  }
+}
+
+// The panel is on the trigger's right in screen terms, so the arrow points left.
+.arrow-right {
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+
+  &::after {
+    clip-path: polygon(#{$inset} 50%, 100% #{$inset}, 100% calc(100% - #{$inset}));
+  }
+}
+
+.arrow-left {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+
+  &::after {
+    clip-path: polygon(0 #{$inset}, calc(100% - #{$inset}) 50%, 0 calc(100% - #{$inset}));
+  }
+}
+
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+  }
+}

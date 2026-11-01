@@ -1,0 +1,62 @@
+// Copyright Christopher Johnson. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+// The mixins the charts share with the components, rebuilt on the public token package
+// because the components' own Sass is not part of their published surface.
+@use '@ordinate/design-tokens' as ord;
+
+@mixin font-body {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-body;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+}
+
+@mixin font-label {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-label;
+  font-weight: ord.$font-weight-label;
+  font-stretch: ord.$font-stretch-label;
+  line-height: ord.$line-height-body;
+}
+
+// Tick labels and values line up in columns.
+@mixin font-numeric {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-body;
+  font-variant-numeric: tabular-nums;
+}
+
+@mixin border-radius($radius) {
+  border-start-start-radius: $radius;
+  border-start-end-radius: $radius;
+  border-end-start-radius: $radius;
+  border-end-end-radius: $radius;
+}
+
+@mixin focus-ring {
+  outline-width: ord.$border-width-focus-ring;
+  outline-style: solid;
+  outline-color: ord.$color-border-focus-ring;
+  outline-offset: ord.$border-focus-ring-offset;
+}
+
+@mixin with-motion {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+  :global(.ord-motion-disabled) & {
+    animation: none;
+    transition: none;
+  }
+}
+
+@mixin screenreader-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

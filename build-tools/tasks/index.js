@@ -10,4 +10,5 @@ module.exports = {
   typescript: require('./typescript'),
   packageJSON: require('./package-json'),
   docs: require('./docs'),
+  charts: require('./charts'),
 };

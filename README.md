@@ -15,6 +15,7 @@ Two things set it apart:
 | `@ordinate/global-styles`    | Fonts, base page styles, and the mode, density and revision helpers. |
 | `@ordinate/collection-hooks` | Filtering, sorting, pagination and selection state for collections.  |
 | `@ordinate/design-tokens`    | The design tokens as Sass variables and JavaScript constants.        |
+| `@ordinate/charts`           | Line, area, bar, mixed and pie charts, patterned as well as colored. |
 
 ## Usage
 

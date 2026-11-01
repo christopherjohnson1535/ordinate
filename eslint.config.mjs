@@ -80,6 +80,7 @@ export default defineConfig(
       'src/**/__tests__/**',
       'global-styles/src/**/__tests__/**',
       'collection-hooks/src/**/__tests__/**',
+      'charts/src/**/__tests__/**',
     ],
     languageOptions: {
       globals: { ...globals.node },

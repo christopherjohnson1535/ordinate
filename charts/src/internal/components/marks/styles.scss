@@ -1,0 +1,81 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '@ordinate/design-tokens' as ord;
+
+.pattern-tint {
+  fill: currentColor;
+  fill-opacity: 0.16;
+}
+
+.pattern-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+}
+
+.pattern-dot {
+  fill: currentColor;
+}
+
+.marker {
+  vector-effect: non-scaling-stroke;
+}
+
+.marker-filled {
+  fill: currentColor;
+  stroke: ord.$color-background-container;
+  stroke-width: ord.$border-width-icon;
+}
+
+.marker-outline {
+  fill: ord.$color-background-container;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-section;
+}
+
+.marker-cross-halo {
+  fill: none;
+  stroke: ord.$color-background-container;
+  // Wide enough to clear a gap in the line underneath the cross.
+  stroke-width: ord.$space-xxs;
+}
+
+.marker-cross {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-section;
+}
+
+.swatch-fill {
+  display: block;
+  flex: none;
+  inline-size: ord.$size-icon-small;
+  block-size: ord.$size-icon-small;
+  overflow: visible;
+}
+
+.swatch-outline {
+  stroke: currentColor;
+  stroke-width: ord.$border-width-default;
+}
+
+.swatch-line {
+  display: block;
+  flex: none;
+  inline-size: calc(#{ord.$size-icon} * 1.5);
+  block-size: ord.$size-icon;
+  overflow: visible;
+}
+
+.swatch-stroke {
+  stroke: currentColor;
+  stroke-width: ord.$border-width-section;
+}
+
+.swatch-threshold {
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+}

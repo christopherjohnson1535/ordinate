@@ -1,0 +1,123 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../styles' as styles;
+@use '@ordinate/design-tokens' as ord;
+
+.plot {
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.plot-focus {
+  display: block;
+  outline-width: 0;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.svg {
+  display: block;
+  max-inline-size: 100%;
+  overflow: visible;
+}
+
+.segment {
+  stroke: currentColor;
+  stroke-width: ord.$border-width-default;
+  stroke-linejoin: round;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+// A gap of background between neighboring segments, as between grouped bars.
+.separator {
+  stroke: ord.$color-background-container;
+  stroke-width: ord.$border-width-section;
+}
+
+.segment-active {
+  fill: none;
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-section;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.dimmed {
+  opacity: 0.25;
+}
+
+.label {
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.leader {
+  fill: none;
+  stroke: ord.$color-text-body-secondary;
+  stroke-width: ord.$border-width-default;
+}
+
+.label-title {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-description;
+  font-weight: ord.$font-weight-label;
+  fill: ord.$color-text-body;
+}
+
+.label-description {
+  @include styles.font-numeric;
+  fill: ord.$color-text-body-secondary;
+}
+
+.inner-value {
+  font-family: ord.$font-family-display;
+  font-size: ord.$font-size-heading-l;
+  font-weight: ord.$font-weight-light;
+  font-variant-numeric: tabular-nums;
+  fill: ord.$color-text-body;
+}
+
+.inner-value-small {
+  font-size: ord.$font-size-heading-s;
+}
+
+.inner-description {
+  @include styles.font-numeric;
+  fill: ord.$color-text-body-secondary;
+}
+
+.popover-header {
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+.anchor {
+  position: absolute;
+  inline-size: 2px;
+  block-size: 2px;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
+}

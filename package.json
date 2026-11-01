@@ -10,7 +10,8 @@
   "private": true,
   "workspaces": [
     "global-styles",
-    "collection-hooks"
+    "collection-hooks",
+    "charts"
   ],
   "files": [],
   "scripts": {
@@ -25,7 +26,7 @@
     "size": "node build-tools/size.js",
     "lint": "npm-run-all --parallel lint:*",
     "lint:eslint": "eslint .",
-    "lint:stylelint": "stylelint --ignore-path .gitignore \"{src,pages}/**/*.scss\"",
+    "lint:stylelint": "stylelint --ignore-path .gitignore \"{src,pages,charts/src}/**/*.scss\"",
     "format": "prettier --write ."
   },
   "dependencies": {

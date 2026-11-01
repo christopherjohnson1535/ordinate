@@ -1,0 +1,155 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../styles' as styles;
+@use '@ordinate/design-tokens' as ord;
+
+.plot {
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.plot-focus {
+  display: block;
+  outline-width: 0;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.svg {
+  display: block;
+  max-inline-size: 100%;
+  overflow: visible;
+}
+
+// The x axis holds the categories and the y axis the values, also when bars run sideways.
+.x-axis,
+.y-axis {
+  shape-rendering: crispEdges;
+}
+
+.axis-line {
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-default;
+  shape-rendering: crispEdges;
+}
+
+.tick {
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-default;
+  shape-rendering: crispEdges;
+}
+
+.tick-label {
+  @include styles.font-numeric;
+  fill: ord.$color-text-body-secondary;
+}
+
+.axis-title {
+  @include styles.font-label;
+  font-size: ord.$font-size-small;
+  fill: ord.$color-text-body;
+}
+
+.grid-rule {
+  stroke: ord.$color-border-divider-secondary;
+  stroke-width: ord.$border-width-default;
+  shape-rendering: crispEdges;
+}
+
+.baseline {
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-default;
+  shape-rendering: crispEdges;
+}
+
+.highlight-band {
+  fill: ord.$color-background-item-hover;
+}
+
+.crosshair {
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-default;
+  stroke-dasharray: 2 2;
+  shape-rendering: crispEdges;
+}
+
+.series {
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.dimmed {
+  opacity: 0.22;
+}
+
+// A band of background under each line, as a draftsman breaks the lines a line crosses, so a
+// dashed line stays readable over bars, areas and other lines.
+.line-halo {
+  fill: none;
+  stroke: ord.$color-background-container;
+  stroke-width: ord.$space-xxs;
+  stroke-linejoin: round;
+}
+
+.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-section;
+  stroke-linejoin: round;
+}
+
+.area-fill {
+  stroke: none;
+}
+
+.area-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+  stroke-linejoin: round;
+}
+
+.bar {
+  stroke: currentColor;
+  stroke-width: ord.$border-width-default;
+  shape-rendering: crispEdges;
+}
+
+.threshold {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+}
+
+.overlay {
+  fill: none;
+  // Catches the pointer across the whole plot, even where nothing is drawn.
+  pointer-events: all;
+  cursor: crosshair;
+}
+
+.anchor {
+  position: absolute;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.popover {
+  pointer-events: auto;
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
+}

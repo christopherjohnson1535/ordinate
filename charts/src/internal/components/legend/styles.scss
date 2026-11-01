@@ -1,0 +1,68 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '@ordinate/design-tokens' as ord;
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: ord.$space-m;
+  row-gap: ord.$space-xxs;
+}
+
+.title {
+  @include styles.font-label;
+  color: ord.$color-text-body;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: ord.$space-xs;
+  row-gap: ord.$space-xxs;
+}
+
+.item {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-xxs;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-body;
+  text-align: start;
+  cursor: default;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  @include styles.with-motion {
+    transition-property: opacity, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.item-highlighted {
+  background-color: ord.$color-background-item-selected;
+}
+
+.item-dimmed {
+  opacity: 0.55;
+}
+
+.label {
+  overflow-wrap: anywhere;
+}
