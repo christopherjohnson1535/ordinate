@@ -1,0 +1,65 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
+@use '../internal/styles/tokens' as ord;
+
+$rule: ord.$border-width-default;
+// The narrowest a cell may get before the row wraps.
+$cell-min: calc(#{ord.$space-xxxl} * 2);
+
+// The strip along the foot of a drawing sheet. The block draws no outer frame of its own besides
+// the heavy rule on top, so it can sit flush inside a framed sheet.
+.root {
+  @include styles.font-body;
+  @include drawing.heavy-rule-block-start;
+  min-inline-size: 0;
+  // Clips the outer half of the cell rules, so only the rules between cells show.
+  overflow: hidden;
+  color: ord.$color-text-body;
+}
+
+// Every cell draws a rule just outside its edges. The one-rule gap lets the rules of neighbouring
+// cells fall on the same line, and empty tracks at the end of a wrapped row stay unruled.
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(#{$cell-min}, 1fr));
+  gap: ord.$border-width-default;
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+@for $count from 1 through 6 {
+  .columns-#{$count} {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(max(#{$cell-min}, calc((100% - #{$count - 1} * #{$rule}) / #{$count})), 1fr)
+    );
+  }
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-s;
+  box-shadow: 0 0 0 $rule ord.$color-border-strong;
+}
+
+.label {
+  @include drawing.font-caption;
+  color: ord.$color-text-secondary;
+  overflow-wrap: break-word;
+}
+
+.value {
+  margin-block: 0;
+  margin-inline: 0;
+  font-weight: ord.$font-weight-label;
+  overflow-wrap: break-word;
+}

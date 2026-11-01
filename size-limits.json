@@ -431,6 +431,10 @@
     "minified": 79400,
     "gzip": 19300
   },
+  "title-block": {
+    "minified": 4300,
+    "gzip": 1200
+  },
   "toggle": {
     "minified": 10200,
     "gzip": 2600

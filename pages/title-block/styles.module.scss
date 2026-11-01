@@ -1,0 +1,37 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-inline-size: 1080px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h2 {
+    margin-block: 0;
+  }
+}
+
+.note {
+  margin-block: 0;
+  color: var(--ord-color-text-secondary);
+}
+
+// Stands in for the framed sheet the block sits on inside an app layout.
+.sheet {
+  border: 2px solid var(--ord-color-border-strong);
+  border-block-start-width: 0;
+  background-color: var(--ord-color-background-container);
+}
+
+.narrow {
+  max-inline-size: 360px;
+}
