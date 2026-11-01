@@ -4,7 +4,7 @@
 */
 
 @use '../../styles' as styles;
-@use '@ordinate/design-tokens' as ord;
+@use '@ordinate-ui/design-tokens' as ord;
 
 // The arrow is a triangle cut from a box. Its inner copy is inset by the border width
 // measured across a 45 degree edge, so the outline keeps the panel's line weight.

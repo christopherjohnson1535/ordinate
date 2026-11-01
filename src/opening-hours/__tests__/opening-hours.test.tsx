@@ -86,7 +86,7 @@ describe('OpeningHours', () => {
     rerender(
       <I18nProvider
         locale="en"
-        messages={[{ '@ordinate/components': { en: { 'opening-hours': { closedText: 'Shut' } } } }]}
+        messages={[{ '@ordinate-ui/components': { en: { 'opening-hours': { closedText: 'Shut' } } } }]}
       >
         <OpeningHours days={week} />
       </I18nProvider>

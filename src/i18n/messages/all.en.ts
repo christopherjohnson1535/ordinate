@@ -3,7 +3,7 @@
 import { I18nProviderProps } from '../interfaces';
 
 const messages: I18nProviderProps.Messages = {
-  '@ordinate/components': {
+  '@ordinate-ui/components': {
     en: {
       alert: {
         dismissAriaLabel: 'Dismiss',

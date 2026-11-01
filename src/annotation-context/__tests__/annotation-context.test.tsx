@@ -199,7 +199,7 @@ describe('AnnotationContext', () => {
     rerender(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { 'annotation-context': { nextButtonText: 'Weiter' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { 'annotation-context': { nextButtonText: 'Weiter' } } } }]}
       >
         <Harness />
       </I18nProvider>

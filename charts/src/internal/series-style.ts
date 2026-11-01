@@ -10,7 +10,7 @@ import {
   colorChartsCategorical6,
   colorChartsCategorical7,
   colorChartsCategorical8,
-} from '@ordinate/design-tokens';
+} from '@ordinate-ui/design-tokens';
 
 /**
  * The categorical series colors, in order. They are token references, so they follow the

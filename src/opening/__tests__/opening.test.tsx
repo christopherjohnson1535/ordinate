@@ -89,7 +89,7 @@ describe('Opening', () => {
     rerender(
       <I18nProvider
         locale="en"
-        messages={[{ '@ordinate/components': { en: { opening: { navigationAriaLabel: 'Parts' } } } }]}
+        messages={[{ '@ordinate-ui/components': { en: { opening: { navigationAriaLabel: 'Parts' } } } }]}
       >
         <Opening title="The Allotment" links={links} />
       </I18nProvider>

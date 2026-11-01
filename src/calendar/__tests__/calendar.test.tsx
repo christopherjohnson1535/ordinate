@@ -203,7 +203,7 @@ describe('Calendar', () => {
     render(
       <I18nProvider
         locale="en"
-        messages={[{ '@ordinate/components': { en: { calendar: { nextMonthAriaLabel: 'Forward' } } } }]}
+        messages={[{ '@ordinate-ui/components': { en: { calendar: { nextMonthAriaLabel: 'Forward' } } } }]}
       >
         <Controlled value="2026-03-05" />
       </I18nProvider>

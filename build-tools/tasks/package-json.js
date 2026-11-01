@@ -3,6 +3,7 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { rootDir, task } = require('../utils');
+const { folderExports } = require('../utils/manifest');
 
 const outDir = path.join(rootDir, 'lib/components');
 const copiedFiles = ['LICENSE', 'NOTICE', 'README.md'];
@@ -15,8 +16,10 @@ module.exports = task('package-json', async () => {
     description: source.description,
     license: source.license,
     repository: source.repository,
+    type: 'module',
     main: './index.js',
     types: './index.d.ts',
+    exports: folderExports({ files: ['test-utils/dom/core'], filePatterns: ['i18n/messages/*'] }),
     sideEffects: ['*.css', '*.css.js', './internal/base-component/index.js'],
     dependencies: source.dependencies,
     peerDependencies: source.peerDependencies,

@@ -1,8 +1,13 @@
 {
-  "name": "@ordinate/global-styles",
+  "name": "@ordinate-ui/global-styles",
   "version": "0.1.0",
   "description": "Fonts, base styles and the mode and revision helpers for Ordinate.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christopherjohnson1535/ordinate.git",
+    "directory": "global-styles"
+  },
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -14,7 +19,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('src/index.css', 'lib/index.css')\""
+    "build": "cd .. && gulp global-styles"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

@@ -201,7 +201,7 @@ function ComponentApi({ definition }: { definition: Definition }) {
   return (
     <div className={styles.main}>
       <SpaceBetween size="l">
-        <Header variant="h2" description={<code>@ordinate/components/{definition.folder}</code>}>
+        <Header variant="h2" description={<code>@ordinate-ui/components/{definition.folder}</code>}>
           {definition.name}
         </Header>
         <Properties definition={definition} />

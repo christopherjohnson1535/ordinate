@@ -103,7 +103,7 @@ describe('PromptInput', () => {
   });
 
   test('reads the action button name from the i18n provider', () => {
-    const messages = { '@ordinate/components': { de: { 'prompt-input': { actionButtonAriaLabel: 'Senden' } } } };
+    const messages = { '@ordinate-ui/components': { de: { 'prompt-input': { actionButtonAriaLabel: 'Senden' } } } };
     render(
       <I18nProvider locale="de" messages={[messages]}>
         <PromptInput value="" ariaLabel="Prompt" />

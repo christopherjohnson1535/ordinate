@@ -1,11 +1,11 @@
-# @ordinate/charts
+# @ordinate-ui/charts
 
 Charts for [Ordinate](../README.md): line, area, bar, mixed line and bar, and pie. They are drawn in SVG with no chart library, styled with the Ordinate design tokens, and follow the pinned revision, the color mode and the density like the components do.
 
 Every series has a pattern as well as a color. Bars, areas and pie segments are filled solid, hatched, cross-hatched, dotted or ruled; lines have their own dash and point marker. Series stay apart in print, in grayscale, in dark mode and for readers who do not tell the colors apart.
 
 ```tsx
-import LineChart from '@ordinate/charts/line-chart';
+import LineChart from '@ordinate-ui/charts/line-chart';
 
 <LineChart
   series={[
@@ -22,13 +22,13 @@ import LineChart from '@ordinate/charts/line-chart';
 
 ## Charts
 
-| Chart                                   | Series types               | Notes                                                                              |
-| --------------------------------------- | -------------------------- | ---------------------------------------------------------------------------------- |
-| `@ordinate/charts/line-chart`           | `line`, `threshold`        | Any x scale: `linear`, `log`, `time` or `categorical`.                             |
-| `@ordinate/charts/area-chart`           | `area`, `threshold`        | Areas are stacked; the detail popover shows the total.                             |
-| `@ordinate/charts/bar-chart`            | `bar`, `threshold`         | Categorical x. Grouped by default; `stackedBars` and `horizontalBars` change that. |
-| `@ordinate/charts/mixed-line-bar-chart` | `bar`, `line`, `threshold` | Categorical x. Lines run through the middle of each category.                      |
-| `@ordinate/charts/pie-chart`            | `data: [{ title, value }]` | `variant="donut"` adds `innerMetricValue` and `innerMetricDescription`.            |
+| Chart                                      | Series types               | Notes                                                                              |
+| ------------------------------------------ | -------------------------- | ---------------------------------------------------------------------------------- |
+| `@ordinate-ui/charts/line-chart`           | `line`, `threshold`        | Any x scale: `linear`, `log`, `time` or `categorical`.                             |
+| `@ordinate-ui/charts/area-chart`           | `area`, `threshold`        | Areas are stacked; the detail popover shows the total.                             |
+| `@ordinate-ui/charts/bar-chart`            | `bar`, `threshold`         | Categorical x. Grouped by default; `stackedBars` and `horizontalBars` change that. |
+| `@ordinate-ui/charts/mixed-line-bar-chart` | `bar`, `line`, `threshold` | Categorical x. Lines run through the middle of each category.                      |
+| `@ordinate-ui/charts/pie-chart`            | `data: [{ title, value }]` | `variant="donut"` adds `innerMetricValue` and `innerMetricDescription`.            |
 
 The cartesian charts share their props: `series`, `xDomain`, `yDomain`, `xScaleType`, `yScaleType`, `xTitle`, `yTitle`, `xTickFormatter`, `yTickFormatter`, `height`, `hideFilter`, `hideLegend`, `legendTitle`, `statusType` with `loadingText`, `errorText`, `recoveryText` and `onRecoveryClick`, `empty`, `noMatch`, `visibleSeries` with `onFilterChange`, `highlightedSeries` with `onHighlightChange`, `detailPopoverSize`, `detailPopoverFooter`, `emphasizeBaselineAxis`, `ariaLabel`, `ariaLabelledby`, `ariaDescription` and `i18nStrings`. Each prop is documented in the chart's `interfaces.ts`.
 
@@ -44,13 +44,13 @@ The charts render a few strings on their own, such as the filter label and the l
 
 ## Requirements and package layout
 
-The package has peer dependencies on `react`, `react-dom` and `@ordinate/components`, and depends on `@ordinate/design-tokens`. It uses only the public surface of the components: it composes `Multiselect`, `FormField`, `Button` and `StatusIndicator`, styles itself with the design token package, and keeps its own copies of the few internal helpers it needs (the floating panel, event helpers and Sass mixins) in `src/internal`.
+The package has peer dependencies on `react`, `react-dom` and `@ordinate-ui/components`, and depends on `@ordinate-ui/design-tokens`. It uses only the public surface of the components: it composes `Multiselect`, `FormField`, `Button` and `StatusIndicator`, styles itself with the design token package, and keeps its own copies of the few internal helpers it needs (the floating panel, event helpers and Sass mixins) in `src/internal`.
 
-Test utilities live in `@ordinate/charts/test-utils/dom`. Importing it adds `findLineChart`, `findAllLineCharts` and the same pair for every chart to the components' `createWrapper()`.
+Test utilities live in `@ordinate-ui/charts/test-utils/dom`. Importing it adds `findLineChart`, `findAllLineCharts` and the same pair for every chart to the components' `createWrapper()`.
 
 ```ts
-import createWrapper from '@ordinate/components/test-utils/dom';
-import '@ordinate/charts/test-utils/dom';
+import createWrapper from '@ordinate-ui/components/test-utils/dom';
+import '@ordinate-ui/charts/test-utils/dom';
 
 const chart = createWrapper().findLineChart()!;
 chart.findApplication()!.keydown('ArrowRight');

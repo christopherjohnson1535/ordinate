@@ -20,8 +20,8 @@ export default defineConfig({
       { find: '~charts', replacement: path.resolve(root, '../lib/charts') },
       { find: '~global-styles', replacement: path.resolve(root, '../global-styles/src') },
       { find: '~collection-hooks', replacement: path.resolve(root, '../collection-hooks/src') },
-      { find: /^@ordinate\/components\//, replacement: `${path.resolve(root, '../lib/components')}/` },
-      { find: /^@ordinate\/design-tokens$/, replacement: path.resolve(root, '../lib/design-tokens/index.js') },
+      { find: /^@ordinate-ui\/components\//, replacement: `${path.resolve(root, '../lib/components')}/` },
+      { find: /^@ordinate-ui\/design-tokens$/, replacement: path.resolve(root, '../lib/design-tokens/index.js') },
     ],
   },
   server: {

@@ -28,7 +28,7 @@ function renderScss(tokenNames) {
 
 function renderManifest(source) {
   const manifest = {
-    name: '@ordinate/design-tokens',
+    name: '@ordinate-ui/design-tokens',
     version: source.version,
     description: 'Ordinate design tokens as CSS custom property references, for JavaScript and Sass.',
     license: source.license,
@@ -48,7 +48,7 @@ function renderManifest(source) {
 }
 
 /**
- * Writes the `@ordinate/design-tokens` package: every token as a reference to its CSS custom
+ * Writes the `@ordinate-ui/design-tokens` package: every token as a reference to its CSS custom
  * property, which the revision styles shipped with the components define.
  */
 async function writeDesignTokens(tokenNames) {

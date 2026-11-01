@@ -1,11 +1,11 @@
 {
-  "name": "@ordinate/components",
+  "name": "@ordinate-ui/components",
   "version": "0.1.0",
   "description": "A schematic React component library with pinnable design revisions.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/christopherjohnson1535/ordinate.git"
+    "url": "git+https://github.com/christopherjohnson1535/ordinate.git"
   },
   "private": true,
   "workspaces": [
@@ -24,6 +24,8 @@
     "test:unit": "vitest run --config vitest.unit.config.mjs",
     "test:browser": "playwright test",
     "size": "node build-tools/size.js",
+    "verify:packages": "node build-tools/verify-packages.js",
+    "release": "node build-tools/release.js",
     "lint": "npm-run-all --parallel lint:*",
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint --ignore-path .gitignore \"{src,pages,charts/src}/**/*.scss\"",

@@ -236,7 +236,7 @@ describe('TreeView', () => {
     rerender(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { 'tree-view': { expandButtonLabel: '{label} aufklappen' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { 'tree-view': { expandButtonLabel: '{label} aufklappen' } } } }]}
       >
         <TreeView {...baseProps} />
       </I18nProvider>

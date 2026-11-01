@@ -6,6 +6,8 @@ const { pathToFileURL } = require('node:url');
 const { parallel, series } = require('gulp');
 const { rootDir, task, tsc } = require('../utils');
 const { compileStyles } = require('../utils/styles');
+const { folderExports } = require('../utils/manifest');
+const { fullySpecifyImports } = require('../utils/specifiers');
 
 const packageDir = path.join(rootDir, 'charts');
 const outDir = path.join(rootDir, 'lib/charts');
@@ -13,7 +15,9 @@ const outDir = path.join(rootDir, 'lib/charts');
 // Chart styles use the public token package, exactly as a consumer's own components would.
 const designTokensImporter = {
   findFileUrl(url) {
-    return url === '@ordinate/design-tokens' ? pathToFileURL(path.join(rootDir, 'lib/design-tokens/index.scss')) : null;
+    return url === '@ordinate-ui/design-tokens'
+      ? pathToFileURL(path.join(rootDir, 'lib/design-tokens/index.scss'))
+      : null;
   },
 };
 
@@ -26,7 +30,10 @@ const chartsStyles = task('charts:styles', () =>
   })
 );
 
-const chartsTypescript = task('charts:typescript', () => tsc('charts/tsconfig.json'));
+const chartsTypescript = task('charts:typescript', async () => {
+  await tsc('charts/tsconfig.json');
+  await fullySpecifyImports(outDir);
+});
 
 const chartsPackageJSON = task('charts:package-json', async () => {
   const library = JSON.parse(await fs.readFile(path.join(rootDir, 'package.json'), 'utf8'));
@@ -38,11 +45,13 @@ const chartsPackageJSON = task('charts:package-json', async () => {
     description: source.description,
     license: source.license,
     repository: library.repository,
+    type: 'module',
     main: './index.js',
     types: './index.d.ts',
+    exports: folderExports(),
     sideEffects: ['*.css', '*.css.js'],
-    dependencies: { ...source.dependencies, '@ordinate/design-tokens': sibling },
-    peerDependencies: { ...source.peerDependencies, '@ordinate/components': sibling },
+    dependencies: { ...source.dependencies, '@ordinate-ui/design-tokens': sibling },
+    peerDependencies: { ...source.peerDependencies, '@ordinate-ui/components': sibling },
   };
   await fs.mkdir(outDir, { recursive: true });
   await fs.writeFile(path.join(outDir, 'package.json'), `${JSON.stringify(manifest, null, 2)}\n`);

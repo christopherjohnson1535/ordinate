@@ -7,7 +7,7 @@ import { StyleScopeProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-// The same global classes `@ordinate/global-styles` sets, so a scope and applyStyle agree.
+// The same global classes `@ordinate-ui/global-styles` sets, so a scope and applyStyle agree.
 export function getScopeClassNames({
   styleName,
   mode,

@@ -9,8 +9,8 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 // The built charts import the library through its package names, as a consumer's code would.
 const resolve = {
   alias: [
-    { find: /^@ordinate\/components\//, replacement: `${path.join(root, 'lib/components')}/` },
-    { find: /^@ordinate\/design-tokens$/, replacement: path.join(root, 'lib/design-tokens/index.js') },
+    { find: /^@ordinate-ui\/components\//, replacement: `${path.join(root, 'lib/components')}/` },
+    { find: /^@ordinate-ui\/design-tokens$/, replacement: path.join(root, 'lib/design-tokens/index.js') },
   ],
 };
 

@@ -15,8 +15,8 @@
       "~global-styles/*": ["../global-styles/src/*"],
       "~collection-hooks": ["../collection-hooks/src"],
       "~charts/*": ["../lib/charts/*"],
-      "@ordinate/components/*": ["../lib/components/*"],
-      "@ordinate/design-tokens": ["../lib/design-tokens"]
+      "@ordinate-ui/components/*": ["../lib/components/*"],
+      "@ordinate-ui/design-tokens": ["../lib/design-tokens"]
     }
   },
   "include": ["."]

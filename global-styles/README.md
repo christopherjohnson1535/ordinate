@@ -1,4 +1,4 @@
-# @ordinate/global-styles
+# @ordinate-ui/global-styles
 
 Fonts, base page styles, and the helpers that set mode, density and revision for [Ordinate](../README.md) components.
 
@@ -11,8 +11,8 @@ import {
   disableMotion,
   Mode,
   Revision,
-} from '@ordinate/global-styles';
-import '@ordinate/global-styles/index.css';
+} from '@ordinate-ui/global-styles';
+import '@ordinate-ui/global-styles/index.css';
 
 applyRevision(Revision.V2026_1);
 applyMode(Mode.Dark);

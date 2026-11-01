@@ -53,7 +53,7 @@ describe('TextFilter', () => {
     render(
       <I18nProvider
         locale="en"
-        messages={[{ '@ordinate/components': { en: { 'text-filter': { filteringClearAriaLabel: 'Empty' } } } }]}
+        messages={[{ '@ordinate-ui/components': { en: { 'text-filter': { filteringClearAriaLabel: 'Empty' } } } }]}
       >
         <TextFilter filteringText="web" filteringClearAriaLabel={undefined} />
       </I18nProvider>

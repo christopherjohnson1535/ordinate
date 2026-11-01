@@ -184,7 +184,7 @@ describe('TutorialPanel', () => {
     rerender(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { 'tutorial-panel': { tutorialListTitle: 'Anleitungen' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { 'tutorial-panel': { tutorialListTitle: 'Anleitungen' } } } }]}
       >
         <TutorialPanel tutorials={[projectTutorial]} />
       </I18nProvider>

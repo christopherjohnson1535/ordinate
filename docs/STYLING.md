@@ -23,12 +23,12 @@ Tokens are defined in `style-dictionary/`, grouped the same way in every revisio
 
 ## Tokens in your own components
 
-The `@ordinate/design-tokens` package gives custom components the same tokens. Each token is a reference to its CSS custom property, so it follows the pinned revision, the color mode, the density and any `applyTheme` theme, exactly as the built-in components do.
+The `@ordinate-ui/design-tokens` package gives custom components the same tokens. Each token is a reference to its CSS custom property, so it follows the pinned revision, the color mode, the density and any `applyTheme` theme, exactly as the built-in components do.
 
 In Sass, the variables have the same names as the internal `ord.$...` ones:
 
 ```scss
-@use '@ordinate/design-tokens' as ord;
+@use '@ordinate-ui/design-tokens' as ord;
 
 .summary-card {
   padding-block: ord.$space-scaled-m;
@@ -40,12 +40,12 @@ In Sass, the variables have the same names as the internal `ord.$...` ones:
 In JavaScript or TypeScript, each token is a camelCase constant:
 
 ```tsx
-import { colorTextSecondary, spaceXs } from '@ordinate/design-tokens';
+import { colorTextSecondary, spaceXs } from '@ordinate-ui/design-tokens';
 
 <span style={{ color: colorTextSecondary, marginInlineStart: spaceXs }}>Updated hourly</span>;
 ```
 
-The package holds references only. The values come from the revision styles that load with any `@ordinate/components` component, so render at least one Ordinate component, or import `@ordinate/components/internal/base-component`, on pages that use the tokens. The build writes the package to `lib/design-tokens` from the token names in `style-dictionary/utils/token-names.ts`, and `src/__tests__/design-tokens.test.ts` checks that every token is exported.
+The package holds references only. The values come from the revision styles that load with any `@ordinate-ui/components` component, so render at least one Ordinate component, or import `@ordinate-ui/components/internal/base-component`, on pages that use the tokens. The build writes the package to `lib/design-tokens` from the token names in `style-dictionary/utils/token-names.ts`, and `src/__tests__/design-tokens.test.ts` checks that every token is exported.
 
 ## Revisions
 

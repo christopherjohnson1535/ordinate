@@ -1,6 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { ElementWrapper } from '@ordinate/components/test-utils/dom';
+import { ElementWrapper } from '@ordinate-ui/components/test-utils/dom';
 
 import { ChartWrapper } from './chart';
 

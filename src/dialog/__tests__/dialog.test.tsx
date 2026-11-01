@@ -112,7 +112,7 @@ describe('Dialog', () => {
     const { unmount } = render(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { dialog: { dismissAriaLabel: 'Dialog schließen' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { dialog: { dismissAriaLabel: 'Dialog schließen' } } } }]}
       >
         <Dialog header="Rename node">Content</Dialog>
       </I18nProvider>

@@ -9,21 +9,29 @@ Two things set it apart:
 
 ## Packages
 
-| Package                      | Contents                                                             |
-| ---------------------------- | -------------------------------------------------------------------- |
-| `@ordinate/components`       | The React components. Built from this repository's root.             |
-| `@ordinate/global-styles`    | Fonts, base page styles, and the mode, density and revision helpers. |
-| `@ordinate/collection-hooks` | Filtering, sorting, pagination and selection state for collections.  |
-| `@ordinate/design-tokens`    | The design tokens as Sass variables and JavaScript constants.        |
-| `@ordinate/charts`           | Line, area, bar, mixed and pie charts, patterned as well as colored. |
+| Package                         | Contents                                                             |
+| ------------------------------- | -------------------------------------------------------------------- |
+| `@ordinate-ui/components`       | The React components. Built from this repository's root.             |
+| `@ordinate-ui/global-styles`    | Fonts, base page styles, and the mode, density and revision helpers. |
+| `@ordinate-ui/collection-hooks` | Filtering, sorting, pagination and selection state for collections.  |
+| `@ordinate-ui/design-tokens`    | The design tokens as Sass variables and JavaScript constants.        |
+| `@ordinate-ui/charts`           | Line, area, bar, mixed and pie charts, patterned as well as colored. |
+
+## Install
+
+```sh
+npm install @ordinate-ui/components @ordinate-ui/global-styles
+```
+
+Add `@ordinate-ui/collection-hooks`, `@ordinate-ui/design-tokens` or `@ordinate-ui/charts` when you need them. React 18 or later is a peer dependency. All packages are released together at the same version.
 
 ## Usage
 
 ```tsx
-import { applyMode, applyRevision, Mode, Revision } from '@ordinate/global-styles';
-import '@ordinate/global-styles/index.css';
+import { applyMode, applyRevision, Mode, Revision } from '@ordinate-ui/global-styles';
+import '@ordinate-ui/global-styles/index.css';
 
-import Button from '@ordinate/components/button';
+import Button from '@ordinate-ui/components/button';
 
 applyRevision(Revision.V2026_1);
 applyMode(Mode.System);
@@ -41,16 +49,16 @@ The same components build a console or a website. `applyStyle(Style.Editorial)` 
 
 ### Brand theme
 
-`applyTheme` from `@ordinate/components/theming` changes a fixed set of brand tokens: primary and accent colors, font families and corner radii. The theme sits on top of the pinned revision. See [Theming, revisions and density](docs/THEMING.md).
+`applyTheme` from `@ordinate-ui/components/theming` changes a fixed set of brand tokens: primary and accent colors, font families and corner radii. The theme sits on top of the pinned revision. See [Theming, revisions and density](docs/THEMING.md).
 
 ### Labels and right-to-left
 
 Components ship English labels for the text they render on their own, such as a close button's accessible name. Each label can be replaced with a prop, or for the whole application with `I18nProvider` and your own messages:
 
 ```tsx
-import I18nProvider from '@ordinate/components/i18n';
+import I18nProvider from '@ordinate-ui/components/i18n';
 
-const messages = { '@ordinate/components': { en: { modal: { closeAriaLabel: 'Close dialog' } } } };
+const messages = { '@ordinate-ui/components': { en: { modal: { closeAriaLabel: 'Close dialog' } } } };
 
 <I18nProvider messages={[messages]}>
   <App />
@@ -63,15 +71,21 @@ Set `dir="rtl"` on the page for right-to-left languages; layouts, icons and keyb
 
 `CodeEditor` runs on CodeMirror 6, which comes with the package. The editor loads CodeMirror with a dynamic `import()` when it first renders, and each language when an editor first uses it, so bundlers put them in separate chunks and pages without a code editor never download them.
 
-### Astro and other server-rendered setups
+### Server rendering
 
-Components import their own CSS. When rendering on the server with Vite, Astro included, let Vite bundle the package instead of loading it from `node_modules`:
+Components import their own CSS, so a bundler has to process them. Bundling for the browser needs no setup. For server rendering, tell the bundler to bundle `@ordinate-ui/*` instead of loading it from `node_modules`, where Node cannot read the CSS imports. With Vite, set `ssr.noExternal`. Astro renders static pages in a separate `prerender` environment that the top-level setting does not reach, so set it for both environments:
 
 ```js
 // astro.config.mjs
-export default {
-  vite: { ssr: { noExternal: ['@ordinate/components'] } },
-};
+import react from '@astrojs/react';
+import { defineConfig } from 'astro/config';
+
+const bundleOrdinate = { resolve: { noExternal: [/^@ordinate-ui\//] } };
+
+export default defineConfig({
+  integrations: [react()],
+  vite: { environments: { ssr: bundleOrdinate, prerender: bundleOrdinate } },
+});
 ```
 
 ## Components
@@ -91,13 +105,13 @@ export default {
 - **Website content:** Article, Figure, Media, Plate, StoryCard, MenuTile, IndexList, PullQuote, Testimonial
 - **Website flows:** HowItWorks, Journey, OpeningHours
 
-Charts (area, bar, line, mixed line and bar, pie) are in the separate `@ordinate/charts` package.
+Charts (area, bar, line, mixed line and bar, pie) are in the separate `@ordinate-ui/charts` package.
 
 ## Development
 
 ```sh
 npm install
-npm run build      # build lib/components
+npm run build      # build every package
 npm start          # rebuild on change and serve the dev pages
 npm test           # unit, accessibility, server-rendering and token contract tests
 npm run lint       # ESLint and Stylelint

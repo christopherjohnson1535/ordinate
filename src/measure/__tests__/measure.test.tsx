@@ -83,7 +83,7 @@ describe('Measure', () => {
 
   test('uses the provider locale for numbers and its messages for the words', () => {
     render(
-      <I18nProvider locale="de" messages={[{ '@ordinate/components': { de: { measure: { ofMax: 'von {max}' } } } }]}>
+      <I18nProvider locale="de" messages={[{ '@ordinate-ui/components': { de: { measure: { ofMax: 'von {max}' } } } }]}>
         <Measure value={4210} max={5000} />
       </I18nProvider>
     );

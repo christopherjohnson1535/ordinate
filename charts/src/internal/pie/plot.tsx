@@ -1,7 +1,7 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type { ButtonProps } from '@ordinate/components/button';
+import type { ButtonProps } from '@ordinate-ui/components/button';
 import clsx from 'clsx';
 
 import { DetailPopover, DetailRow } from '../components/detail-popover';

@@ -163,7 +163,7 @@ describe('Flashbar', () => {
         locale="de"
         messages={[
           {
-            '@ordinate/components': {
+            '@ordinate-ui/components': {
               de: { flashbar: { errorCount: '{count, plural, one {# Fehler} other {# Fehler}}' } },
             },
           },

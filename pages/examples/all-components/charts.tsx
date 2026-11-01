@@ -18,7 +18,7 @@ const series: BarChartProps.SeriesSpec<string>[] = spendByTeam.slice(0, 2).map(t
 
 export default function ChartsGroup({ number }: { number: number }) {
   return (
-    <Group number={number} title="Charts, from @ordinate/charts">
+    <Group number={number} title="Charts, from @ordinate-ui/charts">
       <Cell name="BarChart" wide={true} note="One chart stands for the package; the chart pages show the rest.">
         <BarChart
           series={series}

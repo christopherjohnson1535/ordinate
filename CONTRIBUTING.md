@@ -21,14 +21,15 @@ Run `npm start` to rebuild on change and serve the dev pages at the address Vite
 
 ## Checks
 
-| Command                | What it does                                                        |
-| ---------------------- | ------------------------------------------------------------------- |
-| `npm test`             | Unit and server-rendering tests in jsdom and Node. Fast; run often. |
-| `npm run lint`         | ESLint and Stylelint.                                               |
-| `npm run test:browser` | Browser tests in Chromium against the dev pages.                    |
-| `npm run size`         | Bundles each component and checks it against its size budget.       |
+| Command                   | What it does                                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `npm test`                | Unit and server-rendering tests in jsdom and Node. Fast; run often.                                             |
+| `npm run lint`            | ESLint and Stylelint.                                                                                           |
+| `npm run test:browser`    | Browser tests in Chromium against the dev pages.                                                                |
+| `npm run size`            | Bundles each component and checks it against its size budget.                                                   |
+| `npm run verify:packages` | Loads every package entry in plain Node and checks its types resolve, as an application would after installing. |
 
-All of them except `npm run lint` need `npm run build` first, because they use the built components in `lib/components`.
+All of them except `npm run lint` need `npm run build` first, because they use the built packages.
 
 ### Browser tests
 
@@ -67,6 +68,20 @@ When a component grows on purpose, or you add one, run `npm run size -- --update
 6. Open a pull request describing the change and why it is needed.
 
 There is no CI yet, so please run the checks locally before opening a pull request.
+
+## Releasing
+
+All five packages are published to npm together, at one version, from your machine:
+
+```sh
+npm login
+npm run release -- 0.2.0 --dry-run   # check what would be published
+npm run release -- 0.2.0
+```
+
+The script sets the version in every manifest, builds, runs the unit tests and `verify:packages`, and publishes in dependency order: `@ordinate-ui/design-tokens`, `components`, `global-styles`, `collection-hooks`, then `charts`. A version with a prerelease suffix, such as `0.2.0-beta.1`, goes out under the `next` tag. Commit and tag the version change afterwards; the script prints the commands.
+
+Bump the minor version for any breaking change while Ordinate is below 1.0, since applications install with `^` ranges.
 
 ## Licensing
 

@@ -1,7 +1,7 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import Button, { ButtonProps } from '@ordinate/components/button';
+import Button, { ButtonProps } from '@ordinate-ui/components/button';
 import clsx from 'clsx';
 
 import { SeriesStyle } from '../../series-style';

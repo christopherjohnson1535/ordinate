@@ -337,7 +337,7 @@ describe('ButtonDropdown', () => {
       render(
         <I18nProvider
           locale="de"
-          messages={[{ '@ordinate/components': { de: { 'button-dropdown': { ariaLabel: 'Weitere Aktionen' } } } }]}
+          messages={[{ '@ordinate-ui/components': { de: { 'button-dropdown': { ariaLabel: 'Weitere Aktionen' } } } }]}
         >
           <ButtonDropdown items={items} variant="icon" />
         </I18nProvider>

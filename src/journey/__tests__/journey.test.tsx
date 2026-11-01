@@ -207,7 +207,7 @@ describe('Journey', () => {
         locale="en"
         messages={[
           {
-            '@ordinate/components': {
+            '@ordinate-ui/components': {
               en: { journey: { questionCounterText: 'Step {questionNumber} out of {questionsCount}' } },
             },
           },

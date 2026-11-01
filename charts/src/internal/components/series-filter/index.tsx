@@ -1,8 +1,8 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import FormField from '@ordinate/components/form-field';
-import Multiselect, { MultiselectProps } from '@ordinate/components/multiselect';
+import FormField from '@ordinate-ui/components/form-field';
+import Multiselect, { MultiselectProps } from '@ordinate-ui/components/multiselect';
 
 export interface FilterItem {
   id: string;

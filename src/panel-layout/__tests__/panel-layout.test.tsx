@@ -149,7 +149,7 @@ describe('PanelLayout', () => {
     expect(screen.getByRole('separator', { name: 'Resize filters' })).toBeInTheDocument();
 
     const messages = {
-      '@ordinate/components': { en: { 'panel-layout': { resizeHandleAriaLabel: 'Drag to resize' } } },
+      '@ordinate-ui/components': { en: { 'panel-layout': { resizeHandleAriaLabel: 'Drag to resize' } } },
     };
     render(
       <I18nProvider messages={[messages]}>

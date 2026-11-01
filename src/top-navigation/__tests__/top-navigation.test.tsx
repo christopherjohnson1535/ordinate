@@ -268,7 +268,7 @@ describe('TopNavigation', () => {
     const { rerender } = render(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { 'top-navigation': { overflowMenuTriggerText: 'Mehr' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { 'top-navigation': { overflowMenuTriggerText: 'Mehr' } } } }]}
       >
         <TopNavigation identity={identity} utilities={utilities} />
       </I18nProvider>

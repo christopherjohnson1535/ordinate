@@ -171,7 +171,7 @@ describe('Pagination', () => {
         locale="de"
         messages={[
           {
-            '@ordinate/components': {
+            '@ordinate-ui/components': {
               de: { pagination: { nextPageLabel: 'Nächste Seite', pageLabel: 'Seite {pageNumber}' } },
             },
           },

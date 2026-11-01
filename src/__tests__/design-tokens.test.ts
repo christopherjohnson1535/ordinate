@@ -16,7 +16,7 @@ const read = (file: string) => fs.readFileSync(path.join(packageDir, file), 'utf
 const toKebabCase = (name: string) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 const reference = (name: string) => `var(--ord-${toKebabCase(name)})`;
 
-describe('@ordinate/design-tokens', () => {
+describe('@ordinate-ui/design-tokens', () => {
   test('exports every token as a reference to its custom property, and nothing else', () => {
     expect(Object.keys(designTokens).sort()).toEqual([...allTokenNames].sort());
     const tokens = designTokens as Record<string, string>;
@@ -43,7 +43,7 @@ describe('@ordinate/design-tokens', () => {
     const root = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../package.json'), 'utf8'));
     const manifest = JSON.parse(read('package.json'));
     expect(manifest).toMatchObject({
-      name: '@ordinate/design-tokens',
+      name: '@ordinate-ui/design-tokens',
       version: root.version,
       license: 'Apache-2.0',
       main: './index.js',

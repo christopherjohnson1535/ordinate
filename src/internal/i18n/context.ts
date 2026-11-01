@@ -6,7 +6,7 @@ import { I18nProviderProps } from '../../i18n/interfaces';
 import english from '../../i18n/messages/all.en';
 import { formatMessage, MessageParams } from './format';
 
-export const namespace = '@ordinate/components';
+export const namespace = '@ordinate-ui/components';
 const fallbackLocale = 'en';
 
 export interface I18nContextValue {

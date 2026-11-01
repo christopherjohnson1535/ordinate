@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // The design tokens the charts use are defined by the revision styles that ship with the components.
-import '@ordinate/components/internal/base-component';
+import '@ordinate-ui/components/internal/base-component';
 
 export interface BaseChartProps {
   /**

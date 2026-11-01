@@ -9,7 +9,7 @@ import { NonCancelableEventHandler } from '../internal/events';
  *
  * The editor engine is CodeMirror 6. It is loaded with a dynamic `import()` the first time a
  * code editor renders, so bundlers split it into separate chunks and applications that never
- * render a code editor do not download it. CodeMirror is a dependency of `@ordinate/components`,
+ * render a code editor do not download it. CodeMirror is a dependency of `@ordinate-ui/components`,
  * so there is nothing extra to install.
  *
  * Each language package is loaded only when an editor uses that language.

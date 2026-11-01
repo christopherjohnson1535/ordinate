@@ -1,13 +1,13 @@
-# @ordinate/collection-hooks
+# @ordinate-ui/collection-hooks
 
 State for lists of items in [Ordinate](../README.md): text and property filtering, sorting, pagination and selection. `useCollection` takes all items, keeps the state, and returns the items to show along with props to spread onto the table or cards, the filter and the pagination.
 
 ```tsx
-import { useCollection } from '@ordinate/collection-hooks';
+import { useCollection } from '@ordinate-ui/collection-hooks';
 
-import Pagination from '@ordinate/components/pagination';
-import Table from '@ordinate/components/table';
-import TextFilter from '@ordinate/components/text-filter';
+import Pagination from '@ordinate-ui/components/pagination';
+import Table from '@ordinate-ui/components/table';
+import TextFilter from '@ordinate-ui/components/text-filter';
 
 function Instances({ instances }) {
   const { items, filteredItemsCount, collectionProps, filterProps, paginationProps } = useCollection(instances, {

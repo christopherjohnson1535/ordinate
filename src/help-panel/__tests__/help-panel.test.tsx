@@ -54,7 +54,7 @@ describe('HelpPanel', () => {
     rerender(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { 'help-panel': { loadingText: 'Wird geladen' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { 'help-panel': { loadingText: 'Wird geladen' } } } }]}
       >
         <HelpPanel loading={true} />
       </I18nProvider>

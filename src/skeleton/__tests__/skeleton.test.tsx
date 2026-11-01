@@ -64,7 +64,7 @@ describe('Skeleton', () => {
     render(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { skeleton: { loadingText: 'Wird geladen' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { skeleton: { loadingText: 'Wird geladen' } } } }]}
       >
         <Skeleton />
       </I18nProvider>

@@ -254,7 +254,7 @@ describe('CollectionPreferences controls', () => {
 
   test('the I18nProvider replaces the built-in text', () => {
     const messages = {
-      '@ordinate/components': { en: { 'collection-preferences': { title: 'Settings', confirmLabel: 'Save' } } },
+      '@ordinate-ui/components': { en: { 'collection-preferences': { title: 'Settings', confirmLabel: 'Save' } } },
     };
     render(
       <I18nProvider messages={[messages]} locale="en">

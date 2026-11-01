@@ -9,7 +9,7 @@ import english from '../../../lib/components/i18n/messages/all.en';
 import { formatMessage } from '../../../lib/components/internal/i18n/format';
 import Modal from '../../../lib/components/modal';
 
-const namespace = '@ordinate/components';
+const namespace = '@ordinate-ui/components';
 // Applications bring their own translations; the library ships English only.
 const german: I18nProviderProps.Messages = { [namespace]: { de: { modal: { closeAriaLabel: 'Schließen' } } } };
 

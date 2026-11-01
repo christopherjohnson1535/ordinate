@@ -197,7 +197,7 @@ describe('CopyToClipboard', () => {
         locale="de"
         messages={[
           {
-            '@ordinate/components': {
+            '@ordinate-ui/components': {
               de: { 'copy-to-clipboard': { copyButtonText: 'Kopieren', copySuccessText: 'Kopiert' } },
             },
           },

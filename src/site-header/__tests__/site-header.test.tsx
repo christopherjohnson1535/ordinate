@@ -195,7 +195,7 @@ describe('SiteHeader menu', () => {
         locale="en"
         messages={[
           {
-            '@ordinate/components': {
+            '@ordinate-ui/components': {
               en: { 'site-header': { menuButtonText: 'Browse', navigationAriaLabel: 'Shop' } },
             },
           },

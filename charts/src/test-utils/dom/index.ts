@@ -1,6 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { ElementWrapper } from '@ordinate/components/test-utils/dom';
+import { ElementWrapper } from '@ordinate-ui/components/test-utils/dom';
 
 import AreaChartWrapper from './area-chart';
 import BarChartWrapper from './bar-chart';
@@ -20,7 +20,7 @@ export {
 
 // Importing this module adds chart finders to the components' wrappers, so a test reaches charts
 // the same way it reaches components: `createWrapper().findLineChart()`.
-declare module '@ordinate/components/test-utils/dom/core' {
+declare module '@ordinate-ui/components/test-utils/dom/core' {
   // Merging with the class needs the same type parameter, even though these methods do not use it.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ElementWrapper<E extends Element = HTMLElement> {

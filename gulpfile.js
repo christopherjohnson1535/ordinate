@@ -12,12 +12,14 @@ const {
   packageJSON,
   docs,
   charts,
+  globalStyles,
+  collectionHooks,
 } = require('./build-tools/tasks');
 
 const build = series(
   clean,
   parallel(styleDictionary, generateIndexFile, generateIcons, generateTestUtils),
-  parallel(styles, typescript),
+  parallel(styles, typescript, globalStyles, collectionHooks),
   parallel(packageJSON, docs, charts)
 );
 
@@ -25,6 +27,8 @@ exports.clean = clean;
 exports.build = build;
 exports.docs = docs;
 exports.charts = charts;
+exports['global-styles'] = globalStyles;
+exports['collection-hooks'] = collectionHooks;
 
 exports.watch = () => {
   watch(['src/**/*.{ts,tsx}', '!src/**/__tests__/**', '!src/index.ts', '!src/test-utils/dom/index.ts'], typescript);

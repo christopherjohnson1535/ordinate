@@ -1,6 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { ComponentWrapper, ElementWrapper, MultiselectWrapper } from '@ordinate/components/test-utils/dom';
+import { ComponentWrapper, ElementWrapper, MultiselectWrapper } from '@ordinate-ui/components/test-utils/dom';
 
 import frameStyles from '../../../internal/components/chart-frame/styles.css.js';
 import popoverStyles from '../../../internal/components/detail-popover/styles.css.js';

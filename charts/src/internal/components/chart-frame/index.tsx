@@ -1,8 +1,8 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import Button from '@ordinate/components/button';
-import StatusIndicator from '@ordinate/components/status-indicator';
+import Button from '@ordinate-ui/components/button';
+import StatusIndicator from '@ordinate-ui/components/status-indicator';
 import clsx from 'clsx';
 
 import { BaseChartProps } from '../../base';

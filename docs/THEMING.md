@@ -48,7 +48,7 @@ A theme still wins over a style for the tokens the theme sets.
 A theme lets one product use its own brand colors, fonts and corner radii without forking the library.
 
 ```ts
-import { applyTheme } from '@ordinate/components/theming';
+import { applyTheme } from '@ordinate-ui/components/theming';
 
 const { reset } = applyTheme({
   theme: {

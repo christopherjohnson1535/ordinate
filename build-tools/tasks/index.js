@@ -11,4 +11,5 @@ module.exports = {
   packageJSON: require('./package-json'),
   docs: require('./docs'),
   charts: require('./charts'),
+  ...require('./workspaces'),
 };

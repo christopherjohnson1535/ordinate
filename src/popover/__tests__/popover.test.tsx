@@ -157,7 +157,7 @@ describe('Popover options', () => {
     const { unmount } = render(
       <I18nProvider
         locale="de"
-        messages={[{ '@ordinate/components': { de: { popover: { dismissAriaLabel: 'Schließen' } } } }]}
+        messages={[{ '@ordinate-ui/components': { de: { popover: { dismissAriaLabel: 'Schließen' } } } }]}
       >
         <Popover content="Details">Usage</Popover>
       </I18nProvider>

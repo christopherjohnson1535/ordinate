@@ -3,7 +3,7 @@
 
 // The mixins the charts share with the components, rebuilt on the public token package
 // because the components' own Sass is not part of their published surface.
-@use '@ordinate/design-tokens' as ord;
+@use '@ordinate-ui/design-tokens' as ord;
 
 // Matches `$overlay` in the components' src/internal/styles/layers.scss: floating panels sit above
 // everything on the page.
