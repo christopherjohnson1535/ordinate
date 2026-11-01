@@ -1,0 +1,67 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h1 {
+    margin-block: 0;
+  }
+}
+
+.note {
+  margin-block: 0;
+  max-inline-size: 72ch;
+  font-size: 14px;
+  color: var(--ord-color-text-secondary);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+// A region of fixed height for a layout with `disableBodyScroll`.
+.frame {
+  block-size: 640px;
+  border: 1px solid var(--ord-color-border-divider);
+}
+
+.narrow {
+  inline-size: 390px;
+  max-inline-size: 100%;
+}
+
+.table {
+  inline-size: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding-block: 8px;
+    padding-inline: 12px;
+    border-block-end: 1px solid var(--ord-color-border-divider);
+    text-align: start;
+  }
+
+  th {
+    font-weight: 500;
+    color: var(--ord-color-text-secondary);
+  }
+
+  tr[aria-selected='true'] td {
+    background-color: var(--ord-color-background-item-selected);
+  }
+}
+
+.header-bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+}

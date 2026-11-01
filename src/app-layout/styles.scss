@@ -1,0 +1,258 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// The offsets come from the component as custom properties: the height of a fixed header
+// and footer around the layout, and where the side columns start below them and the toolbar.
+$header-offset: var(--ord-app-layout-header-offset, 0px);
+$footer-offset: var(--ord-app-layout-footer-offset, 0px);
+$panel-top: var(--ord-app-layout-panel-top, 0px);
+$rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
+
+// A tinted frame holds the navigation and the rails; the content sits on a white sheet.
+.root {
+  @include styles.font-body;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(var(--ord-app-layout-min-content-width, 0px), 1fr) auto auto auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'toolbar toolbar toolbar toolbar toolbar'
+    'navigation main split-side panel rail'
+    'navigation split-bottom split-side panel rail';
+  box-sizing: border-box;
+  min-block-size: calc(100vh - #{$header-offset} - #{$footer-offset});
+  background-color: ord.$color-background-layout-main;
+  color: ord.$color-text-body;
+}
+
+.toolbar {
+  grid-area: toolbar;
+  position: sticky;
+  inset-block-start: $header-offset;
+  z-index: 3;
+}
+
+// The side columns stay in view while the page scrolls, each scrolling on its own.
+.navigation,
+.rail,
+.split-panel-side,
+.panel {
+  position: sticky;
+  inset-block-start: $panel-top;
+  align-self: start;
+  box-sizing: border-box;
+  block-size: calc(100vh - #{$panel-top} - #{$footer-offset});
+}
+
+.navigation {
+  grid-area: navigation;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.navigation-header {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  padding-block: ord.$space-xs 0;
+  padding-inline: ord.$space-xs;
+}
+
+.navigation-content {
+  flex-grow: 1;
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ord.$space-xs;
+  inline-size: $rail-size;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-xs;
+  overflow-y: auto;
+}
+
+.navigation-rail {
+  grid-area: navigation;
+}
+
+.panel-rail {
+  grid-area: rail;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+.main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.notifications {
+  padding-block: ord.$space-scaled-s 0;
+  padding-inline: ord.$space-scaled-l;
+}
+
+.sticky-notifications {
+  position: sticky;
+  inset-block-start: $panel-top;
+  z-index: 2;
+  padding-block-end: ord.$space-scaled-s;
+  background-color: ord.$color-background-layout-main;
+}
+
+.breadcrumbs {
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-l;
+}
+
+.notifications + .sheet {
+  margin-block-start: ord.$space-scaled-s;
+}
+
+.sticky-notifications + .sheet {
+  margin-block-start: 0;
+}
+
+.sheet {
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding-block: ord.$space-scaled-l;
+  padding-inline: ord.$space-scaled-l;
+  background-color: ord.$color-background-container;
+}
+
+.sheet-below-frame {
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.sheet-after-navigation {
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+.no-paddings {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+.content {
+  margin-inline: auto;
+}
+
+.split-panel-bottom {
+  grid-area: split-bottom;
+  position: sticky;
+  inset-block-end: $footer-offset;
+  z-index: 2;
+  display: flex;
+  min-inline-size: 0;
+}
+
+.split-panel-side {
+  grid-area: split-side;
+  display: flex;
+}
+
+.panel {
+  grid-area: panel;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-inline-size: 100vw;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+}
+
+.panel-close {
+  position: absolute;
+  inset-block-start: ord.$space-xs;
+  inset-inline-end: ord.$space-xs;
+  z-index: 1;
+}
+
+.panel-content {
+  flex-grow: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+// The layout fills its parent and scrolls the content column instead of the page.
+.disable-body-scroll {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  block-size: 100%;
+  min-block-size: 0;
+  overflow: hidden;
+
+  .toolbar,
+  .split-panel-bottom {
+    position: relative;
+  }
+
+  .navigation,
+  .rail,
+  .split-panel-side,
+  .panel {
+    position: relative;
+    align-self: stretch;
+    block-size: auto;
+    min-block-size: 0;
+  }
+
+  .main {
+    min-block-size: 0;
+    overflow-y: auto;
+  }
+}
+
+// On narrow screens the toolbar holds the toggles, and open panels cover the content.
+.mobile {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'toolbar'
+    'main'
+    'split-bottom';
+
+  .overlay {
+    position: fixed;
+    inset-block: $header-offset $footer-offset;
+    inset-inline: 0;
+    z-index: 4;
+    block-size: auto;
+    inline-size: auto;
+    border-inline-start-width: 0;
+    background-color: ord.$color-background-container;
+  }
+
+  .sheet {
+    padding-inline: ord.$space-scaled-m;
+  }
+
+  .notifications,
+  .breadcrumbs {
+    padding-inline: ord.$space-scaled-m;
+  }
+
+  &.disable-body-scroll .overlay {
+    position: absolute;
+    inset-block: 0;
+  }
+}
