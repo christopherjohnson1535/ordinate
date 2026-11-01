@@ -1,0 +1,148 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  position: relative;
+  display: block;
+  min-inline-size: 0;
+  color: ord.$color-text-secondary;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  min-inline-size: 0;
+  white-space: nowrap;
+}
+
+// The current page gives way first when space runs out, after the middle items have collapsed.
+.current-item {
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.link {
+  color: ord.$color-text-body-secondary;
+  text-decoration-line: none;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxxs;
+
+  @include styles.with-motion {
+    transition-property: color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover {
+    color: ord.$color-text-link-hover;
+    text-decoration-line: underline;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.current {
+  overflow: hidden;
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-label;
+  text-overflow: ellipsis;
+}
+
+.separator {
+  flex-shrink: 0;
+  margin-inline: ord.$space-xxs;
+  color: ord.$color-text-secondary;
+}
+
+.dropdown {
+  display: flex;
+}
+
+.expand-button {
+  @include styles.border-radius(ord.$border-radius-button);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: ord.$size-control-height-small;
+  block-size: ord.$size-icon-medium;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: transparent;
+  color: ord.$color-text-body-secondary;
+  cursor: pointer;
+
+  &:hover,
+  &[aria-expanded='true'] {
+    border-color: ord.$color-border-control;
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.menu {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-xxs;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.menu-link {
+  display: block;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-s;
+  color: ord.$color-text-body;
+  text-decoration-line: none;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+// A hidden copy of every item at its natural width, used to decide how many to collapse.
+.measure {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.measure-list {
+  inline-size: max-content;
+}
