@@ -1,0 +1,89 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+// Matches the `xs` layout breakpoint: below it the actions move under the text.
+$side-by-side-min-width: 688px;
+
+.root {
+  min-inline-size: 0;
+}
+
+.frame {
+  container-type: inline-size;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: ord.$space-scaled-l;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  min-inline-size: 0;
+  max-inline-size: ord.$size-section-narrow;
+}
+
+.heading {
+  @include site.font-headline;
+  font-size: ord.$font-size-headline-l;
+}
+
+.description {
+  @include site.font-lead;
+  color: ord.$color-text-body-secondary;
+}
+
+.tone-inverted .description {
+  color: ord.$color-text-band-inverted-secondary;
+}
+
+.action-area {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.content {
+  min-inline-size: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+@container (min-inline-size: #{$side-by-side-min-width}) {
+  .layout {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: ord.$space-xxl;
+  }
+
+  .text {
+    flex: 1 1 auto;
+  }
+
+  .action-area {
+    flex: 0 1 auto;
+    inline-size: auto;
+    max-inline-size: ord.$size-panel-large;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}
