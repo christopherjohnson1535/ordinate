@@ -1,0 +1,51 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  color: ord.$color-text-body;
+}
+
+// The end padding leaves room for the close button that the app layout places in the corner.
+.header {
+  @include styles.font-heading;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l ord.$space-xxl;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  font-size: ord.$font-size-heading-s;
+  overflow-wrap: break-word;
+}
+
+.content,
+.footer {
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+}
+
+.footer {
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.loading {
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l ord.$space-xxl;
+}
