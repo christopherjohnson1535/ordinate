@@ -8,6 +8,10 @@ const messages: I18nProviderProps.Messages = {
       alert: {
         dismissAriaLabel: 'Ignora',
       },
+      'breadcrumb-group': {
+        ariaLabel: 'Breadcrumbs',
+        expandAriaLabel: 'Show path',
+      },
       button: {
         externalIconAriaLabel: 'Si apre in una nuova scheda',
       },
@@ -24,8 +28,23 @@ const messages: I18nProviderProps.Messages = {
       modal: {
         closeAriaLabel: 'Chiudi',
       },
+      pagination: {
+        nextPageLabel: 'Next page',
+        pageLabel: '{openEnd, select, true {Page {pageNumber}} other {Page {pageNumber} of {pagesCount}}}',
+        paginationLabel: 'Pagination',
+        previousPageLabel: 'Previous page',
+      },
       select: {
         errorIconAriaLabel: 'Errore',
+      },
+      'side-navigation': {
+        ariaLabel: 'Side navigation',
+        externalIconAriaLabel: 'Opens in a new tab',
+      },
+      tabs: {
+        dismissAriaLabel: 'Close tab',
+        scrollLeftAriaLabel: 'Scroll to previous tabs',
+        scrollRightAriaLabel: 'Scroll to next tabs',
       },
     },
   },
