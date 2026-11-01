@@ -1,0 +1,92 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.frame {
+  block-size: calc(100vh - 220px);
+  min-block-size: 420px;
+  border: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-container);
+}
+
+.main {
+  padding: 20px 24px 32px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// Drawn like a schedule on a plate: an ink rule above the head, hairlines between rows.
+.table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-family: var(--ord-font-family-base);
+  font-size: var(--ord-font-size-body);
+  color: var(--ord-color-text-body);
+
+  th {
+    padding-block: 6px;
+    padding-inline: 0 12px;
+    border-block-start: 1px solid var(--ord-color-border-strong);
+    border-block-end: 1px solid var(--ord-color-border-strong);
+    font-size: var(--ord-font-size-small);
+    font-weight: var(--ord-font-weight-label);
+    text-align: start;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ord-color-text-secondary);
+  }
+
+  td {
+    padding-block: 10px;
+    padding-inline: 0 12px;
+    border-block-end: 1px solid var(--ord-color-border-divider-secondary);
+    vertical-align: top;
+  }
+
+  // The description gets the most room; the other columns share the rest.
+  th:last-child {
+    inline-size: 50%;
+  }
+
+  code {
+    font-family: var(--ord-font-family-mono);
+    font-size: var(--ord-font-size-code);
+    overflow-wrap: break-word;
+  }
+}
+
+// Code reads left to right in every layout.
+.page code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.name {
+  font-weight: var(--ord-font-weight-label);
+  white-space: nowrap;
+}
+
+.required {
+  margin-inline-start: 6px;
+}
+
+.values {
+  margin-block-start: 4px;
+  font-family: var(--ord-font-family-mono);
+  font-size: var(--ord-font-size-small);
+  color: var(--ord-color-text-secondary);
+}
+
+.none {
+  color: var(--ord-color-text-secondary);
+}
+
+.description {
+  white-space: pre-line;
+  color: var(--ord-color-text-body-secondary);
+}

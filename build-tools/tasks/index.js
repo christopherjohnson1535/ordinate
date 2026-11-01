@@ -9,4 +9,5 @@ module.exports = {
   styles: require('./styles'),
   typescript: require('./typescript'),
   packageJSON: require('./package-json'),
+  docs: require('./docs'),
 };
