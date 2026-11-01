@@ -87,4 +87,19 @@ export const tokens: ColorsDictionary = {
   colorTextStatusErrorOnInk: { light: '{colorRed300}', dark: '{colorRed600}' },
   // Large decorative numbers, such as the ordinal on a story card. Quiet, but at least 3:1 in both modes.
   colorTextOrdinal: { light: '{colorGrey500}', dark: '{colorGrey500}' },
+  // Text on the terminal background, which is dark in both modes, so these keep their light values in
+  // dark mode too. Each keeps at least 4.5:1 against the terminal.
+  colorTextTerminal: { light: '{colorChalk100}', dark: '{colorChalk100}' },
+  colorTextTerminalSecondary: { light: '{colorChalk300}', dark: '{colorChalk300}' },
+  colorTextTerminalAccent: { light: '{colorCyan400}', dark: '{colorCyan400}' },
+  colorTextTerminalSuccess: { light: '{colorGreen400}', dark: '{colorGreen400}' },
+  colorTextTerminalError: { light: '{colorRed300}', dark: '{colorRed300}' },
+  // A chalkboard for drawings, such as the chalkboard variant of a schematic. Dark in both modes.
+  colorBackgroundChalkboard: { light: '{colorChalk900}', dark: '{colorChalk900}' },
+  colorTextChalkboard: { light: '{colorChalk100}', dark: '{colorChalk100}' },
+  colorTextChalkboardSecondary: { light: '{colorChalk200}', dark: '{colorChalk200}' },
+  colorBorderChalkboard: { light: '{colorChalk200}', dark: '{colorChalk200}' },
+  colorBorderChalkboardSecondary: { light: '{colorChalk300}', dark: '{colorChalk300}' },
+  colorBorderChalkboardAccent: { light: '{colorCyan400}', dark: '{colorCyan400}' },
+  colorBorderChalkboardError: { light: '{colorRed400}', dark: '{colorRed400}' },
 };

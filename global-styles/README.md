@@ -27,6 +27,8 @@ applyDensity(Density.Compact);
 | `applyDensity(density, target?)`   | Comfortable or compact density. `null` returns to comfortable.          |
 | `disableMotion(disabled, target?)` | Turns off component animation.                                          |
 
-`target` defaults to `document.body`. For brand colors, fonts and radii, see `applyTheme` in [THEMING.md](../docs/THEMING.md).
+`target` defaults to `document.body`.
+
+`@ordinate/global-styles/drawing-fonts.css` adds the faces for the `sketch` and `chalkboard` variants of `Schematic`. Import it only where you use them. For brand colors, fonts and radii, see `applyTheme` in [THEMING.md](../docs/THEMING.md).
 
 Licensed under the [Apache License, Version 2.0](../LICENSE).

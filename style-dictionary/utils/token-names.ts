@@ -121,6 +121,18 @@ export const colorsTokenNames = [
   'colorTextStatusInfoOnInk',
   'colorTextStatusErrorOnInk',
   'colorTextOrdinal',
+  'colorTextTerminal',
+  'colorTextTerminalSecondary',
+  'colorTextTerminalAccent',
+  'colorTextTerminalSuccess',
+  'colorTextTerminalError',
+  'colorBackgroundChalkboard',
+  'colorTextChalkboard',
+  'colorTextChalkboardSecondary',
+  'colorBorderChalkboard',
+  'colorBorderChalkboardSecondary',
+  'colorBorderChalkboardAccent',
+  'colorBorderChalkboardError',
 ] as const;
 
 export const bordersTokenNames = [
@@ -191,6 +203,8 @@ export const typographyTokenNames = [
   'letterSpacingCaps',
   'letterSpacingKicker',
   'letterSpacingCatalogue',
+  'fontFamilyHand',
+  'fontFamilyChalkboard',
 ] as const;
 
 export const spacingTokenNames = [
@@ -252,6 +266,9 @@ export const motionTokenNames = [
   'motionDurationRotation',
   'motionEasingStandard',
   'motionEasingLinear',
+  'motionDurationDraw',
+  'motionDurationErase',
+  'motionDurationFlow',
 ] as const;
 
 export const effectsTokenNames = ['opacityDimmed', 'opacityDimmedText', 'opacityLeader', 'opacityMediaHover'] as const;

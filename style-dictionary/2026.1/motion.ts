@@ -8,4 +8,9 @@ export const tokens: MotionDictionary = {
   motionDurationRotation: '800ms',
   motionEasingStandard: 'cubic-bezier(0.2, 0, 0, 1)',
   motionEasingLinear: 'linear',
+  // Drawings that draw themselves: a stroke drawing on, a stroke taking itself away, and one trip of a
+  // dot moving along a wire.
+  motionDurationDraw: '900ms',
+  motionDurationErase: '400ms',
+  motionDurationFlow: '1800ms',
 };

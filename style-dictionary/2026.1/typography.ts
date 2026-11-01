@@ -54,4 +54,8 @@ export const tokens: TypographyDictionary = {
   // label under a plate or figure.
   letterSpacingKicker: '0.08em',
   letterSpacingCatalogue: '0.04em',
+  // Drawings: a hand-lettered face for sketches and Computer Modern for chalkboards. The faces ship in
+  // @ordinate/global-styles/drawing-fonts.css; without it the fallbacks apply.
+  fontFamilyHand: "'Virgil', 'Segoe Print', 'Bradley Hand', cursive",
+  fontFamilyChalkboard: "'CMU Serif', 'Latin Modern Roman', 'IBM Plex Serif', Georgia, serif",
 };

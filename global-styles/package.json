@@ -8,13 +8,14 @@
   "types": "./lib/index.d.ts",
   "exports": {
     ".": "./lib/index.js",
-    "./index.css": "./lib/index.css"
+    "./index.css": "./lib/index.css",
+    "./drawing-fonts.css": "./lib/drawing-fonts.css"
   },
   "files": [
     "lib"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('src/index.css', 'lib/index.css')\""
+    "build": "tsc -p tsconfig.json && node -e \"const fs=require('node:fs');fs.copyFileSync('src/index.css','lib/index.css');fs.copyFileSync('src/drawing-fonts.css','lib/drawing-fonts.css');fs.cpSync('src/fonts','lib/fonts',{recursive:true})\""
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",
