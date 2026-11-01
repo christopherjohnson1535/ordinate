@@ -1,0 +1,226 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+  min-inline-size: 0;
+}
+
+.frame {
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+
+  @include styles.with-motion {
+    transition-property: border-color, outline-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  // The ring goes around the whole editor while the code has focus, and the status bar
+  // buttons draw their own.
+  &:has(.surface:focus-within) {
+    @include styles.focus-ring;
+  }
+}
+
+.invalid .frame {
+  border-color: ord.$color-border-error;
+  border-inline-start-width: ord.$border-width-section;
+}
+
+.warning .frame {
+  border-color: ord.$color-border-status-warning;
+  border-inline-start-width: ord.$border-width-section;
+}
+
+.editor {
+  position: relative;
+  box-sizing: border-box;
+  background-color: ord.$color-background-control;
+  color: ord.$color-text-body;
+
+  .read-only & {
+    background-color: ord.$color-background-control-read-only;
+  }
+}
+
+// A fixed editor theme sets the color scheme locally, so every token inside resolves to its
+// light or dark value regardless of the page mode.
+.theme-light {
+  color-scheme: light;
+}
+
+.theme-dark {
+  color-scheme: dark;
+}
+
+.surface {
+  block-size: 100%;
+  // Keeps CodeMirror's layered gutters and panels below the resize handle.
+  isolation: isolate;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  block-size: 100%;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-m;
+}
+
+.loading-state {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.error-state {
+  @include styles.font-body;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: ord.$space-xs;
+  color: ord.$color-text-body;
+}
+
+.error-state-recovery {
+  flex-shrink: 0;
+}
+
+.resize-handle {
+  flex-shrink: 0;
+}
+
+.status-bar {
+  @include styles.font-body;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: ord.$space-xxs ord.$space-s;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-scaled-xs;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-secondary;
+}
+
+.status-items,
+.status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xxs ord.$space-s;
+  min-inline-size: 0;
+}
+
+.status-actions {
+  gap: ord.$space-xxs;
+}
+
+.language {
+  font-weight: ord.$font-weight-label;
+  color: ord.$color-text-body;
+}
+
+.cursor-position {
+  font-variant-numeric: tabular-nums;
+}
+
+.status-button {
+  @include styles.border-radius(ord.$border-radius-button);
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xxs;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-xxs;
+  border-width: 0;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: ord.$line-height-body;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: background-color, color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.errors-count,
+.warnings-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.has-errors {
+  color: ord.$color-text-error;
+}
+
+.has-warnings {
+  color: ord.$color-text-status-warning;
+}
+
+.tab-focus-toggle[aria-pressed='true'] {
+  background-color: ord.$color-background-control-checked;
+  color: ord.$color-foreground-control-checked;
+
+  &:hover {
+    background-color: ord.$color-background-control-checked;
+    color: ord.$color-foreground-control-checked;
+  }
+}
+
+.preferences-button {
+  flex-shrink: 0;
+}
+
+.preferences {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-l;
+}
+
+.preferences-wrap-lines,
+.preferences-show-gutter,
+.preferences-theme,
+.preferences-cancel,
+.preferences-confirm {
+  min-inline-size: 0;
+}

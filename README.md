@@ -54,6 +54,10 @@ const messages = { '@ordinate/components': { en: { modal: { closeAriaLabel: 'Clo
 
 Set `dir="rtl"` on the page for right-to-left languages; layouts, icons and keyboard navigation follow it.
 
+### Code editor
+
+`CodeEditor` runs on CodeMirror 6, which comes with the package. The editor loads CodeMirror with a dynamic `import()` when it first renders, and each language when an editor first uses it, so bundlers put them in separate chunks and pages without a code editor never download them.
+
 ### Astro and other server-rendered setups
 
 Components import their own CSS. When rendering on the server with Vite, Astro included, let Vite bundle the package instead of loading it from `node_modules`:
@@ -71,7 +75,7 @@ export default {
 - **Content:** Box, Divider, ExpandableSection, Header, KeyValuePairs, TextContent, TruncatedText
 - **Collections:** ActionCard, Cards, CollectionPreferences, ItemCard, List, PropertyFilter, Table (and TableRoot, TableHead, TableHeaderCell, TableBody, TableRow, TableBodyCell), TextFilter, Token, TokenGroup
 - **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
-- **Forms:** AttributeEditor, Autosuggest, Checkbox, ControlGroup, Form, FormField, Input, Multiselect, PromptInput, RadioButton, RadioGroup, Select, Slider, TagEditor, Textarea, Tiles, Toggle
+- **Forms:** AttributeEditor, Autosuggest, Checkbox, CodeEditor, ControlGroup, Form, FormField, Input, Multiselect, PromptInput, RadioButton, RadioGroup, Select, Slider, TagEditor, Textarea, Tiles, Toggle
 - **Dates and files:** Calendar, DateInput, DatePicker, DateRangePicker, TimeInput, FileDropzone, FileInput, FileTokenGroup, FileUpload
 - **Navigation:** AnchorNavigation, BreadcrumbGroup, NavigableGroup, Pagination, SideNavigation, Tabs, TopNavigation, TreeView
 - **Guided flows:** AnnotationContext, Hotspot, Steps, TutorialPanel, Wizard

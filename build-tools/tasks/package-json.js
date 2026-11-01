@@ -20,6 +20,8 @@ module.exports = task('package-json', async () => {
     sideEffects: ['*.css', '*.css.js', './internal/base-component/index.js'],
     dependencies: source.dependencies,
     peerDependencies: source.peerDependencies,
+    // The code editor's engine packages are optional: only applications that render it need them.
+    peerDependenciesMeta: source.peerDependenciesMeta,
   };
   await fs.mkdir(outDir, { recursive: true });
   await fs.writeFile(path.join(outDir, 'package.json'), `${JSON.stringify(manifest, null, 2)}\n`);
