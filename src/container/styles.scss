@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -51,12 +52,19 @@
   }
 }
 
+// The header is labelled like a drawing sheet: the title sits on the sheet itself, with one ink rule
+// under it instead of a separate bar.
 .header {
-  padding-block: ord.$space-m;
+  padding-block: ord.$space-scaled-m ord.$space-scaled-s;
   padding-inline: ord.$space-container;
   border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
+  border-block-end-color: ord.$color-border-strong;
+}
+
+.label {
+  @include drawing.mono-caption;
+  overflow-wrap: anywhere;
 }
 
 .content {

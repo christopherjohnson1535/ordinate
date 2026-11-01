@@ -11,6 +11,13 @@ export default class ContainerWrapper extends ComponentWrapper {
     return this.find(`:scope > .${styles.header}`);
   }
 
+  /**
+   * The plain text label drawn in the header when `header` is a string.
+   */
+  findHeaderLabel(): ElementWrapper | null {
+    return this.find(`:scope > .${styles.header} > .${styles.label}`);
+  }
+
   findContent(): ElementWrapper {
     return this.find(`:scope > .${styles.content}`)!;
   }

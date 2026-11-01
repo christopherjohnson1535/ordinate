@@ -36,6 +36,20 @@ describe('Container', () => {
     others.forEach(name => expect(container[name]()!.getElement()).not.toHaveClass(styles['no-paddings']));
   });
 
+  test('draws a plain text header as a sheet label', () => {
+    render(<Container header="Environment">Content</Container>);
+    const container = createWrapper().findContainer()!;
+    expect(container.findHeaderLabel()!.getText()).toBe('Environment');
+    expect(container.findHeader()!.getText()).toBe('Environment');
+  });
+
+  test('keeps a Header component as it is', () => {
+    render(<Container header={<Header>Usage</Header>}>Content</Container>);
+    const container = createWrapper().findContainer()!;
+    expect(container.findHeaderLabel()).toBeNull();
+    expect(screen.getByRole('heading', { level: 2, name: 'Usage' })).toBeInTheDocument();
+  });
+
   test('applies fitHeight and the variant', () => {
     render(
       <Container fitHeight={true} variant="stacked">

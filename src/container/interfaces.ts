@@ -6,7 +6,8 @@ import { BaseComponentProps } from '../internal/base-component';
 
 export interface ContainerProps extends BaseComponentProps {
   /**
-   * The heading area of the container. Use the Header component.
+   * The heading area of the container, drawn as a sheet label with an ink rule under it. Use the Header
+   * component, or plain text for a short label set in small mono capitals, like "Environment".
    */
   header?: React.ReactNode;
   /**

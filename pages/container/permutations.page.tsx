@@ -40,6 +40,21 @@ export default function ContainerPermutations() {
         <Lines count={2} />
       </Container>
 
+      <Container header="Environment">
+        <Lines count={2} />
+      </Container>
+
+      <Container
+        header={
+          <Header code="Sheet A-03" counter="(4)">
+            Volumes
+          </Header>
+        }
+        footer={footer}
+      >
+        <Lines count={2} />
+      </Container>
+
       <Container header={header} footer={footer}>
         <Lines count={2} />
       </Container>
@@ -64,7 +79,7 @@ export default function ContainerPermutations() {
         <Container variant="stacked" header={<Header>Storage</Header>}>
           4 volumes.
         </Container>
-        <Container variant="stacked" header={<Header>Network</Header>}>
+        <Container variant="stacked" header="Network">
           2 gateways.
         </Container>
       </div>

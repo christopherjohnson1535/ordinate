@@ -31,7 +31,11 @@ export function InternalContainer({
       {...rest}
       className={clsx(styles.root, styles[`variant-${variant}`], fitHeight && styles['fit-height'], className)}
     >
-      {header && <div className={clsx(styles.header, disableHeaderPaddings && styles['no-paddings'])}>{header}</div>}
+      {header && (
+        <div className={clsx(styles.header, disableHeaderPaddings && styles['no-paddings'])}>
+          {typeof header === 'string' ? <div className={styles.label}>{header}</div> : header}
+        </div>
+      )}
       <div className={clsx(styles.content, disableContentPaddings && styles['no-paddings'])}>{children}</div>
       {footer && <div className={clsx(styles.footer, disableFooterPaddings && styles['no-paddings'])}>{footer}</div>}
     </div>
