@@ -1,0 +1,110 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+  box-sizing: border-box;
+  block-size: 100%;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.panel,
+.main {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: auto;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+// The panel gives way only when the layout is narrower than its size, so the handle stays reachable.
+.panel {
+  flex: 0 1 var(--panel-size);
+}
+
+.main {
+  flex: 1 1 0;
+}
+
+.display-panel-only > .panel,
+.display-main-only > .main {
+  flex: 1 1 auto;
+}
+
+.divider {
+  flex: 0 0 auto;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+// A wide strip to grab, drawn as a single rule with a small hinge plate at its middle.
+.handle {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: ord.$space-m;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 50%;
+    border-inline-start-width: ord.$border-width-default;
+    border-inline-start-style: solid;
+    border-inline-start-color: ord.$color-border-divider;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+.grip {
+  position: relative;
+  box-sizing: border-box;
+  inline-size: ord.$space-xs;
+  block-size: ord.$space-l;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+
+  @include styles.with-motion {
+    transition-property: border-color, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.handle:hover,
+.handle:focus-visible,
+.dragging {
+  &::before {
+    border-inline-start-color: ord.$color-border-strong;
+  }
+
+  > .grip {
+    border-color: ord.$color-border-strong;
+  }
+}
+
+.dragging > .grip {
+  background-color: ord.$color-border-strong;
+}

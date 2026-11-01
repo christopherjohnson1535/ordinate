@@ -101,6 +101,9 @@ const messages: I18nProviderProps.Messages = {
         paginationLabel: 'Pagination',
         previousPageLabel: 'Previous page',
       },
+      'panel-layout': {
+        resizeHandleAriaLabel: 'Resize panel',
+      },
       popover: {
         dismissAriaLabel: 'Close popover',
       },
