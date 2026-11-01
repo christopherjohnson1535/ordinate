@@ -1,0 +1,51 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles/tokens' as ord;
+
+.root {
+  position: relative;
+  min-inline-size: 0;
+}
+
+// The scallops bulge outward about a quarter of their length, so the cloud keeps a little room
+// around it and the content keeps clear of the line inside it.
+.active {
+  margin-block: ord.$space-xs;
+  margin-inline: ord.$space-xs;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-s;
+}
+
+.cloud {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  overflow: visible;
+  pointer-events: none;
+
+  path {
+    fill: none;
+    stroke: ord.$color-border-error;
+    stroke-width: ord.$border-width-icon;
+    stroke-linejoin: round;
+  }
+}
+
+// The revision mark sits on the line at the top end corner, on paper so the line does not run
+// through it.
+.marker {
+  position: absolute;
+  inset-block-start: calc(-1 * #{ord.$space-s});
+  inset-inline-end: ord.$space-s;
+  padding-inline: ord.$space-xxs;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-error;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-bold;
+  line-height: ord.$line-height-body;
+  white-space: nowrap;
+}
