@@ -1,0 +1,34 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.root {
+  display: inline-flex;
+  flex-shrink: 0;
+
+  @include styles.with-motion {
+    transition-property: transform;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.collapsed-inline-end {
+  transform: rotate(-90deg);
+
+  &:dir(rtl) {
+    transform: rotate(90deg);
+  }
+
+  &.expanded {
+    transform: none;
+  }
+}
+
+.collapsed-down.expanded {
+  transform: rotate(180deg);
+}
