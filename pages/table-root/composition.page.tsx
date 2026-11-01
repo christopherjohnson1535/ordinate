@@ -139,7 +139,8 @@ export default function TablePartsComposition() {
       </section>
       <section className={styles.section}>
         <h2>Sticky header in a scrolling area</h2>
-        <div className={styles.scroller}>
+        {/* Keyboard users can only scroll this area once it can take focus. */}
+        <div className={styles.scroller} tabIndex={0} role="region" aria-label="Long list, scrolls">
           <TableRoot ariaLabel="Long list" stickyHeader={true}>
             <TableHead>
               <TableRow>

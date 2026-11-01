@@ -24,7 +24,10 @@ const pairs: KeyValuePairsProps.Pair[] = [
     ),
   },
   { label: 'Image', value: <Link href="#">ordinate-base-2026.10</Link> },
-  { label: 'Disk used', value: <ProgressBar variant="key-value" value={72} additionalInfo="144 of 200 GB" /> },
+  {
+    label: 'Disk used',
+    value: <ProgressBar variant="key-value" value={72} additionalInfo="144 of 200 GB" ariaLabel="Disk used" />,
+  },
   { label: 'Launched', value: '31 October 2026, 09:14 UTC' },
   { label: 'Owner', value: 'platform-team@north-annex.example' },
   { label: 'Tags', value: 'env:prod, team:platform, cost-centre:4410' },
