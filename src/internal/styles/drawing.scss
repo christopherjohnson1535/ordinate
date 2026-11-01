@@ -1,0 +1,67 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Marks shared by the parts of the console drawn like a drawing set: schedules, callouts and sheet labels.
+
+@use './index' as styles;
+@use './tokens' as ord;
+
+// Small capitals set in mono, as for column labels, captions and sheet codes on a drawing.
+@mixin mono-caption {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  line-height: ord.$line-height-body;
+  letter-spacing: ord.$letter-spacing-caption;
+  text-transform: uppercase;
+}
+
+// A short reference such as S1 drawn inside a circle. Set the circle's `border-width` next to it.
+@mixin circled-tag($size) {
+  @include styles.border-radius(ord.$border-radius-radio);
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-inline-size: $size;
+  block-size: $size;
+  padding-inline: ord.$space-xxxs;
+  border-style: solid;
+  border-color: currentColor;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  line-height: ord.$line-height-heading;
+  white-space: nowrap;
+}
+
+// A solid ink surface with light text. The text, rule, control and status tokens are pointed at their ink
+// counterparts for the whole subtree, so content placed on it by other components, such as a status
+// indicator, a link or a checkbox, stays readable without knowing about the ink.
+@mixin on-ink {
+  background-color: ord.$color-background-ink;
+  color: ord.$color-text-on-ink;
+  --ord-color-text-body: #{ord.$color-text-on-ink};
+  --ord-color-text-body-secondary: #{ord.$color-text-on-ink};
+  --ord-color-text-secondary: #{ord.$color-text-on-ink-secondary};
+  --ord-color-text-link: #{ord.$color-text-on-ink};
+  --ord-color-text-link-hover: #{ord.$color-text-on-ink-secondary};
+  --ord-color-text-accent: #{ord.$color-text-status-info-on-ink};
+  --ord-color-text-error: #{ord.$color-text-status-error-on-ink};
+  --ord-color-text-status-success: #{ord.$color-text-status-success-on-ink};
+  --ord-color-text-status-warning: #{ord.$color-text-status-warning-on-ink};
+  --ord-color-text-status-info: #{ord.$color-text-status-info-on-ink};
+  --ord-color-text-status-inactive: #{ord.$color-text-on-ink-secondary};
+  --ord-color-border-strong: #{ord.$color-text-on-ink};
+  --ord-color-border-control: #{ord.$color-text-on-ink-secondary};
+  --ord-color-border-divider: #{ord.$color-border-on-ink};
+  --ord-color-border-divider-secondary: #{ord.$color-border-on-ink};
+  --ord-color-border-focus-ring: #{ord.$color-text-on-ink};
+  --ord-color-background-control: #{ord.$color-background-ink};
+  --ord-color-background-control-checked: #{ord.$color-text-on-ink};
+  --ord-color-foreground-control-checked: #{ord.$color-background-ink};
+  --ord-color-background-inline-code: transparent;
+}

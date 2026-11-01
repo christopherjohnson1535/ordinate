@@ -112,6 +112,14 @@ export const colorsTokenNames = [
   'colorBackgroundMarker',
   'colorTextOnMarker',
   'colorTextBandInvertedAccent',
+  'colorBackgroundInk',
+  'colorTextOnInk',
+  'colorTextOnInkSecondary',
+  'colorBorderOnInk',
+  'colorTextStatusSuccessOnInk',
+  'colorTextStatusWarningOnInk',
+  'colorTextStatusInfoOnInk',
+  'colorTextStatusErrorOnInk',
 ] as const;
 
 export const bordersTokenNames = [
@@ -176,6 +184,8 @@ export const typographyTokenNames = [
   'fontFamilyReading',
   'fontSizeReading',
   'lineHeightReading',
+  'letterSpacingCaption',
+  'fontWeightPageHeading',
 ] as const;
 
 export const spacingTokenNames = [

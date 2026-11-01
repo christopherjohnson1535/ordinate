@@ -6,6 +6,7 @@ export const style: Style = {
   id: 'studio',
   description: 'Portfolios and practices: light, very large headlines, image-led layouts and catalogue captions.',
   overrides: {
+    fontWeightPageHeading: '{fontWeightHeadline}',
     fontWeightHeadline: '{fontWeightLight}',
     fontSizeHeadlineS: '26px',
     fontSizeHeadlineM: '40px',

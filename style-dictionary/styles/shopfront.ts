@@ -10,6 +10,7 @@ export const style: Style = {
   description: 'Shops, cafés and local services: condensed headlines, cobalt and sunflower, rounded shapes.',
   overrides: {
     fontFamilyHeadline: '{fontFamilyCondensed}',
+    fontWeightPageHeading: '{fontWeightHeadline}',
     fontWeightHeadline: '{fontWeightHeavy}',
     fontSizeHeadlineS: '24px',
     fontSizeHeadlineM: '40px',

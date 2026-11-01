@@ -75,4 +75,14 @@ export const tokens: ColorsDictionary = {
   colorTextOnMarker: { light: '{colorWhite}', dark: '{colorChalk900}' },
   // Text that stands out on an inverted band, such as a closed day in opening hours.
   colorTextBandInvertedAccent: { light: '{colorWhite}', dark: '{colorChalk100}' },
+  // Solid ink surfaces, such as the selected row of a schedule. In dark mode the ink is chalk, so text and
+  // status colors on it take the light mode's dark values. Each keeps at least 4.5:1 against the ink.
+  colorBackgroundInk: { light: '{colorGrey900}', dark: '{colorChalk100}' },
+  colorTextOnInk: { light: '{colorWhite}', dark: '{colorChalk900}' },
+  colorTextOnInkSecondary: { light: '{colorGrey400}', dark: '{colorGrey700}' },
+  colorBorderOnInk: { light: '{colorGrey600}', dark: '{colorGrey500}' },
+  colorTextStatusSuccessOnInk: { light: '{colorGreen400}', dark: '{colorGreen600}' },
+  colorTextStatusWarningOnInk: { light: '{colorOchre400}', dark: '{colorOchre600}' },
+  colorTextStatusInfoOnInk: { light: '{colorCyan400}', dark: '{colorBlue600}' },
+  colorTextStatusErrorOnInk: { light: '{colorRed300}', dark: '{colorRed600}' },
 };

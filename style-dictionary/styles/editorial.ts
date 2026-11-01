@@ -8,6 +8,7 @@ export const style: Style = {
   overrides: {
     fontFamilyDisplay: '{fontFamilySerif}',
     fontFamilyHeadline: '{fontFamilySerif}',
+    fontWeightPageHeading: '{fontWeightHeadline}',
     fontWeightHeadline: '{fontWeightBody}',
     fontSizeHeadlineS: '28px',
     fontSizeHeadlineM: '44px',

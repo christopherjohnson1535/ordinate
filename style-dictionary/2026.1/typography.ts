@@ -43,4 +43,8 @@ export const tokens: TypographyDictionary = {
   fontFamilyReading: '{fontFamilyBase}',
   fontSizeReading: '16px',
   lineHeightReading: '1.6',
+  // Tracking for small capitals set in mono: column labels, captions and sheet codes.
+  letterSpacingCaption: '0.06em',
+  // Page titles drawn like a sheet heading: light and large. Site styles keep their headline weight.
+  fontWeightPageHeading: '{fontWeightLight}',
 };
