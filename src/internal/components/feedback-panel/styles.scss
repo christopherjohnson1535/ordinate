@@ -1,0 +1,24 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles/tokens' as ord;
+
+.panel {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+  inline-size: max-content;
+  max-inline-size: min(#{ord.$size-panel-small}, calc(100vw - 2 * #{ord.$space-xs}));
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-xs;
+  overflow-wrap: anywhere;
+}
+
+// Transparent rather than hidden, so the live region stays in the accessibility tree.
+.empty {
+  opacity: 0;
+  pointer-events: none;
+}
