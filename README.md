@@ -73,12 +73,13 @@ export default {
 - **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
 - **Forms:** AttributeEditor, Autosuggest, Checkbox, ControlGroup, Form, FormField, Input, Multiselect, PromptInput, RadioButton, RadioGroup, Select, Slider, TagEditor, Textarea, Tiles, Toggle
 - **Dates and files:** Calendar, DateInput, DatePicker, DateRangePicker, TimeInput, FileDropzone, FileInput, FileTokenGroup, FileUpload
-- **Navigation:** BreadcrumbGroup, Pagination, SideNavigation, Tabs, TopNavigation
+- **Navigation:** AnchorNavigation, BreadcrumbGroup, NavigableGroup, Pagination, SideNavigation, Tabs, TopNavigation, TreeView
+- **Guided flows:** AnnotationContext, Hotspot, Steps, TutorialPanel, Wizard
 - **Overlays:** Dialog, Dropdown, Modal, Popover, Tooltip
 - **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, ProgressBar, Skeleton, Spinner, StatusIndicator
 - **Icons:** Icon, IconProvider
 
-More components arrive in phases. Phase 5 adds guided flows and hierarchy.
+More components arrive in phases. Phase 6 adds charts and the code editor.
 
 ## Development
 
