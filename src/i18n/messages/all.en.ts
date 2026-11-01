@@ -23,6 +23,12 @@ const messages: I18nProviderProps.Messages = {
         ariaLabel: 'More actions',
         externalIconAriaLabel: 'Opens in a new tab',
       },
+      'copy-to-clipboard': {
+        copyButtonText: 'Copy',
+        copyButtonAriaLabel: 'Copy',
+        copySuccessText: 'Copied',
+        copyErrorText: 'Failed to copy',
+      },
       dialog: {
         dismissAriaLabel: 'Close dialog',
       },

@@ -1,0 +1,62 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  vertical-align: middle;
+}
+
+.variant-inline {
+  gap: ord.$space-xxs;
+  // Sits in running text, so it keeps the surrounding font.
+  vertical-align: baseline;
+}
+
+.text {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.trigger {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.button {
+  flex-shrink: 0;
+}
+
+// Two classes, so these win over the button's own variant rules.
+.root .inline-button {
+  inline-size: ord.$size-control-height-small;
+  min-block-size: ord.$size-control-height-small;
+  border-color: transparent;
+  background-color: transparent;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  // Without a frame, a hatched square reads as a stray mark; the dimmed icon is enough.
+  &[disabled],
+  &[aria-disabled='true'] {
+    background-color: transparent;
+    background-image: none;
+  }
+}
+
+.feedback {
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xxs;
+}
+
+.feedback-icon {
+  flex-shrink: 0;
+}
