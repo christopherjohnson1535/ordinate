@@ -10,9 +10,12 @@ import styles from './styles.css.js';
 
 /**
  * The edge of the panel the handle sits on. A panel docked at the bottom grows upward from
- * its `block-start` edge; a panel docked at the end of the line grows toward the start.
+ * its `block-start` edge; a panel docked at the end of the line grows toward the start; a
+ * panel in the page flow, such as an editor, grows downward from its `block-end` edge.
  */
-export type ResizeEdge = 'block-start' | 'inline-start';
+export type ResizeEdge = 'block-start' | 'block-end' | 'inline-start';
+
+const isBlockEdge = (edge: ResizeEdge) => edge !== 'inline-start';
 
 export interface ResizeHandleProps {
   edge: ResizeEdge;
@@ -43,11 +46,13 @@ function toPercent(size: number, minSize: number, maxSize: number) {
 }
 
 function getKeyboardDelta(event: React.KeyboardEvent<HTMLElement>, edge: ResizeEdge): number {
-  if (edge === 'block-start') {
-    if (event.key === 'ArrowUp') {
+  if (isBlockEdge(edge)) {
+    const grow = edge === 'block-start' ? 'ArrowUp' : 'ArrowDown';
+    const shrink = edge === 'block-start' ? 'ArrowDown' : 'ArrowUp';
+    if (event.key === grow) {
       return keyboardStep;
     }
-    return event.key === 'ArrowDown' ? -keyboardStep : 0;
+    return event.key === shrink ? -keyboardStep : 0;
   }
   // Moving the edge toward the start of the line makes a panel at the end wider.
   return -getLogicalArrowStep(event.key, event.currentTarget) * keyboardStep;
@@ -94,6 +99,8 @@ export function ResizeHandle({
     let delta: number;
     if (edge === 'block-start') {
       delta = start.y - event.clientY;
+    } else if (edge === 'block-end') {
+      delta = event.clientY - start.y;
     } else {
       delta = start.rtl ? event.clientX - start.x : start.x - event.clientX;
     }
@@ -127,7 +134,7 @@ export function ResizeHandle({
       tabIndex={0}
       aria-label={ariaLabel}
       aria-controls={ariaControls}
-      aria-orientation={edge === 'block-start' ? 'horizontal' : 'vertical'}
+      aria-orientation={isBlockEdge(edge) ? 'horizontal' : 'vertical'}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={toPercent(size, minSize, maxSize)}

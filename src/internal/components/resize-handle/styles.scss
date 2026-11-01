@@ -46,8 +46,8 @@
   }
 }
 
-.edge-block-start {
-  inset-block-start: calc(-1 * #{ord.$space-xs} / 2);
+.edge-block-start,
+.edge-block-end {
   inset-inline: 0;
   block-size: ord.$space-xs;
   cursor: row-resize;
@@ -61,6 +61,14 @@
   .grip {
     transform: rotate(90deg);
   }
+}
+
+.edge-block-start {
+  inset-block-start: calc(-1 * #{ord.$space-xs} / 2);
+}
+
+.edge-block-end {
+  inset-block-end: calc(-1 * #{ord.$space-xs} / 2);
 }
 
 .edge-inline-start {
