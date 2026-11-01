@@ -106,6 +106,7 @@ describe('FormField character count', () => {
       </FormField>
     );
     expect(createWrapper().findFormField()!.findCharacterCount()!.getText()).toBe('12 of 64');
+    expect(createWrapper().findFormField()!.findConstraint()!.getText()).toBe('Up to 64 characters.');
     expect(screen.getByRole('textbox')).toHaveAccessibleDescription('Up to 64 characters. 12 of 64');
   });
 

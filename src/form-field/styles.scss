@@ -42,6 +42,12 @@
   gap: ord.$space-xs;
 }
 
+// Lets a long constraint wrap instead of pushing the character count out of the row.
+.constraint {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
 .character-count {
   margin-inline-start: auto;
 }
