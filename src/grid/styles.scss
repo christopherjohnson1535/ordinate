@@ -1,0 +1,55 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+// Keep in step with `breakpointMinWidths` in src/internal/breakpoints.ts.
+$breakpoints: (
+  xxs: 465px,
+  xs: 688px,
+  s: 912px,
+  m: 1120px,
+  l: 1280px,
+  xl: 1840px,
+);
+
+// The root is the container the columns measure, so a grid in a narrow panel lays out as it would
+// on a narrow screen.
+.root {
+  container-type: inline-size;
+  min-inline-size: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.gutters {
+  column-gap: ord.$space-l;
+  row-gap: ord.$space-l;
+}
+
+.column {
+  min-inline-size: 0;
+  grid-column: var(--grid-column-default);
+  grid-row: var(--grid-row-default);
+}
+
+// Each child only carries a property for the breakpoints where its placement changes, so every
+// breakpoint falls back through the smaller ones.
+$column: var(--grid-column-default);
+$row: var(--grid-row-default);
+@each $name, $width in $breakpoints {
+  $column: var(--grid-column-#{$name}, #{$column});
+  $row: var(--grid-row-#{$name}, #{$row});
+
+  @container (min-inline-size: #{$width}) {
+    .column {
+      grid-column: $column;
+      grid-row: $row;
+    }
+  }
+}
