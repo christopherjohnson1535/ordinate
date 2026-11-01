@@ -7,6 +7,14 @@
     "minified": 84900,
     "gzip": 17800
   },
+  "anchor-navigation": {
+    "minified": 24600,
+    "gzip": 4800
+  },
+  "annotation-context": {
+    "minified": 1900,
+    "gzip": 900
+  },
   "app-layout": {
     "minified": 123100,
     "gzip": 27800
@@ -159,6 +167,10 @@
     "minified": 45900,
     "gzip": 10000
   },
+  "hotspot": {
+    "minified": 106800,
+    "gzip": 23500
+  },
   "i18n": {
     "minified": 700,
     "gzip": 400
@@ -202,6 +214,10 @@
   "multiselect": {
     "minified": 144900,
     "gzip": 32500
+  },
+  "navigable-group": {
+    "minified": 22100,
+    "gzip": 4200
   },
   "pagination": {
     "minified": 77100,
@@ -270,6 +286,10 @@
   "status-indicator": {
     "minified": 61100,
     "gzip": 10500
+  },
+  "steps": {
+    "minified": 68100,
+    "gzip": 12200
   },
   "table": {
     "minified": 125300,
@@ -355,8 +375,20 @@
     "minified": 117100,
     "gzip": 26500
   },
+  "tree-view": {
+    "minified": 83700,
+    "gzip": 18100
+  },
   "truncated-text": {
     "minified": 33900,
     "gzip": 7400
+  },
+  "tutorial-panel": {
+    "minified": 118500,
+    "gzip": 24400
+  },
+  "wizard": {
+    "minified": 121000,
+    "gzip": 25700
   }
 }
