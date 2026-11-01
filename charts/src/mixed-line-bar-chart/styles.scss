@@ -1,0 +1,10 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The chart is laid out by the shared frame; this class names its root for the test utilities
+// and lets it shrink inside flex and grid layouts.
+.root {
+  min-inline-size: 0;
+}
