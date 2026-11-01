@@ -47,4 +47,5 @@ export const tokens: ColorsDictionary = {
   colorBackgroundInlineCode: { light: '{colorGrey150}', dark: '{colorChalk700}' },
   colorBackgroundTooltip: { light: '{colorGrey900}', dark: '{colorChalk100}' },
   colorTextTooltip: { light: '{colorWhite}', dark: '{colorChalk900}' },
+  colorBackgroundHeaderHighContrast: { light: '{colorGrey900}', dark: '{colorTerminalDark}' },
 };

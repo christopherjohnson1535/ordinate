@@ -82,6 +82,7 @@ export const colorsTokenNames = [
   'colorBackgroundInlineCode',
   'colorBackgroundTooltip',
   'colorTextTooltip',
+  'colorBackgroundHeaderHighContrast',
 ] as const;
 
 export const bordersTokenNames = [

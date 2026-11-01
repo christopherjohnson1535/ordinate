@@ -1,0 +1,23 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// Each example sits on the page frame color, as it would inside an application layout.
+.frame {
+  padding-block: 0 24px;
+  border: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-layout-main);
+}

@@ -1,0 +1,94 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// Three rows: the heading area, an overlap row shared by the band and the content, and the rest of
+// the content. The band and the content both span the overlap row, which avoids negative margins.
+.root {
+  @include styles.font-body;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 0 auto;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+.overlap {
+  grid-template-rows: auto ord.$space-xxl auto;
+}
+
+.band {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  background-color: ord.$color-background-header-high-contrast;
+}
+
+.header-area,
+.content {
+  grid-column: 1;
+  justify-self: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: var(--content-layout-max-width, none);
+  min-inline-size: 0;
+}
+
+.header-area {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-s;
+  padding-block-end: ord.$space-scaled-l;
+}
+
+.notifications,
+.breadcrumbs,
+.header {
+  min-inline-size: 0;
+}
+
+.content {
+  grid-row: 2 / 4;
+}
+
+.padded {
+  > .header-area,
+  > .content {
+    padding-inline: ord.$space-scaled-l;
+  }
+}
+
+.padded-top {
+  padding-block-start: ord.$space-scaled-l;
+}
+
+.header-variant-divider {
+  > .header-area {
+    padding-block-end: ord.$space-scaled-m;
+    border-block-end-width: ord.$border-width-default;
+    border-block-end-style: solid;
+    border-block-end-color: ord.$color-border-divider;
+  }
+
+  > .content {
+    padding-block-start: ord.$space-scaled-l;
+  }
+}
+
+// The band uses dark colors in both modes. Switching the color scheme of the heading area makes every
+// token inside it resolve to its dark value, so nested components need no variant of their own.
+.header-variant-high-contrast {
+  > .header-area {
+    padding-block-start: ord.$space-scaled-l;
+    color-scheme: dark;
+    color: ord.$color-text-body;
+  }
+
+  &:not(.overlap) > .content {
+    padding-block-start: ord.$space-scaled-l;
+  }
+}
