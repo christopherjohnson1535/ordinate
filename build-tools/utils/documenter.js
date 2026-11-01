@@ -171,7 +171,7 @@ const byName = (a, b) => a.name.localeCompare(b.name);
 
 /**
  * The definition of one component: its props split into properties, regions and events, and the
- * functions of its `Ref`.
+ * functions of its `Ref`. Returns `null` when the folder declares no `<Name>Props` interface.
  */
 function documentComponent(program, folder) {
   const checker = program.getTypeChecker();
@@ -179,7 +179,7 @@ function documentComponent(program, folder) {
   const sourceFile = program.getSourceFile(path.join(srcDir, folder, 'interfaces.ts'));
   const propsInterface = sourceFile && findStatement(sourceFile, ts.SyntaxKind.InterfaceDeclaration, `${name}Props`);
   if (!propsInterface) {
-    throw new Error(`${folder}/interfaces.ts does not declare ${name}Props`);
+    return null;
   }
 
   const defaults = collectDestructuringDefaults(program, folder);
