@@ -1,0 +1,113 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: inline;
+}
+
+.trigger {
+  cursor: pointer;
+}
+
+.trigger-text {
+  display: inline;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: inherit;
+  // Reads as part of the sentence around it, so it takes the surrounding font and line height.
+  font: inherit;
+  text-align: start;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxxs;
+
+  &:hover {
+    text-decoration-style: solid;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.trigger-custom {
+  display: inline-block;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.panel {
+  @include styles.font-body;
+  --popover-size: #{ord.$size-panel-medium};
+  inline-size: max-content;
+  max-inline-size: min(var(--popover-size), calc(100vw - 2 * #{ord.$space-xs}));
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+  outline-style: none;
+}
+
+.size-small {
+  --popover-size: #{ord.$size-panel-small};
+}
+
+.size-large {
+  --popover-size: #{ord.$size-panel-large};
+}
+
+.fixed-width {
+  inline-size: var(--popover-size);
+}
+
+.header-row,
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+}
+
+.header-row {
+  margin-block-end: ord.$space-xs;
+}
+
+.header {
+  @include styles.font-heading;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  font-size: ord.$font-size-heading-s;
+  overflow-wrap: anywhere;
+}
+
+.content {
+  display: block;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+// One line tall, so the button is centered on the first line and overflows evenly into the padding.
+.dismiss {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+  margin-inline-start: auto;
+}
+
+.header-row > .dismiss {
+  block-size: calc(#{ord.$font-size-heading-s} * #{ord.$line-height-heading});
+}
+
+.dismiss-button {
+  flex-shrink: 0;
+}

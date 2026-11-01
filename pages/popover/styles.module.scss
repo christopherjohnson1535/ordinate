@@ -1,0 +1,43 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-inline-size: 720px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.compass {
+  display: flex;
+  justify-content: center;
+  gap: 160px;
+  padding-block: 120px;
+}
+
+.clip {
+  max-block-size: 120px;
+  padding: 12px;
+  overflow: auto;
+  border: 1px solid var(--ord-color-border-divider);
+}
+
+.edges {
+  display: flex;
+  justify-content: space-between;
+}

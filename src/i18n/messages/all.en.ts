@@ -34,6 +34,9 @@ const messages: I18nProviderProps.Messages = {
         paginationLabel: 'Pagination',
         previousPageLabel: 'Previous page',
       },
+      popover: {
+        dismissAriaLabel: 'Close popover',
+      },
       select: {
         errorIconAriaLabel: 'Error',
       },
