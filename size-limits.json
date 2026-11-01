@@ -1,0 +1,310 @@
+{
+  "action-card": {
+    "minified": 61200,
+    "gzip": 10800
+  },
+  "alert": {
+    "minified": 79300,
+    "gzip": 16200
+  },
+  "app-layout": {
+    "minified": 117500,
+    "gzip": 26200
+  },
+  "app-layout-toolbar": {
+    "minified": 92100,
+    "gzip": 19900
+  },
+  "autosuggest": {
+    "minified": 110800,
+    "gzip": 23800
+  },
+  "badge": {
+    "minified": 21600,
+    "gzip": 3400
+  },
+  "box": {
+    "minified": 50000,
+    "gzip": 8500
+  },
+  "breadcrumb-group": {
+    "minified": 82100,
+    "gzip": 17200
+  },
+  "button": {
+    "minified": 75200,
+    "gzip": 15200
+  },
+  "button-dropdown": {
+    "minified": 99700,
+    "gzip": 21900
+  },
+  "button-group": {
+    "minified": 120800,
+    "gzip": 27200
+  },
+  "cards": {
+    "minified": 101600,
+    "gzip": 20900
+  },
+  "checkbox": {
+    "minified": 63600,
+    "gzip": 11400
+  },
+  "collection-preferences": {
+    "minified": 121900,
+    "gzip": 25600
+  },
+  "column-layout": {
+    "minified": 25400,
+    "gzip": 4500
+  },
+  "container": {
+    "minified": 22900,
+    "gzip": 3600
+  },
+  "content-layout": {
+    "minified": 23200,
+    "gzip": 3800
+  },
+  "copy-to-clipboard": {
+    "minified": 92900,
+    "gzip": 20000
+  },
+  "dialog": {
+    "minified": 79700,
+    "gzip": 16300
+  },
+  "divider": {
+    "minified": 21300,
+    "gzip": 3500
+  },
+  "drawer": {
+    "minified": 34500,
+    "gzip": 7800
+  },
+  "dropdown": {
+    "minified": 27800,
+    "gzip": 5400
+  },
+  "error-boundary": {
+    "minified": 86500,
+    "gzip": 18100
+  },
+  "expandable-section": {
+    "minified": 68600,
+    "gzip": 12000
+  },
+  "flashbar": {
+    "minified": 91500,
+    "gzip": 19000
+  },
+  "form": {
+    "minified": 58200,
+    "gzip": 9900
+  },
+  "form-field": {
+    "minified": 71300,
+    "gzip": 14200
+  },
+  "grid": {
+    "minified": 23400,
+    "gzip": 4000
+  },
+  "header": {
+    "minified": 22200,
+    "gzip": 3600
+  },
+  "help-panel": {
+    "minified": 40300,
+    "gzip": 8400
+  },
+  "i18n": {
+    "minified": 700,
+    "gzip": 400
+  },
+  "icon": {
+    "minified": 55300,
+    "gzip": 9100
+  },
+  "icon-provider": {
+    "minified": 400,
+    "gzip": 300
+  },
+  "input": {
+    "minified": 83000,
+    "gzip": 17000
+  },
+  "item-card": {
+    "minified": 25600,
+    "gzip": 4300
+  },
+  "key-value-pairs": {
+    "minified": 23300,
+    "gzip": 3900
+  },
+  "link": {
+    "minified": 71300,
+    "gzip": 14300
+  },
+  "list": {
+    "minified": 78300,
+    "gzip": 16300
+  },
+  "live-region": {
+    "minified": 20600,
+    "gzip": 3400
+  },
+  "modal": {
+    "minified": 80800,
+    "gzip": 16600
+  },
+  "multiselect": {
+    "minified": 138900,
+    "gzip": 30800
+  },
+  "pagination": {
+    "minified": 71500,
+    "gzip": 14300
+  },
+  "panel-layout": {
+    "minified": 37400,
+    "gzip": 8700
+  },
+  "popover": {
+    "minified": 90800,
+    "gzip": 19500
+  },
+  "progress-bar": {
+    "minified": 87600,
+    "gzip": 18300
+  },
+  "property-filter": {
+    "minified": 172900,
+    "gzip": 38300
+  },
+  "radio-button": {
+    "minified": 27000,
+    "gzip": 4800
+  },
+  "radio-group": {
+    "minified": 28700,
+    "gzip": 5400
+  },
+  "segmented-control": {
+    "minified": 61600,
+    "gzip": 11200
+  },
+  "select": {
+    "minified": 113300,
+    "gzip": 24500
+  },
+  "side-navigation": {
+    "minified": 78500,
+    "gzip": 15700
+  },
+  "skeleton": {
+    "minified": 34500,
+    "gzip": 7700
+  },
+  "slider": {
+    "minified": 33200,
+    "gzip": 5900
+  },
+  "space-between": {
+    "minified": 21400,
+    "gzip": 3500
+  },
+  "spinner": {
+    "minified": 21100,
+    "gzip": 3500
+  },
+  "split-panel": {
+    "minified": 125600,
+    "gzip": 27200
+  },
+  "status-indicator": {
+    "minified": 61100,
+    "gzip": 10500
+  },
+  "table": {
+    "minified": 119600,
+    "gzip": 26500
+  },
+  "table-body": {
+    "minified": 19400,
+    "gzip": 2900
+  },
+  "table-body-cell": {
+    "minified": 82100,
+    "gzip": 16600
+  },
+  "table-head": {
+    "minified": 19400,
+    "gzip": 2900
+  },
+  "table-header-cell": {
+    "minified": 88500,
+    "gzip": 18200
+  },
+  "table-root": {
+    "minified": 23200,
+    "gzip": 4300
+  },
+  "table-row": {
+    "minified": 20900,
+    "gzip": 3400
+  },
+  "tabs": {
+    "minified": 79600,
+    "gzip": 16600
+  },
+  "text-content": {
+    "minified": 25000,
+    "gzip": 3600
+  },
+  "text-filter": {
+    "minified": 86000,
+    "gzip": 18100
+  },
+  "textarea": {
+    "minified": 24800,
+    "gzip": 4500
+  },
+  "theming": {
+    "minified": 3200,
+    "gzip": 1300
+  },
+  "tiles": {
+    "minified": 32600,
+    "gzip": 6200
+  },
+  "toggle": {
+    "minified": 28500,
+    "gzip": 5000
+  },
+  "toggle-button": {
+    "minified": 76400,
+    "gzip": 15500
+  },
+  "token": {
+    "minified": 95700,
+    "gzip": 20500
+  },
+  "token-group": {
+    "minified": 99200,
+    "gzip": 21600
+  },
+  "tooltip": {
+    "minified": 31600,
+    "gzip": 6600
+  },
+  "top-navigation": {
+    "minified": 111500,
+    "gzip": 24900
+  },
+  "truncated-text": {
+    "minified": 33900,
+    "gzip": 7400
+  }
+}
