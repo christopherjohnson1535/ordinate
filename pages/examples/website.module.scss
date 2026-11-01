@@ -1,0 +1,45 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The site runs edge to edge across the dev sheet, as it would across a browser window.
+.page {
+  margin-block: -24px -32px;
+  margin-inline: -24px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding-block: 12px;
+  padding-inline: 24px;
+  border-block-end: 1px dashed var(--ord-color-border-divider);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--ord-color-text-secondary);
+}
+
+.site {
+  background-color: var(--ord-color-background-container);
+}
+
+.item {
+  margin: 0 0 4px;
+  font-family: var(--ord-font-family-headline);
+  font-size: var(--ord-font-size-headline-s);
+  font-weight: var(--ord-font-weight-headline);
+  line-height: var(--ord-line-height-headline);
+}
+
+.text {
+  margin: 0;
+}
+
+.address {
+  font-style: normal;
+}
