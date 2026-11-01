@@ -1,0 +1,425 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  position: relative;
+  border-width: ord.$border-width-section;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color;
+    transition-duration: ord.$motion-duration-erase;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.drawing {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+// Parts and wires. A stroke drawn with pathLength=1 is fully drawn at a dash offset of 0 and gone at 1.
+
+.solid {
+  fill-opacity: 1;
+}
+
+.hatch,
+.outline,
+.cross,
+.wire-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+
+  @include styles.with-motion {
+    transition-property: stroke-dashoffset, stroke, opacity;
+    transition-duration: ord.$motion-duration-draw;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+// The fill follows the outline, so a box is drawn before it is filled in.
+.hatch {
+  @include styles.with-motion {
+    transition-delay: ord.$motion-duration-erase;
+  }
+}
+
+.cross {
+  stroke-dashoffset: 1;
+}
+
+.solid {
+  @include styles.with-motion {
+    transition-property: fill-opacity, fill;
+    transition-duration: ord.$motion-duration-erase;
+    transition-timing-function: ord.$motion-easing-standard;
+    transition-delay: ord.$motion-duration-erase;
+  }
+}
+
+.label,
+.detail {
+  paint-order: stroke;
+  stroke-width: ord.$space-xxs;
+  stroke-linejoin: round;
+
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-erase;
+    transition-timing-function: ord.$motion-easing-standard;
+    transition-delay: ord.$motion-duration-erase;
+  }
+}
+
+.part,
+.wire {
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-erase;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.hidden {
+  > .hatch,
+  > .outline,
+  > .wire-line {
+    stroke-dashoffset: 1;
+
+    @include styles.with-motion {
+      transition-duration: ord.$motion-duration-erase;
+      transition-delay: 0s;
+    }
+  }
+
+  > .solid {
+    fill-opacity: 0;
+  }
+
+  > .label,
+  > .detail {
+    opacity: 0;
+  }
+
+  > .solid,
+  > .label,
+  > .detail {
+    @include styles.with-motion {
+      transition-delay: 0s;
+    }
+  }
+}
+
+.dimmed {
+  opacity: ord.$opacity-dimmed;
+}
+
+.pending > .hatch {
+  opacity: ord.$opacity-dimmed-text;
+}
+
+.removed {
+  > .cross {
+    stroke-dashoffset: 0;
+
+    @include styles.with-motion {
+      transition-delay: ord.$motion-duration-expressive;
+    }
+  }
+
+  > .hatch,
+  > .solid,
+  > .label,
+  > .detail {
+    opacity: ord.$opacity-dimmed-text;
+  }
+}
+
+.junction {
+  @include styles.with-motion {
+    transition-property: opacity, fill;
+    transition-duration: ord.$motion-duration-erase;
+    transition-timing-function: ord.$motion-easing-standard;
+    transition-delay: ord.$motion-duration-erase;
+  }
+}
+
+.hidden > .junction {
+  opacity: 0;
+
+  @include styles.with-motion {
+    transition-delay: 0s;
+  }
+}
+
+// Dots moving along a flow wire. They only move, and so only show, when motion is allowed.
+
+.flow-dot {
+  opacity: 0;
+  offset-rotate: 0deg;
+}
+
+.shown > .flow-dot {
+  @include styles.with-motion {
+    opacity: 1;
+    animation-name: flow;
+    animation-duration: ord.$motion-duration-flow;
+    animation-timing-function: ord.$motion-easing-linear;
+    animation-iteration-count: infinite;
+  }
+}
+
+:global(.ord-motion-disabled) .flow-dot {
+  opacity: 0;
+}
+
+.flow-dot-second {
+  animation-delay: calc(#{ord.$motion-duration-flow} / -2);
+}
+
+@keyframes flow {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+// Schematic: square ink outlines and right-angle wiring on a dot grid, accents hatched.
+
+.variant-schematic {
+  background-image: radial-gradient(circle, #{ord.$color-border-divider} 1px, transparent 1.3px);
+  background-position: ord.$space-xs ord.$space-xs;
+  background-size: ord.$space-m ord.$space-m;
+
+  .outline {
+    stroke: ord.$color-border-strong;
+    stroke-width: ord.$border-width-icon;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
+  .solid {
+    fill: ord.$color-background-container;
+  }
+
+  .hatch {
+    display: none;
+    stroke: ord.$color-border-accent;
+    stroke-width: ord.$border-width-default;
+  }
+
+  .accent > .hatch {
+    display: inline;
+  }
+
+  .wire-line {
+    stroke: ord.$color-border-strong;
+    stroke-width: ord.$border-width-default;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+  }
+
+  .flow > .wire-line,
+  .wire.accent > .wire-line {
+    stroke: ord.$color-border-accent;
+  }
+
+  .junction {
+    fill: ord.$color-border-strong;
+  }
+
+  .flow > .junction,
+  .wire.accent > .junction,
+  .flow-dot {
+    fill: ord.$color-border-accent;
+  }
+
+  .cross {
+    stroke: ord.$color-text-error;
+    stroke-width: ord.$border-width-section;
+  }
+
+  .label,
+  .detail {
+    fill: ord.$color-text-body;
+    stroke: ord.$color-background-container;
+  }
+
+  .label {
+    font-family: ord.$font-family-base;
+    font-size: ord.$font-size-body;
+    font-weight: ord.$font-weight-bold;
+  }
+
+  .detail {
+    font-family: ord.$font-family-mono;
+    font-size: ord.$font-size-small;
+    fill: ord.$color-text-body-secondary;
+  }
+
+  .small > .label {
+    font-size: ord.$font-size-heading-s;
+  }
+
+  .small > .detail {
+    font-size: ord.$font-size-caption;
+  }
+}
+
+// Sketch: the same shapes drawn by hand, with hand lettering and hachure.
+
+.variant-sketch {
+  .outline {
+    stroke: ord.$color-border-strong;
+    stroke-width: ord.$border-width-icon;
+  }
+
+  .solid {
+    fill: none;
+  }
+
+  .hatch {
+    stroke: ord.$color-border-divider;
+    stroke-width: ord.$border-width-default;
+  }
+
+  .accent > .hatch {
+    stroke: ord.$color-border-accent;
+  }
+
+  .wire-line {
+    stroke: ord.$color-border-strong;
+    stroke-width: ord.$border-width-icon;
+  }
+
+  .flow > .wire-line,
+  .wire.accent > .wire-line {
+    stroke: ord.$color-border-accent;
+  }
+
+  .junction {
+    fill: ord.$color-border-strong;
+  }
+
+  .flow > .junction,
+  .wire.accent > .junction,
+  .flow-dot {
+    fill: ord.$color-border-accent;
+  }
+
+  .cross {
+    stroke: ord.$color-text-error;
+    stroke-width: ord.$border-width-section;
+  }
+
+  .label,
+  .detail {
+    font-family: ord.$font-family-hand;
+    font-weight: ord.$font-weight-body;
+    fill: ord.$color-text-body;
+    stroke: ord.$color-background-container;
+  }
+
+  .label {
+    font-size: ord.$font-size-lead;
+  }
+
+  .detail {
+    font-size: ord.$font-size-reading;
+  }
+
+  .small > .detail {
+    font-size: ord.$font-size-code;
+  }
+}
+
+// Chalkboard: clean strokes on a dark board in a book face, accents in the accent color.
+
+.variant-chalkboard {
+  border-color: ord.$color-background-chalkboard;
+  background-color: ord.$color-background-chalkboard;
+
+  .outline {
+    stroke: ord.$color-border-chalkboard;
+    stroke-width: ord.$border-width-section;
+  }
+
+  .accent > .outline {
+    stroke: ord.$color-border-chalkboard-accent;
+  }
+
+  .solid {
+    fill: ord.$color-background-chalkboard;
+  }
+
+  .hatch {
+    display: none;
+  }
+
+  .wire-line {
+    stroke: ord.$color-border-chalkboard-secondary;
+    stroke-width: ord.$border-width-icon;
+  }
+
+  .flow > .wire-line {
+    stroke: ord.$color-border-chalkboard;
+  }
+
+  .wire.accent > .wire-line {
+    stroke: ord.$color-border-chalkboard-accent;
+  }
+
+  .junction {
+    fill: ord.$color-border-chalkboard-secondary;
+  }
+
+  .flow > .junction {
+    fill: ord.$color-border-chalkboard;
+  }
+
+  .wire.accent > .junction,
+  .flow-dot {
+    fill: ord.$color-border-chalkboard-accent;
+  }
+
+  .cross {
+    stroke: ord.$color-border-chalkboard-error;
+    stroke-width: ord.$border-width-section;
+  }
+
+  .label,
+  .detail {
+    font-family: ord.$font-family-chalkboard;
+    fill: ord.$color-text-chalkboard;
+    stroke: ord.$color-background-chalkboard;
+  }
+
+  .label {
+    font-size: ord.$font-size-heading-s;
+    font-weight: ord.$font-weight-bold;
+  }
+
+  .detail {
+    font-size: ord.$font-size-body;
+    fill: ord.$color-text-chalkboard-secondary;
+  }
+
+  .small > .detail {
+    font-size: ord.$font-size-small;
+  }
+}

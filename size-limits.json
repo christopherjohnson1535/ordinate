@@ -1,7 +1,7 @@
 {
   "(shared tokens)": {
-    "minified": 28000,
-    "gzip": 3500
+    "minified": 33800,
+    "gzip": 4100
   },
   "action-card": {
     "minified": 43100,
@@ -82,6 +82,10 @@
   "code-editor": {
     "minified": 902900,
     "gzip": 303500
+  },
+  "code-view": {
+    "minified": 307300,
+    "gzip": 117100
   },
   "collection-preferences": {
     "minified": 112600,
@@ -311,6 +315,14 @@
     "minified": 10400,
     "gzip": 3000
   },
+  "route-map": {
+    "minified": 28100,
+    "gzip": 9200
+  },
+  "schematic": {
+    "minified": 51400,
+    "gzip": 14500
+  },
   "section": {
     "minified": 8900,
     "gzip": 2300
@@ -410,6 +422,10 @@
   "tag-editor": {
     "minified": 129500,
     "gzip": 31500
+  },
+  "terminal": {
+    "minified": 3700,
+    "gzip": 1300
   },
   "testimonial": {
     "minified": 4600,

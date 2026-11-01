@@ -304,6 +304,9 @@ const messages: I18nProviderProps.Messages = {
         tokenOperatorAriaLabel: 'Combine filters with',
         valueText: 'Value',
       },
+      'route-map': {
+        currentStopLabel: 'You are here',
+      },
       select: {
         errorIconAriaLabel: 'Error',
       },

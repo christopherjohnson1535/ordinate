@@ -63,6 +63,16 @@ Set `dir="rtl"` on the page for right-to-left languages; layouts, icons and keyb
 
 `CodeEditor` runs on CodeMirror 6, which comes with the package. The editor loads CodeMirror with a dynamic `import()` when it first renders, and each language when an editor first uses it, so bundlers put them in separate chunks and pages without a code editor never download them.
 
+`CodeView` colors code with the same Lezer grammars, without the editor. It loads each grammar the first time a code view uses that language.
+
+### Drawings
+
+`Schematic` draws in three variants. The `sketch` and `chalkboard` variants use the Virgil and Computer Modern faces, which are not part of `index.css` so that other pages do not download them. Import them where you use those variants:
+
+```ts
+import '@ordinate/global-styles/drawing-fonts.css';
+```
+
 ### Astro and other server-rendered setups
 
 Components import their own CSS. When rendering on the server with Vite, Astro included, let Vite bundle the package instead of loading it from `node_modules`:
@@ -74,10 +84,27 @@ export default {
 };
 ```
 
+Astro 7 prerenders pages in a Vite environment of its own, which `ssr.noExternal` does not reach. Set it for that environment with a small plugin instead:
+
+```js
+// astro.config.mjs
+const bundleOrdinate = {
+  name: 'bundle-ordinate',
+  configEnvironment(name) {
+    if (name === 'ssr' || name === 'prerender') {
+      return { resolve: { noExternal: [/^@ordinate\//] } };
+    }
+  },
+};
+
+export default { vite: { plugins: [bundleOrdinate] } };
+```
+
 ## Components
 
 - **Layout:** AppLayout, AppLayoutToolbar, ColumnLayout, Container, ContentLayout, Drawer, Grid, HelpPanel, PanelLayout, SpaceBetween, SplitPanel, StyleScope, TitleBlock
 - **Content:** Box, Divider, ExpandableSection, Header, KeyValuePairs, TextContent, TruncatedText
+- **Code and drawings:** CodeView, Terminal, Schematic, RouteMap
 - **Collections:** ActionCard, Cards, CollectionPreferences, ItemCard, List, PropertyFilter, Table (and TableRoot, TableHead, TableHeaderCell, TableBody, TableRow, TableBodyCell), TextFilter, Token, TokenGroup
 - **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
 - **Forms:** AttributeEditor, Autosuggest, Checkbox, CodeEditor, ControlGroup, Form, FormField, Input, Multiselect, PromptInput, RadioButton, RadioGroup, Select, Slider, TagEditor, Textarea, Tiles, Toggle

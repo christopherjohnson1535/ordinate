@@ -1,0 +1,126 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  overflow-x: auto;
+}
+
+.map {
+  display: block;
+  inline-size: 100%;
+  min-inline-size: ord.$size-section-narrow;
+  block-size: auto;
+}
+
+.title,
+.description,
+.current-label {
+  font-family: ord.$font-family-base;
+  fill: ord.$color-text-body;
+}
+
+.title {
+  font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-bold;
+}
+
+.description {
+  font-size: ord.$font-size-description;
+  fill: ord.$color-text-body-secondary;
+}
+
+.current-label {
+  font-size: ord.$font-size-description;
+  font-weight: ord.$font-weight-label;
+}
+
+.band,
+.line {
+  fill: none;
+  stroke-linejoin: miter;
+}
+
+.band {
+  stroke: ord.$color-background-highlight;
+  stroke-width: ord.$space-m;
+  opacity: 0;
+
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.band-selected {
+  opacity: 1;
+}
+
+.line {
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-section;
+}
+
+.stop {
+  fill: ord.$color-background-container;
+  stroke: ord.$color-text-secondary;
+  stroke-width: ord.$border-width-icon;
+}
+
+.stop-open,
+.stop-done {
+  stroke: ord.$color-border-strong;
+  stroke-width: ord.$border-width-section;
+}
+
+.stop-done {
+  fill: ord.$color-border-strong;
+}
+
+.junction,
+.terminus-mark {
+  fill: ord.$color-border-strong;
+}
+
+.terminus-inner {
+  fill: none;
+  stroke: ord.$color-background-container;
+  stroke-width: ord.$border-width-section;
+}
+
+.current-ring {
+  fill: none;
+  stroke: ord.$color-border-accent;
+  stroke-width: ord.$border-width-section;
+}
+
+.link {
+  cursor: pointer;
+
+  &:hover .title,
+  &:focus-visible .title {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline-width: ord.$border-width-focus-ring;
+    outline-style: solid;
+    outline-color: ord.$color-border-focus-ring;
+  }
+}
+
+// Hooks for the test-utils wrapper; the parts inside carry the look.
+.row,
+.terminus,
+.current {
+  pointer-events: auto;
+}
+
+.station {
+  shape-rendering: crispEdges;
+}

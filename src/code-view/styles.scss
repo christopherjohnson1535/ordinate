@@ -1,0 +1,142 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  overflow-x: auto;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    // Code views usually sit flush in a container that clips, so the ring is drawn inside the edge.
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 ord.$border-width-focus-ring ord.$color-border-focus-ring;
+  }
+}
+
+.pre {
+  @include styles.font-code;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: 0;
+  line-height: ord.$line-height-reading;
+}
+
+.code {
+  display: block;
+  min-inline-size: max-content;
+  font: inherit;
+
+  .wrap-lines & {
+    min-inline-size: 0;
+  }
+}
+
+.line {
+  display: flex;
+  align-items: baseline;
+  padding-inline-end: ord.$space-m;
+
+  @include styles.with-motion {
+    transition-property: background-color, box-shadow;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.line-number {
+  flex: none;
+  box-sizing: content-box;
+  min-inline-size: 2ch;
+  padding-inline: ord.$space-s ord.$space-s;
+  color: ord.$color-text-secondary;
+  text-align: end;
+  user-select: none;
+}
+
+.line-content {
+  min-inline-size: 0;
+  white-space: pre;
+
+  .root:not(:has(.line-number)) & {
+    padding-inline-start: ord.$space-s;
+  }
+
+  .wrap-lines & {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+.line-highlighted {
+  @include styles.leading-mark(ord.$color-border-accent);
+  background-color: ord.$color-background-highlight;
+
+  > .line-number {
+    color: ord.$color-text-accent;
+    font-weight: ord.$font-weight-label;
+  }
+}
+
+.line-note {
+  flex: none;
+  margin-inline-start: ord.$space-m;
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-body-secondary;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.token-keyword,
+.token-link {
+  color: ord.$color-text-code-keyword;
+}
+
+.token-string {
+  color: ord.$color-text-code-string;
+}
+
+.token-number {
+  color: ord.$color-text-code-number;
+}
+
+.token-comment {
+  color: ord.$color-text-code-comment;
+  font-style: italic;
+}
+
+.token-property {
+  color: ord.$color-text-code-property;
+}
+
+.token-type {
+  color: ord.$color-text-body-secondary;
+}
+
+.token-heading {
+  color: ord.$color-text-code-keyword;
+  font-weight: ord.$font-weight-bold;
+}
+
+.token-strong {
+  font-weight: ord.$font-weight-bold;
+}
+
+.token-emphasis {
+  font-style: italic;
+}
+
+.token-link {
+  text-decoration: underline;
+}
+
+.token-invalid {
+  color: ord.$color-text-error;
+}

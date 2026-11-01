@@ -1,0 +1,73 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-code;
+  box-sizing: border-box;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: 0;
+  overflow-x: auto;
+  background-color: ord.$color-background-terminal;
+  color: ord.$color-text-terminal-secondary;
+  line-height: ord.$line-height-body;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.line {
+  display: block;
+  padding-inline: ord.$space-m ord.$space-m;
+  white-space: pre;
+
+  // A hanging indent: the first line starts at the edge, the rest of a wrapped line further in.
+  .wrap-lines > &:not(.columns) {
+    padding-inline-start: ord.$space-xl;
+    text-indent: calc(-1 * (#{ord.$space-xl} - #{ord.$space-m}));
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+.type-output {
+  color: ord.$color-text-terminal-secondary;
+}
+
+.type-command {
+  color: ord.$color-text-terminal;
+  font-weight: ord.$font-weight-label;
+}
+
+.type-header {
+  color: ord.$color-text-terminal-secondary;
+  font-weight: ord.$font-weight-label;
+}
+
+.type-success {
+  color: ord.$color-text-terminal-success;
+}
+
+.type-error {
+  color: ord.$color-text-terminal-error;
+}
+
+.type-muted {
+  color: ord.$color-text-terminal-secondary;
+  font-style: italic;
+}
+
+.highlighted {
+  color: ord.$color-text-terminal-accent;
+}
+
+.columns {
+  white-space: pre;
+}
