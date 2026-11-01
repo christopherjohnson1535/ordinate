@@ -70,3 +70,13 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+// A thick mark on the inline-start edge, such as the error edge of a field. Box shadows have no
+// logical form, so the offset flips for right-to-left layout.
+@mixin leading-mark($color) {
+  box-shadow: inset ord.$border-width-section 0 0 $color;
+
+  &:dir(rtl) {
+    box-shadow: inset calc(-1 * #{ord.$border-width-section}) 0 0 $color;
+  }
+}

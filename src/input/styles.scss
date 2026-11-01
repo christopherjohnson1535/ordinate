@@ -36,12 +36,12 @@
 
 .invalid {
   border-color: ord.$color-border-error;
-  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+  @include styles.leading-mark(ord.$color-border-error);
 }
 
 .warning {
   border-color: ord.$color-border-status-warning;
-  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-status-warning;
+  @include styles.leading-mark(ord.$color-border-status-warning);
 }
 
 .disabled {
@@ -49,6 +49,11 @@
   border-color: ord.$color-border-disabled;
   box-shadow: none;
   color: ord.$color-text-disabled;
+
+  // Matches the specificity of the right-to-left leading mark.
+  &:dir(rtl) {
+    box-shadow: none;
+  }
 }
 
 .main {

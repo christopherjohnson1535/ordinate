@@ -33,7 +33,7 @@
   border-width: ord.$border-width-default;
   border-style: solid;
   border-color: ord.$color-border-error;
-  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+  @include styles.leading-mark(ord.$color-border-error);
   background-color: ord.$color-background-container;
 }
 
