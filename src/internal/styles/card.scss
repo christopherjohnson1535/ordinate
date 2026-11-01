@@ -1,0 +1,45 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// Shared look of the single-card components: a sheet ruled like a container, so a grid of cards
+// reads as a set of plates on the page.
+
+@use './index' as styles;
+@use './tokens' as ord;
+
+@mixin sheet {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-container);
+  box-sizing: border-box;
+  min-inline-size: 0;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+// A second hairline drawn inside the border doubles its weight without moving the content.
+@mixin selected {
+  border-color: ord.$color-border-strong;
+  box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-strong;
+}
+
+@mixin disabled {
+  @include styles.hatch;
+  color: ord.$color-text-disabled;
+}
+
+@mixin header-text {
+  @include styles.font-heading;
+  font-size: ord.$font-size-heading-xs;
+  overflow-wrap: anywhere;
+}
+
+@mixin description-text {
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+  overflow-wrap: anywhere;
+}
