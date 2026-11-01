@@ -9,10 +9,11 @@ Two things set it apart:
 
 ## Packages
 
-| Package                   | Contents                                                             |
-| ------------------------- | -------------------------------------------------------------------- |
-| `@ordinate/components`    | The React components. Built from this repository's root.             |
-| `@ordinate/global-styles` | Fonts, base page styles, and the mode, density and revision helpers. |
+| Package                      | Contents                                                             |
+| ---------------------------- | -------------------------------------------------------------------- |
+| `@ordinate/components`       | The React components. Built from this repository's root.             |
+| `@ordinate/global-styles`    | Fonts, base page styles, and the mode, density and revision helpers. |
+| `@ordinate/collection-hooks` | Filtering, sorting, pagination and selection state for collections.  |
 
 ## Usage
 

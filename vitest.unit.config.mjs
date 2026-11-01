@@ -11,7 +11,11 @@ export default defineConfig({
         test: {
           name: 'unit',
           environment: 'jsdom',
-          include: ['src/**/__tests__/**/*.test.{ts,tsx}', 'global-styles/src/**/__tests__/**/*.test.ts'],
+          include: [
+            'src/**/__tests__/**/*.test.{ts,tsx}',
+            'global-styles/src/**/__tests__/**/*.test.ts',
+            'collection-hooks/src/**/__tests__/**/*.test.{ts,tsx}',
+          ],
           exclude: ['**/*.ssr.test.tsx'],
           setupFiles: ['./src/__tests__/setup.ts'],
         },

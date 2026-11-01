@@ -14,6 +14,7 @@ export default defineConfig(
     'lib',
     'pages/dist',
     'global-styles/lib',
+    'collection-hooks/lib',
     'src/internal/generated',
     'src/icon/generated',
     'src/index.ts',
@@ -71,7 +72,12 @@ export default defineConfig(
     },
   },
   {
-    files: ['**/*.mjs', 'src/**/__tests__/**', 'global-styles/src/**/__tests__/**'],
+    files: [
+      '**/*.mjs',
+      'src/**/__tests__/**',
+      'global-styles/src/**/__tests__/**',
+      'collection-hooks/src/**/__tests__/**',
+    ],
     languageOptions: {
       globals: { ...globals.node },
     },

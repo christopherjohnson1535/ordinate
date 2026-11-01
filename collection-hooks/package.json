@@ -1,0 +1,21 @@
+{
+  "name": "@ordinate/collection-hooks",
+  "version": "0.1.0",
+  "description": "Filtering, sorting, pagination and selection state for Ordinate tables, cards and lists.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  }
+}

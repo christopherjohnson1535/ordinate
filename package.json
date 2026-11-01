@@ -9,7 +9,8 @@
   },
   "private": true,
   "workspaces": [
-    "global-styles"
+    "global-styles",
+    "collection-hooks"
   ],
   "files": [],
   "scripts": {

@@ -15,6 +15,7 @@ export default defineConfig({
     alias: {
       '~components': path.resolve(root, '../lib/components'),
       '~global-styles': path.resolve(root, '../global-styles/src'),
+      '~collection-hooks': path.resolve(root, '../collection-hooks/src'),
     },
   },
   build: {

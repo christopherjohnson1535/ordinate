@@ -4,6 +4,7 @@ coverage
 lib
 pages/dist
 global-styles/lib
+collection-hooks/lib
 # generated sources
 src/index.ts
 src/internal/generated

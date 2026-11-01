@@ -12,7 +12,8 @@
     "paths": {
       "~components/*": ["../lib/components/*"],
       "~global-styles": ["../global-styles/src"],
-      "~global-styles/*": ["../global-styles/src/*"]
+      "~global-styles/*": ["../global-styles/src/*"],
+      "~collection-hooks": ["../collection-hooks/src"]
     }
   },
   "include": ["."]

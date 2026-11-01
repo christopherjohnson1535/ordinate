@@ -5,6 +5,7 @@ ordinate/
 ├── build-tools/          Build tasks used by gulpfile.js
 │   ├── tasks/            One file per task: clean, style-dictionary, styles, typescript, ...
 │   └── utils/
+├── collection-hooks/     The @ordinate/collection-hooks package: useCollection and its pure helpers
 ├── docs/                 Conventions for contributors
 ├── global-styles/        The @ordinate/global-styles package
 │   └── src/              applyMode, applyRevision, disableMotion, fonts and base CSS
