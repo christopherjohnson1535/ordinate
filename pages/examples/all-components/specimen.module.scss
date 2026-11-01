@@ -104,6 +104,7 @@
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--ord-color-border-divider);
+  border-radius: var(--ord-border-radius-container);
   background-color: var(--ord-color-background-layout-main);
 
   > * {
@@ -151,6 +152,7 @@
 .column {
   max-inline-size: 320px;
   border: 1px solid var(--ord-color-border-divider);
+  border-radius: var(--ord-border-radius-container);
 }
 
 // Website pieces run edge to edge in a site; here each sits in a hairline frame so its band shows.

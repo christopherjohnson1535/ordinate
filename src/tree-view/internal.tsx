@@ -209,7 +209,10 @@ export function InternalTreeView<T>({
                 {renderItemToggleIcon ? (
                   renderItemToggleIcon({ expanded: node.expanded })
                 ) : (
-                  <InternalIcon name={node.expanded ? 'treeview-collapse' : 'treeview-expand'} />
+                  <InternalIcon
+                    className={styles['toggle-icon']}
+                    name={node.expanded ? 'treeview-collapse' : 'treeview-expand'}
+                  />
                 )}
               </button>
             )}

@@ -100,6 +100,7 @@
   block-size: 28px;
   padding-inline: 8px;
   border: 1px solid var(--ord-color-border-control);
+  border-radius: var(--ord-border-radius-input);
   background-color: var(--ord-color-background-control);
   color: var(--ord-color-text-body);
   font: inherit;
@@ -114,6 +115,7 @@
 .segmented {
   display: flex;
   border: 1px solid var(--ord-color-border-control);
+  border-radius: var(--ord-border-radius-button);
   background-color: var(--ord-color-background-control);
 
   button {
@@ -137,6 +139,17 @@
     color: var(--ord-color-text-button-primary);
   }
 
+  // The pressed fill follows the group's corners at either end.
+  button:first-child {
+    border-start-start-radius: inherit;
+    border-end-start-radius: inherit;
+  }
+
+  button:last-child {
+    border-start-end-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
   button:focus-visible {
     outline: 2px solid var(--ord-color-border-focus-ring);
     outline-offset: 2px;
@@ -149,6 +162,7 @@
   padding-inline: 24px;
   border-block-start: 1px solid var(--ord-color-border-divider);
   border-inline-start: 1px solid var(--ord-color-border-divider);
+  border-start-start-radius: var(--ord-border-radius-container);
   background-color: var(--ord-color-background-container);
   color: var(--ord-color-text-body);
 }

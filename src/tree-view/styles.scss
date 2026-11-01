@@ -114,6 +114,12 @@ $guide-offset: calc(#{ord.$space-xxs} - #{$slot} / 2);
   }
 }
 
+// The default toggle draws a box like a checkbox, so its corners follow the checkbox radius
+// of the pinned revision. The icon's 16-unit grid matches the 16px icon size.
+.toggle-icon rect {
+  rx: ord.$border-radius-checkbox;
+}
+
 .icon {
   display: flex;
   flex-shrink: 0;
