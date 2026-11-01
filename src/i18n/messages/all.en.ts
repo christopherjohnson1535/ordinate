@@ -8,6 +8,23 @@ const messages: I18nProviderProps.Messages = {
       alert: {
         dismissAriaLabel: 'Dismiss',
       },
+      'app-layout': {
+        navigation: 'Navigation drawer',
+        navigationToggle: 'Open navigation',
+        navigationClose: 'Close navigation',
+        tools: 'Help panel',
+        toolsToggle: 'Open help panel',
+        toolsClose: 'Close help panel',
+        notifications: 'Notifications',
+        drawers: 'Drawers',
+        drawerCloseButton: 'Close {drawerName}',
+        drawerResizeHandle: 'Resize {drawerName}',
+      },
+      'app-layout-toolbar': {
+        navigationToggle: 'Open navigation',
+        navigationClose: 'Close navigation',
+        drawers: 'Drawers',
+      },
       autosuggest: {
         enteredTextLabel: 'Use: "{value}"',
         errorIconAriaLabel: 'Error',
@@ -53,6 +70,9 @@ const messages: I18nProviderProps.Messages = {
       dialog: {
         dismissAriaLabel: 'Close dialog',
       },
+      drawer: {
+        loadingText: 'Loading',
+      },
       'error-boundary': {
         headerText: 'Something went wrong',
         descriptionText: 'This part of the page could not be shown. Refresh the page to try again.',
@@ -77,6 +97,9 @@ const messages: I18nProviderProps.Messages = {
       'form-field': {
         errorIconAriaLabel: 'Error',
         warningIconAriaLabel: 'Warning',
+      },
+      'help-panel': {
+        loadingText: 'Loading',
       },
       input: {
         clearAriaLabel: 'Clear',
@@ -153,6 +176,19 @@ const messages: I18nProviderProps.Messages = {
       },
       skeleton: {
         loadingText: 'Loading',
+      },
+      'split-panel': {
+        closeButtonAriaLabel: 'Close panel',
+        openButtonAriaLabel: 'Open panel',
+        resizeHandleAriaLabel: 'Resize split panel',
+        preferencesTitle: 'Split panel preferences',
+        preferencesPositionLabel: 'Split panel position',
+        preferencesPositionDescription: 'Choose where the split panel opens.',
+        preferencesPositionBottom: 'Bottom',
+        preferencesPositionSide: 'Side',
+        preferencesPositionSideUnavailable: 'Needs a wider window.',
+        preferencesConfirm: 'Confirm',
+        preferencesCancel: 'Cancel',
       },
       tabs: {
         dismissAriaLabel: 'Close tab',
