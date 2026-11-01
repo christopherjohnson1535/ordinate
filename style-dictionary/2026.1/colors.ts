@@ -73,4 +73,6 @@ export const tokens: ColorsDictionary = {
   colorTextOnEmphasis: { light: '{colorWhite}', dark: '{colorChalk900}' },
   colorBackgroundMarker: { light: '{colorGrey900}', dark: '{colorChalk100}' },
   colorTextOnMarker: { light: '{colorWhite}', dark: '{colorChalk900}' },
+  // Text that stands out on an inverted band, such as a closed day in opening hours.
+  colorTextBandInvertedAccent: { light: '{colorWhite}', dark: '{colorChalk100}' },
 };

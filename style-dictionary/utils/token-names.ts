@@ -111,6 +111,7 @@ export const colorsTokenNames = [
   'colorTextOnEmphasis',
   'colorBackgroundMarker',
   'colorTextOnMarker',
+  'colorTextBandInvertedAccent',
 ] as const;
 
 export const bordersTokenNames = [
@@ -133,6 +134,7 @@ export const bordersTokenNames = [
   'borderRadiusInlineCode',
   'borderRadiusSection',
   'borderRadiusAction',
+  'borderWidthHeadRule',
 ] as const;
 
 export const typographyTokenNames = [
@@ -171,6 +173,9 @@ export const typographyTokenNames = [
   'lineHeightHeadline',
   'letterSpacingHeadline',
   'fontSizeLead',
+  'fontFamilyReading',
+  'fontSizeReading',
+  'lineHeightReading',
 ] as const;
 
 export const spacingTokenNames = [

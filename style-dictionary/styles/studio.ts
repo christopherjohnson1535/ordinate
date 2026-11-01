@@ -14,5 +14,8 @@ export const style: Style = {
     lineHeightHeadline: '0.98',
     letterSpacingHeadline: '-0.035em',
     fontSizeLead: '19px',
+    fontSizeReading: '17px',
+    lineHeightReading: '1.65',
+    borderWidthHeadRule: '{borderWidthDefault}',
   },
 };

@@ -39,4 +39,8 @@ export const tokens: TypographyDictionary = {
   lineHeightHeadline: '1.05',
   letterSpacingHeadline: '-0.02em',
   fontSizeLead: '20px',
+  // Long-form reading text, such as the body of an article.
+  fontFamilyReading: '{fontFamilyBase}',
+  fontSizeReading: '16px',
+  lineHeightReading: '1.6',
 };

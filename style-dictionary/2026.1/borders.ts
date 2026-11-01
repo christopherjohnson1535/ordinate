@@ -22,4 +22,6 @@ export const tokens: BordersDictionary = {
   borderRadiusInlineCode: '0px',
   borderRadiusSection: '{borderRadiusContainer}',
   borderRadiusAction: '{borderRadiusButton}',
+  // The rule drawn above a block on website layouts, such as each step of a process.
+  borderWidthHeadRule: '{borderWidthSection}',
 };
