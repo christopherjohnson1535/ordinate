@@ -1,0 +1,165 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: inline-flex;
+}
+
+.trigger {
+  flex-shrink: 0;
+}
+
+.cancel-button,
+.confirm-button {
+  flex-shrink: 0;
+}
+
+.layout-container {
+  container-type: inline-size;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-xl;
+}
+
+.two-columns {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-l;
+  min-inline-size: 0;
+}
+
+// The columns sit on either side of a rule, like two fields of a drawing sheet.
+.secondary-column {
+  padding-inline-start: ord.$space-xl;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+@container (max-inline-size: 36rem) {
+  .two-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .secondary-column {
+    padding-block-start: ord.$space-l;
+    padding-inline-start: 0;
+    border-inline-start-width: 0;
+    border-block-start-width: ord.$border-width-default;
+    border-block-start-style: solid;
+    border-block-start-color: ord.$color-border-divider;
+  }
+}
+
+.page-size,
+.wrap-lines,
+.striped-rows,
+.content-density,
+.sticky-first-columns,
+.sticky-last-columns,
+.custom {
+  min-inline-size: 0;
+}
+
+.content-display {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+}
+
+.content-display-title {
+  @include styles.font-label;
+  margin-block: 0;
+  margin-inline: 0;
+  color: ord.$color-text-body;
+}
+
+.content-display-description {
+  @include styles.font-body;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.content-display-list {
+  margin-block: ord.$space-xs 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.content-display-option {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: 0 ord.$space-xxs;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider-secondary;
+  background-color: ord.$color-background-container;
+}
+
+.dragging {
+  position: relative;
+  background-color: ord.$color-background-item-hover;
+  outline-width: ord.$border-width-default;
+  outline-style: solid;
+  outline-color: ord.$color-border-strong;
+}
+
+.drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding-inline: ord.$space-xxs;
+  color: ord.$color-text-secondary;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+
+  &:hover {
+    color: ord.$color-text-body;
+  }
+
+  .dragging & {
+    cursor: grabbing;
+  }
+}
+
+.option-label {
+  @include styles.font-body;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.option-actions {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: ord.$space-xxs;
+}
+
+.move-up-button,
+.move-down-button {
+  flex-shrink: 0;
+}
