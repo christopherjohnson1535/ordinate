@@ -8,6 +8,16 @@ const messages: I18nProviderProps.Messages = {
       alert: {
         dismissAriaLabel: 'Dismiss',
       },
+      'annotation-context': {
+        finishButtonText: 'Finish',
+        labelDismissAnnotation: 'Close annotation',
+        labelHotspot:
+          '{open, select, true {Close annotation for step {stepNumber} of {totalStepCount}} other {Open annotation for step {stepNumber} of {totalStepCount}}}',
+        nextButtonText: 'Next',
+        previousButtonText: 'Previous',
+        stepCounterText: 'Step {stepNumber} of {totalStepCount}',
+        taskTitle: 'Task {taskNumber}: {taskTitle}',
+      },
       'app-layout': {
         navigation: 'Navigation drawer',
         navigationToggle: 'Open navigation',

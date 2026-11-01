@@ -1,0 +1,90 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+$line-height: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+
+.root {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+  vertical-align: top;
+}
+
+.with-children {
+  display: flex;
+}
+
+.content {
+  display: block;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+// One body line tall, so the marker lines up with the first line of a label or text beside it.
+.marker-slot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  block-size: $line-height;
+}
+
+.marker {
+  position: relative;
+  display: inline-flex;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-secondary;
+  cursor: pointer;
+
+  &:hover {
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.marker-current {
+  color: ord.$color-text-body;
+
+  &:hover {
+    color: ord.$color-text-accent;
+  }
+}
+
+// A copy of the ring that spreads and fades, like ink soaking into paper. It only exists with motion.
+.pulse {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0;
+  display: none;
+  pointer-events: none;
+
+  @include styles.with-motion {
+    display: inline-flex;
+    animation-name: hotspot-pulse;
+    animation-duration: ord.$motion-duration-rotation;
+    animation-timing-function: ord.$motion-easing-standard;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes hotspot-pulse {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
