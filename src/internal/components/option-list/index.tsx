@@ -118,7 +118,7 @@ export function OptionList({
           styles.option,
           item.group && styles['option-in-group'],
           item.extra && styles['option-extra'],
-          state.selected && indicator !== 'checkbox' && styles['option-selected'],
+          state.selected && indicator === 'check' && styles['option-selected'],
           highlighted && styles['option-highlighted'],
           highlighted && highlight.source === 'keyboard' && styles['option-keyboard'],
           item.disabled && styles['option-disabled']

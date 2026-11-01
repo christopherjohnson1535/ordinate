@@ -19,6 +19,14 @@ function toAutoCompleteValue(autoComplete: boolean | string): string {
   return autoComplete ? 'on' : 'off';
 }
 
+export interface InternalInputProps extends InputProps {
+  /**
+   * Attributes for the native input that other components need, such as the combobox role and
+   * state of an autosuggest. Not part of the public API. They are applied last, so they win.
+   */
+  nativeInputAttributes?: React.InputHTMLAttributes<HTMLInputElement>;
+}
+
 export const InternalInput = React.forwardRef(
   (
     {
@@ -48,8 +56,9 @@ export const InternalInput = React.forwardRef(
       ariaDescribedby,
       invalid,
       warning,
+      nativeInputAttributes,
       ...rest
-    }: InputProps,
+    }: InternalInputProps,
     ref: React.Ref<InputProps.Ref>
   ) => {
     const i18n = useInternalI18n('input');
@@ -119,6 +128,7 @@ export const InternalInput = React.forwardRef(
             onKeyUp={onKeyUp && (event => fireKeyboardEvent(onKeyUp, event))}
             // Browsers change a focused number input when the page scrolls over it, which is easy to do by accident.
             onWheel={type === 'number' ? event => event.currentTarget.blur() : undefined}
+            {...nativeInputAttributes}
           />
         </div>
         {showClearButton && (

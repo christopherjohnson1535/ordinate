@@ -8,6 +8,10 @@ const messages: I18nProviderProps.Messages = {
       alert: {
         dismissAriaLabel: 'Dismiss',
       },
+      autosuggest: {
+        enteredTextLabel: 'Use: "{value}"',
+        errorIconAriaLabel: 'Error',
+      },
       'breadcrumb-group': {
         ariaLabel: 'Breadcrumbs',
         expandAriaLabel: 'Show path',
