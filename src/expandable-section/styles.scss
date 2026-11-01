@@ -1,0 +1,215 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+}
+
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+.heading {
+  display: flex;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: ord.$line-height-body;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: ord.$font-weight-heading;
+  text-align: start;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover {
+    color: ord.$color-text-link-hover;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+// The caret sits on the first line of the header text, however many lines it wraps to.
+.icon {
+  align-items: center;
+  block-size: calc(1em * #{ord.$line-height-body});
+}
+
+.header-text {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+.counter {
+  font-weight: ord.$font-weight-body;
+  color: ord.$color-text-secondary;
+}
+
+.info {
+  @include styles.font-body;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+  margin-inline-start: auto;
+}
+
+// Indented to start under the header text, past the caret.
+.description {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-inline-start: ord.$space-l;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.content {
+  padding-block: ord.$space-scaled-xs 0;
+  padding-inline: ord.$space-l 0;
+
+  @include styles.with-motion {
+    animation-name: reveal;
+    animation-duration: ord.$motion-duration-expressive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+// The container footer already draws the rule above, so the footer variant only steps back in weight.
+.variant-footer .trigger {
+  font-weight: ord.$font-weight-body;
+}
+
+.variant-navigation {
+  .trigger {
+    font-weight: ord.$font-weight-body;
+  }
+
+  .content {
+    padding-block-start: ord.$space-scaled-xxs;
+  }
+}
+
+.variant-inline {
+  .trigger {
+    font-weight: ord.$font-weight-body;
+    color: ord.$color-text-link;
+    text-decoration-thickness: ord.$border-width-default;
+    text-underline-offset: ord.$space-xxxs;
+
+    &:hover {
+      color: ord.$color-text-link-hover;
+      text-decoration-line: underline;
+    }
+  }
+
+  .content {
+    padding-inline-start: 0;
+  }
+}
+
+.variant-container,
+.variant-stacked {
+  @include styles.border-radius(ord.$border-radius-container);
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+
+  .header {
+    padding-block: ord.$space-m;
+    padding-inline: ord.$space-container;
+  }
+
+  .heading,
+  .trigger {
+    @include styles.font-heading;
+    font-size: ord.$font-size-heading-s;
+  }
+
+  .description {
+    @include styles.font-body;
+    font-size: ord.$font-size-description;
+  }
+
+  .content {
+    padding-block: ord.$space-container;
+    padding-inline: ord.$space-container;
+  }
+
+  &.expanded .header {
+    border-block-end-width: ord.$border-width-default;
+    border-block-end-style: solid;
+    border-block-end-color: ord.$color-border-divider;
+  }
+}
+
+// Stacked sections read as one sheet split into parts, like stacked containers.
+.variant-stacked {
+  @include styles.border-radius(0);
+}
+
+.variant-stacked + .variant-stacked {
+  border-block-start-width: 0;
+}
+
+.variant-stacked:not(.variant-stacked + .variant-stacked) {
+  border-start-start-radius: ord.$border-radius-container;
+  border-start-end-radius: ord.$border-radius-container;
+}
+
+.variant-stacked:not(:has(+ .variant-stacked)) {
+  border-end-start-radius: ord.$border-radius-container;
+  border-end-end-radius: ord.$border-radius-container;
+}
+
+.content.no-paddings {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+}
