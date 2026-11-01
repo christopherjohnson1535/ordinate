@@ -75,8 +75,10 @@
   color: ord.$color-text-body;
 }
 
+// Steps not reached yet are plain text, not disabled controls, so they keep readable contrast.
+// The dashed track line and the missing link already mark them as not reached.
 .navigation-title-unvisited {
-  color: ord.$color-text-disabled;
+  color: ord.$color-text-secondary;
 }
 
 .navigation-optional {
