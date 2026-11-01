@@ -1,0 +1,221 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+// Matches the `xs` layout breakpoint: below it the media moves under the text.
+$two-column-min-width: 688px;
+
+.root {
+  min-inline-size: 0;
+}
+
+.frame {
+  container-type: inline-size;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-scaled-xl;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: ord.$space-scaled-m;
+  min-inline-size: 0;
+}
+
+.meta {
+  @include site.font-meta;
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xxs ord.$space-xl;
+  color: ord.$color-text-body-secondary;
+}
+
+.badge-row {
+  display: flex;
+}
+
+.badge {
+  @include styles.font-label;
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: inline-block;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-s;
+  background-color: ord.$color-background-marker;
+  color: ord.$color-text-on-marker;
+  rotate: ord.$rotate-marker;
+}
+
+.kicker {
+  @include styles.font-label;
+  margin-block: 0;
+  margin-inline: 0;
+  color: ord.$color-text-accent;
+}
+
+.title {
+  @include site.font-headline;
+  max-inline-size: 100%;
+  font-size: ord.$font-size-headline-xl;
+}
+
+.description {
+  @include site.font-lead;
+  max-inline-size: ord.$size-section-narrow;
+  color: ord.$color-text-body-secondary;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+  padding-block-start: ord.$space-scaled-xs;
+}
+
+.navigation {
+  inline-size: 100%;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xs ord.$space-l;
+}
+
+.link {
+  @include styles.font-label;
+  color: inherit;
+  text-decoration-line: none;
+
+  &:hover,
+  &[aria-current='page'] {
+    text-decoration-line: underline;
+    text-decoration-thickness: ord.$border-width-section;
+    text-underline-offset: ord.$space-xs;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+.media-frame {
+  min-inline-size: 0;
+
+  > img,
+  > svg,
+  > video,
+  > picture,
+  > picture > img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+}
+
+.media-caption {
+  @include site.font-meta;
+  color: ord.$color-text-secondary;
+}
+
+// The masthead: centered between printed rules, the title as large as the style allows.
+.variant-masthead {
+  .text {
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .meta {
+    justify-content: center;
+    padding-block-end: ord.$space-scaled-s;
+    border-block-end-width: ord.$border-width-default;
+    border-block-end-style: solid;
+    border-block-end-color: ord.$color-border-strong;
+  }
+
+  .badge-row,
+  .actions,
+  .links {
+    justify-content: center;
+  }
+
+  .description {
+    margin-inline: auto;
+  }
+
+  .navigation {
+    padding-block-start: ord.$space-scaled-xs;
+  }
+
+  .double-rule {
+    @include site.double-rule;
+    margin-block-start: ord.$space-scaled-xs;
+  }
+}
+
+// The split opening frames its picture on a tinted panel.
+.variant-split .media-frame {
+  @include styles.border-radius(ord.$border-radius-section);
+  overflow: hidden;
+  padding-block: ord.$space-scaled-xl;
+  padding-inline: ord.$space-scaled-xl;
+  background-color: ord.$color-background-band-accent;
+
+  > img,
+  > picture > img {
+    @include styles.border-radius(ord.$border-radius-container);
+  }
+}
+
+@container (min-inline-size: #{$two-column-min-width}) {
+  .has-media {
+    align-items: center;
+    column-gap: ord.$space-xxl;
+  }
+
+  .variant-statement .has-media {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-areas: 'text media';
+
+    &.media-position-start {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      grid-template-areas: 'media text';
+    }
+  }
+
+  .variant-split .has-media {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'text media';
+
+    &.media-position-start {
+      grid-template-areas: 'media text';
+    }
+  }
+
+  .has-media > .text {
+    grid-area: text;
+  }
+
+  .has-media > .media {
+    grid-area: media;
+  }
+}
