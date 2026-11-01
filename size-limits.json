@@ -4,20 +4,24 @@
     "gzip": 10800
   },
   "alert": {
-    "minified": 79300,
-    "gzip": 16200
+    "minified": 84900,
+    "gzip": 17800
   },
   "app-layout": {
-    "minified": 117500,
-    "gzip": 26200
+    "minified": 123100,
+    "gzip": 27800
   },
   "app-layout-toolbar": {
-    "minified": 92100,
-    "gzip": 19900
+    "minified": 97700,
+    "gzip": 21500
+  },
+  "attribute-editor": {
+    "minified": 99600,
+    "gzip": 22100
   },
   "autosuggest": {
-    "minified": 110800,
-    "gzip": 23800
+    "minified": 116800,
+    "gzip": 25400
   },
   "badge": {
     "minified": 21600,
@@ -28,32 +32,36 @@
     "gzip": 8500
   },
   "breadcrumb-group": {
-    "minified": 82100,
-    "gzip": 17200
+    "minified": 87700,
+    "gzip": 18800
   },
   "button": {
-    "minified": 75200,
-    "gzip": 15200
+    "minified": 80900,
+    "gzip": 16800
   },
   "button-dropdown": {
-    "minified": 99700,
-    "gzip": 21900
+    "minified": 105300,
+    "gzip": 23500
   },
   "button-group": {
-    "minified": 120800,
-    "gzip": 27200
+    "minified": 126400,
+    "gzip": 28800
+  },
+  "calendar": {
+    "minified": 100600,
+    "gzip": 22100
   },
   "cards": {
-    "minified": 101600,
-    "gzip": 20900
+    "minified": 107300,
+    "gzip": 22500
   },
   "checkbox": {
     "minified": 63600,
     "gzip": 11400
   },
   "collection-preferences": {
-    "minified": 121900,
-    "gzip": 25600
+    "minified": 127600,
+    "gzip": 27200
   },
   "column-layout": {
     "minified": 25400,
@@ -67,45 +75,77 @@
     "minified": 23200,
     "gzip": 3800
   },
+  "control-group": {
+    "minified": 21900,
+    "gzip": 3400
+  },
   "copy-to-clipboard": {
-    "minified": 92900,
-    "gzip": 20000
+    "minified": 98600,
+    "gzip": 21600
+  },
+  "date-input": {
+    "minified": 94800,
+    "gzip": 20800
+  },
+  "date-picker": {
+    "minified": 126400,
+    "gzip": 28900
+  },
+  "date-range-picker": {
+    "minified": 194900,
+    "gzip": 44000
   },
   "dialog": {
-    "minified": 79700,
-    "gzip": 16300
+    "minified": 85300,
+    "gzip": 17900
   },
   "divider": {
     "minified": 21300,
     "gzip": 3500
   },
   "drawer": {
-    "minified": 34500,
-    "gzip": 7800
+    "minified": 40100,
+    "gzip": 9400
   },
   "dropdown": {
     "minified": 27800,
     "gzip": 5400
   },
   "error-boundary": {
-    "minified": 86500,
-    "gzip": 18100
+    "minified": 92200,
+    "gzip": 19700
   },
   "expandable-section": {
     "minified": 68600,
     "gzip": 12000
   },
+  "file-dropzone": {
+    "minified": 22700,
+    "gzip": 3900
+  },
+  "file-input": {
+    "minified": 84200,
+    "gzip": 17900
+  },
+  "file-token-group": {
+    "minified": 114000,
+    "gzip": 25200
+  },
+  "file-upload": {
+    "minified": 126000,
+    "gzip": 28000
+  },
   "flashbar": {
-    "minified": 91500,
-    "gzip": 19000
+    "minified": 97100,
+    "gzip": 20600
   },
   "form": {
-    "minified": 58200,
-    "gzip": 9900
+    "minified": 58400,
+    "gzip": 10000
   },
   "form-field": {
-    "minified": 71300,
-    "gzip": 14200
+    "minified": 77100,
+    "gzip": 15800
   },
   "grid": {
     "minified": 23400,
@@ -116,8 +156,8 @@
     "gzip": 3600
   },
   "help-panel": {
-    "minified": 40300,
-    "gzip": 8400
+    "minified": 45900,
+    "gzip": 10000
   },
   "i18n": {
     "minified": 700,
@@ -132,8 +172,8 @@
     "gzip": 300
   },
   "input": {
-    "minified": 83000,
-    "gzip": 17000
+    "minified": 89000,
+    "gzip": 18600
   },
   "item-card": {
     "minified": 25600,
@@ -144,44 +184,48 @@
     "gzip": 3900
   },
   "link": {
-    "minified": 71300,
-    "gzip": 14300
+    "minified": 77000,
+    "gzip": 15900
   },
   "list": {
-    "minified": 78300,
-    "gzip": 16300
+    "minified": 83900,
+    "gzip": 17900
   },
   "live-region": {
     "minified": 20600,
     "gzip": 3400
   },
   "modal": {
-    "minified": 80800,
-    "gzip": 16600
+    "minified": 86500,
+    "gzip": 18200
   },
   "multiselect": {
-    "minified": 138900,
-    "gzip": 30800
+    "minified": 144900,
+    "gzip": 32500
   },
   "pagination": {
-    "minified": 71500,
-    "gzip": 14300
+    "minified": 77100,
+    "gzip": 15900
   },
   "panel-layout": {
-    "minified": 37400,
-    "gzip": 8700
+    "minified": 43000,
+    "gzip": 10300
   },
   "popover": {
-    "minified": 90800,
-    "gzip": 19500
+    "minified": 96400,
+    "gzip": 21200
   },
   "progress-bar": {
-    "minified": 87600,
-    "gzip": 18300
+    "minified": 93200,
+    "gzip": 19900
+  },
+  "prompt-input": {
+    "minified": 90800,
+    "gzip": 19200
   },
   "property-filter": {
-    "minified": 172900,
-    "gzip": 38300
+    "minified": 179500,
+    "gzip": 40000
   },
   "radio-button": {
     "minified": 27000,
@@ -196,16 +240,16 @@
     "gzip": 11200
   },
   "select": {
-    "minified": 113300,
-    "gzip": 24500
+    "minified": 119200,
+    "gzip": 26100
   },
   "side-navigation": {
-    "minified": 78500,
-    "gzip": 15700
+    "minified": 84100,
+    "gzip": 17300
   },
   "skeleton": {
-    "minified": 34500,
-    "gzip": 7700
+    "minified": 40100,
+    "gzip": 9300
   },
   "slider": {
     "minified": 33200,
@@ -220,32 +264,32 @@
     "gzip": 3500
   },
   "split-panel": {
-    "minified": 125600,
-    "gzip": 27200
+    "minified": 131400,
+    "gzip": 28900
   },
   "status-indicator": {
     "minified": 61100,
     "gzip": 10500
   },
   "table": {
-    "minified": 119600,
-    "gzip": 26500
+    "minified": 125300,
+    "gzip": 28100
   },
   "table-body": {
     "minified": 19400,
     "gzip": 2900
   },
   "table-body-cell": {
-    "minified": 82100,
-    "gzip": 16600
+    "minified": 87800,
+    "gzip": 18200
   },
   "table-head": {
     "minified": 19400,
     "gzip": 2900
   },
   "table-header-cell": {
-    "minified": 88500,
-    "gzip": 18200
+    "minified": 94200,
+    "gzip": 19800
   },
   "table-root": {
     "minified": 23200,
@@ -256,19 +300,23 @@
     "gzip": 3400
   },
   "tabs": {
-    "minified": 79600,
-    "gzip": 16600
+    "minified": 85200,
+    "gzip": 18200
+  },
+  "tag-editor": {
+    "minified": 144500,
+    "gzip": 32900
   },
   "text-content": {
     "minified": 25000,
     "gzip": 3600
   },
   "text-filter": {
-    "minified": 86000,
-    "gzip": 18100
+    "minified": 92000,
+    "gzip": 19700
   },
   "textarea": {
-    "minified": 24800,
+    "minified": 25100,
     "gzip": 4500
   },
   "theming": {
@@ -279,29 +327,33 @@
     "minified": 32600,
     "gzip": 6200
   },
+  "time-input": {
+    "minified": 94400,
+    "gzip": 20700
+  },
   "toggle": {
     "minified": 28500,
     "gzip": 5000
   },
   "toggle-button": {
-    "minified": 76400,
-    "gzip": 15500
+    "minified": 82000,
+    "gzip": 17100
   },
   "token": {
-    "minified": 95700,
-    "gzip": 20500
+    "minified": 101300,
+    "gzip": 22100
   },
   "token-group": {
-    "minified": 99200,
-    "gzip": 21600
+    "minified": 104800,
+    "gzip": 23100
   },
   "tooltip": {
     "minified": 31600,
     "gzip": 6600
   },
   "top-navigation": {
-    "minified": 111500,
-    "gzip": 24900
+    "minified": 117100,
+    "gzip": 26500
   },
   "truncated-text": {
     "minified": 33900,
