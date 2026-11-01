@@ -85,13 +85,17 @@ Applications can change a fixed set of brand tokens at runtime with `applyTheme`
 
 ## The look
 
-Revision 2026.1 is a quiet console style: a light grey frame holding the navigation, content on white sheets, ink-colored text and rules, IBM Plex Sans for the interface and IBM Plex Mono for code and data, square corners, and drafting blue used sparingly for accents and progress. Grey control borders keep forms light; strong ink borders are kept for things drawn like a plate, such as modals and title blocks.
+Revision 2026.1 draws the console like a set of drawings: a light grey frame holding a sheet index, content on framed white sheets with grid letters and a title block, numbered notes in the margin, ink-colored text and rules, IBM Plex Sans for the interface and IBM Plex Mono for code and data, square corners, and drafting blue used sparingly for accents and progress. Grey control borders keep forms light; strong ink borders are kept for things drawn like a plate, such as modals and title blocks.
+
+## Drawing marks
+
+The console borrows the marks of a drawing set, and `src/internal/styles/drawing.scss` holds the shared ones: `mono-caption` and `font-caption` for small mono capitals, `circled-tag` for references such as S1, `heavy-rule-block-start` for the rule that opens a title block, and `on-ink`. A revision mark (△) and margin numbers are decoration and stay hidden from screen readers; the text they point to carries the meaning.
 
 ## States
 
 - Focus: a solid 2 px ink outline, offset 2 px. Use the `focus-ring` mixin.
 - Hover: a raised grey background on controls and list items.
-- Selected: ink fill with white text for toggles and segmented controls; a grey background for navigation items.
+- Selected: ink fill with white text for toggles, segmented controls, navigation items and selected table rows. Inside an ink fill, use the `on-ink` mixin from `drawing.scss` so links, status text and controls stay readable.
 - Disabled: dimmed text and hatched with the `hatch` mixin.
 - Error: an error-colored border with a 2 px inset mark on the leading edge, and the message below the control.
 

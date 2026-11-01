@@ -35,7 +35,7 @@ export function SaveBar() {
 
 ### Applications and websites
 
-The same components build a console or a website. `applyStyle(Style.Editorial)` (or `Studio`, or `Shopfront`) gives every component the voice of a journal, a studio portfolio or a local shop, while `Style.Console`, the default, keeps the application look. See [Theming, styles, revisions and density](docs/THEMING.md).
+The same components build a console or a website. `applyStyle(Style.Editorial)` (or `Studio`, or `Shopfront`) gives every component the voice of a journal, a studio portfolio or a local shop, while `Style.Console`, the default, keeps the application look, drawn like a set of drawings: a sheet index, schedules, a checklist sheet for setup flows and notes in the margin. See [Theming, styles, revisions and density](docs/THEMING.md).
 
 `applyRevision`, `applyMode`, `applyStyle` and `applyDensity` take an optional element, so a single page or section can try a newer revision before the whole application moves to it.
 
@@ -76,7 +76,7 @@ export default {
 
 ## Components
 
-- **Layout:** AppLayout, AppLayoutToolbar, ColumnLayout, Container, ContentLayout, Drawer, Grid, HelpPanel, PanelLayout, SpaceBetween, SplitPanel
+- **Layout:** AppLayout, AppLayoutToolbar, ColumnLayout, Container, ContentLayout, Drawer, Grid, HelpPanel, PanelLayout, SpaceBetween, SplitPanel, StyleScope, TitleBlock
 - **Content:** Box, Divider, ExpandableSection, Header, KeyValuePairs, TextContent, TruncatedText
 - **Collections:** ActionCard, Cards, CollectionPreferences, ItemCard, List, PropertyFilter, Table (and TableRoot, TableHead, TableHeaderCell, TableBody, TableRow, TableBodyCell), TextFilter, Token, TokenGroup
 - **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
@@ -85,8 +85,11 @@ export default {
 - **Navigation:** AnchorNavigation, BreadcrumbGroup, NavigableGroup, Pagination, SideNavigation, Tabs, TopNavigation, TreeView
 - **Guided flows:** AnnotationContext, Hotspot, Steps, TutorialPanel, Wizard
 - **Overlays:** Dialog, Dropdown, Modal, Popover, Tooltip
-- **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, ProgressBar, Skeleton, Spinner, StatusIndicator
+- **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, Measure, ProgressBar, Skeleton, Spinner, Stamp, StatusIndicator
 - **Icons:** Icon, IconProvider
+- **Website frame:** Opening, Section, CallToAction, SiteHeader, SiteFooter
+- **Website content:** Article, Figure, Media, Plate, StoryCard, MenuTile, IndexList, PullQuote, Testimonial
+- **Website flows:** HowItWorks, Journey, OpeningHours
 
 Charts (area, bar, line, mixed line and bar, pie) are in the separate `@ordinate/charts` package.
 
