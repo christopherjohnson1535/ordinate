@@ -84,6 +84,11 @@ export const colorsTokenNames = [
   'colorTextTooltip',
   'colorBackgroundHeaderHighContrast',
   'colorBackgroundRowStriped',
+  'colorTextCodeKeyword',
+  'colorTextCodeString',
+  'colorTextCodeNumber',
+  'colorTextCodeComment',
+  'colorTextCodeProperty',
 ] as const;
 
 export const bordersTokenNames = [

@@ -49,4 +49,9 @@ export const tokens: ColorsDictionary = {
   colorTextTooltip: { light: '{colorWhite}', dark: '{colorChalk900}' },
   colorBackgroundHeaderHighContrast: { light: '{colorGrey900}', dark: '{colorTerminalDark}' },
   colorBackgroundRowStriped: { light: '{colorGrey50}', dark: '{colorChalk900}' },
+  colorTextCodeKeyword: { light: '{colorBlue600}', dark: '{colorCyan400}' },
+  colorTextCodeString: { light: '{colorGreen600}', dark: '{colorGreen400}' },
+  colorTextCodeNumber: { light: '{colorOchre600}', dark: '{colorOchre400}' },
+  colorTextCodeComment: { light: '{colorGrey600}', dark: '{colorChalk300}' },
+  colorTextCodeProperty: { light: '{colorRed600}', dark: '{colorRed400}' },
 };
