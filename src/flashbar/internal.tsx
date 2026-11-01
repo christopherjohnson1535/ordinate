@@ -67,6 +67,7 @@ export function InternalFlashbar({
           <Flash
             key={item.id ?? index}
             item={item}
+            position={index + 1}
             hidden={isCollapsed && index > 0}
             statusIconAriaLabel={iconLabel(item)}
             dismissLabel={i18n('dismissLabel', item.dismissLabel)}

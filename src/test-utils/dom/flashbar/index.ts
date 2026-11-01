@@ -10,6 +10,14 @@ type FlashType = 'success' | 'error' | 'warning' | 'info' | 'in-progress';
 export class FlashWrapper extends ComponentWrapper {
   static rootSelector = `.${styles.flash}`;
 
+  /**
+   * The numbered circle in the item's margin. It shows the item's place in the list and is hidden from
+   * screen readers.
+   */
+  findMarker(): ElementWrapper {
+    return this.findByClassName(styles['marker-number'])!;
+  }
+
   findStatusIcon(): ElementWrapper {
     return this.findByClassName(styles['status-icon'])!;
   }

@@ -124,7 +124,7 @@ export default function FlashbarSimple() {
       </section>
 
       <section className={styles.section}>
-        <h2>Narrow</h2>
+        <h2>Narrow, as in a margin column</h2>
         <div className={styles.narrow}>
           <Flashbar
             items={[

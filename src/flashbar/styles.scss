@@ -25,19 +25,16 @@
   list-style: none;
 }
 
-// A strip on white paper, ruled in the status color with a heavier rule on the leading edge.
+// The margin marker: a numbered circle joined to its note by a short leader line.
+$marker-size: ord.$size-icon-medium;
+// The circle and its leader; stacks and the notification bar line up with the notes past it.
+$marker-column: ord.$space-xl;
+
+// A note in the margin: white paper with an ink border, numbered in a circle colored by its type.
 .flash {
-  @include styles.border-radius(ord.$border-radius-alert);
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
-  gap: ord.$space-xs ord.$space-m;
-  box-sizing: border-box;
-  padding-block: ord.$space-scaled-s;
-  padding-inline: ord.$space-m ord.$space-s;
-  border-width: ord.$border-width-section;
-  border-style: solid;
-  background-color: ord.$color-background-container;
+  min-inline-size: 0;
 
   &[hidden] {
     display: none;
@@ -50,11 +47,69 @@
   }
 }
 
-.body {
+// As tall as the first line of the note's text, below the note's padding, so the circle centres on it.
+.marker {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  inline-size: $marker-column;
+  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+  padding-block-start: ord.$space-scaled-s;
+}
+
+.marker-number {
+  @include styles.border-radius(ord.$border-radius-radio);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: $marker-size;
+  block-size: $marker-size;
+  border-width: ord.$border-width-section;
+  border-style: solid;
+  background-color: ord.$color-background-container;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-bold;
+  line-height: ord.$line-height-heading;
+  font-variant-numeric: tabular-nums;
+}
+
+.marker-leader {
+  flex: 1 1 auto;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-strong;
+}
+
+.note {
+  @include styles.border-radius(ord.$border-radius-alert);
   display: flex;
   flex: 1 1 0;
-  gap: ord.$space-s;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+  box-sizing: border-box;
   min-inline-size: 0;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-m ord.$space-xs;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+}
+
+// The icon in one column and the message in the next; the action sits under the message.
+.note-main {
+  display: grid;
+  flex: 1 1 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.body {
+  display: contents;
 }
 
 // The icon and the close button are centred on the first line of text.
@@ -84,9 +139,11 @@
   color: ord.$color-text-body-secondary;
 }
 
+// Below the message, lined up with its text, so the note stays narrow enough for a margin.
 .action-slot {
   display: flex;
-  align-self: center;
+  flex-wrap: wrap;
+  grid-column: 2;
   gap: ord.$space-xs;
 }
 
@@ -94,6 +151,7 @@
 .stack-edges {
   display: flex;
   flex-direction: column;
+  margin-inline-start: ord.$space-xl;
 }
 
 .stack-edge {
@@ -121,8 +179,9 @@
   align-items: center;
   gap: ord.$space-xxs ord.$space-m;
   box-sizing: border-box;
-  inline-size: 100%;
+  inline-size: calc(100% - #{$marker-column});
   margin-block-start: ord.$space-xs;
+  margin-inline-start: ord.$space-xl;
   padding-block: ord.$space-scaled-xs;
   padding-inline: ord.$space-m;
   border-width: ord.$border-width-default;
@@ -170,8 +229,11 @@
 }
 
 .type-success {
-  border-color: ord.$color-border-status-success;
+  .marker-number {
+    border-color: ord.$color-border-status-success;
+  }
 
+  .marker-number,
   .status-icon,
   .count-icon {
     color: ord.$color-text-status-success;
@@ -179,8 +241,11 @@
 }
 
 .type-error {
-  border-color: ord.$color-border-error;
+  .marker-number {
+    border-color: ord.$color-border-error;
+  }
 
+  .marker-number,
   .status-icon,
   .count-icon {
     color: ord.$color-text-error;
@@ -188,8 +253,11 @@
 }
 
 .type-warning {
-  border-color: ord.$color-border-status-warning;
+  .marker-number {
+    border-color: ord.$color-border-status-warning;
+  }
 
+  .marker-number,
   .status-icon,
   .count-icon {
     color: ord.$color-text-status-warning;
@@ -197,8 +265,11 @@
 }
 
 .type-info {
-  border-color: ord.$color-border-status-info;
+  .marker-number {
+    border-color: ord.$color-border-status-info;
+  }
 
+  .marker-number,
   .status-icon,
   .count-icon {
     color: ord.$color-text-status-info;
@@ -206,8 +277,11 @@
 }
 
 .type-in-progress {
-  border-color: ord.$color-border-accent;
+  .marker-number {
+    border-color: ord.$color-border-accent;
+  }
 
+  .marker-number,
   .status-icon,
   .count-icon {
     color: ord.$color-text-accent;

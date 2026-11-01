@@ -33,6 +33,13 @@ describe('Flashbar', () => {
     expect(screen.getByText('Two nodes did not respond.')).toBeInTheDocument();
   });
 
+  test('numbers each note in its margin, out of the accessibility tree', () => {
+    render(<Flashbar items={items} />);
+    const notes = createWrapper().findFlashbar()!.findItems();
+    expect(notes.map(note => note.findMarker().getText())).toEqual(['1', '2', '3', '4']);
+    expect(notes[0].findMarker().getElement().closest('[aria-hidden="true"]')).not.toBeNull();
+  });
+
   test('labels the status icon with the type by default, or with statusIconAriaLabel', () => {
     render(
       <Flashbar
