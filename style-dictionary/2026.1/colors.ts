@@ -54,4 +54,14 @@ export const tokens: ColorsDictionary = {
   colorTextCodeNumber: { light: '{colorOchre600}', dark: '{colorOchre400}' },
   colorTextCodeComment: { light: '{colorGrey600}', dark: '{colorChalk300}' },
   colorTextCodeProperty: { light: '{colorRed600}', dark: '{colorRed400}' },
+  // Series colors in a fixed order: blue, orange, teal, red, violet, olive, plum, green. Neighbors stay
+  // apart for red-green color blindness and every color keeps 3:1 against the container in both modes.
+  colorChartsCategorical1: { light: '#2563AE', dark: '#5B92E0' },
+  colorChartsCategorical2: { light: '#C8641A', dark: '#D47434' },
+  colorChartsCategorical3: { light: '#008A7E', dark: '#22A698' },
+  colorChartsCategorical4: { light: '#C8372D', dark: '#E0645A' },
+  colorChartsCategorical5: { light: '#6A4FD0', dark: '#9282E6' },
+  colorChartsCategorical6: { light: '#8A7A12', dark: '#A8922A' },
+  colorChartsCategorical7: { light: '#A33A82', dark: '#CF6BAE' },
+  colorChartsCategorical8: { light: '#3F8A3A', dark: '#5CA558' },
 };

@@ -62,6 +62,10 @@ The build turns every revision into a full block of custom properties scoped to 
 
 The token contract test (`src/__tests__/token-contract.test.ts`) checks that every revision defines every token, that every reference resolves, and that the generated CSS contains every token for every revision.
 
+## Chart colors
+
+Charts take their series colors from `color-charts-categorical1` to `color-charts-categorical8`, in that order: blue, orange, teal, red, violet, olive, plum, green. Each has its own light and dark value. Every color keeps at least 3:1 contrast against the container background in its mode, neighbors in the order stay apart for red-green color blindness, and every series also gets a fill pattern or a dash and marker, so color is never the only difference. Thresholds and axes are drawn in ink (`color-border-strong`) and grid rules in `color-border-divider-secondary`.
+
 ## Light and dark mode
 
 Mode is not a theme. Each color token defines both a `light` and a `dark` value, which compile to `light-dark()`. `applyMode` sets `color-scheme` through a class: light, dark, or system to follow the operating system.

@@ -89,6 +89,14 @@ export const colorsTokenNames = [
   'colorTextCodeNumber',
   'colorTextCodeComment',
   'colorTextCodeProperty',
+  'colorChartsCategorical1',
+  'colorChartsCategorical2',
+  'colorChartsCategorical3',
+  'colorChartsCategorical4',
+  'colorChartsCategorical5',
+  'colorChartsCategorical6',
+  'colorChartsCategorical7',
+  'colorChartsCategorical8',
 ] as const;
 
 export const bordersTokenNames = [
