@@ -9,10 +9,7 @@
 .alert {
   @include styles.font-body;
   @include styles.border-radius(ord.$border-radius-alert);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: ord.$space-xs ord.$space-m;
+  container-type: inline-size;
   box-sizing: border-box;
   padding-block: ord.$space-s;
   padding-inline: ord.$space-m ord.$space-s;
@@ -20,6 +17,38 @@
   border-style: solid;
   background-color: ord.$color-background-container;
   color: ord.$color-text-body;
+}
+
+// Below this width the action moves under the message, so the text keeps a readable measure.
+$stacked-max-width: 400px;
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: ord.$space-xs ord.$space-m;
+}
+
+@container (max-inline-size: #{$stacked-max-width}) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .body {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .dismiss {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .action-slot {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
 }
 
 .body {

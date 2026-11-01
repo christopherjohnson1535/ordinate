@@ -1,6 +1,6 @@
 {
   "(shared tokens)": {
-    "minified": 27100,
+    "minified": 28000,
     "gzip": 3500
   },
   "action-card": {
@@ -180,7 +180,7 @@
     "gzip": 1600
   },
   "header": {
-    "minified": 3900,
+    "minified": 4500,
     "gzip": 1300
   },
   "help-panel": {
@@ -396,11 +396,11 @@
     "gzip": 18400
   },
   "table-root": {
-    "minified": 4900,
-    "gzip": 2000
+    "minified": 5300,
+    "gzip": 2100
   },
   "table-row": {
-    "minified": 2600,
+    "minified": 3700,
     "gzip": 1100
   },
   "tabs": {

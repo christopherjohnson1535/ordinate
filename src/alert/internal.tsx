@@ -50,37 +50,39 @@ export const InternalAlert = React.forwardRef(
 
     return (
       <div {...rest} className={clsx(styles.alert, styles[`type-${type}`])}>
-        <div
-          ref={focusRef}
-          className={styles.body}
-          role="group"
-          aria-labelledby={header ? headerId : undefined}
-          onBlur={() => focusRef.current?.removeAttribute('tabindex')}
-        >
-          <span className={styles.icon}>
-            <InternalIcon name={typeToIcon[type]} ariaLabel={statusIconAriaLabel} />
-          </span>
-          <div className={styles.message}>
-            {header && (
-              <div id={headerId} className={styles.header}>
-                {header}
-              </div>
-            )}
-            {children && <div className={styles.content}>{children}</div>}
+        <div className={styles.layout}>
+          <div
+            ref={focusRef}
+            className={styles.body}
+            role="group"
+            aria-labelledby={header ? headerId : undefined}
+            onBlur={() => focusRef.current?.removeAttribute('tabindex')}
+          >
+            <span className={styles.icon}>
+              <InternalIcon name={typeToIcon[type]} ariaLabel={statusIconAriaLabel} />
+            </span>
+            <div className={styles.message}>
+              {header && (
+                <div id={headerId} className={styles.header}>
+                  {header}
+                </div>
+              )}
+              {children && <div className={styles.content}>{children}</div>}
+            </div>
           </div>
+          {action && <div className={styles['action-slot']}>{action}</div>}
+          {dismissible && (
+            <div className={styles.dismiss}>
+              <InternalButton
+                variant="icon"
+                formAction="none"
+                ariaLabel={i18n('dismissAriaLabel', dismissAriaLabel)}
+                iconSvg={<InternalIcon name="close" />}
+                onClick={() => fireNonCancelableEvent(onDismiss, null)}
+              />
+            </div>
+          )}
         </div>
-        {action && <div className={styles['action-slot']}>{action}</div>}
-        {dismissible && (
-          <div className={styles.dismiss}>
-            <InternalButton
-              variant="icon"
-              formAction="none"
-              ariaLabel={i18n('dismissAriaLabel', dismissAriaLabel)}
-              iconSvg={<InternalIcon name="close" />}
-              onClick={() => fireNonCancelableEvent(onDismiss, null)}
-            />
-          </div>
-        )}
       </div>
     );
   }

@@ -80,6 +80,8 @@ $side-by-side-min-width: 688px;
   .action-area {
     flex: 0 1 auto;
     inline-size: auto;
+    // Room for a small form, such as an email field with its button, on one line.
+    min-inline-size: ord.$size-panel-medium;
     max-inline-size: ord.$size-panel-large;
   }
 

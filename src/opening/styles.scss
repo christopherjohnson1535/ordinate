@@ -211,6 +211,12 @@ $two-column-min-width: 688px;
     }
   }
 
+  // Beside a picture the split opening's text has half the width, so it takes the next headline size
+  // down, which keeps long words whole.
+  .variant-split .has-media .title {
+    font-size: ord.$font-size-headline-l;
+  }
+
   .has-media > .text {
     grid-area: text;
   }
