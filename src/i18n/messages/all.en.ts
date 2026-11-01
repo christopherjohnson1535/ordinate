@@ -250,7 +250,7 @@ const messages: I18nProviderProps.Messages = {
         propertyText: 'Property',
         removeTokenButtonAriaLabel: 'Remove filter, {token}',
         tokenAriaLabel:
-          '{hasProperty, select, true {{propertyLabel} {operatorText} {value}} other {{operatorText} {value}}}',
+          '{hasProperty, select, true {{propertyLabel} {operator} {value}} other {{showOperator, select, true {{operator} {value}} other {{value}}}}}',
         tokenLimitShowFewer: 'Show fewer',
         tokenLimitShowMore: 'Show {count} more',
         tokenOperatorAriaLabel: 'Combine filters with',
