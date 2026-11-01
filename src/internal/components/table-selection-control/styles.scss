@@ -1,0 +1,18 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles/tokens' as ord;
+
+// Fills the selection cell so a click anywhere in it reaches the control.
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-s;
+  cursor: pointer;
+}

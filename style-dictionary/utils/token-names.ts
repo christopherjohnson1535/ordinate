@@ -83,6 +83,7 @@ export const colorsTokenNames = [
   'colorBackgroundTooltip',
   'colorTextTooltip',
   'colorBackgroundHeaderHighContrast',
+  'colorBackgroundRowStriped',
 ] as const;
 
 export const bordersTokenNames = [
