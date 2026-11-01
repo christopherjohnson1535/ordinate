@@ -1,0 +1,60 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  align-items: start;
+  gap: 32px;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.main {
+  max-inline-size: 640px;
+}
+
+// Keeps each field and its hotspot marker close together.
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-inline-size: 480px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.help {
+  position: sticky;
+  inset-block-start: 16px;
+  border: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-container);
+}
+
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ord-color-text-secondary);
+
+  h2 {
+    margin-block: 0;
+    font-size: 14px;
+  }
+
+  p {
+    margin-block: 0;
+  }
+}
