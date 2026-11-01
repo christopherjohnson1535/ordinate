@@ -1,0 +1,110 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+@mixin start-radius($radius) {
+  border-start-start-radius: $radius;
+  border-end-start-radius: $radius;
+}
+
+@mixin end-radius($radius) {
+  border-start-end-radius: $radius;
+  border-end-end-radius: $radius;
+}
+
+.root {
+  display: inline-flex;
+  max-inline-size: 100%;
+  vertical-align: middle;
+}
+
+// Each segment draws its own frame, so the selected one can take an ink edge and the
+// focus ring is never clipped by the group.
+.segment {
+  @include styles.font-label;
+  position: relative;
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: ord.$space-xs;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  min-block-size: ord.$size-control-height;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-button-horizontal;
+  border-block-width: ord.$border-width-control;
+  border-inline-start-width: 0;
+  border-inline-end-width: ord.$border-width-control;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-body-secondary;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: background-color, border-color, color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:first-child {
+    @include start-radius(ord.$border-radius-button);
+    border-inline-start-width: ord.$border-width-control;
+  }
+
+  &:last-child {
+    @include end-radius(ord.$border-radius-button);
+  }
+
+  &:hover {
+    background-color: ord.$color-background-button-normal-hover;
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    z-index: 1;
+  }
+}
+
+.icon-only {
+  min-inline-size: ord.$size-control-height;
+  padding-inline: ord.$space-xs;
+}
+
+.selected,
+.selected:hover {
+  border-color: ord.$color-background-button-primary;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+}
+
+.disabled,
+.disabled:hover {
+  @include styles.hatch;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-disabled;
+  cursor: default;
+}
+
+.selected.disabled {
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-item-selected;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
