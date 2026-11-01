@@ -80,6 +80,8 @@ export const colorsTokenNames = [
   'colorHatch',
   'colorTextLinkInverted',
   'colorBackgroundInlineCode',
+  'colorBackgroundTooltip',
+  'colorTextTooltip',
 ] as const;
 
 export const bordersTokenNames = [
@@ -165,6 +167,9 @@ export const sizesTokenNames = [
   'sizeModalMedium',
   'sizeModalLarge',
   'sizeDropdownMaxHeight',
+  'sizePanelSmall',
+  'sizePanelMedium',
+  'sizePanelLarge',
 ] as const;
 
 export const motionTokenNames = [

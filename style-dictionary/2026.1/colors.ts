@@ -45,4 +45,6 @@ export const tokens: ColorsDictionary = {
   colorHatch: { light: 'rgba(19, 20, 22, 0.18)', dark: 'rgba(236, 230, 226, 0.22)' },
   colorTextLinkInverted: { light: '{colorWhite}', dark: '{colorChalk900}' },
   colorBackgroundInlineCode: { light: '{colorGrey150}', dark: '{colorChalk700}' },
+  colorBackgroundTooltip: { light: '{colorGrey900}', dark: '{colorChalk100}' },
+  colorTextTooltip: { light: '{colorWhite}', dark: '{colorChalk900}' },
 };

@@ -17,4 +17,7 @@ export const tokens: SizesDictionary = {
   sizeModalMedium: '600px',
   sizeModalLarge: '820px',
   sizeDropdownMaxHeight: '320px',
+  sizePanelSmall: '240px',
+  sizePanelMedium: '320px',
+  sizePanelLarge: '480px',
 };
