@@ -1,0 +1,32 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: inline-block;
+}
+
+.trigger {
+  display: inline-block;
+
+  // Only applies when the tooltip had to make the trigger focusable itself.
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.tooltip {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-body;
+  inline-size: max-content;
+  max-inline-size: min(#{ord.$size-panel-small}, calc(100vw - 2 * #{ord.$space-xs}));
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-xs;
+  overflow-wrap: anywhere;
+}
