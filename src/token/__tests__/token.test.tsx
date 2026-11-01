@@ -69,6 +69,15 @@ describe('Token', () => {
     expect(token().findTags()).toHaveLength(0);
   });
 
+  test('the inline variant can sit inside a paragraph', () => {
+    const { container } = render(
+      <p>
+        Attached <Token variant="inline" label="report.pdf" icon={<Icon name="file" />} onDismiss={() => {}} />
+      </p>
+    );
+    expect(container.querySelector('p div')).toBeNull();
+  });
+
   test('passes id and data attributes to the root', () => {
     render(<Token id="region" data-testid="region" label="US East" />);
     expect(token().getElement()).toHaveAttribute('id', 'region');

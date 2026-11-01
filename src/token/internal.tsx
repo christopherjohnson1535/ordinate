@@ -47,9 +47,11 @@ export function InternalToken({
   const i18n = useInternalI18n('token');
   const inline = variant === 'inline';
   const dismissible = Boolean(onDismiss) && !disabled && !readOnly;
+  // An inline token sits in running text, where a block element would end the paragraph.
+  const Root = inline ? 'span' : 'div';
 
   return (
-    <div
+    <Root
       {...rest}
       className={clsx(
         styles.root,
@@ -95,6 +97,6 @@ export function InternalToken({
           onClick={() => fireNonCancelableEvent(onDismiss, null)}
         />
       )}
-    </div>
+    </Root>
   );
 }
