@@ -1,0 +1,214 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// The body is a TextContent. Its rules select direct children from one class, so the rules here
+// start from two classes to take over the type while keeping its spacing, lists, code and links.
+$body: '.root .body';
+
+.root {
+  display: block;
+  container-type: inline-size;
+  font-family: ord.$font-family-reading;
+  font-size: ord.$font-size-reading;
+  color: ord.$color-text-body;
+}
+
+// Line lengths are counted in characters of the reading text, so they follow each style's type size.
+.measure-narrow {
+  --article-line: 52ch;
+  --article-column-line: 34ch;
+}
+
+.measure-default {
+  --article-line: 68ch;
+  --article-column-line: 40ch;
+}
+
+.measure-wide {
+  --article-line: 84ch;
+  --article-column-line: 48ch;
+}
+
+.measure {
+  max-inline-size: var(--article-line);
+}
+
+.lead {
+  margin-block: 0 ord.$space-l;
+  margin-inline: 0;
+  font-family: ord.$font-family-headline;
+  font-size: ord.$font-size-lead;
+  font-weight: ord.$font-weight-body;
+  line-height: ord.$line-height-heading;
+  color: ord.$color-text-body;
+}
+
+.byline {
+  margin-block-end: ord.$space-xl;
+  padding-block: ord.$space-xs;
+  border-block-start-width: ord.$border-width-head-rule;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-strong;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-small;
+  line-height: ord.$line-height-body;
+  color: ord.$color-text-body-secondary;
+}
+
+#{$body} {
+  font-family: ord.$font-family-reading;
+  font-size: ord.$font-size-reading;
+  line-height: ord.$line-height-reading;
+
+  > :is(p, ul, ol, pre, blockquote, figure) {
+    margin-block: 0 ord.$space-m;
+  }
+
+  > :is(h1, h2, h3, h4, h5) {
+    margin-block: ord.$space-xl ord.$space-s;
+    font-family: ord.$font-family-headline;
+    font-weight: ord.$font-weight-headline;
+    line-height: ord.$line-height-headline;
+    letter-spacing: ord.$letter-spacing-headline;
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  > h1 {
+    font-size: ord.$font-size-headline-m;
+  }
+
+  // A rule over each section heading keeps it apart from the subheadings below it, even in styles
+  // where the two sizes are close.
+  > h2 {
+    padding-block-start: ord.$space-s;
+    border-block-start-width: ord.$border-width-head-rule;
+    border-block-start-style: solid;
+    border-block-start-color: ord.$color-border-strong;
+    font-size: ord.$font-size-headline-s;
+  }
+
+  > h3 {
+    font-size: ord.$font-size-heading-l;
+  }
+
+  // The smallest headings sit at the text's own size and stand out by weight, as run-in heads do in print.
+  > :is(h4, h5) {
+    font-family: ord.$font-family-base;
+    font-weight: ord.$font-weight-bold;
+    letter-spacing: normal;
+  }
+
+  > h4 {
+    font-size: ord.$font-size-reading;
+  }
+
+  > h5 {
+    font-size: ord.$font-size-small;
+    color: ord.$color-text-body-secondary;
+  }
+
+  > :is(h1, h2, h3, h4, h5):first-child {
+    margin-block-start: 0;
+  }
+
+  > pre {
+    font-size: ord.$font-size-code;
+  }
+
+  // A pull quote: the headline voice at a size between the text and a heading.
+  > blockquote {
+    margin-block: ord.$space-xl;
+    padding-inline-start: ord.$space-l;
+    border-inline-start-width: ord.$border-width-head-rule;
+    font-family: ord.$font-family-headline;
+    font-size: ord.$font-size-heading-l;
+    font-weight: ord.$font-weight-headline;
+    line-height: ord.$line-height-heading;
+    letter-spacing: ord.$letter-spacing-headline;
+    color: ord.$color-text-body;
+    break-inside: avoid;
+  }
+
+  > blockquote > footer {
+    margin-block-start: ord.$space-xs;
+    font-family: ord.$font-family-base;
+    font-size: ord.$font-size-small;
+    font-weight: ord.$font-weight-body;
+    letter-spacing: normal;
+    color: ord.$color-text-secondary;
+  }
+
+  > figure {
+    margin-block: ord.$space-xl;
+    margin-inline: 0;
+    break-inside: avoid;
+  }
+
+  > figure > img,
+  > img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  > figure > figcaption {
+    margin-block-start: ord.$space-xs;
+    font-family: ord.$font-family-base;
+    font-size: ord.$font-size-small;
+    line-height: ord.$line-height-body;
+    color: ord.$color-text-secondary;
+  }
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+}
+
+// The first letter stays in the text; only its box is enlarged. Browsers without initial-letter
+// float a large letter instead.
+.drop-cap .body > p:first-of-type::first-letter {
+  float: inline-start;
+  margin-inline-end: ord.$space-xs;
+  font-family: ord.$font-family-headline;
+  font-size: ord.$font-size-headline-l;
+  font-weight: ord.$font-weight-headline;
+  line-height: ord.$line-height-headline;
+  color: ord.$color-text-body;
+}
+
+@supports (initial-letter: 3) {
+  .drop-cap .body > p:first-of-type::first-letter {
+    float: none;
+    initial-letter: 3;
+  }
+}
+
+// Two columns only once the article is wide enough to hold two comfortable lines side by side.
+@container (min-inline-size: 44rem) {
+  .columns-2 {
+    .measure {
+      max-inline-size: calc(2 * var(--article-column-line) + #{ord.$space-xxl});
+    }
+
+    .body {
+      column-count: 2;
+      column-gap: ord.$space-xxl;
+      column-rule-width: ord.$border-width-default;
+      column-rule-style: solid;
+      column-rule-color: ord.$color-border-divider;
+    }
+  }
+}
