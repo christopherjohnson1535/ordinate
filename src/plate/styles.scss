@@ -1,0 +1,75 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/site' as site;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-s;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+// The caption reads like a catalogue entry: a hairline, the reference and the facts on one line,
+// then the title and a few words.
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  padding-block-start: ord.$space-xs;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: ord.$space-m;
+}
+
+.label {
+  @include site.catalogue-label;
+  color: ord.$color-text-body;
+}
+
+.meta {
+  @include site.catalogue-label;
+  @include site.quiet-links;
+  color: ord.$color-text-secondary;
+  overflow-wrap: break-word;
+}
+
+.title {
+  @include site.reset-block;
+  @include site.headline;
+  font-size: ord.$font-size-headline-s;
+  color: ord.$color-text-body;
+}
+
+.description {
+  max-inline-size: 64ch;
+  color: ord.$color-text-body-secondary;
+  overflow-wrap: break-word;
+}
+
+.linked .media {
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.linked:hover .media {
+  opacity: 0.88;
+}
