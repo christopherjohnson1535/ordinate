@@ -199,6 +199,9 @@ const messages: I18nProviderProps.Messages = {
         filteringAriaLabel: 'Filter',
         filteringClearAriaLabel: 'Clear filter',
       },
+      token: {
+        dismissLabel: 'Remove',
+      },
       'top-navigation': {
         overflowMenuTriggerText: 'More',
       },

@@ -1,0 +1,40 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-inline-size: 760px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.narrow {
+  inline-size: 260px;
+}
+
+.prose {
+  max-inline-size: 520px;
+  margin-block: 0;
+  line-height: 1.8;
+}
+
+.inline-limit {
+  display: inline-block;
+  max-inline-size: 180px;
+  vertical-align: bottom;
+}

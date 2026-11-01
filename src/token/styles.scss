@@ -1,0 +1,145 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// A token reads like a callout tag on a drawing: a ruled box, with the dismiss button behind a hairline.
+.root {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-input);
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  max-inline-size: 100%;
+  min-block-size: ord.$size-control-height-small;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+// Inline tokens sit on a line of text, so they take the height of the line rather than of a control.
+.variant-inline {
+  @include styles.border-radius(ord.$border-radius-badge);
+  display: inline-flex;
+  vertical-align: bottom;
+  min-block-size: 0;
+  font-size: ord.$font-size-small;
+}
+
+.read-only {
+  background-color: ord.$color-background-control-read-only;
+}
+
+.disabled {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+  color: ord.$color-text-disabled;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-xs;
+
+  .variant-inline & {
+    padding-block: 0;
+    padding-inline: ord.$space-xxs;
+  }
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+
+  .variant-inline & {
+    gap: ord.$space-xxs;
+  }
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.label {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label-tag {
+  flex-shrink: 0;
+  color: ord.$color-text-secondary;
+}
+
+.description {
+  overflow: hidden;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: ord.$space-xs;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.tag {
+  display: inline-block;
+}
+
+.disabled {
+  .label-tag,
+  .description,
+  .tags {
+    color: inherit;
+  }
+}
+
+// Scoped under the token so these win over the button's own size and colors, whichever stylesheet loads first.
+.root .dismiss-button {
+  @include styles.border-radius(0);
+  border-start-end-radius: ord.$border-radius-input;
+  border-end-end-radius: ord.$border-radius-input;
+  flex-shrink: 0;
+  align-self: stretch;
+  inline-size: ord.$size-control-height-small;
+  min-block-size: 0;
+  border-width: 0;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+  background-color: transparent;
+  color: ord.$color-text-secondary;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    outline-offset: 0;
+  }
+}
+
+.variant-inline .dismiss-button {
+  border-start-end-radius: ord.$border-radius-badge;
+  border-end-end-radius: ord.$border-radius-badge;
+  inline-size: ord.$size-icon-medium;
+  padding-block: 0;
+}

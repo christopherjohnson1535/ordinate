@@ -7,6 +7,7 @@ import { ButtonProps } from '../../../button/interfaces';
 import { InternalButton } from '../../../button/internal';
 import { IconProps } from '../../../icon/interfaces';
 import { InternalIcon } from '../../../icon/internal';
+import { InternalToken } from '../../../token/internal';
 
 import styles from './styles.css.js';
 
@@ -14,6 +15,7 @@ export interface TokenListItem {
   label: string;
   labelTag?: string;
   description?: string;
+  tags?: ReadonlyArray<string>;
   iconName?: IconProps.Name;
   iconAriaLabel?: string;
   lang?: string;
@@ -31,6 +33,10 @@ export interface TokenListProps {
    */
   onDismiss?(index: number): void;
   /**
+   * `horizontal` wraps the tokens in rows; `vertical` stacks them, one per line.
+   */
+  alignment?: 'horizontal' | 'vertical';
+  /**
    * Shows only this many tokens, with a button to show the rest.
    */
   limit?: number;
@@ -44,6 +50,10 @@ export interface TokenListProps {
    */
   disabled?: boolean;
   /**
+   * Keeps the tokens at full contrast but removes the dismiss buttons.
+   */
+  readOnly?: boolean;
+  /**
    * Called after the last token is dismissed while focus was on it, so the host can move focus somewhere useful.
    */
   onEmptied?(): void;
@@ -56,16 +66,18 @@ export function getHiddenTokenCount(count: number, limit: number | undefined): n
 }
 
 /**
- * A wrapping row of tokens, each with an optional dismiss button. Dismissing a focused token moves focus
+ * A list of tokens, each with an optional dismiss button. Dismissing a focused token moves focus
  * to the next token's button, so focus is not lost with the removed one.
  */
 export function TokenList({
   items,
   onDismiss,
+  alignment = 'horizontal',
   limit,
   showMoreText,
   showFewerText,
   disabled = false,
+  readOnly = false,
   onEmptied,
   ariaLabel,
   className,
@@ -78,7 +90,6 @@ export function TokenList({
 
   const limited = getHiddenTokenCount(items.length, limit) > 0;
   const visible = limited && !expanded ? items.slice(0, limit) : items;
-  const dismissible = Boolean(onDismiss) && !disabled;
 
   useEffect(() => {
     const index = pendingFocus.current;
@@ -90,7 +101,12 @@ export function TokenList({
       onEmptied?.();
       return;
     }
-    buttonRefs.current[Math.min(index, visible.length - 1)]?.focus();
+    // Disabled tokens have no button, so look for the nearest one that does, forward first.
+    const candidates = [
+      ...buttonRefs.current.slice(index, visible.length),
+      ...buttonRefs.current.slice(0, index).reverse(),
+    ];
+    candidates.find(Boolean)?.focus();
   });
 
   if (items.length === 0) {
@@ -106,42 +122,35 @@ export function TokenList({
   };
 
   return (
-    <div className={clsx(styles.root, className)}>
+    <div className={clsx(styles.root, styles[`alignment-${alignment}`], className)}>
       <ul ref={listRef} id={listId} className={styles.list} aria-label={ariaLabel}>
         {visible.map((item, index) => {
           const itemDisabled = disabled || Boolean(item.disabled);
           return (
-            <li key={`${index}-${item.label}`} className={clsx(styles.token, itemDisabled && styles.disabled)}>
-              <span className={styles.content}>
-                <span className={styles.main}>
-                  {item.iconName && (
+            <li key={`${index}-${item.label}`} className={styles.item}>
+              <InternalToken
+                dismissButtonRef={button => {
+                  buttonRefs.current[index] = button;
+                }}
+                label={item.label}
+                labelTag={item.labelTag}
+                description={item.description}
+                tags={item.tags}
+                lang={item.lang}
+                icon={
+                  item.iconName && (
                     <InternalIcon
-                      className={styles.icon}
                       name={item.iconName}
                       ariaLabel={item.iconAriaLabel}
                       variant={itemDisabled ? 'disabled' : 'normal'}
                     />
-                  )}
-                  <span className={styles.label} lang={item.lang}>
-                    {item.label}
-                  </span>
-                  {item.labelTag && <span className={styles['label-tag']}>{item.labelTag}</span>}
-                </span>
-                {item.description && <span className={styles.description}>{item.description}</span>}
-              </span>
-              {dismissible && !item.disabled && (
-                <InternalButton
-                  ref={button => {
-                    buttonRefs.current[index] = button;
-                  }}
-                  className={styles['dismiss-button']}
-                  variant="icon"
-                  iconName="close"
-                  formAction="none"
-                  ariaLabel={item.dismissLabel}
-                  onClick={() => dismiss(index)}
-                />
-              )}
+                  )
+                }
+                disabled={itemDisabled}
+                readOnly={readOnly}
+                dismissLabel={item.dismissLabel}
+                onDismiss={onDismiss ? () => dismiss(index) : undefined}
+              />
             </li>
           );
         })}
