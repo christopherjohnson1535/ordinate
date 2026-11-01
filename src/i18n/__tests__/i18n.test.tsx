@@ -1,29 +1,17 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import fs from 'node:fs';
-import path from 'node:path';
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
 
 import I18nProvider, { I18nProviderProps } from '../../../lib/components/i18n';
-import german from '../../../lib/components/i18n/messages/all.de';
 import english from '../../../lib/components/i18n/messages/all.en';
 import { formatMessage } from '../../../lib/components/internal/i18n/format';
 import Modal from '../../../lib/components/modal';
 
 const namespace = '@ordinate/components';
-const messagesDir = path.resolve(__dirname, '../../../lib/components/i18n/messages');
-const locales = fs
-  .readdirSync(messagesDir)
-  .filter(file => /^all\..+\.js$/.test(file))
-  .map(file => file.slice('all.'.length, -'.js'.length));
-
-function keysOf(messages: I18nProviderProps.Messages, locale: string) {
-  return Object.entries(messages[namespace][locale]).flatMap(([component, values]) =>
-    Object.keys(values).map(key => `${component}.${key}`)
-  );
-}
+// Applications bring their own translations; the library ships English only.
+const german: I18nProviderProps.Messages = { [namespace]: { de: { modal: { closeAriaLabel: 'Schließen' } } } };
 
 afterEach(() => {
   document.documentElement.lang = '';
@@ -39,21 +27,14 @@ const renderModal = (wrapper?: (children: React.ReactElement) => React.ReactElem
 };
 
 describe('built-in messages', () => {
-  test('ship 15 locales', () => {
-    expect(locales).toHaveLength(15);
-    expect(locales).toContain('en');
+  test('ship English only', () => {
+    expect(Object.keys(english[namespace])).toEqual(['en']);
   });
 
-  test.each(locales)('%s has exactly the English keys', async locale => {
-    const { default: messages } = await import(path.join(messagesDir, `all.${locale}.js`));
-    expect(keysOf(messages, locale).sort()).toEqual(keysOf(english, 'en').sort());
-  });
-
-  test.each(locales)('every %s message is valid', async locale => {
-    const { default: messages } = await import(path.join(messagesDir, `all.${locale}.js`));
-    for (const values of Object.values(messages[namespace][locale]) as Array<Record<string, string>>) {
+  test('every English message is valid', () => {
+    for (const values of Object.values(english[namespace].en)) {
       for (const template of Object.values(values)) {
-        expect(() => formatMessage(template, { count: 2 }, locale)).not.toThrow();
+        expect(() => formatMessage(template, { count: 2 }, 'en')).not.toThrow();
       }
     }
   });

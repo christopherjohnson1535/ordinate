@@ -36,15 +36,16 @@ export function SaveBar() {
 
 `applyTheme` from `@ordinate/components/theming` changes a fixed set of brand tokens: primary and accent colors, font families and corner radii. The theme sits on top of the pinned revision. See [Theming, revisions and density](docs/THEMING.md).
 
-### Translations and right-to-left
+### Labels and right-to-left
 
-Components ship English labels. Wrap the application in `I18nProvider` with one of the 15 built-in locales, or your own messages:
+Components ship English labels for the text they render on their own, such as a close button's accessible name. Each label can be replaced with a prop, or for the whole application with `I18nProvider` and your own messages:
 
 ```tsx
 import I18nProvider from '@ordinate/components/i18n';
-import german from '@ordinate/components/i18n/messages/all.de';
 
-<I18nProvider locale="de" messages={[german]}>
+const messages = { '@ordinate/components': { en: { modal: { closeAriaLabel: 'Close dialog' } } } };
+
+<I18nProvider messages={[messages]}>
   <App />
 </I18nProvider>;
 ```

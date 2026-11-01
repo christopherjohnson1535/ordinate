@@ -38,13 +38,12 @@ A component is done when it has the four standard files, unit tests with an axe 
 
 ## Built-in strings
 
-Any text a component renders on its own, such as an accessible name for a close button or a "Loading" label, is a translatable message.
+Any text a component renders on its own, such as an accessible name for a close button or a "Loading" label, is a message. Ordinate ships these in English only; applications can replace them with props or with `I18nProvider`.
 
 - Expose it as an optional prop, such as `closeAriaLabel` or `i18nStrings.nextPageAriaLabel`, with no default value in the destructuring.
 - Add the English text to `src/i18n/messages/all.en.ts` under the component's folder name.
 - Read it in `internal.tsx` with `const i18n = useInternalI18n('modal')` and `i18n('closeAriaLabel', closeAriaLabel)`. The prop wins, then the `I18nProvider` locale, then English.
 - Messages with numbers use ICU plurals, such as `{count, plural, one {# item} other {# items}}`, and are called with `i18n(key, prop, { count })`.
-- Every locale file must define the same keys as English; the i18n tests check this.
 
 ## Right-to-left
 

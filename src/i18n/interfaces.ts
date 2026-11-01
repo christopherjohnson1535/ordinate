@@ -9,8 +9,8 @@ export interface I18nProviderProps {
    */
   locale?: string;
   /**
-   * Message sets to use, such as the built-in ones from `@ordinate/components/i18n/messages/all.de`.
-   * When several sets define the same message, the later set wins.
+   * Message sets to use. Ordinate ships English only, so these are the application's own
+   * messages. When several sets define the same message, the later set wins.
    */
   messages: ReadonlyArray<I18nProviderProps.Messages>;
   children?: React.ReactNode;
