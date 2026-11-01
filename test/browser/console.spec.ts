@@ -18,12 +18,12 @@ test('filters services with a typed property filter', async ({ devPage, page }) 
   await filter.pressSequentially('Status = Running');
   await page.keyboard.press('Enter');
 
-  await expect(devPage.content.getByText('4 matches')).toBeVisible();
+  await expect(devPage.content.getByText('4 of 7')).toBeVisible();
   await expect(rowHeaders(table)).toHaveText(['atrium-api', 'lobby-cache', 'north-annex-web', 'reading-room']);
   await expect(devPage.content.getByRole('button', { name: /Status.*Running/ }).first()).toBeVisible();
 
   await devPage.content.getByRole('button', { name: /^Remove filter/ }).click();
-  await expect(devPage.content.getByText('4 matches')).toBeHidden();
+  await expect(devPage.content.getByText('4 of 7')).toBeHidden();
   await expect(rowHeaders(table)).toHaveCount(5);
 });
 
@@ -71,8 +71,22 @@ test('changes the page size through collection preferences', async ({ devPage, p
   await expect(devPage.content.getByRole('button', { name: 'Next page' })).toBeDisabled();
 });
 
+test('draws the schedule with row tags and opens the selected row as a detail callout', async ({ devPage }) => {
+  const table = devPage.content.getByRole('table', { name: 'Services' });
+  await expect(table.getByRole('columnheader', { name: 'Tag' })).toBeVisible();
+  await expect(table.getByRole('cell', { name: 'S4', exact: true })).toBeVisible();
+
+  const panel = devPage.content.getByRole('complementary', { name: 'north-annex-web' });
+  await expect(panel.getByText('Detail S1')).toBeVisible();
+
+  await table.getByRole('radio', { name: 'Select atrium-api' }).check();
+  const detail = devPage.content.getByRole('complementary', { name: 'atrium-api' });
+  await expect(detail.getByText('Detail S3')).toBeVisible();
+  await expect(devPage.content.getByRole('button', { name: 'Restart S3' })).toBeEnabled();
+});
+
 test('closes and reopens the split panel', async ({ devPage }) => {
-  const panel = devPage.content.getByRole('complementary', { name: 'Rollout' });
+  const panel = devPage.content.getByRole('complementary', { name: 'north-annex-web' });
   await expect(panel).toBeVisible();
 
   await panel.getByRole('button', { name: 'Close panel' }).click();

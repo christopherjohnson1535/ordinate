@@ -47,6 +47,9 @@ const services: Service[] = [
   { name: 'reading-room', status: 'Running', image: 'web:v2', nodes: 3 },
 ];
 
+// Each service keeps its tag, S1 to S7, however the schedule is sorted, filtered or paged.
+const serviceTag = (service: Service) => `S${services.indexOf(service) + 1}`;
+
 const statusTypes: Record<Status, StatusIndicatorProps.Type> = {
   Running: 'success',
   Starting: 'in-progress',
@@ -94,7 +97,12 @@ function EmptyState({ title }: { title: string }) {
   );
 }
 
-function ServicesTable() {
+interface ServicesTableProps {
+  selected: Service | null;
+  onSelect: (service: Service) => void;
+}
+
+function ServicesTable({ selected, onSelect }: ServicesTableProps) {
   const [preferences, setPreferences] = useState<CollectionPreferencesProps.Preferences>({
     pageSize: 5,
     stripedRows: false,
@@ -114,7 +122,11 @@ function ServicesTable() {
   return (
     <Table
       {...collectionProps}
+      selectedItems={selected ? [selected] : []}
+      onSelectionChange={event => onSelect(event.detail.selectedItems[0])}
       items={items}
+      caption="Schedule of services"
+      rowTag={serviceTag}
       columnDefinitions={columnDefinitions}
       columnDisplay={preferences.contentDisplay}
       stripedRows={preferences.stripedRows}
@@ -126,7 +138,7 @@ function ServicesTable() {
           counter={`(${services.length})`}
           actions={
             <SpaceBetween direction="horizontal" size="xs">
-              <Button disabled={!collectionProps.selectedItems?.length}>Restart</Button>
+              <Button disabled={!selected}>{selected ? `Restart ${serviceTag(selected)}` : 'Restart'}</Button>
               <Button variant="primary">Add service</Button>
             </SpaceBetween>
           }
@@ -139,7 +151,7 @@ function ServicesTable() {
           {...propertyFilterProps}
           filteringPlaceholder="Find services"
           filteringAriaLabel="Find services"
-          countText={filteredItemsCount === undefined ? undefined : `${filteredItemsCount} matches`}
+          countText={filteredItemsCount === undefined ? undefined : `${filteredItemsCount} of ${services.length}`}
         />
       }
       pagination={<Pagination {...paginationProps} />}
@@ -194,7 +206,29 @@ function Overview() {
 }
 
 // The phase 3 gate: the console page from Sheet 3 of the concept canvas, built only from Ordinate.
+function ServiceDetail({ service }: { service: Service }) {
+  return (
+    <SpaceBetween size="l">
+      <KeyValuePairs
+        columns={1}
+        items={[
+          {
+            label: 'Status',
+            value: <StatusIndicator type={statusTypes[service.status]}>{service.status}</StatusIndicator>,
+          },
+          { label: 'Image', value: <Box variant="code">{service.image}</Box> },
+          { label: 'Nodes', value: `${service.nodes} of 8` },
+        ]}
+      />
+      {service.image === 'web:v2' && (
+        <ProgressBar value={60} label="web:v2 is rolling out" additionalInfo="3 of 5 replicas are ready." />
+      )}
+    </SpaceBetween>
+  );
+}
+
 export default function Console() {
+  const [selectedService, setSelectedService] = useState<Service | null>(services[0]);
   const [activeHref, setActiveHref] = useState('#/services');
   const [activeTabId, setActiveTabId] = useState('services');
   const [splitPanelOpen, setSplitPanelOpen] = useState(true);
@@ -263,15 +297,22 @@ export default function Console() {
         splitPanelPreferences={splitPanelPreferences}
         onSplitPanelPreferencesChange={event => setSplitPanelPreferences(event.detail)}
         splitPanel={
-          <SplitPanel header="Rollout" headerDescription="maxUnavailable 0, maxSurge 1">
-            <ProgressBar value={60} label="web:v2 is rolling out" additionalInfo="3 of 5 replicas are ready." />
-          </SplitPanel>
+          selectedService && (
+            <SplitPanel
+              header={selectedService.name}
+              headerTag={serviceTag(selectedService)}
+              headerDescription="maxUnavailable 0, maxSurge 1"
+            >
+              <ServiceDetail service={selectedService} />
+            </SplitPanel>
+          )
         }
         content={
           <ContentLayout
             header={
               <Header
                 variant="h1"
+                code="Sheet A-02"
                 description="North Annex, production · us-mountain-1"
                 actions={
                   <SpaceBetween direction="horizontal" size="xs">
@@ -290,7 +331,11 @@ export default function Console() {
                 activeTabId={activeTabId}
                 onChange={event => setActiveTabId(event.detail.activeTabId)}
                 tabs={[
-                  { id: 'services', label: 'Services', content: <ServicesTable /> },
+                  {
+                    id: 'services',
+                    label: 'Services',
+                    content: <ServicesTable selected={selectedService} onSelect={setSelectedService} />,
+                  },
                   {
                     id: 'deployments',
                     label: 'Deployments',
