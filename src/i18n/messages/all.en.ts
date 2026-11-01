@@ -110,6 +110,10 @@ const messages: I18nProviderProps.Messages = {
       link: {
         externalIconAriaLabel: 'Opens in a new tab',
       },
+      list: {
+        moveDownAriaLabel: 'Move down',
+        moveUpAriaLabel: 'Move up',
+      },
       modal: {
         closeAriaLabel: 'Close',
       },
