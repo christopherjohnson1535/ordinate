@@ -1,0 +1,165 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// A white strip ruled off from the page in ink, like the title block of a drawing.
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: ord.$space-l;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-l;
+  border-block-end-width: ord.$border-width-section;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+.identity {
+  display: flex;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+}
+
+.identity-link {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+  text-decoration-line: none;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  &:hover .title {
+    text-decoration-line: underline;
+    text-decoration-thickness: ord.$border-width-default;
+    text-underline-offset: ord.$space-xxs;
+  }
+}
+
+.logo {
+  display: block;
+  flex-shrink: 0;
+  inline-size: auto;
+  max-block-size: ord.$size-icon-big;
+}
+
+.title {
+  @include styles.font-heading;
+  overflow: hidden;
+  font-size: ord.$font-size-heading-s;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-inline-size: 0;
+}
+
+.utilities {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: ord.$space-xxs;
+  margin-inline-start: auto;
+}
+
+.utility-slot {
+  position: relative;
+  display: inline-flex;
+}
+
+// Two classes, so these win over the button's own variant rules.
+.utility-slot .utility:not(.utility-primary) {
+  border-color: transparent;
+  background-color: transparent;
+  color: ord.$color-text-body;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+  }
+}
+
+.utility-slot .icon-only {
+  inline-size: ord.$size-control-height;
+  padding-inline: 0;
+}
+
+.utility-label {
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  white-space: nowrap;
+}
+
+// Sits on the top end corner of the icon, wherever the icon is in the control.
+.badge {
+  @include styles.border-radius(ord.$border-radius-badge);
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$space-xs} - #{ord.$space-xxxs});
+  inset-inline-start: calc(#{ord.$space-button-horizontal} + #{ord.$size-icon} / 2 + #{ord.$space-xxxs});
+  inline-size: ord.$space-xs;
+  block-size: ord.$space-xs;
+  background-color: ord.$color-border-accent;
+  box-shadow: 0 0 0 ord.$border-width-section ord.$color-background-container;
+  pointer-events: none;
+}
+
+.badge-centered {
+  inset-inline-start: calc(50% + #{ord.$space-xxxs});
+}
+
+.menu-header {
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-input-horizontal;
+}
+
+.menu-title {
+  @include styles.font-label;
+}
+
+.menu-description {
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+// Invisible copies of the identity and every utility in each state, measured to decide what fits.
+// The frame clips them, so the copies never widen the page.
+.ruler-frame {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ruler {
+  display: flex;
+  gap: ord.$space-xxs;
+  inline-size: max-content;
+
+  > * {
+    flex-shrink: 0;
+  }
+}
+
+.ruler-item {
+  display: inline-flex;
+}

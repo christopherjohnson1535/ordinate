@@ -80,6 +80,9 @@ const messages: I18nProviderProps.Messages = {
         scrollLeftAriaLabel: 'Scroll to previous tabs',
         scrollRightAriaLabel: 'Scroll to next tabs',
       },
+      'top-navigation': {
+        overflowMenuTriggerText: 'More',
+      },
     },
   },
 };
