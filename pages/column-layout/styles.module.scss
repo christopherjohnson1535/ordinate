@@ -1,0 +1,35 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-inline-size: 1040px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// Drag the corner to watch the columns drop away as the container narrows.
+.resizable {
+  overflow: auto;
+  resize: horizontal;
+  min-inline-size: 200px;
+  max-inline-size: 100%;
+  padding: 16px;
+  border: 1px dashed var(--ord-color-border-control);
+}
+
+.cell {
+  padding: 12px;
+  border: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-container);
+  font-family: var(--ord-font-family-mono);
+  font-size: 13px;
+}

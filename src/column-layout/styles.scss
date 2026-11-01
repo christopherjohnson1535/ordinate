@@ -1,0 +1,89 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: grid;
+  grid-template-columns: repeat(var(--column-count, 1), minmax(0, 1fr));
+  min-inline-size: 0;
+}
+
+// The half gaps place the rules in the middle of the gutters, so every column keeps the same width
+// for its content whether or not a rule runs beside it.
+.gutters {
+  --column-layout-column-half: calc(#{ord.$space-l} / 2);
+  --column-layout-row-half: calc(#{ord.$space-scaled-l} / 2);
+  column-gap: ord.$space-l;
+  row-gap: ord.$space-scaled-l;
+}
+
+.gutters.vertical-rules {
+  --column-layout-column-half: calc(#{ord.$space-xl} / 2);
+  column-gap: ord.$space-xl;
+}
+
+.gutters.horizontal-rules {
+  --column-layout-row-half: calc(#{ord.$space-scaled-xl} / 2);
+  row-gap: ord.$space-scaled-xl;
+}
+
+.item {
+  position: relative;
+  min-inline-size: 0;
+}
+
+.vertical-rules > .item:not(.first-in-row)::before,
+.horizontal-rules > .item:not(.first-row)::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.vertical-rules > .item:not(.first-in-row)::before {
+  inset-block: 0;
+  inset-inline-start: calc(-1 * var(--column-layout-column-half, 0px));
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+.horizontal-rules > .item:not(.first-row)::after {
+  inset-block-start: calc(-1 * var(--column-layout-row-half, 0px));
+  inset-inline: calc(-1 * var(--column-layout-column-half, 0px));
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+// Rules stop at the outer edges of the layout instead of running into the gutters beyond.
+.horizontal-rules > .item.first-in-row::after {
+  inset-inline-start: 0;
+}
+
+.horizontal-rules > .item.last-in-row::after {
+  inset-inline-end: 0;
+}
+
+// With both kinds of rules the vertical ones cross the row gutters, so the lines meet.
+.vertical-rules.horizontal-rules > .item:not(.first-in-row) {
+  &::before {
+    inset-block: calc(-1 * var(--column-layout-row-half, 0px));
+  }
+
+  &.first-row::before {
+    inset-block-start: 0;
+  }
+
+  &.last-row::before {
+    inset-block-end: 0;
+  }
+}
+
+.variant-text-grid {
+  @include styles.font-body;
+  color: ord.$color-text-body;
+}
