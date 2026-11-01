@@ -15,6 +15,9 @@ const messages: I18nProviderProps.Messages = {
       button: {
         externalIconAriaLabel: 'Opens in a new tab',
       },
+      dialog: {
+        dismissAriaLabel: 'Close dialog',
+      },
       'form-field': {
         errorIconAriaLabel: 'Error',
         warningIconAriaLabel: 'Warning',

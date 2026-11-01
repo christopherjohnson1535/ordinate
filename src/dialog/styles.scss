@@ -1,0 +1,98 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// Drawn like the modal's plate, but placed in the page flow instead of over it.
+.dialog {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-modal);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  outline-style: none;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  @include styles.with-motion {
+    animation-name: dialog-enter;
+    animation-duration: ord.$motion-duration-responsive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-m;
+  min-block-size: ord.$size-control-height;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-l ord.$space-scaled-xs;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+}
+
+.heading {
+  @include styles.font-heading;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: ord.$font-size-heading-s;
+  overflow-wrap: anywhere;
+}
+
+.close-button {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+
+.content {
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
+}
+
+.content-row {
+  display: flex;
+  align-items: flex-start;
+  padding-inline-end: ord.$space-scaled-xs;
+
+  > .content {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  > .close-button {
+    margin-block-start: ord.$space-scaled-xs;
+  }
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-l;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+  }
+}
