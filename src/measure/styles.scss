@@ -1,0 +1,124 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+.label {
+  @include styles.font-label;
+}
+
+.reading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.value {
+  @include styles.font-heading;
+  font-size: ord.$font-size-display-l;
+  font-weight: ord.$font-weight-light;
+  font-variant-numeric: tabular-nums;
+}
+
+.of,
+.unit {
+  color: ord.$color-text-body-secondary;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  font-variant-numeric: tabular-nums;
+}
+
+// A ruler drawn in ink: the run up to the reading sits on the baseline and the ticks hang below
+// it, longer at the numbered divisions.
+.ruler {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+  margin-block-start: ord.$space-xxs;
+}
+
+.scale {
+  position: relative;
+  block-size: ord.$space-m;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-strong;
+}
+
+.run {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  block-size: ord.$space-xs;
+  background-color: ord.$color-border-accent;
+}
+
+.tick {
+  position: absolute;
+  inset-block-start: 100%;
+  block-size: ord.$space-xxs;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-strong;
+}
+
+.tick-major {
+  block-size: ord.$space-xs;
+}
+
+// The limit crosses the whole ruler, ticks included, like a dimension line.
+.limit-mark {
+  position: absolute;
+  inset-block: calc(-1 * #{ord.$space-xxs}) calc(-1 * #{ord.$space-xs});
+  border-inline-start-width: ord.$border-width-section;
+  border-inline-start-style: dashed;
+  border-inline-start-color: ord.$color-border-strong;
+}
+
+.ends {
+  display: flex;
+  justify-content: space-between;
+  padding-block-start: ord.$space-xs;
+  color: ord.$color-text-secondary;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  line-height: ord.$line-height-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.limit-row {
+  display: flex;
+}
+
+// Starts or ends at the limit mark, and wraps rather than running past the edge.
+.limit-label {
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  line-height: ord.$line-height-body;
+  overflow-wrap: anywhere;
+}
+
+.limit-label-end {
+  text-align: end;
+}
+
+.description {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-small;
+}

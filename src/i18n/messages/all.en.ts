@@ -228,6 +228,10 @@ const messages: I18nProviderProps.Messages = {
         moveDownAriaLabel: 'Move down',
         moveUpAriaLabel: 'Move up',
       },
+      measure: {
+        limitLabel: 'Limit {limit}',
+        ofMax: 'of {max}',
+      },
       modal: {
         closeAriaLabel: 'Close',
       },

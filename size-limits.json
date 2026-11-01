@@ -239,6 +239,10 @@
     "minified": 2200,
     "gzip": 1100
   },
+  "measure": {
+    "minified": 26100,
+    "gzip": 8300
+  },
   "media": {
     "minified": 4700,
     "gzip": 1700
