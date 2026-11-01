@@ -35,6 +35,7 @@ export const colorPaletteTokenNames = [
   'colorOchre400',
   'colorTerminal',
   'colorTerminalDark',
+  'colorRed300',
 ] as const;
 
 export const colorsTokenNames = [

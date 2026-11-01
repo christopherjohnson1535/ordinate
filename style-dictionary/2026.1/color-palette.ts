@@ -32,6 +32,8 @@ export const tokens: ColorPaletteDictionary = {
   colorChalkMark: '#22303A',
   colorCyan400: '#58C4DD',
   colorRed400: '#E5566F',
+  // Lighter red for text on dark read-only surfaces, where red 400 falls below 4.5:1.
+  colorRed300: '#F07F92',
   colorGreen400: '#8FD4A8',
   colorOchre400: '#E3B55B',
   colorTerminal: '#17181A',
