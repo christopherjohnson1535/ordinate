@@ -152,6 +152,9 @@ const messages: I18nProviderProps.Messages = {
       popover: {
         dismissAriaLabel: 'Close popover',
       },
+      'prompt-input': {
+        actionButtonAriaLabel: 'Send',
+      },
       'property-filter': {
         allPropertiesLabel: 'All properties',
         applyActionText: 'Apply',
