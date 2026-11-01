@@ -40,3 +40,5 @@ Build output goes to `lib/`, which is git-ignored:
 
 - `lib/components` is the publishable `@ordinate/components` package.
 - `lib/style-dictionary` is the compiled token source used by the build and the contract test.
+- `lib/design-tokens` is the publishable `@ordinate/design-tokens` package (see [Styling](STYLING.md)).
+- `lib/components-definitions` holds one API definition per component (see [API definitions](API_DOCS.md)).

@@ -14,6 +14,7 @@ Two things set it apart:
 | `@ordinate/components`       | The React components. Built from this repository's root.             |
 | `@ordinate/global-styles`    | Fonts, base page styles, and the mode, density and revision helpers. |
 | `@ordinate/collection-hooks` | Filtering, sorting, pagination and selection state for collections.  |
+| `@ordinate/design-tokens`    | The design tokens as Sass variables and JavaScript constants.        |
 
 ## Usage
 

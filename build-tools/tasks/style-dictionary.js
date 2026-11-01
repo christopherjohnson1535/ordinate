@@ -3,6 +3,7 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { rootDir, task, tsc, toKebabCase } = require('../utils');
+const { writeDesignTokens } = require('../utils/design-tokens');
 
 const outputDir = path.join(rootDir, 'src/internal/generated/styles');
 const themingDir = path.join(rootDir, 'src/internal/generated/theming');
@@ -105,4 +106,5 @@ module.exports = task('style-dictionary', async () => {
   await fs.writeFile(path.join(outputDir, 'tokens.scss'), renderTokens(allTokenNames));
   await fs.mkdir(themingDir, { recursive: true });
   await fs.writeFile(path.join(themingDir, 'index.ts'), renderTheming(revisions, themeableTokenNames));
+  await writeDesignTokens(allTokenNames);
 });
