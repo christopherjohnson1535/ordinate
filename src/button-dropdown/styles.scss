@@ -1,0 +1,225 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+@mixin start-radius($radius) {
+  border-start-start-radius: $radius;
+  border-end-start-radius: $radius;
+}
+
+@mixin end-radius($radius) {
+  border-start-end-radius: $radius;
+  border-end-end-radius: $radius;
+}
+
+@mixin divider-above {
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
+
+.root {
+  display: inline-flex;
+  max-inline-size: 100%;
+  vertical-align: middle;
+}
+
+.dropdown {
+  min-inline-size: 0;
+}
+
+.trigger-area {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+
+.trigger {
+  min-inline-size: 0;
+}
+
+// Two classes, so these win over the button's own variant rules.
+.root .inline-icon {
+  inline-size: ord.$size-control-height-small;
+  min-block-size: ord.$size-control-height-small;
+  border-color: transparent;
+  background-color: transparent;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+  }
+}
+
+.split .main-action {
+  @include end-radius(0);
+}
+
+.split .split-trigger {
+  @include start-radius(0);
+  padding-inline: ord.$space-xs;
+  border-inline-start-width: 0;
+}
+
+// Primary segments share one fill, so a hairline of paper separates them.
+.split .split-trigger-primary {
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-color: ord.$color-background-container;
+}
+
+.menu {
+  box-sizing: border-box;
+  inline-size: max-content;
+  min-inline-size: 100%;
+  max-inline-size: ord.$size-dropdown-max-width;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: ord.$space-xxs;
+  padding-inline: 0;
+  list-style: none;
+
+  &:focus {
+    outline-width: 0;
+  }
+}
+
+.sub-list {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.item-row,
+.expandable-group {
+  display: block;
+}
+
+.group {
+  display: block;
+  padding-block: ord.$space-xxs;
+
+  &:first-child {
+    padding-block-start: 0;
+  }
+
+  &:last-child {
+    padding-block-end: 0;
+  }
+}
+
+.group + .group,
+.group + .item-row,
+.item-row + .group {
+  @include divider-above;
+}
+
+.group-label {
+  @include styles.font-label;
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-xs ord.$space-xxs;
+  padding-inline: ord.$space-input-horizontal;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.item {
+  @include styles.font-body;
+  display: flex;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-input-horizontal;
+  color: ord.$color-text-body;
+  text-decoration-line: none;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    outline-width: 0;
+    background-color: ord.$color-background-item-hover;
+  }
+
+  // Drawn inside the item so the scrolling list does not clip it.
+  &:focus-visible {
+    box-shadow: inset 0 0 0 ord.$border-width-focus-ring ord.$color-border-focus-ring;
+  }
+}
+
+.depth-1 {
+  padding-inline-start: ord.$space-xl;
+}
+
+.depth-2 {
+  padding-inline-start: ord.$space-xxl;
+}
+
+.item-disabled {
+  color: ord.$color-text-disabled;
+  cursor: default;
+}
+
+// Icons sit on the first line of text, which is taller than the icon.
+.check,
+.icon,
+.external-icon,
+.expand-icon {
+  flex-shrink: 0;
+  margin-block-start: ord.$space-xxxs;
+}
+
+.check {
+  display: inline-flex;
+  inline-size: ord.$size-icon;
+}
+
+.item-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.description,
+.disabled-reason,
+.secondary-text {
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.item-disabled .description,
+.item-disabled .secondary-text {
+  color: inherit;
+}
+
+.disabled-reason {
+  display: none;
+
+  .item:hover &,
+  .item:focus & {
+    display: block;
+  }
+}
+
+.secondary-text {
+  flex-shrink: 0;
+  margin-inline-start: ord.$space-s;
+  white-space: nowrap;
+}
+
+.expand-icon {
+  @include styles.with-motion {
+    transition-property: transform;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  .expanded & {
+    transform: rotate(180deg);
+  }
+}

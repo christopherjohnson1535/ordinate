@@ -15,6 +15,10 @@ const messages: I18nProviderProps.Messages = {
       button: {
         externalIconAriaLabel: 'Opens in a new tab',
       },
+      'button-dropdown': {
+        ariaLabel: 'More actions',
+        externalIconAriaLabel: 'Opens in a new tab',
+      },
       dialog: {
         dismissAriaLabel: 'Close dialog',
       },
