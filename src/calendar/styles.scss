@@ -1,0 +1,27 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: inline-flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-xs;
+  color: ord.$color-text-body;
+}
+
+// Reserves its line even when empty, so the calendar does not change height as the pointer moves.
+.disabled-reason {
+  min-block-size: ord.$line-height-body;
+  max-inline-size: calc(7 * #{ord.$size-control-height});
+  padding-block-start: ord.$space-scaled-xxs;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider-secondary;
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-secondary;
+}

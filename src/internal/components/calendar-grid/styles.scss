@@ -1,0 +1,171 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+// A month is drawn like a table on a drawing sheet: a ruled header row, figures of equal width,
+// and a mark on each day that the states fill or outline.
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xxs;
+  min-block-size: ord.$size-control-height;
+}
+
+.header-slot {
+  display: flex;
+  flex: 0 0 ord.$size-control-height;
+  justify-content: center;
+}
+
+.title {
+  @include styles.font-heading;
+  flex: 1 1 auto;
+  font-size: ord.$font-size-heading-xs;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: ord.$color-text-body;
+}
+
+// Scoped under the header so the size wins over the button's own, whichever stylesheet loads first.
+.header .page-button {
+  inline-size: ord.$size-control-height-small;
+  min-block-size: ord.$size-control-height-small;
+}
+
+.grid {
+  box-sizing: border-box;
+  inline-size: calc(7 * #{ord.$size-control-height});
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.weekday {
+  @include styles.font-label;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  font-size: ord.$font-size-small;
+  text-align: center;
+  color: ord.$color-text-secondary;
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
+}
+
+.cell {
+  position: relative;
+  block-size: ord.$size-control-height;
+  padding-block: 0;
+  padding-inline: 0;
+  text-align: center;
+  vertical-align: middle;
+  outline-style: none;
+  cursor: pointer;
+
+  // The band that joins the days of a range; it stops halfway into the first and last day.
+  &::before {
+    position: absolute;
+    inset-block: ord.$space-xxxs;
+    inset-inline: 0;
+    content: '';
+  }
+
+  &:empty {
+    cursor: default;
+  }
+}
+
+.in-range::before {
+  background-color: ord.$color-background-item-selected;
+}
+
+.range-start::before {
+  inset-inline-start: 50%;
+}
+
+.range-end::before {
+  inset-inline-end: 50%;
+}
+
+.range-start.range-end::before {
+  content: none;
+}
+
+.mark {
+  @include styles.font-body;
+  @include styles.border-radius(ord.$border-radius-button);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: calc(100% - 2 * #{ord.$space-xxxs});
+  block-size: calc(100% - 2 * #{ord.$space-xxxs});
+  margin-block: 0;
+  margin-inline: auto;
+  font-variant-numeric: tabular-nums;
+  color: ord.$color-text-body;
+
+  @include styles.with-motion {
+    transition-property: background-color, color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  .cell:hover > & {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  .cell:focus-visible > & {
+    @include styles.focus-ring;
+  }
+
+  .outside > & {
+    color: ord.$color-text-secondary;
+  }
+
+  .current > & {
+    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-strong;
+  }
+
+  .disabled > &,
+  .disabled:hover > & {
+    @include styles.hatch;
+    background-color: transparent;
+    color: ord.$color-text-disabled;
+  }
+
+  .selected > &,
+  .selected:hover > & {
+    background-color: ord.$color-background-control-checked;
+    color: ord.$color-foreground-control-checked;
+  }
+
+  // Today keeps a ring when it is selected, drawn inside the fill in the fill's text color.
+  .selected.current > & {
+    box-shadow:
+      inset 0 0 0 ord.$border-width-section ord.$color-background-control-checked,
+      inset 0 0 0 calc(2 * #{ord.$border-width-section}) ord.$color-foreground-control-checked;
+  }
+}
+
+.disabled {
+  cursor: default;
+}
+
+.year-grid .cell {
+  block-size: calc(1.5 * #{ord.$size-control-height});
+}
+
+.month-cell .mark {
+  @include styles.font-label;
+}

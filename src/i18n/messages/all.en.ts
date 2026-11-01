@@ -45,6 +45,14 @@ const messages: I18nProviderProps.Messages = {
         ariaLabel: 'More actions',
         externalIconAriaLabel: 'Opens in a new tab',
       },
+      calendar: {
+        previousMonthAriaLabel: 'Previous month',
+        nextMonthAriaLabel: 'Next month',
+        previousYearAriaLabel: 'Previous year',
+        nextYearAriaLabel: 'Next year',
+        todayAriaLabel: 'Today',
+        currentMonthAriaLabel: 'This month',
+      },
       cards: {
         loadingText: 'Loading',
       },
