@@ -1,0 +1,180 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// A specimen sheet: every group under a sheet number and an ink rule, every component in a cell
+// with its name as a mono caption.
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ord-space-xxxl);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ord-space-s);
+  max-inline-size: 72ch;
+
+  h1 {
+    margin: 0;
+    font-size: var(--ord-font-size-heading-xl);
+    font-weight: var(--ord-font-weight-page-heading);
+    line-height: var(--ord-line-height-heading);
+  }
+
+  p {
+    margin: 0;
+    color: var(--ord-color-text-body-secondary);
+  }
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ord-space-scaled-l);
+}
+
+.group-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ord-space-m);
+  padding-block-end: var(--ord-space-xs);
+  border-block-end: 2px solid var(--ord-color-border-strong);
+}
+
+.group-number {
+  font-family: var(--ord-font-family-mono);
+  font-size: var(--ord-font-size-small);
+  color: var(--ord-color-text-body-secondary);
+}
+
+.group-title {
+  margin: 0;
+  font-size: var(--ord-font-size-heading-m);
+  font-weight: var(--ord-font-weight-heading);
+  line-height: var(--ord-line-height-heading);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--ord-space-scaled-xl) var(--ord-space-scaled-l);
+  align-items: start;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ord-space-scaled-xs);
+  min-inline-size: 0;
+  padding-block-start: var(--ord-space-scaled-xs);
+  border-block-start: 1px dashed var(--ord-color-border-divider);
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--ord-font-family-mono);
+  font-size: var(--ord-font-size-small);
+  font-weight: var(--ord-font-weight-body);
+  letter-spacing: var(--ord-letter-spacing-caption);
+  line-height: var(--ord-line-height-body);
+  color: var(--ord-color-text-body-secondary);
+}
+
+.note {
+  margin: 0;
+  font-size: var(--ord-font-size-small);
+  color: var(--ord-color-text-body-secondary);
+}
+
+.example {
+  min-inline-size: 0;
+  padding-block-start: var(--ord-space-scaled-xs);
+}
+
+// Layouts, drawers and panels fill their container, so they get a framed box of fixed height.
+.frame {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-layout-main);
+
+  > * {
+    flex: 1;
+    min-block-size: 0;
+  }
+}
+
+.frame-short {
+  block-size: 240px;
+}
+
+.frame-medium {
+  block-size: 360px;
+}
+
+.frame-tall {
+  block-size: 560px;
+}
+
+.swatch {
+  padding: var(--ord-space-scaled-xs) var(--ord-space-scaled-s);
+  border: 1px dashed var(--ord-color-border-strong);
+  font-family: var(--ord-font-family-mono);
+  font-size: var(--ord-font-size-small);
+  color: var(--ord-color-text-body-secondary);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ord-space-xs) var(--ord-space-s);
+}
+
+.readout {
+  margin: 0;
+  margin-block-start: var(--ord-space-xs);
+  font-family: var(--ord-font-family-mono);
+  font-size: var(--ord-font-size-small);
+  color: var(--ord-color-text-body-secondary);
+}
+
+// The tutorial panel is drawn for the app layout's help column, so it keeps that width.
+.column {
+  max-inline-size: 320px;
+  border: 1px solid var(--ord-color-border-divider);
+}
+
+// Website pieces run edge to edge in a site; here each sits in a hairline frame so its band shows.
+.site {
+  min-inline-size: 0;
+  border: 1px dashed var(--ord-color-border-divider);
+  background-color: var(--ord-color-background-container);
+}
+
+// Pieces that sit inside a section on a real site get the section's inner spacing here.
+.padded {
+  padding: var(--ord-space-section-block-small) var(--ord-space-section-inline);
+}
+
+.site-text {
+  margin: 0;
+}
+
+.address {
+  font-style: normal;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--ord-space-scaled-m);
+}

@@ -22,6 +22,11 @@ export const knownAxeViolations: Record<string, Record<string, string>> = {
     'scrollable-region-focusable':
       'Content of a fitHeight container scrolls inside it but cannot take focus when nothing in it can.',
   },
+  'examples/all-components': {
+    'label-content-name-mismatch':
+      'The tree view names each item by its own row text, as on tree-view/simple, so the secondary text and the ' +
+      'children of an expanded item are visible but not part of its name.',
+  },
   'tree-view/simple': {
     'label-content-name-mismatch':
       'An expanded parent item contains its child items, so its visible text includes theirs, while its name is ' +
