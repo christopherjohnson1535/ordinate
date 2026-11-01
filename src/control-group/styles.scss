@@ -1,0 +1,68 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use 'sass:list';
+@use '../internal/styles/tokens' as ord;
+
+@mixin start-radius($radius) {
+  border-start-start-radius: $radius;
+  border-end-start-radius: $radius;
+}
+
+@mixin end-radius($radius) {
+  border-start-end-radius: $radius;
+  border-end-end-radius: $radius;
+}
+
+// The grouped controls do not know they are grouped, and each draws its border on a different
+// element: the input's root, the button itself, the select's trigger. The group finds those elements
+// by the prefix of their scoped class names, which the build derives from the folder and class name.
+$surface-classes: 'input_root', 'button_button', 'internal-components-select-base_trigger', 'textarea_textarea';
+
+$surface-list: ();
+@each $name in $surface-classes {
+  $surface-list: list.append($surface-list, '[class^="ord_#{$name}_"]', $separator: comma);
+  $surface-list: list.append($surface-list, '[class*=" ord_#{$name}_"]', $separator: comma);
+}
+$surface: ':is(#{$surface-list})';
+$popup: '[class*="ord_internal-components-dropdown_popup_"]';
+// A surface inside another one, such as the clear button of a search input, or inside an open list
+// is part of a control rather than its outline.
+$outline: '#{$surface}:not(#{$surface} *, #{$popup} *)';
+
+.root {
+  display: flex;
+  align-items: stretch;
+  min-inline-size: 0;
+}
+
+.item {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+
+  &:has(input:not([type='checkbox'], [type='radio']), textarea, [aria-haspopup='listbox']) {
+    flex: 1 1 0;
+  }
+
+  // Lifts the focus ring above the neighbouring control, which would otherwise paint over it.
+  &:focus-within {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// The error and warning mark belongs on the leading edge of the whole group, not at every seam.
+.item:not(:first-child) #{$outline} {
+  @include start-radius(0);
+  border-inline-start-width: 0;
+  box-shadow: none;
+}
+
+.item:not(:last-child) #{$outline} {
+  @include end-radius(0);
+}
