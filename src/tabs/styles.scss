@@ -1,0 +1,252 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+}
+
+.variant-container,
+.variant-stacked {
+  @include styles.border-radius(ord.$border-radius-container);
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+}
+
+// Stacked tabs join the containers around them into one sheet, as stacked containers do.
+.variant-stacked {
+  @include styles.border-radius(0);
+}
+
+.variant-stacked + .variant-stacked {
+  border-block-start-width: 0;
+}
+
+.variant-stacked:not(.variant-stacked + .variant-stacked) {
+  border-start-start-radius: ord.$border-radius-container;
+  border-start-end-radius: ord.$border-radius-container;
+}
+
+.variant-stacked:not(:has(+ .variant-stacked)) {
+  border-end-start-radius: ord.$border-radius-container;
+  border-end-end-radius: ord.$border-radius-container;
+}
+
+// The base rule is an inset shadow so the active tab's thicker rule can be drawn over it.
+.header {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-inline-size: 0;
+  box-shadow: inset 0 calc(-1 * #{ord.$border-width-default}) 0 ord.$color-border-divider;
+}
+
+.scroller {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tab-row {
+  display: flex;
+  align-items: stretch;
+  inline-size: max-content;
+  min-inline-size: 100%;
+}
+
+// The tab list and the list of extra controls lay their children out in the row.
+.tab-list {
+  display: contents;
+}
+
+.tab-extras {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.tab {
+  @include styles.font-label;
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  box-sizing: border-box;
+  min-block-size: ord.$size-control-height;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-m;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-body-secondary;
+  text-decoration-line: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  @include styles.with-motion {
+    transition-property: color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover {
+    color: ord.$color-text-body;
+  }
+
+  // The scroller clips anything drawn outside it, so focus is marked inside the tab.
+  &:focus-visible {
+    outline-style: none;
+    box-shadow: inset 0 0 0 ord.$border-width-focus-ring ord.$color-border-focus-ring;
+  }
+}
+
+// A short tick between tabs, like the division marks on a scale.
+.tab:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  inset-block: ord.$space-scaled-s;
+  inset-inline-start: 0;
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+.tab-active {
+  color: ord.$color-text-body;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+    block-size: ord.$border-width-section;
+    background-color: ord.$color-border-strong;
+  }
+}
+
+.tab-disabled {
+  color: ord.$color-text-disabled;
+  cursor: default;
+
+  &:hover {
+    color: ord.$color-text-disabled;
+  }
+}
+
+.tab-with-extras {
+  padding-inline-end: ord.$space-xxs;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  padding-inline-end: ord.$space-xs;
+}
+
+.tab-extras:has(.dismiss-button) .action {
+  padding-inline-end: 0;
+}
+
+.dismiss-button,
+.scroll-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-block: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-secondary;
+  cursor: pointer;
+
+  &:hover {
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    outline-style: none;
+    box-shadow: inset 0 0 0 ord.$border-width-focus-ring ord.$color-border-focus-ring;
+  }
+
+  &:disabled {
+    color: ord.$color-text-disabled;
+    cursor: default;
+  }
+}
+
+.dismiss-button {
+  padding-inline: ord.$space-xxs ord.$space-s;
+}
+
+.scroll-button {
+  inline-size: ord.$size-control-height;
+  padding-inline: 0;
+}
+
+.scroll-left {
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
+  border-inline-end-color: ord.$color-border-divider;
+}
+
+.scroll-right {
+  border-inline-start-width: ord.$border-width-default;
+  border-inline-start-style: solid;
+  border-inline-start-color: ord.$color-border-divider;
+}
+
+// Positioned against the tab from script, in physical coordinates measured on screen.
+.tooltip {
+  position: absolute;
+  z-index: 1000;
+  box-sizing: border-box;
+  max-inline-size: calc(100% - #{ord.$space-m});
+  margin-block-start: ord.$space-xxs;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-xs;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+  font-size: ord.$font-size-small;
+  line-height: ord.$line-height-body;
+  pointer-events: none;
+}
+
+.disabled-reason {
+  @include styles.screenreader-only;
+}
+
+.panel {
+  padding-block: ord.$space-scaled-m 0;
+  padding-inline: 0;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.variant-container > .panel,
+.variant-stacked > .panel {
+  padding-block: ord.$space-container;
+  padding-inline: ord.$space-container;
+}
+
+.root.no-paddings > .panel {
+  padding-block: 0;
+  padding-inline: 0;
+}
