@@ -22,6 +22,9 @@ export function useEditorInstance({ engine, value, language, config, listeners }
   const [instance, setInstance] = useState<EditorInstance | null>(null);
   // The editor reads the latest props when it is created, without being recreated when they change.
   const latest = useRef({ value, language, config, listeners });
+  // The last `value` prop handed to the editor. Only a new prop is pushed in: when the instance arrives
+  // after the person has already typed, pushing the prop it was created with would undo their edit.
+  const appliedValue = useRef(value);
 
   useEffect(() => {
     latest.current = { value, language, config, listeners };
@@ -32,6 +35,7 @@ export function useEditorInstance({ engine, value, language, config, listeners }
       return;
     }
     const { value, language, config } = latest.current;
+    appliedValue.current = value;
     const created = engine.createEditor({
       parent: container,
       value,
@@ -52,7 +56,12 @@ export function useEditorInstance({ engine, value, language, config, listeners }
     };
   }, [engine, container]);
 
-  useEffect(() => instance?.setValue(value), [instance, value]);
+  useEffect(() => {
+    if (instance && value !== appliedValue.current) {
+      appliedValue.current = value;
+      instance.setValue(value);
+    }
+  }, [instance, value]);
   useEffect(() => instance?.setLanguage(language), [instance, language]);
   useEffect(() => instance?.configure(config), [instance, config]);
 

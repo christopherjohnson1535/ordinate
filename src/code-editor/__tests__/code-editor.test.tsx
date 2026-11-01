@@ -228,6 +228,13 @@ describe('CodeEditor', () => {
       expect(lastEditor().setValue).toHaveBeenLastCalledWith('x = 2');
     });
 
+    test('does not push the starting value back into a new editor', async () => {
+      await renderLoaded(<CodeEditor ariaLabel="Code" value="x = 1" language="python" />);
+      // The editor was created with this value; sending it again when the instance arrives would undo
+      // anything typed in between.
+      expect(lastEditor().setValue).not.toHaveBeenCalled();
+    });
+
     test('names the language with languageLabel', async () => {
       await renderLoaded(<CodeEditor ariaLabel="Code" value="" language="json" languageLabel="JSON with comments" />);
       expect(getWrapper().findLanguageLabel().getText()).toBe('JSON with comments');
