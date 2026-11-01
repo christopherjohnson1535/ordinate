@@ -18,6 +18,27 @@ const messages: I18nProviderProps.Messages = {
       dialog: {
         dismissAriaLabel: 'Close dialog',
       },
+      'error-boundary': {
+        headerText: 'Something went wrong',
+        descriptionText: 'This part of the page could not be shown. Refresh the page to try again.',
+        refreshActionText: 'Refresh page',
+        feedbackLinkText: 'Send feedback',
+      },
+      flashbar: {
+        ariaLabel: 'Notifications',
+        notificationBarText: 'Notifications',
+        dismissLabel: 'Dismiss',
+        successIconAriaLabel: 'Success',
+        errorIconAriaLabel: 'Error',
+        warningIconAriaLabel: 'Warning',
+        infoIconAriaLabel: 'Info',
+        inProgressIconAriaLabel: 'In progress',
+        successCount: '{count, plural, one {# success} other {# successes}}',
+        errorCount: '{count, plural, one {# error} other {# errors}}',
+        warningCount: '{count, plural, one {# warning} other {# warnings}}',
+        infoCount: '{count, plural, one {# info message} other {# info messages}}',
+        inProgressCount: '{count, plural, other {# in progress}}',
+      },
       'form-field': {
         errorIconAriaLabel: 'Error',
         warningIconAriaLabel: 'Warning',
@@ -46,6 +67,9 @@ const messages: I18nProviderProps.Messages = {
       'side-navigation': {
         ariaLabel: 'Side navigation',
         externalIconAriaLabel: 'Opens in a new tab',
+      },
+      skeleton: {
+        loadingText: 'Loading',
       },
       tabs: {
         dismissAriaLabel: 'Close tab',
