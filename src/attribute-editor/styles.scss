@@ -1,0 +1,143 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-scaled-m;
+  min-inline-size: 0;
+}
+
+.empty {
+  @include styles.font-body;
+  color: ord.$color-text-secondary;
+}
+
+.grid {
+  min-inline-size: 0;
+}
+
+.rows {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style-type: none;
+}
+
+// Column layout: the headings and every row share one grid, so the remove buttons line up even when
+// their texts differ in width.
+.columns {
+  display: grid;
+  grid-template-columns: var(--attribute-editor-columns);
+  column-gap: ord.$space-m;
+
+  .headings,
+  .rows,
+  .row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+  }
+
+  .headings {
+    padding-block-end: ord.$space-xxs;
+  }
+
+  .rows {
+    row-gap: ord.$space-scaled-s;
+  }
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.heading-label {
+  @include styles.font-label;
+  color: ord.$color-text-body;
+}
+
+.heading-info {
+  @include styles.font-body;
+  font-size: ord.$font-size-description;
+}
+
+// Stacked layout: each row is a set of lines, ruled off from the next row like entries in a ledger.
+.stacked {
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: ord.$space-scaled-s;
+  }
+
+  .row + .row {
+    margin-block-start: ord.$space-scaled-m;
+    padding-block-start: ord.$space-scaled-m;
+    border-block-start-width: ord.$border-width-default;
+    border-block-start-style: solid;
+    border-block-start-color: ord.$color-border-divider;
+  }
+}
+
+.line {
+  display: grid;
+  grid-template-columns: var(--attribute-editor-columns);
+  gap: ord.$space-m;
+}
+
+.field {
+  min-inline-size: 0;
+}
+
+.remove-cell {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+}
+
+// Matches the padding a form field puts around its control, so the button lines up with the controls.
+.remove-cell-aligned {
+  padding-block: ord.$space-xxs;
+  padding-inline: 0;
+}
+
+// Takes the height of a field label, so the button sits level with the controls of a labelled line.
+.label-spacer {
+  @include styles.font-label;
+
+  &::before {
+    content: '\200b';
+  }
+}
+
+.own-row {
+  display: flex;
+}
+
+.remove-button,
+.add-button {
+  flex-shrink: 0;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+}
+
+.additional-info {
+  @include styles.font-body;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}

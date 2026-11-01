@@ -25,6 +25,11 @@ const messages: I18nProviderProps.Messages = {
         navigationClose: 'Close navigation',
         drawers: 'Drawers',
       },
+      'attribute-editor': {
+        addButtonText: 'Add new item',
+        removeButtonText: 'Remove',
+        itemRemovedAriaLive: 'Item {itemNumber} removed',
+      },
       autosuggest: {
         enteredTextLabel: 'Use: "{value}"',
         errorIconAriaLabel: 'Error',
