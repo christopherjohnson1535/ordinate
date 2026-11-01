@@ -4,7 +4,8 @@
 ordinate/
 ├── build-tools/          Build tasks used by gulpfile.js
 │   ├── tasks/            One file per task: clean, style-dictionary, styles, typescript, ...
-│   └── utils/
+│   ├── utils/
+│   └── size.js           Bundle size check, `npm run size`
 ├── collection-hooks/     The @ordinate/collection-hooks package: useCollection and its pure helpers
 ├── docs/                 Conventions for contributors
 ├── global-styles/        The @ordinate/global-styles package
@@ -33,8 +34,15 @@ ordinate/
 │   ├── 2026.2/
 │   ├── utils/            Token names, types and reference resolution
 │   └── index.ts          The list of supported revisions
-└── types/                Ambient type declarations
+├── test/
+│   └── browser/          Browser tests that Playwright runs against the dev pages
+│       └── support/      Dev page helper, fixtures, axe runner and the known axe violations
+├── types/                Ambient type declarations
+├── playwright.config.ts  Browser test settings; starts the dev pages server
+└── size-limits.json      Bundle size budget per component, checked by `npm run size`
 ```
+
+Unit tests sit next to the code they test, in `__tests__` folders, and run in jsdom with Vitest. Tests that need a real browser (layout, focus moving between components, contrast) live in `test/browser/` instead. Keeping them outside `src/` means the library build never compiles them.
 
 Build output goes to `lib/`, which is git-ignored:
 
