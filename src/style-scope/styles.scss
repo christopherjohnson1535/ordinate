@@ -1,0 +1,18 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+// Text inherits the parent's resolved color, so a scope re-reads the body color with its own
+// style and revision applied.
+.root {
+  color: ord.$color-text-body;
+  font-family: ord.$font-family-base;
+}
+
+// A scope with its own mode paints the page for that mode, or dark text would sit on a light page.
+.painted {
+  background-color: ord.$color-background-layout-main;
+}

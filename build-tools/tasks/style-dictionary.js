@@ -106,7 +106,7 @@ function renderStyles(styles, revisions, allTokenNames) {
     .join('\n');
 }
 
-function renderTheming(revisions, themeableTokenNames) {
+function renderTheming(revisions, styles, themeableTokenNames) {
   const tokens = themeableTokenNames.map(name => `  ${name}: '${cssVariable(name)}',`);
   const classNames = revisions.map(revision => `  '${revisionClassName(revision.id)}',`);
   return [
@@ -116,6 +116,8 @@ function renderTheming(revisions, themeableTokenNames) {
     `export const themeableTokens = {\n${tokens.join('\n')}\n} as const;\n`,
     'export type ThemeableTokenName = keyof typeof themeableTokens;\n',
     `export const revisionClassNames = [\n${classNames.join('\n')}\n] as const;\n`,
+    `export const revisionIds = [${revisions.map(revision => `'${revision.id}'`).join(', ')}] as const;\n`,
+    `export const styleIds = ['console', ${styles.map(style => `'${style.id}'`).join(', ')}] as const;\n`,
   ].join('\n');
 }
 
@@ -141,6 +143,6 @@ module.exports = task('style-dictionary', async () => {
   );
   await fs.writeFile(path.join(outputDir, 'tokens.scss'), renderTokens(allTokenNames));
   await fs.mkdir(themingDir, { recursive: true });
-  await fs.writeFile(path.join(themingDir, 'index.ts'), renderTheming(revisions, themeableTokenNames));
+  await fs.writeFile(path.join(themingDir, 'index.ts'), renderTheming(revisions, styles, themeableTokenNames));
   await writeDesignTokens(allTokenNames);
 });

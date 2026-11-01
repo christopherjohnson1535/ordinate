@@ -299,6 +299,10 @@
     "minified": 49800,
     "gzip": 9900
   },
+  "style-scope": {
+    "minified": 1600,
+    "gzip": 700
+  },
   "table": {
     "minified": 110200,
     "gzip": 26700
