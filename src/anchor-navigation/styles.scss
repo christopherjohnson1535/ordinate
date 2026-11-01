@@ -1,0 +1,81 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: block;
+  min-inline-size: 0;
+  color: ord.$color-text-body-secondary;
+}
+
+.list {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.list-nested {
+  padding-inline-start: ord.$space-s;
+}
+
+.item {
+  display: block;
+}
+
+.link-row {
+  display: flex;
+  align-items: baseline;
+  gap: ord.$space-xs;
+}
+
+// Every link carries a transparent rule on its leading edge, so marking the current section
+// inks the rule without moving the text.
+.link {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-s 0;
+  border-inline-start-width: ord.$border-width-section;
+  border-inline-start-style: solid;
+  border-inline-start-color: transparent;
+  color: ord.$color-text-body-secondary;
+  text-decoration-line: none;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxxs;
+  overflow-wrap: anywhere;
+
+  @include styles.with-motion {
+    transition-property: color, border-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover {
+    color: ord.$color-text-body;
+    text-decoration-line: underline;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+.link-active {
+  border-inline-start-color: ord.$color-border-strong;
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-label;
+}
+
+.info {
+  flex-shrink: 0;
+  color: ord.$color-text-secondary;
+  font-size: ord.$font-size-small;
+}
