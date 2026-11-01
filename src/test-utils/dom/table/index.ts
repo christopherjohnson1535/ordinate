@@ -9,7 +9,7 @@ import rootStyles from '../../../table-root/styles.css.js';
 export default class TableWrapper extends TableGridWrapper {
   static rootSelector = `.${styles.root}`;
 
-  protected findGrid(): ElementWrapper<HTMLTableElement> | null {
+  protected findNativeTable(): ElementWrapper<HTMLTableElement> | null {
     return this.find<HTMLTableElement>(`.${rootStyles.root} > .${rootStyles.table}`);
   }
 

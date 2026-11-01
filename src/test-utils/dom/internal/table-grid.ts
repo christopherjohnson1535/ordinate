@@ -15,10 +15,10 @@ export abstract class TableGridWrapper extends ComponentWrapper {
   /**
    * The `<table>` element the finders search in.
    */
-  protected abstract findGrid(): ElementWrapper<HTMLTableElement> | null;
+  protected abstract findNativeTable(): ElementWrapper<HTMLTableElement> | null;
 
   findColumnHeaders(): TableHeaderCellWrapper[] {
-    return (this.findGrid()?.findAll(':scope > thead > tr > th') ?? []).map(
+    return (this.findNativeTable()?.findAll(':scope > thead > tr > th') ?? []).map(
       cell => new TableHeaderCellWrapper(cell.getElement())
     );
   }
@@ -41,7 +41,7 @@ export abstract class TableGridWrapper extends ComponentWrapper {
    * The body rows that show items. Rows that hold the empty or loading message are left out.
    */
   findRows(): TableRowWrapper[] {
-    return (this.findGrid()?.findAll(`:scope > tbody > tr:not(.${rowStyles.message})`) ?? []).map(
+    return (this.findNativeTable()?.findAll(`:scope > tbody > tr:not(.${rowStyles.message})`) ?? []).map(
       row => new TableRowWrapper(row.getElement())
     );
   }

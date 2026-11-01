@@ -15,7 +15,7 @@ export default class TableRootWrapper extends TableGridWrapper {
     return this.find<HTMLTableElement>(`:scope > .${styles.table}`)!;
   }
 
-  protected findGrid(): ElementWrapper<HTMLTableElement> | null {
+  protected findNativeTable(): ElementWrapper<HTMLTableElement> | null {
     return this.findTableElement();
   }
 }
