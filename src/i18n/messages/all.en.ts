@@ -240,7 +240,7 @@ const messages: I18nProviderProps.Messages = {
         propertyText: 'Property',
         removeTokenButtonAriaLabel: 'Remove filter, {token}',
         tokenAriaLabel:
-          '{hasProperty, select, true {{propertyLabel} {operator} {value}} other {{showOperator, select, true {{operator} {value}} other {{value}}}}}',
+          '{hasProperty, select, true {{propertyLabel} {operatorText} {value}} other {{operatorText} {value}}}',
         tokenLimitShowFewer: 'Show fewer',
         tokenLimitShowMore: 'Show {count} more',
         tokenOperatorAriaLabel: 'Combine filters with',
@@ -335,6 +335,10 @@ const messages: I18nProviderProps.Messages = {
       },
       'top-navigation': {
         overflowMenuTriggerText: 'More',
+      },
+      'tree-view': {
+        collapseButtonLabel: '{hasLabel, select, true {Collapse {label}} other {Collapse}}',
+        expandButtonLabel: '{hasLabel, select, true {Expand {label}} other {Expand}}',
       },
       wizard: {
         cancelButton: 'Cancel',
