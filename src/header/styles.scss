@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -19,6 +20,20 @@
   align-items: center;
   justify-content: space-between;
   gap: ord.$space-xs;
+}
+
+.heading-group {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+  min-inline-size: 0;
+}
+
+.code {
+  @include drawing.mono-caption;
+  color: ord.$color-text-secondary;
+  overflow-wrap: anywhere;
 }
 
 .title {
@@ -37,8 +52,23 @@
   overflow-wrap: break-word;
 }
 
-.variant-h1 .heading {
-  font-size: ord.$font-size-heading-m;
+// The page title reads like the heading of a drawing sheet: large, light and tightly set. The family,
+// weight and tracking come from the style, so a website style's headline voice carries over.
+.variant-h1 {
+  .main {
+    align-items: flex-end;
+  }
+
+  .heading {
+    font-family: ord.$font-family-headline;
+    font-size: ord.$font-size-display-l;
+    font-weight: ord.$font-weight-page-heading;
+    letter-spacing: ord.$letter-spacing-headline;
+  }
+
+  .counter {
+    font-weight: inherit;
+  }
 }
 
 .variant-h2 .heading {

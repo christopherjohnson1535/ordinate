@@ -16,6 +16,7 @@ export default function Header({
   actions,
   counter,
   info,
+  code,
   children,
   ...props
 }: HeaderProps) {
@@ -28,6 +29,7 @@ export default function Header({
       actions={actions}
       counter={counter}
       info={info}
+      code={code}
     >
       {children}
     </InternalHeader>

@@ -46,6 +46,15 @@ export default function HeaderPermutations() {
             <Header
               variant={variant}
               headingTagOverride="div"
+              code="Sheet A-02"
+              description="Every node of the north annex, by zone."
+              actions={actions}
+            >
+              Service schedule
+            </Header>
+            <Header
+              variant={variant}
+              headingTagOverride="div"
               description="A long title wraps onto the next line before the actions do."
               actions={actions}
             >

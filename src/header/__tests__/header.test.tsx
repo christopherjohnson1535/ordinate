@@ -47,6 +47,23 @@ describe('Header', () => {
     expect(screen.getByRole('heading')).not.toContainElement(screen.getByRole('link', { name: 'Info' }));
   });
 
+  test('shows the code above the heading, outside the heading name', () => {
+    render(
+      <Header variant="h1" code="Sheet A-02" counter="(4)">
+        Service schedule
+      </Header>
+    );
+    const header = createWrapper().findHeader()!;
+    expect(header.findCode()!.getText()).toBe('Sheet A-02');
+    expect(screen.getByRole('heading', { level: 1, name: 'Service schedule (4)' })).toBeInTheDocument();
+    expect(screen.getByRole('heading')).not.toContainElement(header.findCode()!.getElement());
+  });
+
+  test('renders no code element without a code', () => {
+    render(<Header>Nodes</Header>);
+    expect(createWrapper().findHeader()!.findCode()).toBeNull();
+  });
+
   test('passes id and data attributes', () => {
     render(
       <Header id="nodes-header" data-testid="nodes">
@@ -63,6 +80,7 @@ describe('Header test utilities and accessibility', () => {
     render(
       <Header
         variant="h1"
+        code="Sheet A-02"
         counter="(12)"
         info={<a href="#help">Info</a>}
         description="Machines in this project."
@@ -92,6 +110,7 @@ describe('Header test utilities and accessibility', () => {
     const { container } = render(
       <Header
         variant="h1"
+        code="Sheet A-02"
         counter="(12)"
         info={<a href="#help">Info</a>}
         description="Machines in this project."

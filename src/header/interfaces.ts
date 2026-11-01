@@ -10,9 +10,15 @@ export interface HeaderProps extends BaseComponentProps {
    */
   children?: React.ReactNode;
   /**
+   * A short reference shown in small mono capitals above the heading, like the sheet number on a
+   * drawing: "Sheet A-02". It is not part of the heading's text.
+   */
+  code?: React.ReactNode;
+  /**
    * The heading level and its look.
    *
-   * - `h1` is for the page title.
+   * - `h1` is for the page title, drawn large and light like a sheet heading. Under a website style it
+   *   takes that style's headline type.
    * - `h2` is for container and modal titles.
    * - `h3` is for sections inside a container.
    */

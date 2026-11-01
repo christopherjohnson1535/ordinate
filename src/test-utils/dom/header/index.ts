@@ -14,6 +14,13 @@ export default class HeaderWrapper extends ComponentWrapper {
     return this.findByClassName(styles['heading-text'])!;
   }
 
+  /**
+   * The sheet code shown above the heading.
+   */
+  findCode(): ElementWrapper | null {
+    return this.findByClassName(styles.code);
+  }
+
   findCounter(): ElementWrapper | null {
     return this.findByClassName(styles.counter);
   }
