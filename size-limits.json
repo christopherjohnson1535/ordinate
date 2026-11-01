@@ -67,6 +67,10 @@
     "minified": 63600,
     "gzip": 11400
   },
+  "code-editor": {
+    "minified": 923000,
+    "gzip": 306100
+  },
   "collection-preferences": {
     "minified": 127600,
     "gzip": 27200

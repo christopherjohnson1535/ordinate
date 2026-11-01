@@ -84,7 +84,7 @@ export default {
 - **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, ProgressBar, Skeleton, Spinner, StatusIndicator
 - **Icons:** Icon, IconProvider
 
-More components arrive in phases. Phase 6 adds charts and the code editor.
+Charts (area, bar, line, mixed line and bar, pie) are in the separate `@ordinate/charts` package.
 
 ## Development
 
