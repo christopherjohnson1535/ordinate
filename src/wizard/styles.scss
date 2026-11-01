@@ -1,0 +1,160 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: grid;
+  grid-template-columns: ord.$size-panel-small minmax(0, 1fr);
+  align-items: start;
+  column-gap: ord.$space-xl;
+  color: ord.$color-text-body;
+}
+
+.collapsed {
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: ord.$space-l;
+}
+
+.navigation {
+  min-inline-size: 0;
+}
+
+// The navigation sits level with the step's heading, below the top of the form.
+.root:not(.collapsed) .navigation {
+  padding-block-start: ord.$space-xxs;
+}
+
+.navigation-list {
+  min-inline-size: 0;
+}
+
+.navigation-item {
+  min-inline-size: 0;
+}
+
+.navigation-title {
+  @include styles.font-body;
+  display: inline;
+  overflow-wrap: anywhere;
+  color: ord.$color-text-body-secondary;
+}
+
+.navigation-title-active {
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-heading;
+}
+
+.navigation-link {
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-body;
+  text-align: start;
+  text-decoration-line: none;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxxs;
+  cursor: pointer;
+
+  &:hover {
+    color: ord.$color-text-link-hover;
+    text-decoration-line: underline;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.navigation-title-visited {
+  color: ord.$color-text-body;
+}
+
+.navigation-title-unvisited {
+  color: ord.$color-text-disabled;
+}
+
+.navigation-optional {
+  color: ord.$color-text-secondary;
+  font-size: ord.$font-size-small;
+  font-style: italic;
+}
+
+// A numbered balloon, as drawings use to call out the parts in order.
+.balloon {
+  @include styles.border-radius(ord.$border-radius-radio);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: ord.$size-icon-medium;
+  block-size: ord.$size-icon-medium;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body-secondary;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  line-height: ord.$line-height-heading;
+  font-variant-numeric: tabular-nums;
+}
+
+.balloon-active {
+  border-color: ord.$color-background-button-primary;
+  background-color: ord.$color-background-button-primary;
+  color: ord.$color-text-button-primary;
+}
+
+.balloon-visited {
+  border-color: ord.$color-border-strong;
+  color: ord.$color-text-body;
+}
+
+.balloon-unvisited {
+  border-style: dashed;
+  color: ord.$color-text-disabled;
+}
+
+.navigation-toggle {
+  min-inline-size: 0;
+}
+
+.main {
+  min-inline-size: 0;
+}
+
+.step-header {
+  min-inline-size: 0;
+
+  // The heading takes focus from the wizard when the step changes; it is not a control.
+  [tabindex='-1']:focus {
+    outline-style: none;
+  }
+}
+
+.header-optional {
+  font-style: italic;
+}
+
+.content {
+  min-inline-size: 0;
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
+}
+
+.cancel-button,
+.skip-to-button,
+.previous-button,
+.primary-button {
+  flex-shrink: 0;
+}

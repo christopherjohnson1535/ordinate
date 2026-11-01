@@ -336,6 +336,19 @@ const messages: I18nProviderProps.Messages = {
       'top-navigation': {
         overflowMenuTriggerText: 'More',
       },
+      wizard: {
+        cancelButton: 'Cancel',
+        collapsedStepsLabel: 'Step {stepNumber} of {stepsCount}',
+        errorIconAriaLabel: 'Error',
+        loadingNextStepText: 'Loading next step',
+        navigationAriaLabel: 'Steps',
+        nextButton: 'Next',
+        optional: 'optional',
+        previousButton: 'Previous',
+        skipToButtonLabel: 'Skip to {title}',
+        stepNumberLabel: 'Step {stepNumber}',
+        submitButton: 'Submit',
+      },
     },
   },
 };
