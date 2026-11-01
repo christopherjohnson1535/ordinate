@@ -92,6 +92,11 @@ const messages: I18nProviderProps.Messages = {
         removeFileAriaLabel: 'Remove file {fileNumber}, {fileName}',
         warningIconAriaLabel: 'Warning',
       },
+      'file-upload': {
+        dropzoneText: '{multiple, select, true {Drop files to upload} other {Drop file to upload}}',
+        errorIconAriaLabel: 'Error',
+        warningIconAriaLabel: 'Warning',
+      },
       flashbar: {
         ariaLabel: 'Notifications',
         notificationBarText: 'Notifications',

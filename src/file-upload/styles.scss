@@ -1,0 +1,55 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.dropzone,
+.tokens {
+  align-self: stretch;
+}
+
+.tokens:empty {
+  display: none;
+}
+
+.hints {
+  @include styles.font-body;
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+.error {
+  color: ord.$color-text-error;
+}
+
+.warning {
+  color: ord.$color-text-status-warning;
+}
+
+.message-icon {
+  flex-shrink: 0;
+}
+
+.constraint {
+  min-inline-size: 0;
+}
