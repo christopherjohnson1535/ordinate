@@ -197,6 +197,14 @@ const messages: I18nProviderProps.Messages = {
         preferencesConfirm: 'Confirm',
         preferencesCancel: 'Cancel',
       },
+      'table-body-cell': {
+        selectionAriaLabel: 'Select row',
+      },
+      'table-header-cell': {
+        allItemsSelectionLabel: 'Select all rows',
+        resizerRoleDescription: 'resize handle',
+        selectionGroupLabel: 'Row selection',
+      },
       tabs: {
         dismissAriaLabel: 'Close tab',
         scrollLeftAriaLabel: 'Scroll to previous tabs',

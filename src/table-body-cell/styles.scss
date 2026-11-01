@@ -1,0 +1,84 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  box-sizing: border-box;
+  padding-block: ord.$space-scaled-s;
+  padding-inline: ord.$space-scaled-m;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider-secondary;
+  color: ord.$color-text-body;
+  text-align: start;
+}
+
+// The outer rule belongs to whatever surrounds the table, such as a container.
+tr:last-child > .root {
+  border-block-end-width: 0;
+}
+
+.inset-container {
+  &:first-child {
+    padding-inline-start: ord.$space-container;
+  }
+
+  &:last-child {
+    padding-inline-end: ord.$space-container;
+  }
+}
+
+// Lines the outer columns up with a heading above the table, as in an embedded table.
+.inset-flush {
+  &:first-child {
+    padding-inline-start: 0;
+  }
+
+  &:last-child {
+    padding-inline-end: 0;
+  }
+}
+
+.align-middle {
+  vertical-align: middle;
+}
+
+.align-top {
+  vertical-align: top;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.wrap {
+  overflow-wrap: anywhere;
+}
+
+// In a fixed layout the column width wins over the content, so long text is cut with an ellipsis.
+.truncate.no-wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selection {
+  inline-size: calc(#{ord.$size-checkbox} + 2 * #{ord.$space-scaled-s});
+  padding-block: 0;
+  padding-inline: 0;
+
+  &.inset-container:first-child,
+  &.inset-flush:first-child {
+    padding-inline-start: 0;
+  }
+}
+
+.message {
+  padding-block: ord.$space-scaled-l;
+  color: ord.$color-text-secondary;
+  text-align: center;
+}

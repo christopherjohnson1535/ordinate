@@ -1,0 +1,40 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  background-color: transparent;
+}
+
+.item {
+  @include styles.with-motion {
+    transition-property: background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.striped:nth-child(even) {
+  background-color: ord.$color-background-row-striped;
+}
+
+.item:hover {
+  background-color: ord.$color-background-item-hover;
+}
+
+.selected,
+.selected:hover {
+  background-color: ord.$color-background-item-selected;
+}
+
+.message {
+  background-color: transparent;
+}
+
+.clickable {
+  cursor: pointer;
+}

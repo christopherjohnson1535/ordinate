@@ -1,0 +1,152 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// The ink rule under the header row is the strongest line in the table, like the rule under the
+// title row of a drawing's parts list.
+.root {
+  @include styles.font-label;
+  position: relative;
+  box-sizing: border-box;
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-m;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  text-align: start;
+  vertical-align: bottom;
+}
+
+.inset-container {
+  &:first-child {
+    padding-inline-start: ord.$space-container;
+  }
+
+  &:last-child {
+    padding-inline-end: ord.$space-container;
+  }
+}
+
+// Lines the outer columns up with a heading above the table, as in an embedded table.
+.inset-flush {
+  &:first-child {
+    padding-inline-start: 0;
+  }
+
+  &:last-child {
+    padding-inline-end: 0;
+  }
+}
+
+.heading,
+.sorting-button {
+  display: flex;
+  align-items: flex-end;
+  gap: ord.$space-xxs;
+}
+
+.label {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+.sorting-button {
+  inline-size: 100%;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  &:hover:enabled .label {
+    text-decoration-line: underline;
+    text-underline-offset: ord.$border-focus-ring-offset;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.sorting-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  // Keeps the icon on the last line of a wrapped heading, centered on its text.
+  padding-block-end: ord.$space-xxxs;
+  color: ord.$color-text-secondary;
+}
+
+.sorted .sorting-icon {
+  color: ord.$color-text-body;
+}
+
+.sorting-button:disabled .sorting-icon {
+  color: ord.$color-text-disabled;
+}
+
+.resizable {
+  padding-inline-end: ord.$space-scaled-l;
+}
+
+// A short upright tick at the end of the cell, like a dimension line's extension mark.
+.resizer {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  inline-size: ord.$space-s;
+  cursor: col-resize;
+  touch-action: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: ord.$space-scaled-xs;
+    inset-inline-end: 0;
+    border-inline-end-width: ord.$border-width-default;
+    border-inline-end-style: solid;
+    border-inline-end-color: ord.$color-border-divider;
+  }
+
+  &:hover::after,
+  &:focus-visible::after,
+  &.resizer-active::after {
+    inset-block: 0;
+    border-inline-end-width: ord.$border-width-section;
+    border-inline-end-color: ord.$color-border-strong;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+.selection {
+  inline-size: calc(#{ord.$size-checkbox} + 2 * #{ord.$space-scaled-s});
+  padding-block: 0;
+  padding-inline: 0;
+
+  &.inset-container:first-child,
+  &.inset-flush:first-child {
+    padding-inline-start: 0;
+  }
+}
+
+.screenreader-only {
+  @include styles.screenreader-only;
+}

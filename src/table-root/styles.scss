@@ -1,0 +1,37 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow-x: auto;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+// Separate borders keep each cell's rules attached to the cell, so a moving header keeps its rule.
+.table {
+  @include styles.font-body;
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: ord.$color-text-body;
+}
+
+.layout-fixed {
+  table-layout: fixed;
+}
+
+.head-stuck {
+  position: relative;
+  z-index: 1;
+}
