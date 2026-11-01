@@ -78,6 +78,25 @@ describe('useCollection', () => {
     expect(result.current.collectionProps.sortingDescending).toBeUndefined();
   });
 
+  test('hands the property filter plain operator names, keeping custom rules in the hook', () => {
+    const { result } = renderHook(() =>
+      useCollection(instances, {
+        propertyFiltering: {
+          filteringProperties: [
+            {
+              key: 'zone',
+              propertyLabel: 'Zone',
+              operators: ['=', { operator: '^', match: (value, text) => String(value).startsWith(String(text)) }],
+            },
+          ],
+        },
+      })
+    );
+    expect(result.current.propertyFilterProps.filteringProperties).toEqual([
+      { key: 'zone', propertyLabel: 'Zone', operators: ['=', '^'] },
+    ]);
+  });
+
   test('filters by property and lists the filtering options', () => {
     const options: UseCollectionOptions<Instance> = {
       propertyFiltering: {
@@ -88,7 +107,9 @@ describe('useCollection', () => {
       },
     };
     const { result } = renderHook(() => useCollection(instances, options));
-    expect(result.current.propertyFilterProps.filteringProperties).toBe(options.propertyFiltering!.filteringProperties);
+    expect(result.current.propertyFilterProps.filteringProperties).toEqual(
+      options.propertyFiltering!.filteringProperties
+    );
     expect(
       result.current.propertyFilterProps.filteringOptions
         .filter(option => option.propertyKey === 'zone')

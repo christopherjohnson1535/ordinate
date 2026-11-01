@@ -5,6 +5,8 @@ import { useMemo, useReducer } from 'react';
 import {
   CollectionActions,
   CollectionProps,
+  FilteringProperty,
+  FilteringPropertyDefinition,
   PropertyFilterQuery,
   UseCollectionOptions,
   UseCollectionResult,
@@ -12,6 +14,16 @@ import {
 import { processItems } from './operations';
 import { getFilteringOptions } from './operations/property-filter';
 import { collectionReducer, createInitialState } from './state';
+
+// The component only needs operator names; matching rules stay with the hook.
+function toDefinition({ operators, ...property }: FilteringProperty): FilteringPropertyDefinition {
+  return operators
+    ? {
+        ...property,
+        operators: operators.map(operator => (typeof operator === 'string' ? operator : operator.operator)),
+      }
+    : property;
+}
 
 function readQuery(detail: PropertyFilterQuery | { query: PropertyFilterQuery }): PropertyFilterQuery {
   return 'query' in detail ? detail.query : detail;
@@ -47,6 +59,10 @@ export function useCollection<T>(allItems: ReadonlyArray<T>, options: UseCollect
     () => (filteringProperties ? getFilteringOptions(allItems, filteringProperties) : []),
     [allItems, filteringProperties]
   );
+  const filteringPropertyDefinitions = useMemo(
+    () => (filteringProperties ?? []).map(toDefinition),
+    [filteringProperties]
+  );
 
   const noMatch = allItems.length > 0 && filteredItemsCount === 0;
   const collectionProps: CollectionProps<T> = {
@@ -78,7 +94,7 @@ export function useCollection<T>(allItems: ReadonlyArray<T>, options: UseCollect
       query: state.propertyFilteringQuery,
       // Accepts the query as the detail itself or under `detail.query`, so it fits either event shape.
       onChange: ({ detail }) => actions.setPropertyFiltering(readQuery(detail)),
-      filteringProperties: filteringProperties ?? [],
+      filteringProperties: filteringPropertyDefinitions,
       filteringOptions,
     },
     paginationProps: {

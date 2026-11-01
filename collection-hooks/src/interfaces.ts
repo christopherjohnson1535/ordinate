@@ -50,7 +50,7 @@ export interface FilteringProperty {
    */
   key: string;
   propertyLabel: string;
-  groupValuesLabel: string;
+  groupValuesLabel?: string;
   /**
    * Operators the property supports, in addition to its default operator.
    */
@@ -74,7 +74,7 @@ export interface PropertyFilterToken {
    */
   propertyKey?: string;
   operator: PropertyFilterOperator;
-  value: unknown;
+  value: string;
 }
 
 export type PropertyFilterOperation = 'and' | 'or';
@@ -171,10 +171,18 @@ export interface FilterProps {
   onChange: DetailEventHandler<{ filteringText: string }>;
 }
 
+/**
+ * A filtering property as the property filter component sees it: operators are plain names,
+ * because custom matching rules only matter to the hook.
+ */
+export interface FilteringPropertyDefinition extends Omit<FilteringProperty, 'operators'> {
+  operators?: ReadonlyArray<PropertyFilterOperator>;
+}
+
 export interface PropertyFilterProps {
   query: PropertyFilterQuery;
   onChange: DetailEventHandler<PropertyFilterQuery | { query: PropertyFilterQuery }>;
-  filteringProperties: ReadonlyArray<FilteringProperty>;
+  filteringProperties: ReadonlyArray<FilteringPropertyDefinition>;
   filteringOptions: ReadonlyArray<FilteringOption>;
 }
 

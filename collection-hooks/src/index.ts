@@ -7,6 +7,7 @@ export type {
   DetailEventHandler,
   FilteringOption,
   FilteringProperty,
+  FilteringPropertyDefinition,
   FilterProps,
   PaginationProps,
   PropertyFilterOperation,
