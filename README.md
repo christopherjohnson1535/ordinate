@@ -65,18 +65,15 @@ export default {
 
 ## Components
 
-- Box
-- Button
-- Container
-- Divider
-- FormField
-- Header
-- Icon and IconProvider
-- Input
-- Modal
-- SpaceBetween
+- **Layout and content:** Box, Container, Divider, ExpandableSection, Header, KeyValuePairs, SpaceBetween, TextContent
+- **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
+- **Forms:** Autosuggest, Checkbox, Form, FormField, Input, Multiselect, RadioButton, RadioGroup, Select, Slider, Textarea, Tiles, Toggle
+- **Navigation:** BreadcrumbGroup, Pagination, SideNavigation, Tabs, TopNavigation
+- **Overlays:** Dialog, Dropdown, Modal, Popover, Tooltip
+- **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, ProgressBar, Skeleton, Spinner, StatusIndicator
+- **Icons:** Icon, IconProvider
 
-Components are added in phases; phase 1 adds layout primitives, form controls and status components.
+More components arrive in phases. Phase 3 adds tables, cards, collections and the application layout.
 
 ## Development
 
