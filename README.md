@@ -71,13 +71,14 @@ export default {
 - **Content:** Box, Divider, ExpandableSection, Header, KeyValuePairs, TextContent, TruncatedText
 - **Collections:** ActionCard, Cards, CollectionPreferences, ItemCard, List, PropertyFilter, Table (and TableRoot, TableHead, TableHeaderCell, TableBody, TableRow, TableBodyCell), TextFilter, Token, TokenGroup
 - **Actions:** Button, ButtonDropdown, ButtonGroup, CopyToClipboard, Link, SegmentedControl, ToggleButton
-- **Forms:** Autosuggest, Checkbox, Form, FormField, Input, Multiselect, RadioButton, RadioGroup, Select, Slider, Textarea, Tiles, Toggle
+- **Forms:** AttributeEditor, Autosuggest, Checkbox, ControlGroup, Form, FormField, Input, Multiselect, PromptInput, RadioButton, RadioGroup, Select, Slider, TagEditor, Textarea, Tiles, Toggle
+- **Dates and files:** Calendar, DateInput, DatePicker, DateRangePicker, TimeInput, FileDropzone, FileInput, FileTokenGroup, FileUpload
 - **Navigation:** BreadcrumbGroup, Pagination, SideNavigation, Tabs, TopNavigation
 - **Overlays:** Dialog, Dropdown, Modal, Popover, Tooltip
 - **Status and feedback:** Alert, Badge, ErrorBoundary, Flashbar, LiveRegion, ProgressBar, Skeleton, Spinner, StatusIndicator
 - **Icons:** Icon, IconProvider
 
-More components arrive in phases. Phase 4 adds dates, files and advanced inputs.
+More components arrive in phases. Phase 5 adds guided flows and hierarchy.
 
 ## Development
 
