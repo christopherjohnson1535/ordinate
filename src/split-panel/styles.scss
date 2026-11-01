@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -18,17 +19,31 @@
 
 .position-bottom {
   inline-size: 100%;
-  border-block-start-width: ord.$border-width-default;
+  border-block-start-width: ord.$border-width-section;
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-strong;
 }
 
+// At the side the panel is a detail callout: a sheet framed in heavy ink, joined to the content by a short
+// leader line level with its title.
 .position-side {
   block-size: 100%;
   max-inline-size: 100%;
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-strong;
+  border-width: ord.$border-width-section;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(#{ord.$space-scaled-s} + #{ord.$size-control-height} / 2);
+    inset-inline-end: 100%;
+    inline-size: ord.$space-m;
+    border-block-start-width: ord.$border-width-icon;
+    border-block-start-style: solid;
+    border-block-start-color: ord.$color-border-strong;
+    pointer-events: none;
+  }
 }
 
 // At the bottom there is room for the actions beside the title; at the side they go below it,
@@ -39,7 +54,7 @@
   grid-template-areas: 'main actions buttons';
   align-items: start;
   gap: ord.$space-xs ord.$space-s;
-  padding-block: ord.$space-scaled-xs;
+  padding-block: ord.$space-scaled-s;
   padding-inline: ord.$space-scaled-l ord.$space-scaled-xs;
 }
 
@@ -53,7 +68,7 @@
 .open > .header {
   border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
+  border-block-end-color: ord.$color-border-strong;
 }
 
 .header-main {
@@ -65,8 +80,27 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: ord.$space-xs;
+  gap: ord.$space-xs ord.$space-s;
   min-block-size: ord.$size-control-height;
+}
+
+.tag {
+  @include drawing.circled-tag(ord.$size-control-height);
+  border-width: ord.$border-width-section;
+  font-size: ord.$font-size-body;
+  font-weight: ord.$font-weight-bold;
+}
+
+.heading-group {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.kicker {
+  @include drawing.mono-caption;
+  color: ord.$color-text-secondary;
 }
 
 .heading {
@@ -75,6 +109,10 @@
   margin-inline: 0;
   font-size: ord.$font-size-heading-s;
   overflow-wrap: anywhere;
+}
+
+.open .heading {
+  font-size: ord.$font-size-heading-m;
 }
 
 .info {

@@ -18,6 +18,7 @@ interface ExampleProps {
   closeBehavior?: SplitPanelProps.CloseBehavior;
   hidePreferencesButton?: boolean;
   rich?: boolean;
+  headerTag?: string;
 }
 
 function Example({
@@ -27,6 +28,7 @@ function Example({
   closeBehavior,
   hidePreferencesButton,
   rich = false,
+  headerTag,
 }: ExampleProps) {
   const [open, setOpen] = useState(initiallyOpen);
   const [position, setPosition] = useState(initialPosition);
@@ -46,6 +48,7 @@ function Example({
           splitPanel={
             <SplitPanel
               header="na-01"
+              headerTag={headerTag}
               closeBehavior={closeBehavior}
               hidePreferencesButton={hidePreferencesButton}
               headerDescription={rich ? 'Node in us-mountain-1a' : undefined}
@@ -93,9 +96,11 @@ export default function SplitPanelPermutations() {
         Split panels live in an app layout, which tells them their position, size and open state. Each example below is
         a small app layout.
       </p>
-      <Example title="Bottom, with description, info and actions" position="bottom" rich={true} />
-      <Example title="Side" position="side" rich={true} />
-      <Example title="Collapsed at the bottom" position="bottom" initiallyOpen={false} />
+      <Example title="Side, as a detail callout with a tag" position="side" rich={true} headerTag="S3" />
+      <Example title="Bottom, with a tag, description, info and actions" position="bottom" rich={true} headerTag="S3" />
+      <Example title="Side, without a tag" position="side" rich={true} />
+      <Example title="Bottom, without a tag" position="bottom" />
+      <Example title="Collapsed at the bottom" position="bottom" initiallyOpen={false} headerTag="S3" />
       <Example title="Collapsed at the side" position="side" initiallyOpen={false} />
       <Example
         title="Hidden when closed, without preferences"

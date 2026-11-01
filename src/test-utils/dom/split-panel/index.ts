@@ -30,6 +30,20 @@ export default class SplitPanelWrapper extends ComponentWrapper {
     return this.findByClassName(styles.heading);
   }
 
+  /**
+   * The circled tag before the title.
+   */
+  findHeaderTag(): ElementWrapper | null {
+    return this.findByClassName(styles.tag);
+  }
+
+  /**
+   * The label above the title that repeats the tag, such as "Detail S3".
+   */
+  findHeaderKicker(): ElementWrapper | null {
+    return this.findByClassName(styles.kicker);
+  }
+
   findHeaderDescription(): ElementWrapper | null {
     return this.findByClassName(styles.description);
   }

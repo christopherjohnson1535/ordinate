@@ -17,6 +17,7 @@ import styles from './styles.css.js';
 
 export function InternalSplitPanel({
   header,
+  headerTag,
   headerDescription,
   headerInfo,
   headerActions,
@@ -109,11 +110,25 @@ export function InternalSplitPanel({
     );
   }
 
+  // Drawn like a detail callout: the circled tag, and above the title a label that repeats it. The circle is
+  // left out of the accessibility tree, so the tag is read once, in the label.
   const heading = (
     <div className={styles['header-title']}>
-      <h2 id={headingId} className={styles.heading}>
-        {header}
-      </h2>
+      {headerTag && (
+        <span className={styles.tag} aria-hidden="true">
+          {headerTag}
+        </span>
+      )}
+      <div className={styles['heading-group']}>
+        {headerTag && (
+          <span className={styles.kicker}>
+            {i18n('detailText', i18nStrings?.detailText)} {headerTag}
+          </span>
+        )}
+        <h2 id={headingId} className={styles.heading}>
+          {header}
+        </h2>
+      </div>
       {isOpen && headerInfo && <span className={styles.info}>{headerInfo}</span>}
     </div>
   );

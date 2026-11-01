@@ -56,6 +56,27 @@ describe('SplitPanel', () => {
     expect(panel.findHeaderActions()!.getText()).toBe('Restart');
   });
 
+  test('headerTag draws a circled tag and a detail label, reading the tag once', () => {
+    renderInLayout({}, { headerTag: 'S3' });
+    const panel = getSplitPanel();
+    expect(panel.findHeaderTag()!.getText()).toBe('S3');
+    expect(panel.findHeaderTag()!.getElement()).toHaveAttribute('aria-hidden', 'true');
+    expect(panel.findHeaderKicker()!.getText()).toBe('Detail S3');
+    expect(screen.getByRole('complementary', { name: 'na-01' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'na-01' })).toBeInTheDocument();
+  });
+
+  test('without headerTag there is no tag or detail label', () => {
+    renderInLayout();
+    expect(getSplitPanel().findHeaderTag()).toBeNull();
+    expect(getSplitPanel().findHeaderKicker()).toBeNull();
+  });
+
+  test('i18nStrings.detailText replaces the word before the tag', () => {
+    renderInLayout({}, { headerTag: 'S3', i18nStrings: { detailText: 'Callout' } });
+    expect(getSplitPanel().findHeaderKicker()!.getText()).toBe('Callout S3');
+  });
+
   test('the close button asks the layout to close the panel', () => {
     const onSplitPanelToggle = vi.fn();
     renderInLayout({ onSplitPanelToggle: event => onSplitPanelToggle(event.detail) });
@@ -214,12 +235,12 @@ describe('SplitPanel outside an app layout', () => {
 
 describe('SplitPanel accessibility', () => {
   test('has no accessibility violations when open', async () => {
-    const { container } = renderInLayout({}, { headerDescription: 'Node in zone a' });
+    const { container } = renderInLayout({}, { headerDescription: 'Node in zone a', headerTag: 'S3' });
     await expectNoAxeViolations(container);
   });
 
   test('has no accessibility violations when collapsed', async () => {
-    const { container } = renderInLayout({ splitPanelOpen: false });
+    const { container } = renderInLayout({ splitPanelOpen: false }, { headerTag: 'S3' });
     await expectNoAxeViolations(container);
   });
 

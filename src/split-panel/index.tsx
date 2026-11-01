@@ -11,6 +11,7 @@ export type { SplitPanelProps };
 
 export default function SplitPanel({
   header,
+  headerTag,
   headerDescription,
   headerInfo,
   headerActions,
@@ -24,6 +25,7 @@ export default function SplitPanel({
     <InternalSplitPanel
       {...getBaseProps(props)}
       header={header}
+      headerTag={headerTag}
       headerDescription={headerDescription}
       headerInfo={headerInfo}
       headerActions={headerActions}

@@ -319,6 +319,7 @@ const messages: I18nProviderProps.Messages = {
       },
       'split-panel': {
         closeButtonAriaLabel: 'Close panel',
+        detailText: 'Detail',
         openButtonAriaLabel: 'Open panel',
         resizeHandleAriaLabel: 'Resize split panel',
         preferencesTitle: 'Split panel preferences',

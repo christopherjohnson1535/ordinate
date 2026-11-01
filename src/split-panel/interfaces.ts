@@ -11,6 +11,11 @@ export interface SplitPanelProps extends BaseComponentProps {
    */
   header: string;
   /**
+   * A short reference such as "S3", drawn in a circle before the title with a "Detail S3" label above it,
+   * like a detail callout on a drawing. Use the same tag as the row it describes, from the table's `rowTag`.
+   */
+  headerTag?: string;
+  /**
    * Text below the title, such as a short summary of the selected item.
    */
   headerDescription?: React.ReactNode;
@@ -42,6 +47,7 @@ export interface SplitPanelProps extends BaseComponentProps {
   hidePreferencesButton?: boolean;
   /**
    * Text for the panel's built-in controls:
+   * * `detailText`: The word before `headerTag` in the label above the title, "Detail".
    * * `openButtonAriaLabel`, `closeButtonAriaLabel`: The open and close buttons.
    * * `resizeHandleAriaLabel`: The handle that resizes the panel.
    * * `preferencesTitle`: The preferences button and the title of the preferences dialog.
@@ -58,6 +64,7 @@ export namespace SplitPanelProps {
   export type CloseBehavior = 'collapse' | 'hide';
 
   export interface I18nStrings {
+    detailText?: string;
     openButtonAriaLabel?: string;
     closeButtonAriaLabel?: string;
     resizeHandleAriaLabel?: string;
