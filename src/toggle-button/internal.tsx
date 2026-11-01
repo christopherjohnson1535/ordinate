@@ -3,14 +3,14 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { InternalButton } from '../button/internal';
+import { InternalButton, InternalButtonProps } from '../button/internal';
 import { fireNonCancelableEvent } from '../internal/events';
 import { warnOnce } from '../internal/logging';
 import { ToggleButtonProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-export interface InternalToggleButtonProps extends ToggleButtonProps {
+export interface InternalToggleButtonProps extends ToggleButtonProps, Pick<InternalButtonProps, 'tabIndex'> {
   /**
    * Lets other components position the button. Not part of the public API.
    */

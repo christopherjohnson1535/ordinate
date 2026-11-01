@@ -16,6 +16,15 @@ export interface InternalButtonProps extends ButtonProps {
    * Lets other components position the button. Not part of the public API.
    */
   className?: string;
+  /**
+   * Lets a composite widget, such as a toolbar, manage the tab stop. Not part of the public API.
+   */
+  tabIndex?: number;
+  /**
+   * Keeps a disabled button in the tab order, marked with `aria-disabled`, so a reason for
+   * it being disabled can be shown on focus. Not part of the public API.
+   */
+  focusableWhenDisabled?: boolean;
 }
 
 export const InternalButton = React.forwardRef(
@@ -45,6 +54,8 @@ export const InternalButton = React.forwardRef(
       ariaControls,
       onClick,
       className,
+      tabIndex,
+      focusableWhenDisabled = false,
       ...rest
     }: InternalButtonProps,
     ref: React.Ref<ButtonProps.Ref>
@@ -56,6 +67,7 @@ export const InternalButton = React.forwardRef(
     const isIconOnly = variant === 'icon';
     const hasIcon = Boolean(iconName || iconSvg);
     const inactive = disabled || loading;
+    const nativeDisabled = disabled && !focusableWhenDisabled;
     const target = targetProp ?? (external && href !== undefined ? '_blank' : undefined);
 
     if (isIconOnly && !ariaLabel) {
@@ -143,7 +155,7 @@ export const InternalButton = React.forwardRef(
             rel={rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined)}
             download={download}
             role={inactive ? 'link' : undefined}
-            tabIndex={loading && !disabled ? 0 : undefined}
+            tabIndex={tabIndex ?? (inactive && !nativeDisabled ? 0 : undefined)}
             aria-disabled={inactive ? 'true' : undefined}
             onClick={handleClick}
           >
@@ -163,8 +175,9 @@ export const InternalButton = React.forwardRef(
           type={formAction === 'none' ? 'button' : 'submit'}
           form={form}
           className={classNames}
-          disabled={disabled}
-          aria-disabled={loading && !disabled ? 'true' : undefined}
+          disabled={nativeDisabled}
+          tabIndex={tabIndex}
+          aria-disabled={inactive && !nativeDisabled ? 'true' : undefined}
           onClick={handleClick}
         >
           {content}

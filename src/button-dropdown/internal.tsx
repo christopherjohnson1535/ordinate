@@ -35,6 +35,14 @@ export interface InternalButtonDropdownProps extends ButtonDropdownProps {
    * Content fixed above the items, such as the signed-in user's name. Not part of the public API.
    */
   menuHeader?: React.ReactNode;
+  /**
+   * Lets a composite widget, such as a toolbar, manage the trigger's tab stop. Not part of the public API.
+   */
+  triggerTabIndex?: number;
+  /**
+   * Wraps the trigger button alone, without the menu, for example in a tooltip. Not part of the public API.
+   */
+  wrapTrigger?: (trigger: React.ReactElement) => React.ReactNode;
 }
 
 export const InternalButtonDropdown = React.forwardRef(
@@ -56,6 +64,8 @@ export const InternalButtonDropdown = React.forwardRef(
       triggerClassName,
       triggerIconName,
       menuHeader,
+      triggerTabIndex,
+      wrapTrigger,
       ...rest
     }: InternalButtonDropdownProps,
     ref: React.Ref<ButtonDropdownProps.Ref>
@@ -165,6 +175,7 @@ export const InternalButtonDropdown = React.forwardRef(
         ariaExpanded={open}
         ariaHaspopup="menu"
         ariaControls={open ? menuId : undefined}
+        tabIndex={triggerTabIndex}
         onClick={handleTriggerClick}
       >
         {isIconVariant || isSplit ? undefined : children}
@@ -219,7 +230,7 @@ export const InternalButtonDropdown = React.forwardRef(
               onKeyDown={handleTriggerKeyDown}
               onMouseDown={() => (pointerPressed.current = true)}
             >
-              {trigger}
+              {wrapTrigger ? wrapTrigger(trigger) : trigger}
             </span>
           }
           onOutsideClick={() => closeMenu(false)}

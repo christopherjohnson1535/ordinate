@@ -25,8 +25,29 @@ function removeToken(list: string | null, token: string) {
     .join(' ');
 }
 
-export function InternalTooltip({ content, children, position = 'top', ...rest }: TooltipProps) {
-  const [visible, setVisible] = useState(false);
+export interface InternalTooltipProps extends TooltipProps {
+  /**
+   * Links the tooltip to the trigger as its accessible description, making the trigger focusable
+   * if needed. Turn it off when the tooltip repeats the accessible name of a trigger that manages
+   * its own focus, such as a toolbar button, so the text is not read twice. Not part of the public API.
+   */
+  describesTrigger?: boolean;
+  /**
+   * Keeps the tooltip hidden, for example while other feedback shows in its place. Not part of the public API.
+   */
+  suppressed?: boolean;
+}
+
+export function InternalTooltip({
+  content,
+  children,
+  position = 'top',
+  describesTrigger = true,
+  suppressed = false,
+  ...rest
+}: InternalTooltipProps) {
+  const [shown, setVisible] = useState(false);
+  const visible = shown && !suppressed;
   const triggerRef = useRef<HTMLSpanElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const tooltipId = `${useId()}tooltip`;
@@ -52,7 +73,7 @@ export function InternalTooltip({ content, children, position = 'top', ...rest }
   // rather than through a prop the element may not accept.
   useEffect(() => {
     const wrapper = triggerRef.current;
-    if (!wrapper) {
+    if (!wrapper || !describesTrigger) {
       return;
     }
     const target = getFirstTabbable(wrapper) ?? wrapper;
@@ -72,7 +93,7 @@ export function InternalTooltip({ content, children, position = 'top', ...rest }
         wrapper.removeAttribute('tabindex');
       }
     };
-  }, [tooltipId, children]);
+  }, [tooltipId, children, describesTrigger]);
 
   // Escape hides a tooltip shown by hover too, while focus is somewhere else.
   useEffect(() => {
@@ -122,6 +143,7 @@ export function InternalTooltip({ content, children, position = 'top', ...rest }
         preferredSide={position}
         variant="inverse"
         hidden={!visible}
+        aria-hidden={describesTrigger ? undefined : true}
         className={styles.tooltip}
       >
         {content}
