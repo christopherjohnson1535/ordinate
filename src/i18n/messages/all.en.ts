@@ -82,6 +82,9 @@ const messages: I18nProviderProps.Messages = {
         refreshActionText: 'Refresh page',
         feedbackLinkText: 'Send feedback',
       },
+      'file-input': {
+        uploadButtonText: '{multiple, select, true {Choose files} other {Choose file}}',
+      },
       flashbar: {
         ariaLabel: 'Notifications',
         notificationBarText: 'Notifications',

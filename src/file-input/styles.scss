@@ -1,0 +1,42 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  position: relative;
+  display: inline-flex;
+  max-inline-size: 100%;
+  vertical-align: top;
+}
+
+// The native input keeps focus and the accessible name; the button beside it only draws the control.
+.native-input {
+  @include styles.screenreader-only;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  opacity: 0;
+}
+
+// Scoped under the root so these win over the button's own styles, whichever stylesheet loads first.
+.root .native-input:focus-visible ~ .trigger {
+  @include styles.focus-ring;
+}
+
+.root .invalid {
+  border-color: ord.$color-border-error;
+  border-inline-start-width: ord.$border-width-section;
+}
+
+.root .warning {
+  border-color: ord.$color-border-status-warning;
+  border-inline-start-width: ord.$border-width-section;
+}
