@@ -83,6 +83,11 @@ const messages: I18nProviderProps.Messages = {
         copySuccessText: 'Copied',
         copyErrorText: 'Failed to copy',
       },
+      'date-picker': {
+        openCalendarAriaLabel: '{granularity, select, month {Choose month} other {Choose date}}',
+        openCalendarSelectedAriaLabel:
+          '{granularity, select, month {Choose month, selected month is {date}} other {Choose date, selected date is {date}}}',
+      },
       dialog: {
         dismissAriaLabel: 'Close dialog',
       },

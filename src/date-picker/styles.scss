@@ -1,0 +1,38 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+}
+
+// The calendar is taller than a list popup, so it may use all the room the dropdown measured.
+.dropdown > [role='dialog'] {
+  max-block-size: var(--dropdown-available-block-size, none);
+}
+
+.trigger {
+  display: flex;
+  align-items: stretch;
+  gap: ord.$space-xxs;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+// Scoped under the trigger so the square size wins over the button's own padding.
+.trigger .open-button {
+  flex: 0 0 auto;
+  inline-size: ord.$size-control-height;
+  padding-inline: 0;
+}
+
+.popup {
+  padding-block: ord.$space-scaled-xs;
+  padding-inline: ord.$space-scaled-s;
+}
