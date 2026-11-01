@@ -1,0 +1,210 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  @include styles.font-body;
+  display: block;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  padding-block: 0 ord.$space-scaled-m;
+  padding-inline: 0;
+  color: ord.$color-text-body-secondary;
+}
+
+.header {
+  margin-block-end: ord.$space-scaled-s;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-m;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+}
+
+.header-link {
+  @include styles.font-heading;
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  max-inline-size: 100%;
+  color: ord.$color-text-body;
+  font-size: ord.$font-size-heading-s;
+  text-decoration-line: none;
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.logo {
+  flex-shrink: 0;
+  inline-size: auto;
+  block-size: ord.$size-icon-big;
+}
+
+.header-text {
+  overflow-wrap: anywhere;
+}
+
+.list {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.item {
+  display: block;
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  padding-inline-end: ord.$space-s;
+}
+
+// Every link carries a transparent rule on its leading edge, so marking the current page
+// inks the rule without moving the text.
+.link {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-m 0;
+  border-inline-start-width: ord.$border-width-section;
+  border-inline-start-style: solid;
+  border-inline-start-color: transparent;
+  color: ord.$color-text-body-secondary;
+  text-decoration-line: none;
+  text-decoration-thickness: ord.$border-width-default;
+  text-underline-offset: ord.$space-xxxs;
+  overflow-wrap: anywhere;
+
+  @include styles.with-motion {
+    transition-property: color, border-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:hover {
+    color: ord.$color-text-body;
+    text-decoration-line: underline;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+.link-active {
+  border-inline-start-color: ord.$color-border-strong;
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-label;
+}
+
+.external-icon {
+  vertical-align: baseline;
+}
+
+.info {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.nested {
+  padding-inline-start: ord.$space-m;
+}
+
+.section {
+  margin-block-start: ord.$space-scaled-xs;
+}
+
+.section-toggle {
+  @include styles.font-label;
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xxxs;
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-xs ord.$space-s;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-heading;
+  text-align: start;
+  cursor: pointer;
+
+  &:hover {
+    color: ord.$color-text-link-hover;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+.caret {
+  flex-shrink: 0;
+  color: ord.$color-text-secondary;
+}
+
+// Section links line up with the section title past the caret: the toggle's start padding,
+// caret and gap add up to this padding plus a link's leading rule and padding.
+.section-items {
+  padding-inline-start: ord.$space-xs;
+}
+
+.section-group {
+  margin-block-start: ord.$space-scaled-s;
+}
+
+.section-group-title {
+  @include styles.font-label;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline: ord.$space-m;
+  color: ord.$color-text-secondary;
+  font-size: ord.$font-size-small;
+}
+
+.expand-toggle {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: ord.$size-control-height-small;
+  block-size: ord.$size-control-height-small;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  background-color: transparent;
+  color: ord.$color-text-secondary;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+    outline-offset: 0;
+  }
+}
+
+.divider {
+  margin-block: ord.$space-scaled-s;
+  margin-inline: ord.$space-m;
+  border-width: 0;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
+}
