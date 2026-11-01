@@ -1,0 +1,39 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+.root {
+  display: block;
+  min-inline-size: 0;
+}
+
+.optional {
+  @include styles.font-body;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-secondary;
+}
+
+// Stands in the value's place and keeps the row as tall as one with a field.
+.undo-prompt {
+  @include styles.font-body;
+  display: flex;
+  align-items: center;
+  min-block-size: ord.$size-control-height;
+  color: ord.$color-text-secondary;
+}
+
+.limit-exceeded {
+  display: inline-flex;
+  align-items: baseline;
+  gap: ord.$space-xxs;
+  color: ord.$color-text-error;
+}
+
+.limit-icon {
+  flex-shrink: 0;
+  align-self: center;
+}
