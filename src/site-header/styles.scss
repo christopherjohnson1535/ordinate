@@ -1,0 +1,187 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+// Matches the `xs` layout breakpoint: below it the links fold into the menu.
+$inline-links-min-width: 688px;
+// Matches the `xxs` layout breakpoint: below it the menu button shows only its icon.
+$menu-text-min-width: 465px;
+
+.root {
+  display: block;
+  min-inline-size: 0;
+}
+
+.sticky {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+}
+
+.notice {
+  @include styles.font-body;
+  background-color: ord.$color-background-emphasis;
+  color: ord.$color-text-on-emphasis;
+  font-size: ord.$font-size-small;
+
+  a {
+    color: inherit;
+  }
+}
+
+.notice-inner {
+  padding-block: ord.$space-scaled-xxs;
+  text-align: center;
+}
+
+.bar {
+  position: relative;
+  container-type: inline-size;
+  border-block-end-width: ord.$border-width-default;
+  border-block-end-style: solid;
+  border-block-end-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
+}
+
+.bar-inner {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  min-block-size: ord.$size-control-height;
+  padding-block: ord.$space-scaled-s;
+}
+
+.brand {
+  flex: 0 1 auto;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+.menu-button {
+  @include styles.font-label;
+  @include styles.border-radius(ord.$border-radius-action);
+  display: none;
+  align-items: center;
+  gap: ord.$space-xs;
+  box-sizing: border-box;
+  min-block-size: ord.$size-control-height;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-s;
+  border-width: ord.$border-width-control;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-body;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ord.$color-background-button-normal-hover;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
+  &[aria-expanded='true'] {
+    border-color: ord.$color-border-strong;
+  }
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xxs;
+}
+
+.item {
+  display: flex;
+}
+
+.link {
+  @include styles.font-label;
+  @include styles.border-radius(ord.$border-radius-action);
+  display: flex;
+  align-items: center;
+  min-block-size: ord.$size-control-height-small;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-s;
+  color: inherit;
+  text-decoration-line: none;
+
+  &:hover {
+    background-color: ord.$color-background-item-hover;
+  }
+
+  &[aria-current='page'] {
+    text-decoration-line: underline;
+    text-decoration-thickness: ord.$border-width-section;
+    text-underline-offset: ord.$space-xs;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+.brand + .actions {
+  margin-inline-start: auto;
+}
+
+@container (max-inline-size: #{$inline-links-min-width - 1px}) {
+  .menu-button {
+    display: inline-flex;
+  }
+
+  .links {
+    display: none;
+  }
+
+  // The open menu hangs below the bar across its full width, over the page.
+  .links-open {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline: 0;
+    // Above any sticky header further down the page, which shares the root stacking context.
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-block: ord.$space-scaled-xs ord.$space-scaled-m;
+    padding-inline: ord.$space-section-inline;
+    border-block-end-width: ord.$border-width-default;
+    border-block-end-style: solid;
+    border-block-end-color: ord.$color-border-strong;
+    background-color: ord.$color-background-container;
+  }
+
+  .links-open .link {
+    min-block-size: ord.$size-control-height;
+    padding-inline: ord.$space-xs;
+  }
+}
+
+@container (max-inline-size: #{$menu-text-min-width - 1px}) {
+  .menu-button {
+    padding-inline: ord.$space-xs;
+  }
+
+  .menu-button-text {
+    @include styles.screenreader-only;
+  }
+}
