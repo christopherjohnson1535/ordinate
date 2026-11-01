@@ -2,7 +2,7 @@
 
 ## Tokens
 
-Every visual value comes from a design token. Component styles never contain raw colors, sizes, radii, fonts or timings. Stylelint enforces this in `src/`, along with logical properties (`margin-inline-start`, not `margin-left`) and no shorthand for `border`, `border-radius`, `margin` or `padding`.
+Every visual value comes from a design token. Component styles never contain raw colors, sizes, radii, fonts, letter-spacing, opacity or timings. Stylelint enforces this in `src/`, along with logical properties (`margin-inline-start`, not `margin-left`) and no shorthand for `border`, `border-radius`, `margin` or `padding`.
 
 Use tokens through the Sass namespace:
 
@@ -19,7 +19,7 @@ Use tokens through the Sass namespace:
 
 Each Sass variable compiles to a CSS custom property, for example `var(--ord-border-radius-button)`. The values come from the revision in effect.
 
-Tokens are defined in `style-dictionary/`, grouped the same way in every revision: color palette, colors, borders, typography, spacing, sizes and motion. The token names in `style-dictionary/utils/token-names.ts` are the contract that every revision must fill.
+Tokens are defined in `style-dictionary/`, grouped the same way in every revision: color palette, colors, borders, typography, spacing, sizes, motion and effects (opacities). The token names in `style-dictionary/utils/token-names.ts` are the contract that every revision must fill.
 
 ## Tokens in your own components
 

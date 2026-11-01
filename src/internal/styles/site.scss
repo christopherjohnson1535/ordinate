@@ -22,7 +22,7 @@
   font-size: ord.$font-size-small;
   font-weight: ord.$font-weight-body;
   line-height: ord.$line-height-body;
-  letter-spacing: 0.04em;
+  letter-spacing: ord.$letter-spacing-catalogue;
   text-transform: uppercase;
 }
 
@@ -32,7 +32,7 @@
   font-size: ord.$font-size-small;
   font-weight: ord.$font-weight-label;
   line-height: ord.$line-height-body;
-  letter-spacing: 0.08em;
+  letter-spacing: ord.$letter-spacing-kicker;
   text-transform: uppercase;
 }
 

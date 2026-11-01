@@ -113,8 +113,13 @@
     position: absolute;
     inset-block: 0;
     inset-inline: 0;
-    background-image: linear-gradient(90deg, transparent, ord.$color-background-container, transparent);
-    opacity: 0.7;
+    // The sweep peaks at 70% of the container color.
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, #{ord.$color-background-container} 70%, transparent),
+      transparent
+    );
     transform: translateX(-100%);
     animation-name: shimmer;
     animation-duration: ord.$motion-duration-rotation;

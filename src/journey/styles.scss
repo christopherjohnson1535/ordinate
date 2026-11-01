@@ -130,7 +130,7 @@
 }
 
 .description {
-  max-inline-size: 40em;
+  max-inline-size: ord.$size-measure-default;
   font-size: ord.$font-size-heading-s;
   color: ord.$color-text-body-secondary;
 }

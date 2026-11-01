@@ -4,6 +4,7 @@ import {
   BordersTokenName,
   ColorPaletteTokenName,
   ColorsTokenName,
+  EffectsTokenName,
   MotionTokenName,
   SizesTokenName,
   SpacingTokenName,
@@ -41,6 +42,7 @@ export type TypographyDictionary = Record<TypographyTokenName, GlobalValue>;
 export type SpacingDictionary = Record<SpacingTokenName, GlobalValue | DensityValue>;
 export type SizesDictionary = Record<SizesTokenName, GlobalValue | DensityValue>;
 export type MotionDictionary = Record<MotionTokenName, GlobalValue>;
+export type EffectsDictionary = Record<EffectsTokenName, GlobalValue>;
 
 /**
  * The token contract. Every revision provides a value for every token.

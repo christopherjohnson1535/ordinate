@@ -79,6 +79,8 @@ $line-height: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
 
 @keyframes hotspot-pulse {
   from {
+    // A step in the pulse animation, not a design value.
+    // stylelint-disable-next-line declaration-property-value-allowed-list
     opacity: 0.8;
     transform: scale(1);
   }

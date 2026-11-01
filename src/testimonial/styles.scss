@@ -43,7 +43,7 @@
 
 .quote {
   @include site.reset-block;
-  max-inline-size: 60ch;
+  max-inline-size: ord.$size-measure-default;
   font-size: ord.$font-size-lead;
   line-height: ord.$line-height-heading;
   overflow-wrap: break-word;

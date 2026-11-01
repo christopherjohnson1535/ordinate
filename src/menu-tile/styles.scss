@@ -82,7 +82,7 @@
 }
 
 .item-description {
-  max-inline-size: 48ch;
+  max-inline-size: ord.$size-measure-narrow;
   font-size: ord.$font-size-description;
   color: ord.$color-text-secondary;
   overflow-wrap: break-word;

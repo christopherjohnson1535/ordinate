@@ -57,7 +57,7 @@
 }
 
 .description {
-  max-inline-size: 64ch;
+  max-inline-size: ord.$size-measure-default;
   color: ord.$color-text-body-secondary;
   overflow-wrap: break-word;
 }
@@ -71,5 +71,5 @@
 }
 
 .linked:hover .media {
-  opacity: 0.88;
+  opacity: ord.$opacity-media-hover;
 }

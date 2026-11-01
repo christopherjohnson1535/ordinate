@@ -50,4 +50,8 @@ export const tokens: TypographyDictionary = {
   fontWeightPageHeading: '{fontWeightLight}',
   // Tracking for short labels set in capitals, such as stamps.
   letterSpacingCaps: '0.12em',
+  // Tracking for the capitals of website labels: a kicker above a title, and the mono catalogue
+  // label under a plate or figure.
+  letterSpacingKicker: '0.08em',
+  letterSpacingCatalogue: '0.04em',
 };

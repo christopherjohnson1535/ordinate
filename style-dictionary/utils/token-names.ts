@@ -189,6 +189,8 @@ export const typographyTokenNames = [
   'letterSpacingCaption',
   'fontWeightPageHeading',
   'letterSpacingCaps',
+  'letterSpacingKicker',
+  'letterSpacingCatalogue',
 ] as const;
 
 export const spacingTokenNames = [
@@ -239,6 +241,9 @@ export const sizesTokenNames = [
   'sizeSectionDefault',
   'sizeSectionWide',
   'rotateMarker',
+  'sizeMeasureNarrow',
+  'sizeMeasureDefault',
+  'sizeMeasureWide',
 ] as const;
 
 export const motionTokenNames = [
@@ -249,6 +254,8 @@ export const motionTokenNames = [
   'motionEasingLinear',
 ] as const;
 
+export const effectsTokenNames = ['opacityDimmed', 'opacityDimmedText', 'opacityLeader', 'opacityMediaHover'] as const;
+
 export type ColorPaletteTokenName = (typeof colorPaletteTokenNames)[number];
 export type ColorsTokenName = (typeof colorsTokenNames)[number];
 export type BordersTokenName = (typeof bordersTokenNames)[number];
@@ -256,6 +263,7 @@ export type TypographyTokenName = (typeof typographyTokenNames)[number];
 export type SpacingTokenName = (typeof spacingTokenNames)[number];
 export type SizesTokenName = (typeof sizesTokenNames)[number];
 export type MotionTokenName = (typeof motionTokenNames)[number];
+export type EffectsTokenName = (typeof effectsTokenNames)[number];
 
 export const allTokenNames = [
   ...colorPaletteTokenNames,
@@ -265,6 +273,7 @@ export const allTokenNames = [
   ...spacingTokenNames,
   ...sizesTokenNames,
   ...motionTokenNames,
+  ...effectsTokenNames,
 ] as const;
 
 export type TokenName = (typeof allTokenNames)[number];

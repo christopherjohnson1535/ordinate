@@ -27,4 +27,9 @@ export const tokens: SizesDictionary = {
   sizeSectionWide: '1440px',
   // How far markers such as an opening's badge tilt. The console keeps them level.
   rotateMarker: '0deg',
+  // The longest comfortable line for running text beside or under other content: a menu item's
+  // note, a card's summary or a quote, and a caption or section description.
+  sizeMeasureNarrow: '48ch',
+  sizeMeasureDefault: '64ch',
+  sizeMeasureWide: '72ch',
 };

@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   gap: ord.$space-xxs;
-  max-inline-size: 72ch;
+  max-inline-size: ord.$size-measure-wide;
   font-size: ord.$font-size-description;
   color: ord.$color-text-body-secondary;
   overflow-wrap: break-word;
