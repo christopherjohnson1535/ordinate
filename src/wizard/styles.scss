@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -11,40 +12,137 @@
   color: ord.$color-text-body;
 }
 
+// The step scale runs across the top and the step takes the full width below it.
 .variant-steps {
   display: grid;
-  grid-template-columns: ord.$size-panel-small minmax(0, 1fr);
-  align-items: start;
-  column-gap: ord.$space-xl;
-}
-
-.collapsed {
   grid-template-columns: minmax(0, 1fr);
   row-gap: ord.$space-l;
+}
+
+// The kind colors the scale, the references and the step count. Words stay in ink.
+.kind-configuration :is(.scale-line, .navigation-reference, .step-counter) {
+  color: ord.$color-kind-configuration;
+}
+
+.kind-resource :is(.scale-line, .navigation-reference, .step-counter) {
+  color: ord.$color-kind-resource;
+}
+
+.kind-policy :is(.scale-line, .navigation-reference, .step-counter) {
+  color: ord.$color-kind-policy;
+}
+
+.kind-neutral :is(.scale-line, .navigation-reference, .step-counter) {
+  color: ord.$color-kind-neutral;
 }
 
 .navigation {
   min-inline-size: 0;
 }
 
-// The navigation sits level with the step's heading, below the top of the form.
-.root:not(.collapsed) .navigation {
-  padding-block-start: ord.$space-xxs;
+.scale {
+  display: grid;
+  gap: ord.$space-xxs;
+  min-inline-size: 0;
+}
+
+// A dimension line: a faint line in the kind's color closed by a tick at each end, a tick for each step and
+// a heavier ink segment up to the current step.
+$scale-height: ord.$space-l;
+$tick-height: ord.$space-s;
+
+.scale-line {
+  position: relative;
+  block-size: $scale-height;
+
+  &::before {
+    @include drawing.construction-line;
+    content: '';
+    inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+    inset-inline: 0;
+    block-size: ord.$border-width-default;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(50% - #{$tick-height} / 2);
+    inset-inline: 0;
+    block-size: $tick-height;
+    border-inline-width: ord.$border-width-default;
+    border-inline-style: solid;
+    border-inline-color: currentColor;
+    pointer-events: none;
+  }
+}
+
+.scale-done {
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$border-width-section} / 2);
+  inset-inline-start: 0;
+  block-size: ord.$border-width-section;
+  background-color: ord.$color-border-strong;
+
+  @include styles.with-motion {
+    transition-property: inline-size;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.scale-tick {
+  position: absolute;
+  inset-block-start: calc(50% - #{$tick-height} / 2);
+  inline-size: ord.$border-width-default;
+  block-size: $tick-height;
+  background-color: currentColor;
+}
+
+.scale-tick-done {
+  background-color: ord.$color-border-strong;
+}
+
+// The current step's tick stands the full height of the scale, in ink.
+.scale-tick-active {
+  inset-block-start: 0;
+  inline-size: ord.$border-width-section;
+  block-size: 100%;
+  background-color: ord.$color-border-strong;
 }
 
 .navigation-list {
-  min-inline-size: 0;
+  display: grid;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
 }
 
 .navigation-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-inline-size: 0;
+  padding-inline: ord.$space-xxs;
+  text-align: center;
 }
 
 .navigation-title {
   @include styles.font-body;
-  display: inline;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-inline-size: 100%;
   overflow-wrap: anywhere;
   color: ord.$color-text-body-secondary;
+}
+
+.navigation-reference {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  letter-spacing: ord.$letter-spacing-caption;
 }
 
 .navigation-title-active {
@@ -58,15 +156,16 @@
   border-width: 0;
   background-color: transparent;
   color: ord.$color-text-body;
-  text-align: start;
+  text-align: center;
   text-decoration-line: none;
   text-decoration-thickness: ord.$border-width-default;
   text-underline-offset: ord.$space-xxxs;
   cursor: pointer;
 
-  &:hover {
-    color: ord.$color-text-link-hover;
-    text-decoration-line: underline;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover .navigation-name {
+      text-decoration-line: underline;
+    }
   }
 
   &:focus-visible {
@@ -79,7 +178,6 @@
 }
 
 // Steps not reached yet are plain text, not disabled controls, so they keep readable contrast.
-// The dashed track line and the missing link already mark them as not reached.
 .navigation-title-unvisited {
   color: ord.$color-text-secondary;
 }
@@ -90,46 +188,27 @@
   font-style: italic;
 }
 
-// A numbered balloon, as drawings use to call out the parts in order.
-.balloon {
-  @include styles.border-radius(ord.$border-radius-radio);
-  display: inline-flex;
-  flex-shrink: 0;
+// Too narrow for the names: the scale keeps the references and screen readers keep the names.
+.scale-compact {
+  .navigation-name,
+  .navigation-optional {
+    @include styles.screenreader-only;
+  }
+}
+
+// The actions stand on a construction line closed by hash marks, like the foot of a drawn section.
+.footer-rule {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  inline-size: ord.$size-icon-medium;
-  block-size: ord.$size-icon-medium;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
-  background-color: ord.$color-background-container;
-  color: ord.$color-text-body-secondary;
-  font-family: ord.$font-family-mono;
-  font-size: ord.$font-size-small;
-  font-weight: ord.$font-weight-label;
-  line-height: ord.$line-height-heading;
-  font-variant-numeric: tabular-nums;
-}
-
-.balloon-active {
-  border-color: ord.$color-background-button-primary;
-  background-color: ord.$color-background-button-primary;
-  color: ord.$color-text-button-primary;
-}
-
-.balloon-visited {
-  border-color: ord.$color-border-strong;
-  color: ord.$color-text-body;
-}
-
-.balloon-unvisited {
-  border-style: dashed;
-  color: ord.$color-text-disabled;
-}
-
-.navigation-toggle {
-  min-inline-size: 0;
+  justify-content: space-between;
+  gap: ord.$space-xs ord.$space-m;
+  margin-block-start: ord.$space-l;
+  padding-block-start: ord.$space-m;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider;
 }
 
 .main {

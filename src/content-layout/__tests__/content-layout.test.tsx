@@ -48,22 +48,18 @@ describe('ContentLayout', () => {
     expect(layout.findContent().getText()).toBe('Content');
   });
 
-  test('the high-contrast header draws a band the content overlaps', () => {
+  test('the high-contrast header sits on the sheet, ruled off in ink, with no band', () => {
     const root = renderLayout({ headerVariant: 'high-contrast' }).getElement();
-    expect(root.querySelector(`.${styles.band}`)).not.toBeNull();
     expect(root).toHaveClass(styles['header-variant-high-contrast'], styles.overlap, styles.padded);
-    expect(root).not.toHaveClass(styles['padded-top']);
   });
 
-  test('disableOverlap starts the content below the band', () => {
+  test('disableOverlap is still accepted', () => {
     const root = renderLayout({ headerVariant: 'high-contrast', disableOverlap: true }).getElement();
-    expect(root.querySelector(`.${styles.band}`)).not.toBeNull();
     expect(root).not.toHaveClass(styles.overlap);
   });
 
   test.each(['default', 'divider'] as const)('the %s header has no band and no overlap', headerVariant => {
     const root = renderLayout({ headerVariant }).getElement();
-    expect(root.querySelector(`.${styles.band}`)).toBeNull();
     expect(root).not.toHaveClass(styles.overlap);
   });
 

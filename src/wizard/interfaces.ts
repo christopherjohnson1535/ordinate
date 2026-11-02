@@ -12,10 +12,26 @@ export interface WizardProps extends BaseComponentProps {
    *   the margin, and items can be filled in any order. The open item shows its content, checked
    *   items fold to a one-line summary with a Change button, and the sheet is submitted from its
    *   footer once every required item has been opened and no item has an error.
-   * * `steps`: one step at a time, with the list of steps beside it and previous and next buttons.
-   *   The last step's primary button submits the flow.
+   * * `steps`: one step at a time, under a step scale that runs across the top: a tick for each step,
+   *   labelled with its reference (S1, S2…) and name, inked up to the current step. The step takes the
+   *   full width, with the previous and next buttons on a rule at its foot. The last step's primary
+   *   button submits the flow.
    */
   variant?: WizardProps.Variant;
+  /**
+   * What the flow sets up, as for Container. The kind colors the step scale, the step references and the
+   * hash marks on the footer rule. Only the `steps` variant uses it.
+   * - `configuration` for settings people change, drawn in drafting blue.
+   * - `resource` for things that exist or run, drawn in teal.
+   * - `policy` for rules the system follows, drawn in plum.
+   * - `neutral` for anything else, drawn in graphite.
+   */
+  kind?: WizardProps.Kind;
+  /**
+   * A short reference for the flow, such as `C4`, set before the step count above each step's heading, so
+   * other parts of the page can point at it. Only the `steps` variant uses it.
+   */
+  reference?: string;
   /**
    * The steps of the flow, in order.
    */
@@ -77,6 +93,8 @@ export interface WizardProps extends BaseComponentProps {
 export namespace WizardProps {
   export type Variant = 'checklist' | 'steps';
 
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
+
   export interface Step {
     /**
      * The name of the step, shown as its heading and in the navigation.
@@ -124,7 +142,7 @@ export namespace WizardProps {
      */
     stepNumberLabel?: (stepNumber: number) => string;
     /**
-     * Heading of the navigation when the wizard is too narrow to show it beside the step.
+     * The step count set above the heading of each step, such as "Step 2 of 4".
      */
     collapsedStepsLabel?: (stepNumber: number, stepsCount: number) => string;
     /**

@@ -116,17 +116,19 @@ export default function WizardPermutations() {
       <h2 className={styles['variant-heading']}>Steps</h2>
 
       <section className={styles.section}>
-        <h3>Narrow: the navigation collapses into a disclosure</h3>
+        <h3>Narrow: the scale keeps only the references</h3>
         <div className={styles.narrow}>
           <Uncontrolled variant="steps" steps={makeSteps(4, [2])} />
         </div>
       </section>
 
       <section className={styles.section}>
-        <h3>Skipping: every step after the first is optional</h3>
+        <h3>Skipping: every step after the first is optional, in a configuration kind with a reference</h3>
         <div className={styles.wide}>
           <Uncontrolled
             variant="steps"
+            kind="configuration"
+            reference="C4"
             steps={makeSteps(5, [1, 2, 3])}
             allowSkipTo={true}
             submitButtonText="Start copying"

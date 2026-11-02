@@ -15,6 +15,7 @@ export default function TreeView<T>({
   getItemChildren,
   renderItem,
   expandedItems,
+  currentItemId,
   onItemToggle,
   renderItemToggleIcon,
   ariaLabel,
@@ -31,6 +32,7 @@ export default function TreeView<T>({
       getItemChildren={getItemChildren}
       renderItem={renderItem}
       expandedItems={expandedItems}
+      currentItemId={currentItemId}
       onItemToggle={onItemToggle}
       renderItemToggleIcon={renderItemToggleIcon}
       ariaLabel={ariaLabel}

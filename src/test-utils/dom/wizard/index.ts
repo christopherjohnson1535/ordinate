@@ -110,6 +110,13 @@ export default class WizardWrapper extends ComponentWrapper {
     return this.findActiveItem()?.findError() ?? this.findByClassName(formStyles['error-text']);
   }
 
+  /**
+   * The rule at the foot of the `steps` variant that holds the actions.
+   */
+  findFooter(): ElementWrapper | null {
+    return this.findByClassName(styles['footer-rule']);
+  }
+
   findSecondaryActions(): ElementWrapper | null {
     return this.findByClassName(styles['secondary-actions']) ?? this.findByClassName(formStyles['secondary-actions']);
   }
@@ -176,15 +183,21 @@ export default class WizardWrapper extends ComponentWrapper {
   }
 
   /**
-   * The disclosure that holds the navigation when the wizard is too narrow to show it beside the step.
+   * Deprecated: the step scale stays across the top at every width, so there is no disclosure. Always null.
    */
   findNavigationToggle(): ExpandableSectionWrapper | null {
-    const element = this.findByClassName(styles['navigation-toggle']);
-    return element ? new ExpandableSectionWrapper(element.getElement()) : null;
+    return null;
   }
 
   /**
-   * The steps in the navigation, in order.
+   * The step scale across the top of the `steps` variant: the line with a tick for each step.
+   */
+  findStepScale(): ElementWrapper | null {
+    return this.findByClassName(styles.scale);
+  }
+
+  /**
+   * The steps in the navigation, in order. Each holds the step's reference, such as "S2", and its name.
    */
   findNavigationItems(): ElementWrapper[] {
     return this.findAllByClassName(styles['navigation-item']);

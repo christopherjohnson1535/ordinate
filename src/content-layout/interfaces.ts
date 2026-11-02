@@ -24,21 +24,22 @@ export interface ContentLayoutProps extends BaseComponentProps {
   /**
    * How the heading area is set apart from the content.
    *
-   * - `default` places the heading on the page with no decoration.
-   * - `high-contrast` sets the notifications, breadcrumbs and heading on a dark band, like the title block
-   *   of a drawing. Components inside the band switch to their dark colors. The band always keeps its
-   *   content clear of its edges.
-   * - `divider` rules the heading off from the content with a line.
+   * The heading always sits on the sheet with the content, never on a colored band.
+   *
+   * - `default` places the heading on the sheet with no decoration.
+   * - `high-contrast` stands the notifications, breadcrumbs and heading on a heavy ink rule, like the head of
+   *   a title block.
+   * - `divider` rules the heading off from the content with a hairline.
    */
   headerVariant?: ContentLayoutProps.HeaderVariant;
   /**
    * The widest the heading and the content may get, in pixels. They stay centered when the layout is
-   * wider. The high-contrast band still spans the full width.
+   * wider.
    */
   maxContentWidth?: number;
   /**
-   * With the `high-contrast` header, the top of the content overlaps the bottom of the band. Set this to
-   * start the content below the band instead. Other header variants never overlap.
+   * Deprecated: the `high-contrast` header no longer draws a band for the content to overlap, so this has no
+   * visible effect.
    */
   disableOverlap?: boolean;
   /**

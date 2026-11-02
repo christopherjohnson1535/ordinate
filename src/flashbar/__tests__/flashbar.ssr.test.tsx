@@ -11,12 +11,13 @@ test('renders on the server', () => {
     <Flashbar
       stackItems={true}
       items={[
-        { type: 'error', header: 'Deployment failed', dismissible: true },
-        { type: 'success', header: 'Backup complete' },
+        { type: 'fault', header: 'Deployment failed', dismissible: true },
+        { type: 'complete', header: 'Backup complete' },
       ]}
     />
   );
   expect(html).toContain('Deployment failed');
   expect(html).toContain('aria-label="Dismiss"');
-  expect(html).toContain('1 error');
+  expect(html).toContain('1 fault');
+  expect(html).toContain('Show all 2');
 });

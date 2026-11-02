@@ -10,10 +10,10 @@ import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 const items: FlashbarProps.MessageDefinition[] = [
-  { id: 'deploy', type: 'error', header: 'Deployment failed', content: 'Two nodes did not respond.' },
-  { id: 'cert', type: 'warning', header: 'Certificate expires soon' },
-  { id: 'backup', type: 'success', header: 'Backup complete' },
-  { id: 'patch', type: 'error', header: 'Patch failed' },
+  { id: 'deploy', type: 'fault', header: 'Deployment failed', content: 'Two nodes did not respond.' },
+  { id: 'cert', type: 'caution', header: 'Certificate expires soon' },
+  { id: 'backup', type: 'complete', header: 'Backup complete' },
+  { id: 'patch', type: 'fault', header: 'Patch failed' },
 ];
 
 function liveText() {
@@ -33,35 +33,52 @@ describe('Flashbar', () => {
     expect(screen.getByText('Two nodes did not respond.')).toBeInTheDocument();
   });
 
-  test('numbers each note in its margin, out of the accessibility tree', () => {
+  test('draws each item as a margin note, its type named in the margin', () => {
     render(<Flashbar items={items} />);
     const notes = createWrapper().findFlashbar()!.findItems();
-    expect(notes.map(note => note.findMarker().getText())).toEqual(['1', '2', '3', '4']);
-    expect(notes[0].findMarker().getElement().closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(notes.map(note => note.findCaption().getText())).toEqual(['Fault', 'Caution', 'Complete', 'Fault']);
+    expect(createWrapper().findAllAlerts()).toHaveLength(4);
   });
 
-  test('labels the status icon with the type by default, or with statusIconAriaLabel', () => {
+  test('the status icon is decorative unless statusIconAriaLabel or an i18n label is set', () => {
+    render(
+      <Flashbar
+        items={[
+          { type: 'fault', header: 'A' },
+          { type: 'note', header: 'B', statusIconAriaLabel: 'Note' },
+          { header: 'C' },
+        ]}
+        i18nStrings={{ errorIconAriaLabel: 'Error' }}
+      />
+    );
+    expect(screen.getAllByRole('img').map(icon => icon.getAttribute('aria-label'))).toEqual(['Error', 'Note']);
+  });
+
+  test('accepts the old type names with a warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     render(
       <Flashbar
         items={[
           { type: 'error', header: 'A' },
-          { type: 'in-progress', header: 'B' },
-          { header: 'C', statusIconAriaLabel: 'Note' },
+          { type: 'success', header: 'B' },
+          { type: 'in-progress', header: 'C' },
         ]}
       />
     );
-    expect(screen.getAllByRole('img').map(icon => icon.getAttribute('aria-label'))).toEqual([
-      'Error',
-      'In progress',
-      'Note',
-    ]);
+    const wrapper = createWrapper().findFlashbar()!;
+    expect(wrapper.findItemsByType('fault')).toHaveLength(1);
+    expect(wrapper.findItemsByType('success')).toHaveLength(1);
+    expect(wrapper.findItems()[2].isUnderway()).toBe(true);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('"error" is now called "fault"'));
+    warn.mockRestore();
   });
 
-  test('a loading item shows a spinner that keeps the status label', () => {
-    render(<Flashbar items={[{ type: 'in-progress', loading: true, header: 'Creating instance' }]} />);
-    const icon = createWrapper().findFlashbar()!.findItems()[0].findStatusIcon();
-    expect(icon.getElement().querySelector('svg path')).not.toBeNull();
-    expect(screen.getByRole('img', { name: 'In progress' })).toBeInTheDocument();
+  test('a loading item shows the underway spinner and an Underway caption', () => {
+    render(<Flashbar items={[{ type: 'note', loading: true, header: 'Creating instance' }]} />);
+    const item = createWrapper().findFlashbar()!.findItems()[0];
+    expect(item.isUnderway()).toBe(true);
+    expect(item.findCaption().getText()).toBe('Underway');
+    expect(item.findStatusIcon().getElement().querySelector('svg')).not.toBeNull();
   });
 
   test('announces new items politely and alert items assertively', () => {
@@ -70,30 +87,30 @@ describe('Flashbar', () => {
     rerender(
       <Flashbar
         items={[
-          { id: 'a', type: 'success', header: 'Saved' },
-          { id: 'b', type: 'error', header: 'Quota reached', ariaRole: 'alert' },
+          { id: 'a', type: 'complete', header: 'Saved' },
+          { id: 'b', type: 'fault', header: 'Quota reached', ariaRole: 'alert' },
         ]}
       />
     );
     act(() => {
       vi.runAllTimers();
     });
-    expect(document.querySelector('[aria-live="polite"]')).toHaveTextContent('Success Saved');
-    expect(document.querySelector('[aria-live="assertive"]')).toHaveTextContent('Error Quota reached');
+    expect(document.querySelector('[aria-live="polite"]')).toHaveTextContent('Complete Saved');
+    expect(document.querySelector('[aria-live="assertive"]')).toHaveTextContent('Fault Quota reached');
   });
 
   test('announces an item again when its text changes', () => {
     vi.useFakeTimers();
-    const { rerender } = render(<Flashbar items={[{ id: 'a', type: 'in-progress', header: 'Creating' }]} />);
+    const { rerender } = render(<Flashbar items={[{ id: 'a', loading: true, header: 'Creating' }]} />);
     act(() => {
       vi.runAllTimers();
     });
-    expect(liveText()).toEqual(['In progress Creating']);
-    rerender(<Flashbar items={[{ id: 'a', type: 'success', header: 'Created' }]} />);
+    expect(liveText()).toEqual(['Underway Creating']);
+    rerender(<Flashbar items={[{ id: 'a', type: 'complete', header: 'Created' }]} />);
     act(() => {
       vi.runAllTimers();
     });
-    expect(liveText()).toEqual(['Success Created']);
+    expect(liveText()).toEqual(['Complete Created']);
   });
 
   test('fires onDismiss from the close button', () => {
@@ -120,13 +137,20 @@ describe('Flashbar', () => {
     expect(wrapper.findNotificationBar()).toBeNull();
   });
 
-  test('a stack shows the first item and a bar that counts the items by type', () => {
-    render(<Flashbar items={items} stackItems={true} />);
+  test('a stack shows the first item and a summary that keys each type with a count', () => {
+    render(<Flashbar items={[...items, { id: 'run', loading: true, header: 'Restarting' }]} stackItems={true} />);
     const wrapper = createWrapper().findFlashbar()!;
     expect(wrapper.findItems().map(item => item.findHeader()!.getText())).toEqual(['Deployment failed']);
-    const bar = screen.getByRole('button', { name: 'Notifications 2 errors 1 warning 1 success' });
-    expect(bar).toHaveAttribute('aria-expanded', 'false');
-    expect(document.getElementById(bar.getAttribute('aria-controls')!)).toBe(
+    expect(wrapper.findSummaryCounts().map(count => count.getText())).toEqual([
+      '2 faults',
+      '1 caution',
+      '1 complete',
+      '1 underway',
+    ]);
+    expect(screen.getByRole('group', { name: 'Notifications' })).toBe(wrapper.findSummary()!.getElement());
+    const button = screen.getByRole('button', { name: 'Show all 5' });
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(document.getElementById(button.getAttribute('aria-controls')!)).toBe(
       screen.getByRole('list', { name: 'Notifications' })
     );
   });
@@ -164,7 +188,7 @@ describe('Flashbar', () => {
         messages={[
           {
             '@ordinate/components': {
-              de: { flashbar: { errorCount: '{count, plural, one {# Fehler} other {# Fehler}}' } },
+              de: { flashbar: { faultCount: '{count, plural, one {# Fehler} other {# Fehler}}' } },
             },
           },
         ]}
@@ -172,17 +196,24 @@ describe('Flashbar', () => {
         <Flashbar items={items.slice(0, 1).concat(items[3])} stackItems={true} />
       </I18nProvider>
     );
-    expect(screen.getByRole('button', { expanded: false })).toHaveTextContent('2 Fehler');
+    expect(createWrapper().findFlashbar()!.findSummaryCounts()[0].getText()).toBe('2 Fehler');
     rerender(
       <Flashbar
         items={items}
         stackItems={true}
-        i18nStrings={{ notificationBarText: 'Messages', itemCountText: (type, count) => `${type}: ${count}` }}
+        i18nStrings={{
+          showAllText: count => `All ${count}`,
+          itemCountText: (type, count) => `${type}: ${count}`,
+        }}
       />
     );
-    expect(screen.getByRole('button', { expanded: false })).toHaveAccessibleName(
-      'Messages error: 2 warning: 1 success: 1'
-    );
+    const wrapper = createWrapper().findFlashbar()!;
+    expect(wrapper.findSummaryCounts().map(count => count.getText())).toEqual([
+      'fault: 2',
+      'caution: 1',
+      'complete: 1',
+    ]);
+    expect(wrapper.findNotificationBar()!.getElement()).toHaveAccessibleName('All 4');
   });
 
   test('passes id and data attributes, but not className', () => {
@@ -223,10 +254,10 @@ describe('Flashbar test utilities and accessibility', () => {
       <>
         <Flashbar
           items={[
-            { type: 'success', header: 'Saved', dismissible: true },
-            { type: 'warning', header: 'Expiring', action: <button>Renew</button> },
-            { type: 'in-progress', loading: true, header: 'Creating' },
-            { type: 'info', content: 'Maintenance on Sunday', statusIconAriaLabel: '' },
+            { type: 'complete', header: 'Saved', dismissible: true },
+            { type: 'caution', header: 'Expiring', action: <button>Renew</button> },
+            { type: 'note', loading: true, header: 'Creating' },
+            { type: 'note', content: 'Maintenance on Sunday', statusIconAriaLabel: '' },
           ]}
         />
         <Flashbar items={items} stackItems={true} />

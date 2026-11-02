@@ -23,11 +23,18 @@ export default class SideNavigationWrapper extends ComponentWrapper {
   }
 
   /**
-   * Returns the code of every link, in order, while any link has one. Links without a code
-   * return an empty code, so the list lines up with `findLinks()`.
+   * Deprecated: codes are no longer drawn, so this always returns an empty list.
    */
   findLinkCodes(): ElementWrapper[] {
-    return this.findAllByClassName(styles.code);
+    return [];
+  }
+
+  /**
+   * Returns the items of every section and section group, in order: each hangs on its own construction
+   * line.
+   */
+  findGroups(): ElementWrapper[] {
+    return this.findAllByClassName(styles.group);
   }
 
   findActiveLink(): ElementWrapper<HTMLAnchorElement> | null {

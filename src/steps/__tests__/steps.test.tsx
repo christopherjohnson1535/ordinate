@@ -45,6 +45,15 @@ describe('Steps', () => {
     expect(second.findStatusIndicator()).not.toBeNull();
   });
 
+  test('numbers each step with an S reference, as Wizard does', () => {
+    render(<Steps steps={steps} />);
+    expect(
+      wrapper()
+        .findItems()
+        .map(item => item.findReference().getText())
+    ).toEqual(['S1', 'S2', 'S3']);
+  });
+
   test('a status icon without a label is decorative', () => {
     render(<Steps steps={[{ header: 'Build', status: 'complete' }]} />);
     expect(screen.queryByRole('img')).toBeNull();

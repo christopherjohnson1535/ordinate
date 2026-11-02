@@ -53,6 +53,7 @@ export function InternalTreeView<T>({
   getItemChildren,
   renderItem,
   expandedItems,
+  currentItemId,
   onItemToggle,
   renderItemToggleIcon,
   ariaLabel,
@@ -178,12 +179,17 @@ export function InternalTreeView<T>({
           }
         }}
         role="treeitem"
-        className={clsx(styles.item, node.index === node.setSize - 1 && styles['item-last'])}
+        className={clsx(
+          styles.item,
+          node.index === node.setSize - 1 && styles['item-last'],
+          node.id === currentItemId && styles['item-current']
+        )}
         data-item-id={node.id}
         aria-level={node.level}
         aria-setsize={node.setSize}
         aria-posinset={node.index + 1}
         aria-expanded={node.hasChildren ? node.expanded : undefined}
+        aria-current={node.id === currentItemId ? 'true' : undefined}
         aria-label={rendered.announcementLabel}
         aria-labelledby={rendered.announcementLabel === undefined ? labelIds : undefined}
         tabIndex={node.id === tabStopId ? 0 : -1}

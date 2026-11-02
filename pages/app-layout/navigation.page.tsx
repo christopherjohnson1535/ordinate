@@ -22,7 +22,7 @@ export default function AppLayoutNavigation() {
   const [items, setItems] = useState<FlashbarProps.MessageDefinition[]>([
     {
       id: 'maintenance',
-      type: 'info',
+      type: 'note',
       header: 'Scheduled maintenance on November 4',
       content: 'Nodes in us-mountain-1 restart one at a time between 02:00 and 04:00 MST.',
       dismissible: true,
@@ -33,7 +33,7 @@ export default function AppLayoutNavigation() {
   return (
     <DemoPage
       title="App layout: navigation"
-      description="The content sits on a framed sheet with grid reference letters along the top and a title block along the foot. The navigation is an index on the grey frame and collapses to a rail with a single toggle. Notifications sit in the margin beside the sheet when there is room, or above the breadcrumbs, and when sticky they stay in view while the content scrolls. The content type sets the maximum content width."
+      description="The content sits on a white sheet laid on the paper, with grid reference letters along the top and a title block along the foot. The navigation is a sheet index along the side and collapses to a rail with a single toggle. Notifications sit in the margin beside the sheet when there is room, or above the breadcrumbs, and when sticky they stay in view while the content scrolls. The content type sets the maximum content width."
       controls={
         <>
           <SegmentedControl

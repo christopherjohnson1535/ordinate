@@ -109,9 +109,9 @@ describe('Wizard, steps variant', () => {
   test('marks the current step and offers only steps already reached', () => {
     render(<Controlled />);
     expect(wrapper().findActiveNavigationItem()!.getText()).toContain('Name the cluster');
-    expect(wrapper().findActiveNavigationItem()!.find('[aria-current="step"]')!.getText()).toBe(
-      'Step 1 Name the cluster'
-    );
+    const current = wrapper().findActiveNavigationItem()!.find('[aria-current="step"]')!;
+    expect(current.getText()).toContain('Step 1');
+    expect(current.getText()).toContain('Name the cluster');
     expect(wrapper().findNavigationLinks()).toHaveLength(0);
 
     wrapper().findPrimaryButton().click();
@@ -119,8 +119,29 @@ describe('Wizard, steps variant', () => {
     expect(
       wrapper()
         .findNavigationLinks()
-        .map(link => link.getText())
-    ).toEqual(['Step 1 Name the cluster', 'Step 2 Choose capacity']);
+        .map(link => link.getElement())
+    ).toEqual([navigationButton('Name the cluster'), navigationButton('Choose capacity')]);
+  });
+
+  test('labels each step on the scale with its reference, hidden from screen readers', () => {
+    render(<Wizard steps={steps} activeStepIndex={1} />);
+    expect(wrapper().findStepScale()).not.toBeNull();
+    const items = wrapper().findNavigationItems();
+    expect(items.map(item => item.getText().match(/S\d/)![0])).toEqual(['S1', 'S2', 'S3', 'S4', 'S5']);
+    expect(navigationButton('Name the cluster')).toHaveAccessibleName('Step 1 Name the cluster');
+  });
+
+  test('kind and reference mark the step count above the heading', () => {
+    render(<Wizard steps={steps} activeStepIndex={1} kind="configuration" reference="C4" />);
+    expect(wrapper().findHeader().getText()).toContain('C4 · Step 2 of 5');
+    expect(wrapper().getElement().className).toMatch(/kind-configuration/);
+  });
+
+  test('stands the actions on the footer rule', () => {
+    render(<Wizard steps={steps} activeStepIndex={1} />);
+    const footer = wrapper().findFooter()!;
+    expect(footer.getElement()).toContainElement(wrapper().findPrimaryButton().getElement());
+    expect(footer.getElement()).toContainElement(wrapper().findPreviousButton()!.getElement());
   });
 
   test('a step reached before can be chosen in the navigation, with the reason step', () => {
@@ -172,7 +193,7 @@ describe('Wizard, steps variant', () => {
       wrapper()
         .findNavigationLinks()
         .map(link => link.getText())
-    ).not.toContain('Step 5 Review');
+    ).not.toContainEqual(expect.stringContaining('Review'));
   });
 
   test('while the next step loads, navigation stops and the primary button shows loading', () => {
@@ -216,23 +237,20 @@ describe('Wizard, steps variant', () => {
     expect(within(navigation).getByRole('button', { name: 'Part 1 Name the cluster' })).toBeInTheDocument();
   });
 
-  test('collapses the navigation into a "Step n of m" disclosure in a narrow container', () => {
+  test('keeps the scale in a narrow container, with the names kept for screen readers', () => {
     vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(400);
     render(<Controlled activeStepIndex={1} />);
-    const toggle = wrapper().findNavigationToggle()!;
-    expect(toggle.findHeaderText().getText()).toBe('Step 2 of 5');
-    expect(toggle.isExpanded()).toBe(false);
-    toggle.findExpandButton().click();
-    expect(toggle.isExpanded()).toBe(true);
+    expect(wrapper().findNavigationToggle()).toBeNull();
+    expect(wrapper().findStepScale()!.getElement().className).toMatch(/scale-compact/);
+    expect(wrapper().findHeader().getText()).toContain('Step 2 of 5');
     fireEvent.click(navigationButton('Name the cluster'));
     expect(screen.getByRole('heading', { level: 1, name: 'Name the cluster' })).toBeInTheDocument();
-    expect(wrapper().findNavigationToggle()!.isExpanded()).toBe(false);
   });
 
-  test('keeps the navigation beside the step in a wide container', () => {
+  test('shows the step names on the scale in a wide container', () => {
     vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(1000);
     render(<Wizard steps={steps} />);
-    expect(wrapper().findNavigationToggle()).toBeNull();
+    expect(wrapper().findStepScale()!.getElement().className).not.toMatch(/scale-compact/);
   });
 
   test('renders secondary actions', () => {

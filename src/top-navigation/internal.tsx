@@ -167,7 +167,7 @@ export function InternalTopNavigation({ identity, utilities = [], search, i18nSt
         aria-hidden="true"
       >
         <div ref={measureRef} className={styles.ruler}>
-          <span className={styles['identity-link']} data-measure="identity">
+          <span className={`${styles.identity} ${styles['identity-link']}`} data-measure="identity">
             {identityContent}
           </span>
           {utilities.map((utility, index) => (
@@ -181,7 +181,7 @@ export function InternalTopNavigation({ identity, utilities = [], search, i18nSt
             </React.Fragment>
           ))}
           <span className={styles['ruler-item']} data-measure="overflow">
-            {overflowMenu}
+            <span className={styles['utility-slot']}>{overflowMenu}</span>
           </span>
         </div>
       </div>

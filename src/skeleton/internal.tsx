@@ -58,7 +58,9 @@ export function InternalSkeleton({
         ) : (
           Array.from({ length: lineCount(variant, lines) }, (_, index) => (
             <div key={index} className={styles.line}>
-              <span className={styles.bar} />
+              <span className={styles.bar}>
+                <span className={styles.rule} />
+              </span>
             </div>
           ))
         )}

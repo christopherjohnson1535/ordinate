@@ -15,22 +15,24 @@ function AnchorList({
   nodes,
   activeHref,
   onFollow,
-  nested = false,
+  depth = 1,
 }: {
   nodes: ReadonlyArray<AnchorNode>;
   activeHref: string | undefined;
   onFollow: (event: React.MouseEvent, anchor: AnchorNavigationProps.Anchor) => void;
-  nested?: boolean;
+  depth?: number;
 }) {
+  // Levels below the third are drawn like the third, so deep outlines keep their width.
+  const level = Math.min(depth, 3);
   return (
-    <ol className={clsx(styles.list, nested && styles['list-nested'])}>
+    <ol className={styles.list}>
       {nodes.map(({ anchor, children }, index) => {
         const active = anchor.href === activeHref;
         return (
           <li key={`${anchor.href}-${index}`} className={styles.item}>
             <div className={styles['link-row']}>
               <a
-                className={clsx(styles.link, active && styles['link-active'])}
+                className={clsx(styles.link, styles[`level-${level}`], active && styles['link-active'])}
                 href={anchor.href}
                 aria-current={active ? 'true' : undefined}
                 onClick={event => {
@@ -44,7 +46,7 @@ function AnchorList({
               {anchor.info && <span className={styles.info}>{anchor.info}</span>}
             </div>
             {children.length > 0 && (
-              <AnchorList nodes={children} activeHref={activeHref} onFollow={onFollow} nested={true} />
+              <AnchorList nodes={children} activeHref={activeHref} onFollow={onFollow} depth={depth + 1} />
             )}
           </li>
         );

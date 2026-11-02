@@ -4,13 +4,28 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
+
+// A scale: a faint vertical line with a tick for every heading, longer for deeper levels. The current
+// heading gets a longer ink tick, the position rule laid across the line.
+$line-box: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
 
 .root {
   @include styles.font-body;
+  position: relative;
   display: block;
   min-inline-size: 0;
   color: ord.$color-text-body-secondary;
+
+  &::before {
+    @include drawing.construction-line;
+    content: '';
+    inset-block: ord.$space-xxs;
+    inset-inline-start: 0;
+    inline-size: ord.$border-width-default;
+    color: ord.$color-kind-neutral;
+  }
 }
 
 .list {
@@ -19,10 +34,6 @@
   padding-block: 0;
   padding-inline: 0;
   list-style: none;
-}
-
-.list-nested {
-  padding-inline-start: ord.$space-s;
 }
 
 .item {
@@ -35,31 +46,48 @@
   gap: ord.$space-xs;
 }
 
-// Every link carries a transparent rule on its leading edge, so marking the current section
-// inks the rule without moving the text.
+// The tick starts on the line and is centred on the first line of text. The text starts past the
+// longest tick of its level, so marking the current heading does not move it.
 .link {
+  position: relative;
   flex: 0 1 auto;
   min-inline-size: 0;
   padding-block: ord.$space-scaled-xxs;
-  padding-inline: ord.$space-s 0;
-  border-inline-start-width: ord.$border-width-section;
-  border-inline-start-style: solid;
-  border-inline-start-color: transparent;
+  padding-inline: ord.$space-l 0;
   color: ord.$color-text-body-secondary;
   text-decoration-line: none;
   text-decoration-thickness: ord.$border-width-default;
   text-underline-offset: ord.$space-xxxs;
   overflow-wrap: anywhere;
 
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(#{ord.$space-scaled-xxs} + #{$line-box} / 2 - #{ord.$border-width-default} / 2);
+    inset-inline-start: 0;
+    inline-size: var(--anchor-tick);
+    block-size: ord.$border-width-default;
+    background-color: ord.$color-kind-neutral;
+    pointer-events: none;
+
+    @include styles.with-motion {
+      transition-property: inline-size, block-size, background-color;
+      transition-duration: ord.$motion-duration-expressive;
+      transition-timing-function: ord.$motion-easing-standard;
+    }
+  }
+
   @include styles.with-motion {
-    transition-property: color, border-color;
+    transition-property: color;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
   }
 
-  &:hover {
-    color: ord.$color-text-body;
-    text-decoration-line: underline;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ord.$color-text-body;
+      text-decoration-line: underline;
+    }
   }
 
   &:focus-visible {
@@ -68,10 +96,30 @@
   }
 }
 
+.level-1 {
+  --anchor-tick: #{ord.$space-xs};
+}
+
+.level-2 {
+  --anchor-tick: #{ord.$space-s};
+  padding-inline-start: ord.$space-xl;
+}
+
+.level-3 {
+  --anchor-tick: #{ord.$space-m};
+  padding-inline-start: ord.$space-xxl;
+}
+
 .link-active {
-  border-inline-start-color: ord.$color-border-strong;
   color: ord.$color-text-body;
   font-weight: ord.$font-weight-label;
+
+  &::before {
+    inline-size: calc(var(--anchor-tick) + #{ord.$space-xs});
+    inset-block-start: calc(#{ord.$space-scaled-xxs} + #{$line-box} / 2 - #{ord.$border-width-section} / 2);
+    block-size: ord.$border-width-section;
+    background-color: ord.$color-border-strong;
+  }
 }
 
 .info {

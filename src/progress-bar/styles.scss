@@ -4,20 +4,41 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// Progress is a measure, so it is drawn as a dimension line: a tick at each end, a faint line between them
+// and an ink bar that fills it. The measure is lettered in mono at the end of the label's row; once the
+// operation has finished, the state's icon and word stand there instead.
 .root {
   @include styles.font-body;
-  display: flex;
-  flex-direction: column;
-  gap: ord.$space-xxs;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'label measure'
+    'description description'
+    'bar bar'
+    'result result'
+    'info info';
+  align-items: baseline;
+  column-gap: ord.$space-s;
+  row-gap: ord.$space-xxs;
   min-inline-size: 0;
   color: ord.$color-text-body;
 }
 
 .label {
   @include styles.font-label;
+  grid-area: label;
   overflow-wrap: break-word;
+}
+
+.description {
+  grid-area: description;
+}
+
+.additional-info {
+  grid-area: info;
 }
 
 .description,
@@ -27,34 +48,63 @@
   overflow-wrap: break-word;
 }
 
-.progress {
-  display: flex;
-  align-items: center;
-  gap: ord.$space-s;
+.measure {
+  grid-area: measure;
+  justify-self: end;
 }
 
-// The track is ruled at every tenth like a scale bar on a drawing; the fill covers the ticks it has passed.
-.track {
-  @include styles.border-radius(ord.$border-radius-badge);
-  flex: 1 1 auto;
-  box-sizing: border-box;
+.percentage {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  font-variant-numeric: tabular-nums;
+  color: ord.$color-text-body;
+}
+
+.status {
+  white-space: nowrap;
+}
+
+// The dimension line. The end ticks stand the full height; the line and the bar run through the middle.
+.bar {
+  position: relative;
+  grid-area: bar;
+  align-self: center;
   block-size: ord.$space-s;
-  overflow: hidden;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
-  background-image: repeating-linear-gradient(
-    to right,
-    transparent 0 calc(10% - 1px),
-    ord.$color-border-divider calc(10% - 1px) 10%
-  );
+  color: ord.$color-kind-neutral;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inline-size: ord.$border-width-default;
+    background-color: currentColor;
+  }
+
+  &::before {
+    inset-inline-start: 0;
+  }
+
+  &::after {
+    inset-inline-end: 0;
+  }
+}
+
+.base {
+  @include drawing.construction-line;
+  inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+  inset-inline: 0;
+  block-size: ord.$border-width-default;
 }
 
 .fill {
-  block-size: 100%;
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$space-xxs} / 2);
+  inset-inline-start: 0;
+  block-size: ord.$space-xxs;
   max-inline-size: 100%;
-  background-color: ord.$color-border-accent;
+  background-color: ord.$color-border-strong;
 
   @include styles.with-motion {
     transition-property: inline-size;
@@ -63,20 +113,26 @@
   }
 }
 
-.percentage {
-  @include styles.font-code;
-  flex-shrink: 0;
-  min-inline-size: 4ch;
-  font-variant-numeric: tabular-nums;
-  color: ord.$color-text-body-secondary;
-  text-align: end;
+// Where a failed operation stopped: a tick across the line in the fault color, beside the ink it reached.
+.stop {
+  position: absolute;
+  inset-block: calc(-1 * #{ord.$space-xxxs});
+  inline-size: ord.$border-width-section;
+  background-color: ord.$color-text-error;
+}
+
+.track {
+  min-inline-size: 0;
 }
 
 .result {
   display: flex;
   flex-wrap: wrap;
+  grid-area: result;
   align-items: center;
   gap: ord.$space-xs ord.$space-s;
+  font-size: ord.$font-size-description;
+  color: ord.$color-text-body-secondary;
 }
 
 .result-text {
@@ -89,7 +145,7 @@
 
 // Drawn with the spacing of a key and its value in KeyValuePairs.
 .variant-key-value {
-  gap: ord.$space-xxxs;
+  row-gap: ord.$space-xxxs;
 }
 
 .variant-flash .label {

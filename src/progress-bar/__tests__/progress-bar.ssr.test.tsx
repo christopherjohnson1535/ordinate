@@ -10,7 +10,7 @@ test('renders on the server', () => {
   const html = renderToString(
     <>
       <ProgressBar value={42} label="Uploading backup" />
-      <ProgressBar status="success" resultText="Upload complete" />
+      <ProgressBar status="complete" resultText="Upload complete" />
     </>
   );
   expect(html).toContain('role="progressbar"');

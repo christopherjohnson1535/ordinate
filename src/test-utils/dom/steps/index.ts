@@ -11,6 +11,13 @@ export class StepWrapper extends ComponentWrapper {
     return this.findByClassName(styles.header)!;
   }
 
+  /**
+   * The step's reference, such as "S2".
+   */
+  findReference(): ElementWrapper {
+    return this.findByClassName(styles.reference)!;
+  }
+
   findDetails(): ElementWrapper | null {
     return this.findByClassName(styles.details);
   }

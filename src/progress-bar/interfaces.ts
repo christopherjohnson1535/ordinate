@@ -11,7 +11,7 @@ export interface ProgressBarProps extends BaseComponentProps {
    */
   value?: number;
   /**
-   * What is in progress, shown above the bar. It names the progress bar for screen readers.
+   * What is underway, shown above the bar. It names the progress bar for screen readers.
    */
   label?: React.ReactNode;
   /**
@@ -23,10 +23,12 @@ export interface ProgressBarProps extends BaseComponentProps {
    */
   additionalInfo?: React.ReactNode;
   /**
-   * The state of the operation. `success` and `error` replace the bar with a status and `resultText`, and
-   * announce the result to screen readers.
+   * The state of the operation, named like StatusIndicator's states: `underway`, `complete` or `fault`.
+   * `complete` and `fault` show the state's icon and word in place of the measure, keep the bar where it
+   * stopped, show `resultText` below it and announce the result to screen readers. The old names
+   * (`in-progress`, `success` and `error`) still work with a warning until the next major version.
    */
-  status?: ProgressBarProps.Status;
+  status?: ProgressBarProps.Status | ProgressBarProps.LegacyStatus;
   /**
    * The text shown with the status once the operation has finished.
    */
@@ -62,7 +64,12 @@ export interface ProgressBarProps extends BaseComponentProps {
 }
 
 export namespace ProgressBarProps {
-  export type Status = 'in-progress' | 'success' | 'error';
+  export type Status = 'underway' | 'complete' | 'fault';
+
+  /**
+   * Deprecated: the old names of the states. Use `Status`.
+   */
+  export type LegacyStatus = 'in-progress' | 'success' | 'error';
 
   export type Variant = 'standalone' | 'flash' | 'key-value';
 }

@@ -24,9 +24,11 @@ export function InternalSteps({ steps, orientation = 'vertical', ariaLabel, aria
             key: String(index),
             upcoming: state === 'waiting' || state === 'queued',
             itemProps: { className: styles.step },
-            // The header keeps the ink color; only the icon takes the status color.
+            // The header keeps the ink color; only the icon takes the status color. The reference numbers the
+            // step as Wizard does, so a step can be pointed at in words.
             head: (
               <InternalStatusIndicator state={state} iconAriaLabel={step.statusIconAriaLabel}>
+                <span className={styles.reference}>S{index + 1}</span>{' '}
                 <span className={styles.header}>{step.header}</span>
               </InternalStatusIndicator>
             ),

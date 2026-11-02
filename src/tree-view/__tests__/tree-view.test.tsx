@@ -255,6 +255,14 @@ describe('TreeView', () => {
     expect(screen.getAllByTestId('toggle-icon').map(icon => icon.textContent)).toEqual(['-', '+', '+']);
   });
 
+  test('currentItemId marks the item the user is on', () => {
+    render(<TreeView {...baseProps} expandedItems={['site']} currentItemId="south" />);
+    const tree = createWrapper().findTreeView()!;
+    expect(tree.findCurrentItem()!.getId()).toBe('south');
+    expect(tree.findItemById('south')!.getElement()).toHaveAttribute('aria-current', 'true');
+    expect(tree.findItemById('north')!.isCurrent()).toBe(false);
+  });
+
   test('passes id and data attributes to the root', () => {
     render(<TreeView {...baseProps} id="locations" data-testid="tree" />);
     expect(screen.getByTestId('tree')).toHaveAttribute('id', 'locations');

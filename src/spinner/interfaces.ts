@@ -8,8 +8,8 @@ export interface SpinnerProps extends BaseComponentProps {
    */
   size?: SpinnerProps.Size;
   /**
-   * The color of the spinner:
-   * * `normal` follows the surrounding text color.
+   * The spinner is the underway icon, turning. Its color:
+   * * `normal` is drawn in ink.
    * * `disabled` uses the disabled text color.
    * * `inverted` is for dark fills, such as a primary button.
    *

@@ -4,8 +4,11 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// A stack of Alert's margin notes. The notes draw themselves; the flashbar only stacks them and, when the
+// stack is collapsed, keys what it holds in a summary row.
 .root {
   @include styles.font-body;
   display: flex;
@@ -17,7 +20,6 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: ord.$space-xs;
   margin-block: 0;
   margin-inline: 0;
   padding-block: 0;
@@ -25,21 +27,14 @@
   list-style: none;
 }
 
-// The margin marker: a numbered circle joined to its note by a short leader line.
-$marker-size: ord.$size-icon-medium;
-// The circle and its leader; stacks and the notification bar line up with the notes past it.
-$marker-column: ord.$space-xl;
-
-// A note in the margin: white paper with an ink border, numbered in a circle colored by its type.
 .flash {
-  display: flex;
-  align-items: flex-start;
   min-inline-size: 0;
 
   &[hidden] {
     display: none;
   }
 
+  // A new note fades in where it lands, without moving.
   @include styles.with-motion {
     animation-name: enter;
     animation-duration: ord.$motion-duration-expressive;
@@ -47,250 +42,89 @@ $marker-column: ord.$space-xl;
   }
 }
 
-// As tall as the first line of the note's text, below the note's padding, so the circle centres on it.
-.marker {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  inline-size: $marker-column;
-  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
-  padding-block-start: ord.$space-scaled-s;
-}
-
-.marker-number {
-  @include styles.border-radius(ord.$border-radius-radio);
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  inline-size: $marker-size;
-  block-size: $marker-size;
-  border-width: ord.$border-width-section;
-  border-style: solid;
-  background-color: ord.$color-background-container;
-  font-family: ord.$font-family-mono;
-  font-size: ord.$font-size-small;
-  font-weight: ord.$font-weight-bold;
-  line-height: ord.$line-height-heading;
-  font-variant-numeric: tabular-nums;
-}
-
-.marker-leader {
-  flex: 1 1 auto;
-  border-block-start-width: ord.$border-width-default;
-  border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-strong;
-}
-
 .note {
-  @include styles.border-radius(ord.$border-radius-alert);
-  display: flex;
-  flex: 1 1 0;
-  align-items: flex-start;
-  gap: ord.$space-xs;
-  box-sizing: border-box;
-  min-inline-size: 0;
-  padding-block: ord.$space-scaled-s;
-  padding-inline: ord.$space-m ord.$space-xs;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
-}
-
-// The icon in one column and the message in the next; the action sits under the message.
-.note-main {
-  display: grid;
-  flex: 1 1 0;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: ord.$space-xs;
   min-inline-size: 0;
 }
 
-.body {
-  display: contents;
+// The type and state of each item, for the test utilities. The note inside draws them.
+.type-note,
+.type-complete,
+.type-caution,
+.type-fault,
+.underway {
+  list-style: none;
 }
 
-// The icon and the close button are centred on the first line of text.
-.status-icon,
-.dismiss {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
-}
-
-// Grows to the full width so content such as a progress bar can use it.
-.message {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: ord.$space-xxs;
-  min-inline-size: 0;
-  overflow-wrap: anywhere;
-}
-
-.header {
-  font-weight: ord.$font-weight-heading;
-}
-
-.content {
-  color: ord.$color-text-body-secondary;
-}
-
-// Below the message, lined up with its text, so the note stays narrow enough for a margin.
-.action-slot {
-  display: flex;
-  flex-wrap: wrap;
-  grid-column: 2;
-  gap: ord.$space-xs;
-}
-
-// The edges of the sheets under the first item of a collapsed stack, each a little narrower.
-.stack-edges {
-  display: flex;
-  flex-direction: column;
-  margin-inline-start: ord.$space-xl;
-}
-
-.stack-edge {
-  box-sizing: border-box;
-  block-size: ord.$space-xxs;
-  margin-inline: ord.$space-xs;
-  border-width: ord.$border-width-default;
-  border-block-start-width: 0;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  border-end-start-radius: ord.$border-radius-badge;
-  border-end-end-radius: ord.$border-radius-badge;
-  background-color: ord.$color-background-container;
-
-  & + & {
-    margin-inline: ord.$space-m;
-  }
-}
-
-.notification-bar {
-  @include styles.font-label;
-  @include styles.border-radius(ord.$border-radius-alert);
+.summary {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: ord.$space-xxs ord.$space-m;
-  box-sizing: border-box;
-  inline-size: calc(100% - #{$marker-column});
-  margin-block-start: ord.$space-xs;
-  margin-inline-start: ord.$space-xl;
-  padding-block: ord.$space-scaled-xs;
-  padding-inline: ord.$space-m;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-button-normal;
-  color: ord.$color-text-body;
-  text-align: start;
-  cursor: pointer;
-
-  @include styles.with-motion {
-    transition-property: background-color;
-    transition-duration: ord.$motion-duration-responsive;
-    transition-timing-function: ord.$motion-easing-standard;
-  }
-
-  &:hover {
-    background-color: ord.$color-background-button-normal-hover;
-  }
-
-  &:focus-visible {
-    @include styles.focus-ring;
-  }
+  gap: ord.$space-xs ord.$space-m;
+  padding-block: ord.$space-xs 0;
 }
 
 .counts {
   display: flex;
   flex-wrap: wrap;
-  gap: ord.$space-xxs ord.$space-m;
+  align-items: center;
+  gap: ord.$space-xs ord.$space-m;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  list-style: none;
 }
 
+// Set like a badge: small mono capitals in ink, keyed by a square in the type's color.
 .count {
+  @include drawing.mono-caption;
   display: inline-flex;
   align-items: center;
   gap: ord.$space-xxs;
-}
-
-.count-text {
-  font-weight: ord.$font-weight-body;
+  font-size: ord.$font-size-caption;
   color: ord.$color-text-body-secondary;
+  white-space: nowrap;
 }
 
-.notification-bar-icon {
-  margin-inline-start: auto;
+.key {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  inline-size: ord.$size-key-square;
+  block-size: ord.$size-key-square;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: currentColor;
+  background-color: currentColor;
 }
 
-.type-success {
-  .marker-number {
-    border-color: ord.$color-border-status-success;
-  }
-
-  .marker-number,
-  .status-icon,
-  .count-icon {
-    color: ord.$color-text-status-success;
-  }
+.count-fault .key {
+  color: ord.$color-text-error;
 }
 
-.type-error {
-  .marker-number {
-    border-color: ord.$color-border-error;
-  }
-
-  .marker-number,
-  .status-icon,
-  .count-icon {
-    color: ord.$color-text-error;
-  }
+.count-caution .key {
+  color: ord.$color-text-status-warning;
 }
 
-.type-warning {
-  .marker-number {
-    border-color: ord.$color-border-status-warning;
-  }
-
-  .marker-number,
-  .status-icon,
-  .count-icon {
-    color: ord.$color-text-status-warning;
-  }
+.count-complete .key {
+  color: ord.$color-text-status-success;
 }
 
-.type-info {
-  .marker-number {
-    border-color: ord.$color-border-status-info;
-  }
-
-  .marker-number,
-  .status-icon,
-  .count-icon {
-    color: ord.$color-text-status-info;
-  }
+.count-note .key {
+  color: ord.$color-text-status-info;
 }
 
-.type-in-progress {
-  .marker-number {
-    border-color: ord.$color-border-accent;
-  }
+// Work still underway is keyed by an open square: started, not finished.
+.count-underway .key {
+  color: ord.$color-text-status-info;
+  background-color: transparent;
+}
 
-  .marker-number,
-  .status-icon,
-  .count-icon {
-    color: ord.$color-text-accent;
-  }
+.notification-bar {
+  flex-shrink: 0;
 }
 
 @keyframes enter {
   from {
     opacity: 0;
-    transform: translateY(calc(-1 * #{ord.$space-xxs}));
   }
 }

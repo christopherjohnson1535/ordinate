@@ -69,6 +69,11 @@ $stacked-max-width: 400px;
   overflow-wrap: anywhere;
 }
 
+.message,
+.action-slot {
+  grid-column: 2;
+}
+
 .message {
   display: flex;
   flex-direction: column;
@@ -89,7 +94,8 @@ $stacked-max-width: 400px;
   display: flex;
   flex-wrap: wrap;
   gap: ord.$space-xs;
-  padding-block-start: ord.$space-xs;
+  min-inline-size: 0;
+  padding-block-start: ord.$space-xxs;
 }
 
 // Only the icon and the word beside it carry the tone. The message stays in ink.
@@ -112,5 +118,10 @@ $stacked-max-width: 400px;
 @container (max-inline-size: #{$stacked-max-width}) {
   .body {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .message,
+  .action-slot {
+    grid-column: 1;
   }
 }

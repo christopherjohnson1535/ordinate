@@ -8,8 +8,8 @@ import { NonCancelableEventHandler } from '../internal/events';
 
 export interface AppLayoutProps extends BaseComponentProps {
   /**
-   * The main content of the page, drawn on a framed sheet: a heavy ink border, grid reference
-   * letters along its top edge and, when `titleBlock` is set, a title block along its foot.
+   * The main content of the page, drawn on a white sheet laid on the paper: a hairline edge, grid
+   * reference letters along its top edge and, when `titleBlock` is set, a title block along its foot.
    */
   content?: React.ReactNode;
   /**
@@ -37,7 +37,7 @@ export interface AppLayoutProps extends BaseComponentProps {
    */
   variant?: AppLayoutProps.Variant;
   /**
-   * The navigation, usually a `SideNavigation`. It sits on the grey frame beside the sheet, like
+   * The navigation, usually a `SideNavigation`. It sits on its own white strip along the side, like
    * the index of a drawing set.
    */
   navigation?: React.ReactNode;
