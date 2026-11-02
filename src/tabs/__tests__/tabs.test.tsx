@@ -9,6 +9,7 @@ import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+import markerStyles from '../../../lib/components/internal/components/sliding-marker/styles.css.js';
 import tabsStyles from '../../../lib/components/tabs/styles.css.js';
 
 const tabs: TabsProps.Tab[] = [
@@ -231,7 +232,7 @@ describe('Tabs drawing', () => {
     const element = marks[0].getElement();
     expect(element).toHaveAttribute('aria-hidden', 'true');
     expect(element).toHaveClass(marksStyles.selected, marksStyles.open);
-    expect(element.parentElement).toHaveClass(tabsStyles.marker);
+    expect(element.parentElement).toHaveClass(markerStyles.marker);
   });
 
   test("shows each tab's reference after its label, as part of its name", () => {

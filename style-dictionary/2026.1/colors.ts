@@ -11,7 +11,8 @@ export const tokens: ColorsDictionary = {
   colorBackgroundButtonNormalHover: { light: '{colorGrey50}', dark: '{colorChalk700}' },
   colorBackgroundButtonPrimary: { light: '{colorGrey900}', dark: '{colorChalk100}' },
   colorBackgroundButtonPrimaryHover: { light: '{colorGrey800}', dark: '{colorWhite}' },
-  colorBackgroundOverlay: { light: 'rgba(19, 20, 22, 0.4)', dark: 'rgba(0, 0, 0, 0.6)' },
+  // A veil of paper over the page behind a modal, so the page stays readable but recedes.
+  colorBackgroundOverlay: { light: 'rgba(242, 243, 245, 0.72)', dark: 'rgba(23, 24, 26, 0.72)' },
   colorBackgroundItemHover: { light: '{colorGrey175}', dark: '{colorChalk700}' },
   colorBackgroundItemSelected: { light: '{colorGrey200}', dark: '{colorChalk600}' },
   colorBackgroundHighlight: { light: '{colorBlue100}', dark: '{colorChalkMark}' },

@@ -1,0 +1,30 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles/tokens' as ord;
+
+.leader {
+  flex: 0 0 auto;
+  block-size: 12px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  // The arrow points the other way when the page reads right to left.
+  &:dir(rtl) {
+    scale: -1 1;
+  }
+}
+
+.size-normal {
+  inline-size: 28px;
+}
+
+.size-short {
+  inline-size: 16px;
+}

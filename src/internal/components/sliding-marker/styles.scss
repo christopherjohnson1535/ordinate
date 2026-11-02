@@ -1,0 +1,21 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.marker {
+  position: absolute;
+  inset-block: ord.$space-xxs;
+  pointer-events: none;
+}
+
+.placed {
+  @include styles.with-motion {
+    transition-property: inset-inline-start, inline-size;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}

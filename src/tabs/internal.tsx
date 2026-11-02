@@ -5,24 +5,15 @@ import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
 import { ConstructionTopLine } from '../internal/components/construction';
-import { CropMarks } from '../internal/components/crop-marks';
+import { SlidingMarker, useSlidingMarker } from '../internal/components/sliding-marker';
 import { getLogicalArrowStep } from '../internal/direction';
 import { fireNonCancelableEvent } from '../internal/events';
-import { useBrowserLayoutEffect } from '../internal/hooks/use-browser-layout-effect';
-import { useResizeObserver } from '../internal/hooks/use-resize-observer';
 import { useInternalI18n } from '../internal/i18n/context';
 import { isPlainLeftClick } from '../internal/link-click';
 import { TabsProps } from './interfaces';
 import { useScrollOverflow } from './use-scroll-overflow';
 
 import styles from './styles.css.js';
-
-// Where the open tab sits along the row, measured from the row's inline start. Tabs keep their order and
-// widths in either reading direction, so the measure stays right if the direction changes.
-interface Marker {
-  start: number;
-  size: number;
-}
 
 interface Tooltip {
   index: number;
@@ -55,9 +46,6 @@ export function InternalTabs({
   const [ownActiveTabId, setOwnActiveTabId] = useState(() => firstEnabled(tabs)?.id);
   const [tooltip, setTooltip] = useState<Tooltip | null>(null);
   const overflow = useScrollOverflow(scrollerRef, rowRef);
-  const [marker, setMarker] = useState<Marker | null>(null);
-  // The marker only slides once it has a place to slide from, so it does not fly in on the first render.
-  const [markerPlaced, setMarkerPlaced] = useState(false);
 
   const requestedId = activeTabId ?? ownActiveTabId;
   const activeTab = tabs.find(tab => tab.id === requestedId) ?? firstEnabled(tabs);
@@ -65,32 +53,17 @@ export function InternalTabs({
   const tabStop = activeTab && !activeTab.disabled ? activeTab : firstEnabled(tabs);
 
   const activeIndex = activeTab ? tabs.indexOf(activeTab) : -1;
-  const measureMarker = () => {
+  // The marker takes in the open tab's own action and close button, which sit beside it in the row.
+  const marker = useSlidingMarker(rowRef, () => {
     const element = tabRefs.current[activeIndex];
     if (!element || !activeTab) {
-      setMarker(null);
-      return;
+      return [];
     }
-    // The marker takes in the tab's own action and close button, which sit beside it in the row.
     const extras = Array.from(rowRef.current?.querySelectorAll<HTMLElement>(`.${styles['tab-extras']}`) ?? []).find(
       candidate => candidate.getAttribute('data-tab-id') === activeTab.id
     );
-    const parts = extras ? [element, extras] : [element];
-    const left = Math.min(...parts.map(part => part.offsetLeft));
-    const size = Math.max(...parts.map(part => part.offsetLeft + part.offsetWidth)) - left;
-    const row = rowRef.current;
-    const rtl = row ? getComputedStyle(row).direction === 'rtl' : false;
-    const start = rtl && row ? row.offsetWidth - left - size : left;
-    setMarker(current => (current && current.start === start && current.size === size ? current : { start, size }));
-  };
-  useBrowserLayoutEffect(measureMarker);
-  useResizeObserver(rowRef, measureMarker);
-  useBrowserLayoutEffect(() => {
-    if (marker && !markerPlaced) {
-      const frame = requestAnimationFrame(() => setMarkerPlaced(true));
-      return () => cancelAnimationFrame(frame);
-    }
-  }, [marker, markerPlaced]);
+    return extras ? [element, extras] : [element];
+  });
 
   const tabId = (index: number) => `${baseId}-tab-${index}`;
   const panelId = (index: number) => `${baseId}-panel-${index}`;
@@ -278,14 +251,7 @@ export function InternalTabs({
             </div>
             <div className={styles['tab-list']}>{tabs.map(renderExtras)}</div>
             {/* Crop marks stand at the corners of the open tab and slide to the next one. */}
-            {marker && (
-              <span
-                className={clsx(styles.marker, markerPlaced && styles['marker-placed'])}
-                style={{ insetInlineStart: marker.start, inlineSize: marker.size }}
-              >
-                <CropMarks selected={true} open={true} />
-              </span>
-            )}
+            <SlidingMarker position={marker.position} placed={marker.placed} />
           </div>
         </div>
         {overflow.overflowing && scrollButton(1)}

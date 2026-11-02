@@ -76,20 +76,6 @@ $leader-reach: ord.$space-xxs;
 }
 
 .leader {
-  inline-size: 28px;
-  block-size: 12px;
-  overflow: visible;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: ord.$border-width-icon;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-
-  // The arrow points the other way when the page reads right to left.
-  &:dir(rtl) {
-    scale: -1 1;
-  }
-
   @include styles.with-motion {
     transition-property: translate;
     transition-duration: ord.$motion-duration-expressive;

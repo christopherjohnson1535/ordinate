@@ -142,22 +142,6 @@
   }
 }
 
-// Ink crop marks at the corners of the open tab. The script places the marker on the tab and it slides to the
-// next one, quickly and slowing as it lands.
-.marker {
-  position: absolute;
-  inset-block: ord.$space-xxs;
-  pointer-events: none;
-}
-
-.marker-placed {
-  @include styles.with-motion {
-    transition-property: inset-inline-start, inline-size;
-    transition-duration: ord.$motion-duration-expressive;
-    transition-timing-function: ord.$motion-easing-standard;
-  }
-}
-
 .tab-disabled {
   color: ord.$color-text-disabled;
   cursor: default;

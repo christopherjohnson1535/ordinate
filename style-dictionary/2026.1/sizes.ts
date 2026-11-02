@@ -42,4 +42,8 @@ export const tokens: SizesDictionary = {
   // when the card is under the pointer.
   sizeCropMark: '12px',
   sizeCropMarkReach: '18px',
+  // How far a pressable control stands off its drawn offset, and how far a plate such as a modal or a
+  // menu is lifted above the sheet. A pressed control closes the gap.
+  sizeOffsetControl: '2px',
+  sizeOffsetPlate: '4px',
 };

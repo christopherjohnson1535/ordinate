@@ -104,3 +104,60 @@
   opacity: ord.$opacity-construction;
   pointer-events: none;
 }
+
+// A pressable control drawn as a block with a hard ink offset, as if it stands a little off the sheet. Like a
+// shadow, the offset falls down and to the right in either reading direction, and it closes when the control
+// is pressed. Use `offset-block-ink` for a control filled with ink, where an ink offset would merge with the
+// fill.
+@mixin offset-block {
+  border-color: ord.$color-border-strong;
+  box-shadow: ord.$size-offset-control ord.$size-offset-control 0 0 ord.$color-border-strong;
+}
+
+// The offset of an ink-filled control, drawn as a separate outline with a hairline of paper between the
+// control and its offset.
+@mixin offset-block-ink {
+  box-shadow:
+    ord.$size-offset-control ord.$size-offset-control 0 calc(-1 * #{ord.$border-width-default})
+      ord.$color-background-container,
+    calc(#{ord.$size-offset-control} + #{ord.$border-width-default})
+      calc(#{ord.$size-offset-control} + #{ord.$border-width-default}) 0 0 ord.$color-border-strong;
+}
+
+// The press: the control moves onto its offset. Put it on the control's `:active` state.
+@mixin offset-press {
+  translate: ord.$size-offset-control ord.$size-offset-control;
+  box-shadow: none;
+}
+
+// The motion for `offset-press`. Wrap it in `styles.with-motion` at the call site.
+@mixin offset-press-transition {
+  transition-property: translate, box-shadow, background-color, color;
+  transition-duration: ord.$motion-duration-responsive;
+  transition-timing-function: ord.$motion-easing-standard;
+}
+
+// A plate: a sheet lifted off the drawing for a while, such as a modal, a popover, a menu or the list under a
+// select. White, with a hairline ink edge and a hard ink offset below it.
+@mixin plate($radius: ord.$border-radius-modal) {
+  @include styles.border-radius($radius);
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-plate ord.$size-offset-plate 0 0 ord.$color-border-strong;
+}
+
+// The "you are here" mark: a short ink rule on the leading edge of a navigation item, a step or a tree node.
+// Draws on `::before`, so the element needs `position: relative`.
+@mixin position-rule {
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: ord.$space-xxs;
+    inset-inline-start: 0;
+    inline-size: ord.$border-width-section;
+    background-color: ord.$color-border-strong;
+    pointer-events: none;
+  }
+}
