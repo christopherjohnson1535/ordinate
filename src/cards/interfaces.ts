@@ -13,6 +13,8 @@ export interface CardsProps<T = unknown> extends BaseComponentProps {
   /**
    * How a card shows an item:
    * * `header(item)` (optional): the title of the card, often a link to the item.
+   * * `reference(item)` (optional): a short reference at the end of the header row, such as R1, in the
+   *   color of `kind`.
    * * `sections` (optional): the blocks of the card body, each with:
    *   * `id` (optional): identifies the section for `visibleSections`. Sections without an ID are always shown.
    *   * `header` (optional): a short label above the section.
@@ -104,10 +106,17 @@ export interface CardsProps<T = unknown> extends BaseComponentProps {
    * no other controls or links. Keyboard users still select with the control.
    */
   entireCardClickable?: boolean;
+  /**
+   * What the items are, told by the color of each card's corner marks and reference: `configuration`,
+   * `resource`, `policy` or `neutral`. Neutral graphite when left out.
+   */
+  kind?: CardsProps.Kind;
 }
 
 export namespace CardsProps {
   export type Variant = 'container' | 'full-page';
+
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
 
   export type SelectionType = 'single' | 'multi';
 
@@ -115,6 +124,7 @@ export namespace CardsProps {
 
   export interface CardDefinition<T> {
     header?: (item: T) => React.ReactNode;
+    reference?: (item: T) => React.ReactNode;
     sections?: ReadonlyArray<SectionDefinition<T>>;
   }
 

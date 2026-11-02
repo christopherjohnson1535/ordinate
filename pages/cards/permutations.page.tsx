@@ -35,6 +35,7 @@ const stateTypes = { running: 'complete', stopped: 'halted', pending: 'waiting' 
 
 const cardDefinition: CardsProps.CardDefinition<Node> = {
   header: item => <Link href={`#${item.id}`}>{item.name}</Link>,
+  reference: item => `R${item.name.slice(5, 7).replace(/^0/, '')}`,
   sections: [
     { id: 'type', header: 'Type', content: item => item.type, width: 50 },
     { id: 'zone', header: 'Zone', content: item => item.zone, width: 50 },
@@ -56,6 +57,7 @@ function SelectableCards(props: Partial<CardsProps<Node>>) {
       cardDefinition={cardDefinition}
       trackBy="id"
       selectionType="multi"
+      kind="resource"
       selectedItems={selectedItems}
       onSelectionChange={event => setSelectedItems(event.detail.selectedItems)}
       isItemDisabled={item => Boolean(item.retired)}

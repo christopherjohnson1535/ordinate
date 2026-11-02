@@ -9,6 +9,8 @@ import createWrapper from '../../../lib/components/test-utils/dom';
 import Tiles, { TilesProps } from '../../../lib/components/tiles';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+
 const plans: TilesProps.Item[] = [
   { value: 'free', label: 'Free', description: 'One project.' },
   { value: 'team', label: 'Team', description: 'Up to 20 people.', image: <img src="team.svg" alt="Team plan" /> },
@@ -125,6 +127,18 @@ describe('Tiles', () => {
     rerender(<Tiles ref={ref} ariaLabel="Plan" items={plans} value={null} />);
     act(() => ref.current?.focus());
     expect(screen.getByRole('radio', { name: 'Free' })).toHaveFocus();
+  });
+
+  test("closes the chosen tile's corner marks into a frame", () => {
+    render(<Controlled value="team" kind="configuration" />);
+    const marks = createWrapper()
+      .findTiles()!
+      .findAllByClassName(marksStyles.root)
+      .map(wrapper => wrapper.getElement());
+    expect(marks).toHaveLength(3);
+    expect(marks.map(mark => mark.classList.contains(marksStyles.selected))).toEqual([false, true, false]);
+    expect(marks[0]).toHaveClass(marksStyles['kind-configuration']);
+    expect(marks[2]).not.toHaveClass(marksStyles.interactive);
   });
 });
 

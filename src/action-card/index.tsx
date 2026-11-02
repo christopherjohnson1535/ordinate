@@ -16,6 +16,7 @@ const ActionCard = React.forwardRef(
       description,
       children,
       iconName,
+      kind = 'neutral',
       href,
       target,
       onClick,
@@ -32,6 +33,7 @@ const ActionCard = React.forwardRef(
       header={header}
       description={description}
       iconName={iconName}
+      kind={kind}
       href={href}
       target={target}
       onClick={onClick}

@@ -1,0 +1,129 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles' as styles;
+@use '../../styles/tokens' as ord;
+
+.root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.kind-configuration {
+  color: ord.$color-kind-configuration;
+}
+
+.kind-resource {
+  color: ord.$color-kind-resource;
+}
+
+.kind-policy {
+  color: ord.$color-kind-policy;
+}
+
+.kind-neutral {
+  color: ord.$color-kind-neutral;
+}
+
+.corner {
+  position: absolute;
+  inline-size: ord.$size-crop-mark;
+  block-size: ord.$size-crop-mark;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+  opacity: ord.$opacity-construction;
+
+  @include styles.with-motion {
+    transition-property: inline-size, block-size, opacity;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.start-start {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  border-block-start-width: ord.$border-width-default;
+  border-inline-start-width: ord.$border-width-default;
+}
+
+.start-end {
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  border-block-start-width: ord.$border-width-default;
+  border-inline-end-width: ord.$border-width-default;
+}
+
+.end-start {
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-inline-start-width: ord.$border-width-default;
+}
+
+.end-end {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-inline-end-width: ord.$border-width-default;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  opacity: 0;
+
+  @include styles.with-motion {
+    transition-property: opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+// A chosen card closes into a frame in ink, with heavier corners so the choice still reads at a glance.
+.selected {
+  color: ord.$color-border-strong;
+
+  .frame {
+    opacity: 1;
+  }
+
+  .corner {
+    opacity: 1;
+  }
+
+  .start-start {
+    border-block-start-width: ord.$border-width-section;
+    border-inline-start-width: ord.$border-width-section;
+  }
+
+  .start-end {
+    border-block-start-width: ord.$border-width-section;
+    border-inline-end-width: ord.$border-width-section;
+  }
+
+  .end-start {
+    border-block-end-width: ord.$border-width-section;
+    border-inline-start-width: ord.$border-width-section;
+  }
+
+  .end-end {
+    border-block-end-width: ord.$border-width-section;
+    border-inline-end-width: ord.$border-width-section;
+  }
+}
+
+// Only on devices with a real pointer, so a tap does not leave the marks stretched.
+@media (hover: hover) and (pointer: fine) {
+  *:hover > .interactive > .corner {
+    inline-size: ord.$size-crop-mark-reach;
+    block-size: ord.$size-crop-mark-reach;
+    opacity: 1;
+  }
+}

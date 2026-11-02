@@ -26,6 +26,11 @@ export interface ActionCardProps extends BaseComponentProps {
    */
   iconName?: IconProps.Name;
   /**
+   * What the action works on, told by the color of the corner marks: `configuration`, `resource`,
+   * `policy` or `neutral`. Neutral graphite when left out.
+   */
+  kind?: ActionCardProps.Kind;
+  /**
    * The URL the card goes to. With it, the card is a link; without it, the card is a button.
    */
   href?: string;
@@ -54,6 +59,7 @@ export interface ActionCardProps extends BaseComponentProps {
 }
 
 export namespace ActionCardProps {
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
   export interface FollowDetail {
     href?: string;
     target?: string;

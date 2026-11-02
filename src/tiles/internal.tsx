@@ -3,6 +3,7 @@
 import React, { useContext, useId, useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
+import { CropMarks } from '../internal/components/crop-marks';
 import { FormFieldContext, useFormFieldContext } from '../internal/context/form-field-context';
 import { QuestionContext } from '../internal/context/question-context';
 import { fireNonCancelableEvent } from '../internal/events';
@@ -49,6 +50,7 @@ export const InternalTiles = React.forwardRef(
       items = [],
       onChange,
       columns,
+      kind = 'neutral',
       name,
       readOnly = false,
       ariaLabel,
@@ -120,6 +122,13 @@ export const InternalTiles = React.forwardRef(
                 )}
                 onClick={event => handleTileClick(event, item, index)}
               >
+                {resolvedVariant === 'default' && (
+                  <CropMarks
+                    kind={kind}
+                    selected={item.value === value && !readOnly}
+                    interactive={!item.disabled && !readOnly}
+                  />
+                )}
                 <InternalRadioButton
                   ref={button => {
                     buttonRefs.current[index] = button;

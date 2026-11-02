@@ -95,6 +95,8 @@ Sections are drawn with construction lines rather than boxes. A thin line opens 
 
 Every container is drawn this way. Container puts the heading in a margin column. The container variants of Table, Cards, ExpandableSection and Tabs keep their heading on top, because they need the full width, and draw the same opening line with `ConstructionTopLine` from `src/internal/components/construction`. `RuleEndMarks` puts the hash marks on a footer rule.
 
+Cards have no box. ItemCard, the cards inside Cards, ActionCard and Tiles draw `CropMarks` from `src/internal/components/crop-marks` at their four corners, in the kind's color at `opacity-construction`, with arms of `size-crop-mark`. A chosen card or tile closes the marks into a frame in ink with heavier corners, and its reference turns ink too. Where the whole card answers a click, the marks reach out to `size-crop-mark-reach` while the pointer is over it, on devices with a real pointer only. ActionCard points at its destination with a leader arrow that moves a little further on hover. The large answer tiles in a Journey question keep their box. Cards, ItemCard, ActionCard and Tiles take a `kind`, and ItemCard and Cards' `cardDefinition` take a `reference`, as Container does.
+
 KeyValuePairs borrow Container's margin at a small scale: each label is set right-aligned in a margin column against a faint construction line, with its value to the right in ink. Rows meet edge to edge, so the line runs unbroken down each column.
 
 ## Kinds

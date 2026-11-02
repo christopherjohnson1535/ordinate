@@ -10,6 +10,8 @@ import ItemCard from '../../../lib/components/item-card';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+
 const card = () => createWrapper().findItemCard()!;
 
 describe('ItemCard', () => {
@@ -92,5 +94,27 @@ describe('ItemCard', () => {
       </ItemCard>
     );
     await expectNoAxeViolations(container);
+  });
+
+  test('draws corner marks in place of a border, hidden from assistive technology', () => {
+    const { rerender } = render(<ItemCard header="node-01" kind="resource" />);
+    const marks = card().findByClassName(marksStyles.root)!.getElement();
+    expect(marks).toHaveAttribute('aria-hidden', 'true');
+    expect(marks).toHaveClass(marksStyles['kind-resource']);
+    expect(marks).not.toHaveClass(marksStyles.selected);
+    rerender(<ItemCard header="node-01" kind="resource" selected={true} />);
+    expect(card().findByClassName(marksStyles.root)!.getElement()).toHaveClass(marksStyles.selected);
+  });
+
+  test('the embedded variant has no marks', () => {
+    render(<ItemCard header="node-01" variant="embedded" />);
+    expect(card().findByClassName(marksStyles.root)).toBeNull();
+  });
+
+  test('shows the reference at the end of the header row', () => {
+    const { rerender } = render(<ItemCard header="node-01" />);
+    expect(card().findReference()).toBeNull();
+    rerender(<ItemCard header="node-01" reference="R1" kind="resource" />);
+    expect(card().findReference()!.getText()).toBe('R1');
   });
 });

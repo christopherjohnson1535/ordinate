@@ -65,7 +65,7 @@ export default function TilesPermutations() {
           <Tiles {...useTile(null)} items={plans} />
         </FormField>
         <FormField label="Plan">
-          <Tiles {...useTile('team')} items={plans} columns={4} />
+          <Tiles {...useTile('team')} items={plans} columns={4} kind="configuration" />
         </FormField>
       </section>
 

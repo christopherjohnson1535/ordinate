@@ -43,6 +43,8 @@ function SelectableCard() {
     <ItemCard
       header={<Link href="#node-02">node-02</Link>}
       description="m7.xlarge in us-east-1b"
+      reference="R2"
+      kind="resource"
       selected={selected}
       selectionControl={
         <Checkbox checked={selected} onChange={event => setSelected(event.detail.checked)} ariaLabel="Select node-02" />
@@ -59,7 +61,13 @@ export default function ItemCardPermutations() {
       <Box variant="h1">Item card</Box>
 
       <div className={styles.grid}>
-        <ItemCard header="node-01" description="m7.large in us-east-1a" actions={actions}>
+        <ItemCard
+          header="node-01"
+          description="m7.large in us-east-1a"
+          reference="R1"
+          kind="resource"
+          actions={actions}
+        >
           Running for 720 hours.
         </ItemCard>
 
@@ -68,6 +76,8 @@ export default function ItemCardPermutations() {
         <ItemCard
           header="node-03"
           description="c7.large in us-east-1c"
+          reference="R3"
+          kind="resource"
           footer={<Link href="#node-03">View details</Link>}
           media={<Plan />}
         >
@@ -77,13 +87,20 @@ export default function ItemCardPermutations() {
         <ItemCard
           header="node-04"
           description="Being retired"
+          reference="R4"
+          kind="resource"
           disabled={true}
           selectionControl={<Checkbox checked={false} disabled={true} ariaLabel="Select node-04" />}
         >
           Cannot be selected.
         </ItemCard>
 
-        <ItemCard header="A card with a header long enough to wrap onto a second line" actions={actions}>
+        <ItemCard
+          header="A card with a header long enough to wrap onto a second line"
+          reference="P1"
+          kind="policy"
+          actions={actions}
+        >
           Header only, with actions.
         </ItemCard>
 

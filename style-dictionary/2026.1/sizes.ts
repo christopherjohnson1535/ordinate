@@ -38,4 +38,8 @@ export const tokens: SizesDictionary = {
   sizeMarginColumn: '192px',
   // The colored square that keys a badge, like the key beside a legend entry.
   sizeKeySquare: '8px',
+  // The arms of the marks drawn at the corners of a card in place of a border, and how far they reach
+  // when the card is under the pointer.
+  sizeCropMark: '12px',
+  sizeCropMarkReach: '18px',
 };

@@ -10,6 +10,7 @@ import Header from '../../../lib/components/header';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
 import frameStyles from '../../../lib/components/internal/components/sheet-frame/styles.css.js';
 
 interface Node {
@@ -134,6 +135,19 @@ describe('Cards', () => {
     render(<Cards id="nodes" data-testid="nodes" items={nodes} cardDefinition={cardDefinition} />);
     expect(cards().getElement()).toHaveAttribute('id', 'nodes');
     expect(cards().getElement()).toHaveAttribute('data-testid', 'nodes');
+  });
+
+  test("shows each card's reference and colors the cards by kind", () => {
+    render(
+      <Cards
+        items={nodes}
+        kind="resource"
+        cardDefinition={{ ...cardDefinition, reference: item => `R${item.id.slice(1)}` }}
+      />
+    );
+    const items = cards().findItems();
+    expect(items.map(item => item.findReference()!.getText())).toEqual(['R1', 'R2', 'R3']);
+    expect(items[0].findByClassName(marksStyles['kind-resource'])).not.toBeNull();
   });
 });
 

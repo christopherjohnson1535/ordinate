@@ -13,7 +13,7 @@
 
 .grid {
   display: grid;
-  gap: ord.$space-s;
+  gap: ord.$space-m;
 }
 
 @for $count from 1 through 4 {
@@ -29,30 +29,17 @@
   }
 }
 
+// A tile has no box: CropMarks stand at its corners and close into a frame in ink once it is chosen.
 .tile {
-  @include styles.border-radius(ord.$border-radius-container);
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: ord.$space-s;
   box-sizing: border-box;
-  padding-block: ord.$space-scaled-s;
-  padding-inline: ord.$space-scaled-m;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
-  background-color: ord.$color-background-container;
+  padding-block: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
   color: ord.$color-text-body;
   cursor: pointer;
-
-  @include styles.with-motion {
-    transition-property: border-color, box-shadow, background-color;
-    transition-duration: ord.$motion-duration-responsive;
-    transition-timing-function: ord.$motion-easing-standard;
-  }
-
-  &:hover:not(.selected, .disabled, .read-only) {
-    background-color: ord.$color-background-button-normal-hover;
-  }
 
   // The focus ring goes around the whole tile instead of the small radio circle.
   &:has(input:focus-visible) {
@@ -68,25 +55,15 @@
   }
 }
 
-// A second hairline drawn inside the border doubles its weight without moving the content.
-.selected {
-  border-color: ord.$color-border-strong;
-  box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-strong;
-}
-
+// Read-only tiles are shaded, like a part of a drawing that is fixed. The radio button still shows
+// which one is set.
 .read-only {
   background-color: ord.$color-background-control-read-only;
   cursor: default;
-
-  &.selected {
-    border-color: ord.$color-text-secondary;
-    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-text-secondary;
-  }
 }
 
 .disabled {
   @include styles.hatch;
-  border-color: ord.$color-border-disabled;
   color: ord.$color-text-disabled;
   cursor: default;
 }
@@ -97,12 +74,41 @@
   margin-block-start: auto;
 }
 
-// Answer tiles, for one question per screen: a large label in the headline voice, the radio button
-// moved to the far corner, and an inverted fill once chosen.
+// Answer tiles, for one question per screen: a boxed tile with a large label in the headline voice, the
+// radio button moved to the far corner, and an inverted fill once chosen.
 .answer {
+  @include styles.border-radius(ord.$border-radius-container);
   gap: ord.$space-xs;
   padding-block: ord.$space-scaled-l;
   padding-inline: ord.$space-scaled-l;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+
+  @include styles.with-motion {
+    transition-property: border-color, background-color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &.read-only {
+    background-color: ord.$color-background-control-read-only;
+  }
+
+  &.disabled {
+    border-color: ord.$color-border-disabled;
+  }
+
+  &.selected {
+    border-color: ord.$color-border-strong;
+    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-strong;
+  }
+
+  &.read-only.selected {
+    border-color: ord.$color-text-secondary;
+    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-text-secondary;
+  }
 
   > :first-child {
     flex-direction: row-reverse;

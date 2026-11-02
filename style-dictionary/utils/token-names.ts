@@ -269,6 +269,8 @@ export const sizesTokenNames = [
   'sizeHashMark',
   'sizeMarginColumn',
   'sizeKeySquare',
+  'sizeCropMark',
+  'sizeCropMarkReach',
 ] as const;
 
 export const motionTokenNames = [

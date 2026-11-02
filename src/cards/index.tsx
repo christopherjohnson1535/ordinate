@@ -29,6 +29,7 @@ export default function Cards<T>({
   ariaLabels,
   variant = 'container',
   entireCardClickable = false,
+  kind = 'neutral',
   ...props
 }: CardsProps<T>) {
   return (
@@ -53,6 +54,7 @@ export default function Cards<T>({
       ariaLabels={ariaLabels}
       variant={variant}
       entireCardClickable={entireCardClickable}
+      kind={kind}
     />
   );
 }

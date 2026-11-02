@@ -16,6 +16,7 @@ const Tiles = React.forwardRef(
       items,
       onChange,
       columns,
+      kind = 'neutral',
       name,
       readOnly = false,
       ariaLabel,
@@ -34,6 +35,7 @@ const Tiles = React.forwardRef(
       items={items}
       onChange={onChange}
       columns={columns}
+      kind={kind}
       name={name}
       readOnly={readOnly}
       ariaLabel={ariaLabel}

@@ -15,6 +15,13 @@ export default class ItemCardWrapper extends ComponentWrapper {
     return this.findByClassName(styles.description);
   }
 
+  /**
+   * The short reference at the end of the header row, such as R1.
+   */
+  findReference(): ElementWrapper | null {
+    return this.findByClassName(styles.reference);
+  }
+
   findContent(): ElementWrapper | null {
     return this.findByClassName(styles.content);
   }

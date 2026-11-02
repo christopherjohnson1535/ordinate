@@ -7,6 +7,9 @@
 @use '../internal/styles/card' as card;
 @use '../internal/styles/tokens' as ord;
 
+// How far the leader reaches toward the edge while the card is under the pointer.
+$leader-reach: ord.$space-xxs;
+
 .root {
   @include card.sheet;
   display: flex;
@@ -16,28 +19,26 @@
   margin-block: 0;
   margin-inline: 0;
   padding-block: ord.$space-scaled-m;
-  padding-inline: ord.$space-scaled-m;
+  padding-inline: ord.$space-scaled-l;
+  border-width: 0;
+  background-color: transparent;
   text-align: start;
   text-decoration: none;
   cursor: pointer;
 
+  &:focus-visible {
+    @include styles.focus-ring;
+  }
+
   @include styles.with-motion {
-    transition-property: border-color, background-color;
+    transition-property: transform;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
   }
 
-  &:hover:not(.disabled) {
-    border-color: ord.$color-border-strong;
-    background-color: ord.$color-background-button-normal-hover;
-  }
-
+  // A slight press, smaller than a button's, because the card is large.
   &:active:not(.disabled) {
-    background-color: ord.$color-background-item-hover;
-  }
-
-  &:focus-visible {
-    @include styles.focus-ring;
+    transform: scale(0.99);
   }
 }
 
@@ -61,6 +62,49 @@
 .arrow {
   @include card.header-text;
   margin-inline-start: auto;
+  color: ord.$color-text-secondary;
+
+  .disabled & {
+    color: ord.$color-text-disabled;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .root:hover:not(.disabled) & {
+      color: ord.$color-text-body;
+    }
+  }
+}
+
+.leader {
+  inline-size: 28px;
+  block-size: 12px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: ord.$border-width-icon;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  // The arrow points the other way when the page reads right to left.
+  &:dir(rtl) {
+    scale: -1 1;
+  }
+
+  @include styles.with-motion {
+    transition-property: translate;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .root:hover:not(.disabled) & {
+      translate: $leader-reach 0;
+    }
+
+    .root:hover:not(.disabled) &:dir(rtl) {
+      translate: calc(-1 * #{$leader-reach}) 0;
+    }
+  }
 }
 
 .text {

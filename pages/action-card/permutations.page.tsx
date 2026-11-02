@@ -19,12 +19,14 @@ export default function ActionCardPermutations() {
           header="Create a cluster"
           description="Start with three nodes in one region."
           iconName="add"
+          kind="configuration"
           onClick={() => setClicks(count => count + 1)}
         />
         <ActionCard
           header="Import a cluster"
           description="Bring an existing cluster under management."
           iconName="upload"
+          kind="resource"
           onClick={() => setClicks(count => count + 1)}
         >
           Takes about five minutes.

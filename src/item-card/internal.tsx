@@ -3,6 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
+import { CropMarks } from '../internal/components/crop-marks';
 import { ItemCardProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -22,6 +23,8 @@ export interface InternalItemCardProps extends ItemCardProps {
 export function InternalItemCard({
   header,
   description,
+  reference,
+  kind = 'neutral',
   children,
   footer,
   actions,
@@ -34,7 +37,7 @@ export function InternalItemCard({
   className,
   ...rest
 }: InternalItemCardProps) {
-  const hasHeaderRow = Boolean(header || description || actions || selectionControl);
+  const hasHeaderRow = Boolean(header || description || reference || actions || selectionControl);
 
   return (
     <div
@@ -49,6 +52,9 @@ export function InternalItemCard({
       )}
       onClick={onClick}
     >
+      {variant === 'default' && (
+        <CropMarks kind={kind} selected={selected} interactive={Boolean(onClick) && !disabled} />
+      )}
       {media && <div className={styles.media}>{media}</div>}
       {(hasHeaderRow || children) && (
         <div className={styles.body}>
@@ -59,6 +65,7 @@ export function InternalItemCard({
                 {header && <div className={styles.header}>{header}</div>}
                 {description && <div className={styles.description}>{description}</div>}
               </div>
+              {reference && <div className={clsx(styles.reference, styles[`kind-${kind}`])}>{reference}</div>}
               {actions && <div className={styles.actions}>{actions}</div>}
             </div>
           )}

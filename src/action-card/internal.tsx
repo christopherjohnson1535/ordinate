@@ -4,6 +4,7 @@ import React, { useId, useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
+import { CropMarks } from '../internal/components/crop-marks';
 import { fireCancelableEvent, fireNonCancelableEvent } from '../internal/events';
 import { isPlainLeftClick } from '../internal/link-click';
 import { ActionCardProps } from './interfaces';
@@ -17,6 +18,7 @@ export const InternalActionCard = React.forwardRef(
       description,
       children,
       iconName,
+      kind = 'neutral',
       href,
       target,
       onClick,
@@ -36,6 +38,7 @@ export const InternalActionCard = React.forwardRef(
 
     const content = (
       <>
+        <CropMarks kind={kind} interactive={!disabled} />
         {iconName && (
           <span className={styles.icon}>
             <InternalIcon name={iconName} size="medium" variant={disabled ? 'disabled' : 'normal'} />
@@ -52,8 +55,11 @@ export const InternalActionCard = React.forwardRef(
           )}
           {children && <span className={styles.content}>{children}</span>}
         </span>
-        <span className={styles.arrow}>
-          <InternalIcon name="chevron-right" variant={disabled ? 'disabled' : 'subtle'} />
+        <span className={styles.arrow} aria-hidden="true">
+          {/* A leader line with an arrowhead, like the one that points a note at the part it describes. */}
+          <svg className={styles.leader} viewBox="0 0 28 12" focusable="false">
+            <path d="M1 6h25M21.5 2l4.5 4-4.5 4" />
+          </svg>
         </span>
       </>
     );

@@ -14,11 +14,21 @@ export interface ItemCardProps extends BaseComponentProps {
    */
   description?: React.ReactNode;
   /**
+   * A short reference at the end of the header row, such as R1, set in the kind's color. Pair the
+   * letter with the kind, so the meaning does not rest on color alone.
+   */
+  reference?: React.ReactNode;
+  /**
+   * What the item is, told by the color of the corner marks and the reference: `configuration`,
+   * `resource`, `policy` or `neutral`. Neutral graphite when left out.
+   */
+  kind?: ItemCardProps.Kind;
+  /**
    * Main content of the card, such as the item's properties.
    */
   children?: React.ReactNode;
   /**
-   * Content at the bottom of the card, separated from the rest by a line.
+   * Content at the bottom of the card, such as when the item last changed.
    */
   footer?: React.ReactNode;
   /**
@@ -31,8 +41,8 @@ export interface ItemCardProps extends BaseComponentProps {
    */
   media?: React.ReactNode;
   /**
-   * Marks the card as selected with a strong border. Pair it with a control in `selectionControl`
-   * that says the same, because the border alone is not announced.
+   * Closes the corner marks into a frame in ink. Pair it with a control in `selectionControl` that
+   * says the same, because the frame alone is not announced.
    */
   selected?: boolean;
   /**
@@ -44,13 +54,14 @@ export interface ItemCardProps extends BaseComponentProps {
    */
   disabled?: boolean;
   /**
-   * - `default` is a ruled sheet of its own.
-   * - `embedded` drops the border, background and padding, for a card inside another surface such
-   *   as a container or a popover.
+   * - `default` stands on its own, drawn with marks at its four corners in place of a border.
+   * - `embedded` drops the marks and padding, for a card inside another surface such as a container
+   *   or a popover.
    */
   variant?: ItemCardProps.Variant;
 }
 
 export namespace ItemCardProps {
   export type Variant = 'default' | 'embedded';
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
 }

@@ -40,6 +40,7 @@ export function InternalCards<T>({
   ariaLabels,
   variant = 'container',
   entireCardClickable = false,
+  kind = 'neutral',
   ...rest
 }: CardsProps<T>) {
   const i18n = useInternalI18n('cards');
@@ -111,6 +112,8 @@ export function InternalCards<T>({
       <InternalItemCard
         className={clsx(styles.card, Boolean(selectionType) && disabled && styles['card-disabled'])}
         header={cardHeader !== undefined && <span id={cardHeaderId}>{cardHeader}</span>}
+        reference={cardDefinition.reference?.(item)}
+        kind={kind}
         selected={selected}
         disabled={Boolean(selectionType) && disabled}
         selectionControl={selectionType && renderSelectionControl(item, index, cardHeaderId)}

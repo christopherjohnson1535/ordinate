@@ -12,6 +12,8 @@ export type { ItemCardProps };
 export default function ItemCard({
   header,
   description,
+  reference,
+  kind = 'neutral',
   children,
   footer,
   actions,
@@ -27,6 +29,8 @@ export default function ItemCard({
       {...getBaseProps(props)}
       header={header}
       description={description}
+      reference={reference}
+      kind={kind}
       footer={footer}
       actions={actions}
       media={media}

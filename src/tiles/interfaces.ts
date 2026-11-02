@@ -32,6 +32,11 @@ export interface TilesProps extends BaseComponentProps, Omit<FormFieldControlPro
    */
   columns?: number;
   /**
+   * What the choice sets, told by the color of the corner marks: `configuration`, `resource`, `policy`
+   * or `neutral`. Neutral graphite when left out.
+   */
+  kind?: TilesProps.Kind;
+  /**
    * The native `name` shared by the radio buttons. Generated when not set.
    */
   name?: string;
@@ -54,6 +59,7 @@ export interface TilesProps extends BaseComponentProps, Omit<FormFieldControlPro
 }
 
 export namespace TilesProps {
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
   export interface Item {
     value: string;
     label: React.ReactNode;

@@ -8,6 +8,8 @@ import ActionCard, { ActionCardProps } from '../../../lib/components/action-card
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+
 const card = () => createWrapper().findActionCard()!;
 
 describe('ActionCard as a button', () => {
@@ -96,6 +98,17 @@ describe('ActionCard test utilities and accessibility', () => {
     expect(card().findHeader()!.getText()).toBe('Create a cluster');
     expect(card().findDescription()!.getText()).toBe('Three nodes.');
     expect(card().findContent()!.getText()).toBe('Takes about five minutes.');
+  });
+
+  test('the marks and the leader arrow are drawing only, and a disabled card does not reach', () => {
+    const { rerender } = render(<ActionCard header="Create a cluster" kind="configuration" />);
+    const marks = card().findByClassName(marksStyles.root)!.getElement();
+    expect(marks).toHaveAttribute('aria-hidden', 'true');
+    expect(marks).toHaveClass(marksStyles['kind-configuration'], marksStyles.interactive);
+    expect(card().find('svg')!.getElement().closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(screen.getByRole('button')).toHaveAccessibleName('Create a cluster');
+    rerender(<ActionCard header="Create a cluster" kind="configuration" disabled={true} />);
+    expect(card().findByClassName(marksStyles.root)!.getElement()).not.toHaveClass(marksStyles.interactive);
   });
 
   test('passes id and data attributes to the root', () => {
