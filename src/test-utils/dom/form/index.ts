@@ -7,6 +7,10 @@ import styles from '../../../form/styles.css.js';
 export default class FormWrapper extends ComponentWrapper {
   static rootSelector = `.${styles.root}`;
 
+  findReference(): ElementWrapper | null {
+    return this.findByClassName(styles.reference);
+  }
+
   findHeader(): ElementWrapper | null {
     return this.findByClassName(styles.header);
   }

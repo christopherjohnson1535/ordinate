@@ -4,12 +4,37 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// Below this width the label stacks above the control. Container queries cannot read custom properties, so the
+// width is a Sass value: the margin column plus room for a usable control.
+$margin-layout-min-width: 560px;
+
 .root {
+  min-inline-size: 0;
+}
+
+// The margin layout measures the field itself. Where the field's parent sizes it to its content, such as a
+// horizontal SpaceBetween, the field takes the width of a small panel and so stacks.
+.layout-margin {
+  container-type: inline-size;
+  contain-intrinsic-inline-size: ord.$size-panel-small;
+}
+
+// Stacked: the label, then the description, the control and the messages, one under the other.
+.frame,
+.margin,
+.body {
   display: flex;
   flex-direction: column;
-  gap: ord.$space-xxs;
+  // No column gap, so the margin layout's columns meet at the construction line.
+  gap: ord.$space-xxs 0;
+  min-inline-size: 0;
+}
+
+.margin:empty {
+  display: none;
 }
 
 .label-row {
@@ -30,26 +55,10 @@
 }
 
 .description,
-.hints {
+.constraint {
   @include styles.font-body;
   font-size: ord.$font-size-description;
   color: ord.$color-text-secondary;
-}
-
-.hints {
-  display: flex;
-  flex-wrap: wrap;
-  gap: ord.$space-xs;
-}
-
-// Lets a long constraint wrap instead of pushing the character count out of the row.
-.constraint {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-}
-
-.character-count {
-  margin-inline-start: auto;
 }
 
 .controls {
@@ -82,6 +91,11 @@
   flex-basis: 100%;
 }
 
+// A count of characters is a measure, so it is drawn as a dimension line under the control, in the neutral kind.
+.character-count {
+  color: ord.$color-kind-neutral;
+}
+
 .error,
 .warning {
   @include styles.font-body;
@@ -101,4 +115,46 @@
 
 .screenreader-only {
   @include styles.screenreader-only;
+}
+
+// The margin layout, as KeyValuePairs draws a pair: the label set right-aligned in a margin column against a
+// faint construction line, with its description under it, and the control and its messages to the right. The
+// column is the same width in both, so a details page and its edit form line up.
+@container (min-inline-size: #{$margin-layout-min-width}) {
+  .frame {
+    display: grid;
+    grid-template-columns: minmax(0, ord.$size-margin-column) minmax(0, 1fr);
+  }
+
+  // Kept when empty, so the control lines up with the fields around it.
+  .margin,
+  .margin:empty {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-block-start: ord.$space-scaled-s;
+    padding-inline-end: ord.$space-s;
+    text-align: end;
+
+    &::after {
+      @include drawing.construction-line;
+      content: '';
+      inset-block: 0;
+      inset-inline-end: 0;
+      inline-size: ord.$border-width-default;
+      color: ord.$color-kind-neutral;
+    }
+  }
+
+  .label-row {
+    justify-content: flex-end;
+  }
+
+  .label {
+    overflow-wrap: break-word;
+  }
+
+  .body {
+    padding-inline-start: ord.$space-s;
+  }
 }

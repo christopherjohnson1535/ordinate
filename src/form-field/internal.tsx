@@ -4,6 +4,7 @@ import React, { useEffect, useId, useState } from 'react';
 import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
+import { DimensionLine } from '../internal/components/dimension-line';
 import { FormFieldContext } from '../internal/context/form-field-context';
 import { useInternalI18n } from '../internal/i18n/context';
 import { warnOnce } from '../internal/logging';
@@ -23,6 +24,14 @@ function useSettledValue<T>(value: T, delay: number): T {
   return settled;
 }
 
+export interface InternalFormFieldProps extends FormFieldProps {
+  /**
+   * Defaults to `stacked`, the look other components such as AttributeEditor and the preferences
+   * panels are laid out for. The public FormField defaults to `margin`.
+   */
+  layout?: FormFieldProps.Layout;
+}
+
 export function InternalFormField({
   label,
   info,
@@ -37,8 +46,9 @@ export function InternalFormField({
   stretch = false,
   children,
   secondaryControl,
+  layout = 'stacked',
   ...rest
-}: FormFieldProps) {
+}: InternalFormFieldProps) {
   const i18n = useInternalI18n('form-field');
   const baseId = useId();
   const controlId = controlIdProp ?? `${baseId}control`;
@@ -74,73 +84,69 @@ export function InternalFormField({
   };
 
   return (
-    <div {...rest} className={styles.root}>
-      {(label || info) && (
-        <div className={styles['label-row']}>
-          {label && (
-            <label id={labelId} className={styles.label} htmlFor={controlId}>
-              {label}
-            </label>
+    <div {...rest} className={clsx(styles.root, layout === 'margin' && styles['layout-margin'])}>
+      <div className={styles.frame}>
+        <div className={styles.margin}>
+          {(label || info) && (
+            <div className={styles['label-row']}>
+              {label && (
+                <label id={labelId} className={styles.label} htmlFor={controlId}>
+                  {label}
+                </label>
+              )}
+              {info && <span className={styles.info}>{info}</span>}
+            </div>
           )}
-          {info && <span className={styles.info}>{info}</span>}
+          {description && (
+            <div id={descriptionId} className={styles.description}>
+              {description}
+            </div>
+          )}
         </div>
-      )}
-      {description && (
-        <div id={descriptionId} className={styles.description}>
-          {description}
-        </div>
-      )}
-      <div className={clsx(styles.controls, stretch && styles.stretch)}>
-        <div className={styles.control}>
-          <FormFieldContext.Provider value={{ controlId, ...sharedContext }}>{children}</FormFieldContext.Provider>
-        </div>
-        {secondaryControl && (
-          <div className={styles['secondary-control']}>
-            <FormFieldContext.Provider value={sharedContext}>{secondaryControl}</FormFieldContext.Provider>
+        <div className={styles.body}>
+          <div className={clsx(styles.controls, stretch && styles.stretch)}>
+            <div className={styles.control}>
+              <FormFieldContext.Provider value={{ controlId, ...sharedContext }}>{children}</FormFieldContext.Provider>
+            </div>
+            {secondaryControl && (
+              <div className={styles['secondary-control']}>
+                <FormFieldContext.Provider value={sharedContext}>{secondaryControl}</FormFieldContext.Provider>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      {errorText && (
-        <div id={errorId} className={styles.error}>
-          <InternalIcon
-            className={styles['message-icon']}
-            name="fault"
-            size="small"
-            ariaLabel={i18n('errorIconAriaLabel', errorIconAriaLabel)}
-          />
-          <span>{errorText}</span>
-        </div>
-      )}
-      {showWarning && (
-        <div id={warningId} className={styles.warning}>
-          <InternalIcon
-            className={styles['message-icon']}
-            name="caution"
-            size="small"
-            ariaLabel={i18n('warningIconAriaLabel', warningIconAriaLabel)}
-          />
-          <span>{warningText}</span>
-        </div>
-      )}
-      {(constraintText || characterCountText) && (
-        <div className={styles.hints}>
-          {constraintText && (
-            <span id={constraintId} className={styles.constraint}>
-              {constraintText}
-            </span>
-          )}
           {characterCountText && (
             <>
-              <span className={styles['character-count']} aria-hidden="true">
-                {characterCountText}
-              </span>
+              <div className={styles['character-count']} aria-hidden="true">
+                <DimensionLine label={characterCountText} />
+              </div>
               <span id={characterCountId} className={styles['screenreader-only']}>
                 {settledCharacterCount}
               </span>
             </>
           )}
+          {errorText && (
+            <div id={errorId} className={styles.error}>
+              <InternalIcon name="fault" size="small" ariaLabel={i18n('errorIconAriaLabel', errorIconAriaLabel)} />
+              <span>{errorText}</span>
+            </div>
+          )}
+          {showWarning && (
+            <div id={warningId} className={styles.warning}>
+              <InternalIcon
+                name="caution"
+                size="small"
+                ariaLabel={i18n('warningIconAriaLabel', warningIconAriaLabel)}
+              />
+              <span>{warningText}</span>
+            </div>
+          )}
+          {constraintText && (
+            <div id={constraintId} className={styles.constraint}>
+              {constraintText}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

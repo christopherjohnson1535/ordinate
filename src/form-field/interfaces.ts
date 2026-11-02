@@ -22,8 +22,8 @@ export interface FormFieldProps extends BaseComponentProps {
    */
   constraintText?: React.ReactNode;
   /**
-   * A count of characters used or left, such as "12 of 64 characters", shown after the constraint text.
-   * Update it on every change: screen readers hear it after typing pauses for a second.
+   * A count of characters used or left, such as "12 of 64 characters", drawn as a dimension line under the
+   * control. Update it on every change: screen readers hear it after typing pauses for a second.
    */
   characterCountText?: string;
   /**
@@ -54,6 +54,16 @@ export interface FormFieldProps extends BaseComponentProps {
    */
   stretch?: boolean;
   /**
+   * Where the label goes.
+   * - `margin` sets the label right-aligned in a margin column beside the control, against a faint
+   *   construction line, with the description under it. The column is as wide as the label column of
+   *   KeyValuePairs, so a details page and its edit form line up. Where the field is narrower than
+   *   about 560 px, the label stacks above the control.
+   * - `stacked` always puts the label above the control. Use it where fields sit side by side or in a
+   *   narrow panel.
+   */
+  layout?: FormFieldProps.Layout;
+  /**
    * The control, for example an `Input`.
    */
   children?: React.ReactNode;
@@ -61,4 +71,8 @@ export interface FormFieldProps extends BaseComponentProps {
    * A second control or content beside the main control, such as a button that acts on its value.
    */
   secondaryControl?: React.ReactNode;
+}
+
+export namespace FormFieldProps {
+  export type Layout = 'margin' | 'stacked';
 }

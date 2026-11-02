@@ -10,6 +10,8 @@ import { InternalForm } from './internal';
 export type { FormProps };
 
 export default function Form({
+  kind = 'neutral',
+  reference,
   children,
   header,
   errorText,
@@ -22,6 +24,8 @@ export default function Form({
   return (
     <InternalForm
       {...getBaseProps(props)}
+      kind={kind}
+      reference={reference}
       header={header}
       errorText={errorText}
       errorIconAriaLabel={errorIconAriaLabel}

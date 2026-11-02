@@ -30,6 +30,8 @@ export default function FormSimple() {
       }}
     >
       <Form
+        kind="configuration"
+        reference="C4"
         header={<h1 className={styles.heading}>Create project</h1>}
         errorText={error}
         errorIconAriaLabel="Error"
@@ -44,7 +46,7 @@ export default function FormSimple() {
         }
       >
         <div className={styles.fields}>
-          <FormField label="Project name">
+          <FormField label="Project name" description="Shown in lists." constraintText="Lowercase letters and hyphens.">
             <Input value={name} onChange={event => setName(event.detail.value)} />
           </FormField>
           <FormField label="Region">

@@ -6,6 +6,20 @@ import { BaseComponentProps } from '../internal/base-component';
 
 export interface FormProps extends BaseComponentProps {
   /**
+   * What the form holds, as for Container. The kind colors the construction line that opens the form, the
+   * rule under it and the reference.
+   * - `configuration` for settings people change, drawn in drafting blue.
+   * - `resource` for things that exist or run, drawn in teal.
+   * - `policy` for rules the system follows, drawn in plum.
+   * - `neutral` for anything else, drawn in graphite.
+   */
+  kind?: FormProps.Kind;
+  /**
+   * A short reference set above the header, as on a drawing set, such as `C4`. Other parts of the page can
+   * point back to the form with it.
+   */
+  reference?: string;
+  /**
    * The fields of the form, usually form fields grouped in containers.
    */
   children?: React.ReactNode;
@@ -39,4 +53,6 @@ export interface FormProps extends BaseComponentProps {
 
 export namespace FormProps {
   export type Variant = 'full-page' | 'embedded';
+
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
 }

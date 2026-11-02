@@ -5,6 +5,7 @@
 
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
+@use './field';
 
 // The root draws the field box so the search icon, inline label and clear button sit inside its border.
 .root {
@@ -13,9 +14,7 @@
   align-items: center;
   box-sizing: border-box;
   min-block-size: ord.$size-control-height;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
+  @include field.edge;
   background-color: ord.$color-background-control;
   color: ord.$color-text-body;
 
@@ -31,29 +30,19 @@
 }
 
 .read-only {
-  background-color: ord.$color-background-control-read-only;
+  @include field.read-only;
 }
 
 .invalid {
-  border-color: ord.$color-border-error;
-  @include styles.leading-mark(ord.$color-border-error);
+  @include field.status-edge(error);
 }
 
 .warning {
-  border-color: ord.$color-border-status-warning;
-  @include styles.leading-mark(ord.$color-border-status-warning);
+  @include field.status-edge(warning);
 }
 
 .disabled {
-  @include styles.hatch;
-  border-color: ord.$color-border-disabled;
-  box-shadow: none;
-  color: ord.$color-text-disabled;
-
-  // Matches the specificity of the right-to-left leading mark.
-  &:dir(rtl) {
-    box-shadow: none;
-  }
+  @include field.disabled;
 }
 
 .main {

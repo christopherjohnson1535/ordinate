@@ -3,11 +3,16 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
-// Digits of equal width keep the separators still while the user types.
+@use '../internal/styles/tokens' as ord;
+
+// Dates and times are data, so they are lettered in mono like other measures. Digits of equal width also keep
+// the separators still while the user types.
 .root {
   display: block;
 
   input {
+    font-family: ord.$font-family-mono;
+    font-size: ord.$font-size-code;
     font-variant-numeric: tabular-nums;
   }
 }

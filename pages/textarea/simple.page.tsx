@@ -22,7 +22,8 @@ export default function TextareaSimple() {
         <FormField
           label="Notes"
           description="Shown to everyone on the project."
-          constraintText={`${notes.length} of ${limit} characters.`}
+          constraintText={`Up to ${limit} characters.`}
+          characterCountText={`${notes.length} / ${limit} characters`}
           errorText={notes.length > limit ? `Shorten the notes to ${limit} characters or fewer.` : undefined}
         >
           <Textarea value={notes} onChange={event => setNotes(event.detail.value)} />

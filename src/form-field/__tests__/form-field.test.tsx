@@ -10,6 +10,7 @@ import Input from '../../../lib/components/input';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import formFieldStyles from '../../../lib/components/form-field/styles.css.js';
 import inputStyles from '../../../lib/components/input/styles.css.js';
 
 describe('FormField warning', () => {
@@ -126,6 +127,48 @@ describe('FormField character count', () => {
     expect(input).toHaveAccessibleDescription('1 of 64');
     act(() => vi.advanceTimersByTime(1000));
     expect(input).toHaveAccessibleDescription('2 of 64');
+  });
+});
+
+describe('FormField layout', () => {
+  test('sets the label in the margin by default', () => {
+    render(
+      <FormField label="Project name">
+        <Input value="north-annex" />
+      </FormField>
+    );
+    expect(createWrapper().findFormField()!.getElement()).toHaveClass(formFieldStyles['layout-margin']);
+  });
+
+  test('stacks the label above the control when asked', () => {
+    render(
+      <FormField label="Project name" layout="stacked">
+        <Input value="north-annex" />
+      </FormField>
+    );
+    expect(createWrapper().findFormField()!.getElement()).not.toHaveClass(formFieldStyles['layout-margin']);
+  });
+
+  test('keeps the label, description and messages in reading order', () => {
+    render(
+      <FormField label="Project name" description="Shown in lists." constraintText="Lowercase only." errorText="Taken.">
+        <Input value="north-annex" />
+      </FormField>
+    );
+    expect(createWrapper().findFormField()!.getElement()).toHaveTextContent(
+      /^Project name.*Shown in lists\..*Taken\..*Lowercase only\.$/
+    );
+  });
+
+  test('draws the character count as a dimension line hidden from screen readers', () => {
+    render(
+      <FormField label="Description" characterCountText="12 of 64">
+        <Input value="north-annex" />
+      </FormField>
+    );
+    const count = createWrapper().findFormField()!.findCharacterCount()!.getElement();
+    expect(count).toHaveAttribute('aria-hidden', 'true');
+    expect(count).toHaveTextContent('12 of 64');
   });
 });
 
