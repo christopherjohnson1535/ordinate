@@ -6,42 +6,68 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
-// A dashed outline, like the boundary of an area left open on a drawing for something to be placed.
+// An area left open on the drawing for something to be placed: a dashed construction line drawn a little
+// inside crop marks at its four corners.
 .root {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-input);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   min-block-size: calc(#{ord.$size-control-height} * 2);
-  padding-block: ord.$space-scaled-m;
+  padding-block: ord.$space-scaled-l;
   padding-inline: ord.$space-l;
-  border-width: ord.$border-width-control;
-  border-style: dashed;
-  border-color: ord.$color-border-control;
   background-color: ord.$color-background-container;
   color: ord.$color-text-secondary;
   text-align: center;
 
   @include styles.with-motion {
-    transition-property: background-color, border-color, color;
+    transition-property: background-color, color;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
   }
 }
 
-.page-dragging {
-  border-color: ord.$color-border-accent;
-  color: ord.$color-text-body;
+.boundary {
+  @include styles.border-radius(ord.$border-radius-input);
+  position: absolute;
+  inset-block: ord.$space-xs;
+  inset-inline: ord.$space-xs;
+  border-width: ord.$border-width-default;
+  border-style: dashed;
+  border-color: ord.$color-kind-neutral;
+  opacity: ord.$opacity-construction;
+  pointer-events: none;
+
+  @include styles.with-motion {
+    transition-property: border-color, opacity;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
 }
 
+// While files are dragged over the page the line is inked in, to show where they can go.
+.page-dragging {
+  color: ord.$color-text-body;
+
+  .boundary {
+    border-color: ord.$color-border-strong;
+    opacity: 1;
+  }
+}
+
+// Over the zone itself, the line closes and the area takes a raised tint.
 .active {
-  border-style: solid;
-  background-color: ord.$color-background-highlight;
+  background-color: ord.$color-background-item-hover;
+
+  .boundary {
+    border-style: solid;
+  }
 }
 
 .content {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

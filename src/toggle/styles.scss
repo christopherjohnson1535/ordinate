@@ -12,6 +12,8 @@ $thumb-size: calc(#{ord.$size-toggle-height} - 2 * #{ord.$border-width-default} 
   display: flex;
 }
 
+// Off is a hairline track with a graphite knob. On fills the track with ink and turns the knob to paper, as
+// ink fill means "on" everywhere.
 .track {
   @include styles.border-radius(ord.$border-radius-toggle);
   position: relative;
@@ -20,7 +22,7 @@ $thumb-size: calc(#{ord.$size-toggle-height} - 2 * #{ord.$border-width-default} 
   block-size: ord.$size-toggle-height;
   border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-control;
+  border-color: ord.$color-text-secondary;
   background-color: ord.$color-background-control;
 
   @include styles.with-motion {
@@ -37,7 +39,7 @@ $thumb-size: calc(#{ord.$size-toggle-height} - 2 * #{ord.$border-width-default} 
   inset-inline-start: ord.$space-xxxs;
   inline-size: $thumb-size;
   block-size: $thumb-size;
-  background-color: ord.$color-border-control;
+  background-color: ord.$color-text-secondary;
 
   @include styles.with-motion {
     transition-property: inset-inline-start, background-color;
@@ -46,11 +48,13 @@ $thumb-size: calc(#{ord.$size-toggle-height} - 2 * #{ord.$border-width-default} 
   }
 }
 
-.root:not(.read-only):hover :enabled + .track:not(.checked) {
-  border-color: ord.$color-border-strong;
+@media (hover: hover) and (pointer: fine) {
+  .root:not(.read-only):hover :enabled + .track:not(.checked) {
+    border-color: ord.$color-border-strong;
 
-  .thumb {
-    background-color: ord.$color-border-strong;
+    .thumb {
+      background-color: ord.$color-border-strong;
+    }
   }
 }
 
@@ -77,11 +81,11 @@ $thumb-size: calc(#{ord.$size-toggle-height} - 2 * #{ord.$border-width-default} 
 
 :disabled + .track {
   @include styles.hatch;
-  border-color: ord.$color-border-disabled;
+  border-color: ord.$color-text-disabled;
   background-color: ord.$color-background-control;
 
   .thumb {
-    background-color: ord.$color-border-disabled;
+    background-color: ord.$color-text-disabled;
   }
 }
 

@@ -54,6 +54,17 @@ export interface AbsoluteRangeRef {
   focus(): void;
 }
 
+// The number of days a range takes in, counting both ends.
+function countDays(low: Date, high: Date): number {
+  const utc = (date: Date) => Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  return Math.round((utc(high) - utc(low)) / 86_400_000) + 1;
+}
+
+// "5 days", in the picker's locale.
+function formatDayCount(count: number, locale: string): string {
+  return new Intl.NumberFormat(locale, { style: 'unit', unit: 'day', unitDisplay: 'long' }).format(count);
+}
+
 // Keeps the focused date within the months on show, moving the first month only as far as needed.
 function getFirstMonth(first: Date, focused: Date, monthCount: number): Date {
   if (compareMonths(focused, first) < 0) {
@@ -135,6 +146,7 @@ export const AbsoluteRange = React.forwardRef(
     });
 
     const months = Array.from({ length: monthCount }, (_, index) => addMonths(firstMonth, index));
+    const rangeLength = start && previewEnd && low && high ? formatDayCount(countDays(low, high), locale) : null;
     const announcement =
       start && end ? labels.selectedRangeAnnouncement(formatFullDate(start, locale), formatFullDate(end, locale)) : '';
 
@@ -142,39 +154,42 @@ export const AbsoluteRange = React.forwardRef(
 
     return (
       <div className={styles.absolute}>
-        <div ref={keyboard.containerRef} className={styles.months}>
-          {months.map((month, index) => {
-            const titleId = `${baseId}month${index}`;
-            return (
-              <div key={index} className={styles.month}>
-                <GridHeader
-                  title={formatMonthYear(month, locale)}
-                  titleId={titleId}
-                  previousAriaLabel={labels.previousMonthAriaLabel}
-                  nextAriaLabel={labels.nextMonthAriaLabel}
-                  onPrevious={index === 0 ? () => page(-1) : undefined}
-                  onNext={index === months.length - 1 ? () => page(1) : undefined}
-                />
-                <MonthGrid
-                  month={month}
-                  weekStart={weekStart}
-                  locale={locale}
-                  focusedDate={focusedDate}
-                  today={today}
-                  currentAriaLabel={labels.todayAriaLabel}
-                  ariaLabelledby={titleId}
-                  showOutsideDays={false}
-                  isEnabled={isEnabled}
-                  getCellState={getCellState}
-                  getDisabledReason={dateDisabledReason}
-                  onSelect={pick}
-                  onFocusDate={focusDate}
-                  onHoverDate={setHoveredDate}
-                  onKeyDown={keyboard.onKeyDown}
-                />
-              </div>
-            );
-          })}
+        <div className={styles.calendar}>
+          <div ref={keyboard.containerRef} className={styles.months}>
+            {months.map((month, index) => {
+              const titleId = `${baseId}month${index}`;
+              return (
+                <div key={index} className={styles.month}>
+                  <GridHeader
+                    title={formatMonthYear(month, locale)}
+                    titleId={titleId}
+                    previousAriaLabel={labels.previousMonthAriaLabel}
+                    nextAriaLabel={labels.nextMonthAriaLabel}
+                    onPrevious={index === 0 ? () => page(-1) : undefined}
+                    onNext={index === months.length - 1 ? () => page(1) : undefined}
+                  />
+                  <MonthGrid
+                    month={month}
+                    weekStart={weekStart}
+                    locale={locale}
+                    focusedDate={focusedDate}
+                    today={today}
+                    currentAriaLabel={labels.todayAriaLabel}
+                    ariaLabelledby={titleId}
+                    showOutsideDays={false}
+                    isEnabled={isEnabled}
+                    getCellState={getCellState}
+                    getDisabledReason={dateDisabledReason}
+                    onSelect={pick}
+                    onFocusDate={focusDate}
+                    onHoverDate={setHoveredDate}
+                    onKeyDown={keyboard.onKeyDown}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          {rangeLength && <div className={styles['range-length']}>{rangeLength}</div>}
         </div>
         <InternalLiveRegion hidden={true}>{announcement}</InternalLiveRegion>
         <div className={dateOnly ? styles['inputs-date-only'] : styles.inputs}>

@@ -19,7 +19,7 @@ const Slider = React.forwardRef(
       onChange,
       disabled = false,
       readOnly = false,
-      tickMarks = false,
+      tickMarks,
       hideFillLine = false,
       referenceValues,
       valueFormatter,

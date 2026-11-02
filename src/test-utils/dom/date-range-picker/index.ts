@@ -48,6 +48,13 @@ export default class DateRangePickerWrapper extends ComponentWrapper {
     return months ? new CalendarGridWrapper(months.getElement()) : null;
   }
 
+  /**
+   * Returns the length of the chosen or previewed range lettered under the months, such as "5 days".
+   */
+  findRangeLength(): ElementWrapper | null {
+    return this.findByClassName(styles['range-length']);
+  }
+
   findStartDateInput(): DateInputWrapper | null {
     return this.findPart(DateInputWrapper, styles['start-date']);
   }

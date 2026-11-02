@@ -8,6 +8,9 @@ import SegmentedControl, { SegmentedControlProps } from '../../../lib/components
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+import markerStyles from '../../../lib/components/internal/components/sliding-marker/styles.css.js';
+
 const options: SegmentedControlProps.Option[] = [
   { id: 'day', text: 'Day' },
   { id: 'week', text: 'Week' },
@@ -178,5 +181,17 @@ describe('SegmentedControl', () => {
   test('has no accessibility violations', async () => {
     const { container } = render(<Controlled />);
     await expectNoAxeViolations(container);
+  });
+
+  test('marks the selected segment with open ink crop marks, hidden from assistive technology', () => {
+    const { container, rerender } = render(<SegmentedControl label="Period" options={options} selectedId="week" />);
+    const marks = createWrapper(container).findSegmentedControl()!.findAllByClassName(marksStyles.root);
+    expect(marks).toHaveLength(1);
+    const element = marks[0].getElement();
+    expect(element).toHaveAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass(marksStyles.selected, marksStyles.open);
+    expect(element.parentElement).toHaveClass(markerStyles.marker);
+    rerender(<SegmentedControl label="Period" options={options} selectedId={null} />);
+    expect(createWrapper(container).findSegmentedControl()!.findAllByClassName(marksStyles.root)).toHaveLength(0);
   });
 });

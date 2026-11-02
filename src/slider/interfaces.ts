@@ -34,19 +34,22 @@ export interface SliderProps extends BaseComponentProps, FormFieldControlProps {
    */
   readOnly?: boolean;
   /**
-   * Draws a tick at every step, like the graduations of a ruler. Use it when there are few steps.
+   * Draws a tick at every step, like the graduations of a ruler. When left out, the ticks are drawn if there
+   * are no more than 40 steps. Set it to `true` to draw them for up to 100 steps, or `false` to show only
+   * the major ticks at the minimum, the maximum and the reference values.
    */
   tickMarks?: boolean;
   /**
-   * Hides the line that fills the track from the minimum to the value.
+   * Hides the ink line that fills the scale from the minimum to the value.
    */
   hideFillLine?: boolean;
   /**
-   * Values to label below the track, between the minimum and the maximum, which are always labeled.
+   * Values to label below the scale with a major tick, between the minimum and the maximum, which are always
+   * labeled.
    */
   referenceValues?: ReadonlyArray<number>;
   /**
-   * Formats a value for the labels below the track, the value shown while the slider is in use,
+   * Formats a value for the labels below the scale, the value shown above the index line,
    * and what screen readers announce, such as `value => `${value}%``.
    */
   valueFormatter?: (value: number) => string;

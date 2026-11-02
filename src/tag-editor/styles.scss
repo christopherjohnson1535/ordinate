@@ -14,6 +14,17 @@
 .optional {
   @include styles.font-body;
   font-size: ord.$font-size-description;
+  letter-spacing: normal;
+  text-transform: none;
+  color: ord.$color-text-secondary;
+}
+
+// The count against the limit is a measure, so it is lettered as a mono caption. Going over the limit is an
+// error, which reads as a message in the body face.
+.limit {
+  @include styles.font-code;
+  font-size: ord.$font-size-small;
+  font-variant-numeric: tabular-nums;
   color: ord.$color-text-secondary;
 }
 
@@ -27,7 +38,9 @@
 }
 
 .limit-exceeded {
+  @include styles.font-body;
   display: inline-flex;
+  font-size: ord.$font-size-description;
   align-items: baseline;
   gap: ord.$space-xxs;
   color: ord.$color-text-error;

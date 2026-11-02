@@ -6,10 +6,13 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
+$dot-size: calc(#{ord.$size-checkbox} / 3);
+
 .root {
   display: flex;
 }
 
+// A radio button stays a circle. Once selected its ring turns ink and a little heavier, with an ink dot inside.
 .circle {
   @include styles.border-radius(ord.$border-radius-radio);
   position: relative;
@@ -18,7 +21,7 @@
   block-size: ord.$size-checkbox;
   border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-control;
+  border-color: ord.$color-text-secondary;
   background-color: ord.$color-background-control;
 
   @include styles.with-motion {
@@ -31,21 +34,35 @@
     @include styles.border-radius(ord.$border-radius-radio);
     content: '';
     position: absolute;
-    inset-block: ord.$space-xxs;
-    inset-inline: ord.$space-xxs;
-    background-color: transparent;
+    inset-block: 0;
+    inset-inline: 0;
+    inline-size: $dot-size;
+    block-size: $dot-size;
+    margin-block: auto;
+    margin-inline: auto;
+    background-color: ord.$color-background-control-checked;
+    transform: scale(0);
+
+    @include styles.with-motion {
+      transition-property: transform, background-color;
+      transition-duration: ord.$motion-duration-responsive;
+      transition-timing-function: ord.$motion-easing-standard;
+    }
   }
 }
 
-.root:not(.read-only):hover :enabled + .circle:not(.checked) {
-  border-color: ord.$color-border-strong;
+@media (hover: hover) and (pointer: fine) {
+  .root:not(.read-only):hover :enabled + .circle:not(.checked) {
+    border-color: ord.$color-border-strong;
+  }
 }
 
 .checked {
+  border-width: ord.$border-width-icon;
   border-color: ord.$color-background-control-checked;
 
   &::after {
-    background-color: ord.$color-background-control-checked;
+    transform: scale(1);
   }
 }
 
@@ -65,7 +82,7 @@
 
 :disabled + .circle {
   @include styles.hatch;
-  border-color: ord.$color-border-disabled;
+  border-color: ord.$color-text-disabled;
 }
 
 :disabled + .checked {

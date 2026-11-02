@@ -4,31 +4,23 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// A slider is drawn as a scale: a hairline base with a graduation at each step, labeled major ticks, an ink
+// fill up to the value and an ink index line with the value lettered above it. The native range input lies
+// over the whole drawing, invisible, and takes the pointer and the keyboard. The scale is inset by half the
+// native thumb on each side, so its ends sit under the thumb's center at the minimum and the maximum, and
+// positions on the scale match the native thumb.
+
 $thumb: ord.$size-icon;
-$tick: ord.$space-xs;
-
-// The native range input takes the pointer and the keyboard; everything else is drawn behind it. The
-// drawn track is inset by half a thumb on each side, so its ends sit under the thumb's center at the
-// minimum and the maximum, and positions on the track match the native thumb.
-@mixin thumb {
-  @include styles.border-radius(ord.$border-radius-checkbox);
-  box-sizing: border-box;
-  inline-size: $thumb;
-  block-size: $thumb;
-  border-width: ord.$border-width-section;
-  border-style: solid;
-  border-color: ord.$color-background-control-checked;
-  background-color: ord.$color-background-container;
-  cursor: pointer;
-
-  @include styles.with-motion {
-    transition-property: background-color, border-color;
-    transition-duration: ord.$motion-duration-responsive;
-    transition-timing-function: ord.$motion-easing-standard;
-  }
-}
+$value-height: calc(#{ord.$font-size-small} * #{ord.$line-height-body});
+// How far the index line stands above the base, and how far it and the major ticks hang below.
+$index-above: ord.$space-s;
+$major-tick: ord.$space-xs;
+$minor-tick: ord.$space-xxs;
+// The distance from the top of the drawing to the base line.
+$base: calc(#{$value-height} + #{ord.$space-xxs} + #{$index-above});
 
 .root {
   @include styles.font-body;
@@ -39,9 +31,7 @@ $tick: ord.$space-xs;
 
 .control {
   position: relative;
-  display: flex;
-  align-items: center;
-  block-size: ord.$size-control-height-small;
+  block-size: calc(#{$base} + #{$major-tick});
 }
 
 .track {
@@ -53,43 +43,111 @@ $tick: ord.$space-xs;
 .rail,
 .fill {
   position: absolute;
-  inset-block-start: calc(50% - #{ord.$border-width-section} / 2);
   inset-inline-start: 0;
-  block-size: ord.$border-width-section;
 }
 
 .rail {
+  inset-block-start: $base;
   inline-size: 100%;
-  background-color: ord.$color-border-control;
+  block-size: ord.$border-width-default;
+  background-color: ord.$color-text-secondary;
 }
 
+// The fill is the heavier ink line of "how much", laid on the base from the minimum to the value.
 .fill {
+  inset-block-start: calc(#{$base} - #{ord.$border-width-default} / 2);
   inline-size: calc(var(--slider-value) * 100%);
+  block-size: ord.$border-width-section;
   background-color: ord.$color-background-control-checked;
 }
 
-// Graduations hang below the rail like the marks of a scale rule.
+// Graduations hang below the base like the marks of a scale rule. The major ones are longer and darker.
 .tick {
   position: absolute;
-  inset-block-start: 50%;
+  inset-block-start: $base;
   inset-inline-start: calc(var(--slider-tick) * 100%);
-  block-size: $tick;
+  block-size: $minor-tick;
   border-inline-start-width: ord.$border-width-default;
   border-inline-start-style: solid;
   border-inline-start-color: ord.$color-border-control;
 }
 
-.tick-reference {
-  block-size: ord.$space-s;
-  border-inline-start-color: ord.$color-border-strong;
+.tick-major {
+  block-size: $major-tick;
+  border-inline-start-color: ord.$color-text-secondary;
+}
+
+// The index: an ink line through the base with a small triangle on top pointing down at the value. The box is
+// wider than the line so the focus ring stands clear of it.
+.handle {
+  position: absolute;
+  inset-block: calc(#{$base} - #{$index-above}) 0;
+  inset-inline-start: calc(var(--slider-value) * 100% - #{ord.$space-xs} / 2);
+  inline-size: ord.$space-xs;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: ord.$color-background-control-checked;
+  }
+
+  // The line.
+  &::after {
+    inset-block: 0;
+    inset-inline-start: calc(50% - #{ord.$border-width-section} / 2);
+    inline-size: ord.$border-width-section;
+  }
+
+  // The triangle. It is symmetric, so the physical clip path holds in either reading direction.
+  &::before {
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: calc(#{ord.$space-xxs} + #{ord.$space-xxxs});
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .control:has(.input:focus-visible) & {
+    @include styles.focus-ring;
+  }
+}
+
+// The value is lettered above the index. It shifts along its own width as the value moves, so it starts at the
+// index at the minimum and ends there at the maximum and never runs past the scale.
+.readout {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(var(--slider-value) * 100%);
+  inline-size: 0;
+}
+
+.readout-text {
+  @include styles.font-code;
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  line-height: ord.$line-height-body;
+  font-variant-numeric: tabular-nums;
+  color: ord.$color-text-body;
+  unicode-bidi: plaintext;
+  white-space: nowrap;
+  translate: calc(var(--slider-value) * -100%) 0;
+
+  [dir='rtl'] & {
+    translate: calc(var(--slider-value) * 100%) 0;
+  }
 }
 
 .input {
-  position: relative;
+  position: absolute;
   z-index: 1;
+  inset-block: 0;
+  inset-inline: 0;
   appearance: none;
   inline-size: 100%;
-  block-size: $thumb;
+  block-size: 100%;
   margin-block: 0;
   margin-inline: 0;
   background-color: transparent;
@@ -100,87 +158,56 @@ $tick: ord.$space-xs;
   }
 
   &::-webkit-slider-runnable-track {
-    block-size: $thumb;
+    block-size: 100%;
     background-color: transparent;
   }
 
   &::-moz-range-track {
-    block-size: $thumb;
+    block-size: 100%;
     background-color: transparent;
   }
 
+  // The native thumb stays the size of the drawn index, so the pointer can grab it, but is not drawn.
   &::-webkit-slider-thumb {
-    @include thumb;
     appearance: none;
+    inline-size: $thumb;
+    block-size: 100%;
+    border-width: 0;
+    background-color: transparent;
+    cursor: pointer;
   }
 
   &::-moz-range-thumb {
-    @include thumb;
-  }
-
-  &:hover:enabled::-webkit-slider-thumb {
-    background-color: ord.$color-background-item-hover;
-  }
-
-  &:hover:enabled::-moz-range-thumb {
-    background-color: ord.$color-background-item-hover;
-  }
-
-  &:focus-visible::-webkit-slider-thumb {
-    @include styles.focus-ring;
-  }
-
-  &:focus-visible::-moz-range-thumb {
-    @include styles.focus-ring;
+    inline-size: $thumb;
+    block-size: 100%;
+    border-width: 0;
+    background-color: transparent;
+    cursor: pointer;
   }
 
   &:disabled {
     cursor: default;
+
+    &::-webkit-slider-thumb {
+      cursor: default;
+    }
+
+    &::-moz-range-thumb {
+      cursor: default;
+    }
   }
 }
 
-// The current value, called out above the thumb while the slider is in use.
-.readout {
-  position: absolute;
-  inset-block-end: calc(50% + #{$thumb} / 2 + #{ord.$space-xxs});
-  inset-inline-start: calc(var(--slider-value) * 100%);
-  display: flex;
-  justify-content: center;
-  inline-size: 0;
-  visibility: hidden;
-
-  .control:hover &,
-  .control:has(.input:focus-visible) &,
-  .control:has(.input:active) & {
-    visibility: visible;
-  }
-
-  .disabled & {
-    visibility: hidden;
-  }
-}
-
-.readout-text {
-  @include styles.font-code;
-  unicode-bidi: plaintext;
-  padding-block: 0;
-  padding-inline: ord.$space-xxs;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
-  font-size: ord.$font-size-small;
-  white-space: nowrap;
-}
-
+// Mono labels under the major ticks.
 .labels {
   @include styles.font-code;
   position: relative;
   display: flex;
   justify-content: space-between;
   gap: ord.$space-xs;
-  margin-block-start: ord.$space-xxs;
+  margin-block-start: ord.$space-xxxs;
   font-size: ord.$font-size-small;
+  font-variant-numeric: tabular-nums;
   color: ord.$color-text-secondary;
 }
 
@@ -198,7 +225,7 @@ $tick: ord.$space-xs;
   inset-inline: calc(#{$thumb} / 2);
 }
 
-// A zero-width box centers the label on its position in either reading direction.
+// A zero-width box centers the label on its tick in either reading direction.
 .label-reference {
   position: absolute;
   inset-inline-start: calc(var(--slider-tick) * 100%);
@@ -209,81 +236,63 @@ $tick: ord.$space-xs;
 }
 
 .invalid {
-  .fill {
+  .fill,
+  .handle::before,
+  .handle::after {
     background-color: ord.$color-border-error;
-  }
-
-  .input::-webkit-slider-thumb {
-    border-color: ord.$color-border-error;
-  }
-
-  .input::-moz-range-thumb {
-    border-color: ord.$color-border-error;
   }
 }
 
 .warning {
-  .fill {
+  .fill,
+  .handle::before,
+  .handle::after {
     background-color: ord.$color-border-status-warning;
-  }
-
-  .input::-webkit-slider-thumb {
-    border-color: ord.$color-border-status-warning;
-  }
-
-  .input::-moz-range-thumb {
-    border-color: ord.$color-border-status-warning;
   }
 }
 
 .read-only {
-  .fill {
+  .fill,
+  .handle::before,
+  .handle::after {
     background-color: ord.$color-text-secondary;
   }
 
-  .input {
-    cursor: default;
-  }
-
-  .input::-webkit-slider-thumb {
-    border-color: ord.$color-text-secondary;
-    background-color: ord.$color-background-control-read-only;
-    cursor: default;
-  }
-
+  .input,
+  .input::-webkit-slider-thumb,
   .input::-moz-range-thumb {
-    border-color: ord.$color-text-secondary;
-    background-color: ord.$color-background-control-read-only;
     cursor: default;
   }
 }
 
+// A disabled scale is hatched below its base, like a part of the drawing that cannot be used.
 .disabled {
-  .rail {
-    background-color: ord.$color-border-disabled;
+  .track::after {
+    @include styles.hatch;
+    content: '';
+    position: absolute;
+    inset-block-start: $base;
+    inset-inline: 0;
+    block-size: $major-tick;
   }
 
-  .fill {
+  .rail {
+    background-color: ord.$color-border-control;
+  }
+
+  .fill,
+  .handle::before,
+  .handle::after {
     background-color: ord.$color-text-disabled;
   }
 
-  .tick {
-    border-inline-start-color: ord.$color-border-disabled;
+  .tick,
+  .tick-major {
+    border-inline-start-color: ord.$color-border-control;
   }
 
-  .labels {
+  .labels,
+  .readout-text {
     color: ord.$color-text-disabled;
-  }
-
-  .input::-webkit-slider-thumb {
-    @include styles.hatch;
-    border-color: ord.$color-border-disabled;
-    cursor: default;
-  }
-
-  .input::-moz-range-thumb {
-    @include styles.hatch;
-    border-color: ord.$color-border-disabled;
-    cursor: default;
   }
 }

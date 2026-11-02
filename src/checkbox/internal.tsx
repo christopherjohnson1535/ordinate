@@ -86,7 +86,7 @@ export const InternalCheckbox = React.forwardRef(
         )}
         styledControl={
           <span className={clsx(styles.box, styles[`box-${state}`])}>
-            {state !== 'unchecked' && <InternalIcon name={state === 'checked' ? 'check' : 'remove'} size="small" />}
+            {state === 'checked' && <InternalIcon name="check" size="small" />}
           </span>
         }
       />

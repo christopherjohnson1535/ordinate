@@ -12,10 +12,25 @@ export default class SliderWrapper extends ComponentWrapper {
   }
 
   /**
-   * Returns the tick marks, including the longer ones at reference values.
+   * Returns the tick marks on the scale, including the major ones at the minimum, the maximum and the
+   * reference values.
    */
   findTickMarks(): ElementWrapper[] {
     return this.findAllByClassName(styles.tick);
+  }
+
+  /**
+   * Returns the major tick marks: the ones at the minimum, the maximum and the reference values.
+   */
+  findMajorTickMarks(): ElementWrapper[] {
+    return this.findAllByClassName(styles['tick-major']);
+  }
+
+  /**
+   * Returns the value lettered above the index line.
+   */
+  findValueTag(): ElementWrapper {
+    return this.findByClassName(styles['readout-text'])!;
   }
 
   /**

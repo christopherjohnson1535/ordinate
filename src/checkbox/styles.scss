@@ -6,17 +6,21 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
+// A checkbox is an ink key square, like Badge's: solid with a paper tick when checked, half filled from the
+// start edge when partly checked, open when clear.
 .box {
   @include styles.border-radius(ord.$border-radius-checkbox);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   inline-size: ord.$size-checkbox;
   block-size: ord.$size-checkbox;
+  overflow: hidden;
   border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-control;
+  border-color: ord.$color-text-secondary;
   background-color: ord.$color-background-control;
   color: ord.$color-foreground-control-checked;
 
@@ -27,14 +31,29 @@
   }
 }
 
-.root:not(.read-only):hover :enabled + .box-unchecked {
-  border-color: ord.$color-border-strong;
-}
-
-.box-checked,
-.box-indeterminate {
+.box-checked {
   border-color: ord.$color-background-control-checked;
   background-color: ord.$color-background-control-checked;
+}
+
+.box-indeterminate {
+  border-color: ord.$color-background-control-checked;
+}
+
+// The half fill sits on the start side, so it changes sides in right-to-left layout as Badge's key does.
+.box-indeterminate::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 50%;
+  background-color: ord.$color-background-control-checked;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:not(.read-only):hover :enabled + .box-unchecked {
+    border-color: ord.$color-border-strong;
+  }
 }
 
 .read-only {
@@ -42,21 +61,37 @@
     background-color: ord.$color-background-control-read-only;
   }
 
-  .box-checked,
-  .box-indeterminate {
+  .box-checked {
     border-color: ord.$color-text-secondary;
     background-color: ord.$color-text-secondary;
   }
+
+  .box-indeterminate {
+    border-color: ord.$color-text-secondary;
+
+    &::before {
+      background-color: ord.$color-text-secondary;
+    }
+  }
 }
 
+// Hatched like any part of the drawing that cannot be used, with its edge kept so the square still reads.
 :disabled + .box {
   @include styles.hatch;
-  border-color: ord.$color-border-disabled;
+  border-color: ord.$color-text-disabled;
   background-color: ord.$color-background-control;
 }
 
-:disabled + .box-checked,
-:disabled + .box-indeterminate {
+:disabled + .box-checked {
   border-color: ord.$color-text-disabled;
   background-color: ord.$color-text-disabled;
+  background-image: none;
+}
+
+:disabled + .box-indeterminate {
+  border-color: ord.$color-text-disabled;
+
+  &::before {
+    background-color: ord.$color-text-disabled;
+  }
 }

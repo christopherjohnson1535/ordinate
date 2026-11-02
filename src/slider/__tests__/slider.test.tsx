@@ -92,15 +92,34 @@ describe('Slider', () => {
     rerender(<Slider ariaLabel="Rating" value={2} min={0} max={10} step={2.5} tickMarks={true} />);
     expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(5);
     rerender(<Slider ariaLabel="Rating" value={2} min={0} max={5} />);
-    expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(0);
+    expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(6);
+    rerender(<Slider ariaLabel="Rating" value={2} min={0} max={5} tickMarks={false} />);
+    expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(2);
   });
 
-  test('skips tick marks when there are too many steps', () => {
+  test('draws major ticks at the ends and the reference values', () => {
+    render(<Slider ariaLabel="Memory" value={16} min={0} max={64} step={8} referenceValues={[32, 36]} />);
+    const slider = createWrapper().findSlider()!;
+    expect(slider.findTickMarks()).toHaveLength(10);
+    expect(slider.findMajorTickMarks()).toHaveLength(4);
+  });
+
+  test('draws major ticks only when there are too many steps', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    render(<Slider ariaLabel="Bytes" value={2} min={0} max={10000} tickMarks={true} />);
-    expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(0);
+    const { rerender } = render(<Slider ariaLabel="Opacity" value={2} min={0} max={100} />);
+    expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(2);
+    expect(warn).not.toHaveBeenCalled();
+    rerender(<Slider ariaLabel="Bytes" value={2} min={0} max={10000} tickMarks={true} />);
+    expect(createWrapper().findSlider()!.findTickMarks()).toHaveLength(2);
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('tickMarks'));
     warn.mockRestore();
+  });
+
+  test('letters the value above the index line', () => {
+    render(<Slider ariaLabel="Memory" value={24} min={0} max={64} valueFormatter={value => `${value} GB`} />);
+    const tag = createWrapper().findSlider()!.findValueTag();
+    expect(tag.getText()).toBe('24 GB');
+    expect(tag.getElement().closest('[aria-hidden="true"]')).not.toBeNull();
   });
 
   test('describes itself with ariaDescription', () => {

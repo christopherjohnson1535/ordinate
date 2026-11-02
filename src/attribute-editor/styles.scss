@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -30,7 +31,8 @@
   list-style-type: none;
 }
 
-// Column layout: the headings and every row share one grid, so the remove buttons line up even when
+// Column layout is set as a schedule, as on a drawing: column labels in mono capitals on an ink rule, and a
+// hairline between rows. The headings and every row share one grid, so the remove buttons line up even when
 // their texts differ in width.
 .columns {
   display: grid;
@@ -46,11 +48,20 @@
   }
 
   .headings {
-    padding-block-end: ord.$space-xxs;
+    padding-block-end: ord.$space-xs;
+    border-block-end-width: ord.$border-width-section;
+    border-block-end-style: solid;
+    border-block-end-color: ord.$color-border-strong;
   }
 
-  .rows {
-    row-gap: ord.$space-scaled-s;
+  .row {
+    padding-block: ord.$space-scaled-xs;
+  }
+
+  .row + .row {
+    border-block-start-width: ord.$border-width-default;
+    border-block-start-style: solid;
+    border-block-start-color: ord.$color-border-divider-secondary;
   }
 }
 
@@ -63,8 +74,9 @@
 }
 
 .heading-label {
-  @include styles.font-label;
-  color: ord.$color-text-body;
+  @include drawing.mono-caption;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-secondary;
 }
 
 .heading-info {
@@ -72,7 +84,8 @@
   font-size: ord.$font-size-description;
 }
 
-// Stacked layout: each row is a set of lines, ruled off from the next row like entries in a ledger.
+// Stacked layout: each row is a set of lines, ruled off from the next row with a hairline like the rows of a
+// schedule.
 .stacked {
   .row {
     display: flex;
@@ -85,7 +98,7 @@
     padding-block-start: ord.$space-scaled-m;
     border-block-start-width: ord.$border-width-default;
     border-block-start-style: solid;
-    border-block-start-color: ord.$color-border-divider;
+    border-block-start-color: ord.$color-border-divider-secondary;
   }
 }
 
