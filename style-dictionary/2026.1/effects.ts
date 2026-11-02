@@ -11,4 +11,6 @@ export const tokens: EffectsDictionary = {
   opacityLeader: '0.55',
   // A linked image fades a little under the pointer.
   opacityMediaHover: '0.88',
+  // Construction lines around a container, drawn in its kind color but held back so the content leads.
+  opacityConstruction: '0.45',
 };

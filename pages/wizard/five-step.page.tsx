@@ -9,7 +9,6 @@ import Checkbox from '~components/checkbox';
 import ColumnLayout from '~components/column-layout';
 import Container from '~components/container';
 import FormField from '~components/form-field';
-import Header from '~components/header';
 import Input from '~components/input';
 import KeyValuePairs from '~components/key-value-pairs';
 import Link from '~components/link';
@@ -142,7 +141,7 @@ export default function WizardFiveStep() {
       description: 'Choose where the cluster runs. You cannot move it to another region later.',
       errorText: activeStepIndex === 0 ? errorText : undefined,
       content: (
-        <Container header={<Header>Cluster details</Header>}>
+        <Container heading="Cluster details">
           <SpaceBetween size="l">
             <FormField
               label="Cluster name"
@@ -178,12 +177,12 @@ export default function WizardFiveStep() {
       errorText: activeStepIndex === 1 ? errorText : undefined,
       content: (
         <SpaceBetween size="l">
-          <Container header={<Header>Tier</Header>}>
+          <Container heading="Tier">
             <FormField label="Pricing tier">
               <RadioGroup value={draft.tier} items={tiers} onChange={event => update({ tier: event.detail.value })} />
             </FormField>
           </Container>
-          <Container header={<Header>Nodes</Header>}>
+          <Container heading="Nodes">
             <SpaceBetween size="l">
               <FormField
                 label="Number of nodes"
@@ -211,7 +210,7 @@ export default function WizardFiveStep() {
       description: 'Tags help you find the cluster and split its cost. You can add them later.',
       isOptional: true,
       content: (
-        <Container header={<Header counter={`(${draft.tags.length})`}>Tags</Header>}>
+        <Container heading="Tags" measure={`(${draft.tags.length})`}>
           <SpaceBetween size="m">
             {draft.tags.map((tag, index) => (
               <ColumnLayout key={index} columns={3}>
@@ -259,7 +258,7 @@ export default function WizardFiveStep() {
       isOptional: true,
       errorText: activeStepIndex === 3 ? errorText : undefined,
       content: (
-        <Container header={<Header>Email</Header>}>
+        <Container heading="Email">
           <SpaceBetween size="l">
             <Checkbox checked={draft.notify} onChange={event => update({ notify: event.detail.checked })}>
               Send email notifications
@@ -334,16 +333,11 @@ export default function WizardFiveStep() {
           ].map(section => (
             <Container
               key={section.title}
-              header={
-                <Header
-                  actions={
-                    <Button formAction="none" onClick={() => setActiveStepIndex(section.index)}>
-                      Edit
-                    </Button>
-                  }
-                >
-                  {section.title}
-                </Header>
+              heading={section.title}
+              actions={
+                <Button formAction="none" onClick={() => setActiveStepIndex(section.index)}>
+                  Edit
+                </Button>
               }
             >
               <KeyValuePairs columns={3} items={section.items} />
@@ -404,7 +398,7 @@ export default function WizardFiveStep() {
         }}
         onSubmit={() => setSubmitted('created')}
         aside={
-          <Container header={<Header>Summary</Header>}>
+          <Container heading="Summary">
             <KeyValuePairs
               columns={1}
               items={[

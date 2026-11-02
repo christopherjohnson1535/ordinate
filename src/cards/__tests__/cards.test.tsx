@@ -10,6 +10,8 @@ import Header from '../../../lib/components/header';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import frameStyles from '../../../lib/components/internal/components/sheet-frame/styles.css.js';
+
 interface Node {
   id: string;
   name: string;
@@ -121,11 +123,11 @@ describe('Cards', () => {
     expect(screen.queryByRole('list')).toBeNull();
   });
 
-  test('the full-page variant does not put the cards in a container', () => {
-    const { rerender } = render(<Cards items={nodes} cardDefinition={cardDefinition} />);
-    expect(createWrapper().findContainer()).not.toBeNull();
+  test('the full-page variant does not put the cards on a framed sheet', () => {
+    const { container, rerender } = render(<Cards items={nodes} cardDefinition={cardDefinition} />);
+    expect(container.querySelector(`.${frameStyles.root}`)).not.toBeNull();
     rerender(<Cards items={nodes} cardDefinition={cardDefinition} variant="full-page" />);
-    expect(createWrapper().findContainer()).toBeNull();
+    expect(container.querySelector(`.${frameStyles.root}`)).toBeNull();
   });
 
   test('passes id and data attributes to the root', () => {

@@ -3,7 +3,7 @@
 import React, { useId, useRef } from 'react';
 import clsx from 'clsx';
 
-import { InternalContainer } from '../container/internal';
+import { SheetFrame } from '../internal/components/sheet-frame';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { InternalLiveRegion } from '../live-region/internal';
@@ -234,7 +234,7 @@ export function InternalTable<T>({
 
   if (variant === 'container') {
     return (
-      <InternalContainer
+      <SheetFrame
         {...rest}
         className={clsx(styles.root, styles[`variant-${variant}`], styles.sheet)}
         header={headerArea}
@@ -243,7 +243,7 @@ export function InternalTable<T>({
       >
         {table}
         {liveRegion}
-      </InternalContainer>
+      </SheetFrame>
     );
   }
 
@@ -251,9 +251,9 @@ export function InternalTable<T>({
     <div {...rest} className={clsx(styles.root, styles[`variant-${variant}`])}>
       {headerArea}
       {variant === 'full-page' ? (
-        <InternalContainer className={styles.sheet} footer={footerSlot} disableContentPaddings={true}>
+        <SheetFrame className={styles.sheet} footer={footerSlot} disableContentPaddings={true}>
           {table}
-        </InternalContainer>
+        </SheetFrame>
       ) : (
         <>
           {table}

@@ -4,7 +4,6 @@ import React from 'react';
 
 import AreaChart, { AreaChartProps } from '~charts/area-chart';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import { eightSeries, hourFormatter, months, numberFormatter, requests } from '../charts/data';
 import { EmptyState, NoMatchState } from '../charts/states';
@@ -26,7 +25,7 @@ export default function AreaChartPermutations() {
     <article className={styles.page}>
       <h1>Area chart</h1>
 
-      <Container header={<Header variant="h2">Requests per minute, stacked by building</Header>}>
+      <Container heading="Requests per minute, stacked by building">
         <AreaChart
           series={buildingSeries}
           xScaleType="time"
@@ -41,7 +40,7 @@ export default function AreaChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Eight series, every pattern</Header>}>
+      <Container heading="Eight series, every pattern">
         <AreaChart
           series={eightAreas}
           xScaleType="categorical"
@@ -54,7 +53,7 @@ export default function AreaChartPermutations() {
       </Container>
 
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Two series, no filter or legend</Header>}>
+        <Container heading="Two series, no filter or legend">
           <AreaChart
             series={buildingSeries.slice(2, 4)}
             xScaleType="time"
@@ -65,10 +64,10 @@ export default function AreaChartPermutations() {
             ariaLabel="Two buildings"
           />
         </Container>
-        <Container header={<Header variant="h2">Loading</Header>}>
+        <Container heading="Loading">
           <AreaChart series={[]} statusType="loading" loadingText="Loading requests" height={180} />
         </Container>
-        <Container header={<Header variant="h2">Error</Header>}>
+        <Container heading="Error">
           <AreaChart
             series={[]}
             statusType="error"
@@ -77,7 +76,7 @@ export default function AreaChartPermutations() {
             height={180}
           />
         </Container>
-        <Container header={<Header variant="h2">Empty</Header>}>
+        <Container heading="Empty">
           <AreaChart series={[]} empty={<EmptyState />} height={180} />
         </Container>
       </div>

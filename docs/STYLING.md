@@ -89,7 +89,22 @@ Revision 2026.1 draws the console like a set of drawings: a light grey frame hol
 
 ## Drawing marks
 
-The console borrows the marks of a drawing set, and `src/internal/styles/drawing.scss` holds the shared ones: `mono-caption` and `font-caption` for small mono capitals, `circled-tag` for references such as S1, `heavy-rule-block-start` for the rule that opens a title block, and `on-ink`. A revision mark (△) and margin numbers are decoration and stay hidden from screen readers; the text they point to carries the meaning.
+The console borrows the marks of a drawing set, and `src/internal/styles/drawing.scss` holds the shared ones: `mono-caption` and `font-caption` for small mono capitals, `circled-tag` for references such as S1, `heavy-rule-block-start` for the rule that opens a title block, `on-ink`, `construction-line` and `hash-mark`. A revision mark (△) and margin numbers are decoration and stay hidden from screen readers; the text they point to carries the meaning.
+
+Sections are drawn with construction lines rather than boxes. A thin line opens each section and runs past both ends; a second line stands between the heading column and the content and runs past the top and the bottom. Both use `construction-line`, which holds them back with `opacity-construction`. A 45-degree `hash-mark` sits wherever a line ends or meets another. A dimension line, from `src/internal/components/dimension-line`, lies on the top line and carries a short measure of what the section holds, such as "7 services". The line breaks around its label, so it needs no background. The lines and marks are drawing only; the label is text.
+
+## Kinds
+
+A section's color says what it holds. Kinds are not decoration and not status, so the three hues stay clear of green, amber and red.
+
+| Kind            | Token                      | Light    | Dark      | For                        |
+| --------------- | -------------------------- | -------- | --------- | -------------------------- |
+| `configuration` | `color-kind-configuration` | Blue 600 | Cyan 400  | Settings people change     |
+| `resource`      | `color-kind-resource`      | Teal 600 | Teal 400  | Things that exist or run   |
+| `policy`        | `color-kind-policy`        | Plum 600 | Plum 400  | Rules the system follows   |
+| `neutral`       | `color-kind-neutral`       | Grey 600 | Chalk 300 | Anything else, the default |
+
+The kind colors the construction lines, hash marks, dimension line and reference. Each keeps at least 4.5:1 against the container background in its mode, because the reference is text. Pair a kind with a reference whose letter matches it, such as C1, R1 or P1, so the meaning does not rest on color alone.
 
 ## States
 

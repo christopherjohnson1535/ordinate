@@ -2,89 +2,241 @@
  Copyright Christopher Johnson. All Rights Reserved.
  SPDX-License-Identifier: Apache-2.0
 */
-
 @use '../internal/styles' as styles;
+@use '../internal/styles/breakpoints';
 @use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// Geometry of the drawing. The top construction line sits on the top edge of the section and runs past
+// both ends by $overshoot. The side line stands halfway across the gap between the margin and the content
+// and runs past the top line and the end of the content by the same amount.
+$overshoot: ord.$space-s;
+// Keep these equal to the root padding and the layout column gap below, which must name the tokens.
+$gap: ord.$space-xl;
+$top: ord.$space-l;
+$side-line-start: calc(-1 * #{$gap} / 2);
+$half-mark: calc(#{ord.$size-hash-mark} / 2);
+$half-line: calc(#{ord.$border-width-default} / 2);
+
+// Below this width the heading stacks above the content and the side line is left out.
+$side-by-side-min-width: breakpoints.$xs;
+
 .root {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-container);
-  display: flex;
-  flex-direction: column;
+  position: relative;
   box-sizing: border-box;
   min-inline-size: 0;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-divider;
-  background-color: ord.$color-background-container;
+  padding-block-start: ord.$space-l;
+  // Room for the side line to run past the end of the content without touching the next section.
+  padding-block-end: ord.$space-s;
   color: ord.$color-text-body;
+  container-type: inline-size;
 }
 
-// Stacked containers read as one sheet split into sections: they share borders, and only
-// the outer corners of the run follow the container radius.
-.variant-stacked {
-  @include styles.border-radius(0);
+// Everything drawn in the kind color carries this class.
+.kind-configuration .ink {
+  color: ord.$color-kind-configuration;
 }
 
-.variant-stacked + .variant-stacked {
-  border-block-start-width: 0;
+.kind-resource .ink {
+  color: ord.$color-kind-resource;
 }
 
-.variant-stacked:not(.variant-stacked + .variant-stacked) {
-  border-start-start-radius: ord.$border-radius-container;
-  border-start-end-radius: ord.$border-radius-container;
+.kind-policy .ink {
+  color: ord.$color-kind-policy;
 }
 
-.variant-stacked:not(:has(+ .variant-stacked)) {
-  border-end-start-radius: ord.$border-radius-container;
-  border-end-end-radius: ord.$border-radius-container;
+.kind-neutral .ink {
+  color: ord.$color-kind-neutral;
+}
+
+.top-line {
+  @include drawing.construction-line;
+  inset-block-start: 0;
+  inset-inline: calc(-1 * #{$overshoot});
+  block-size: ord.$border-width-default;
+}
+
+.mark {
+  @include drawing.hash-mark;
+}
+
+.mark-top-start {
+  inset-block-start: 0;
+  inset-inline-start: calc(-1 * #{$overshoot} - #{$half-mark});
+}
+
+.mark-top-end {
+  inset-block-start: 0;
+  inset-inline-end: calc(-1 * #{$overshoot} - #{$half-mark});
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, ord.$size-margin-column) minmax(0, 1fr);
+  column-gap: ord.$space-xl;
+  row-gap: ord.$space-s;
+  align-content: start;
+}
+
+.no-margin {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.margin {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+  min-inline-size: 0;
+}
+
+.reference {
+  @include drawing.font-caption;
+  font-size: ord.$font-size-small;
+}
+
+.heading {
+  @include styles.font-heading;
+  margin-block: 0;
+  font-size: ord.$font-size-heading-m;
+  font-weight: ord.$font-weight-label;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.description {
+  margin-block: 0;
+  color: ord.$color-text-secondary;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-m;
+  min-inline-size: 0;
+}
+
+.side-line {
+  @include drawing.construction-line;
+  inset-block: calc(-1 * (#{$top} + #{$overshoot})) calc(-1 * #{$overshoot});
+  inset-inline-start: $side-line-start;
+  inline-size: ord.$border-width-default;
+}
+
+.mark-side-start,
+.mark-side-end {
+  inset-inline-start: calc(#{$side-line-start} - #{$half-mark} + #{$half-line});
+}
+
+.mark-side-start {
+  inset-block-start: calc(-1 * (#{$top} + #{$overshoot}));
+}
+
+.mark-side-end {
+  inset-block-end: calc(-1 * #{$overshoot});
+}
+
+// The dimension line lies on the top construction line, from the side line to the end of the content.
+.measure {
+  position: absolute;
+  inset-block-start: calc(-1 * #{$top});
+  inset-inline: $side-line-start 0;
+  transform: translateY(-50%);
+}
+
+.no-margin {
+  .side-line,
+  .mark-side-start,
+  .mark-side-end {
+    display: none;
+  }
+
+  .measure {
+    inset-inline-start: 0;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: ord.$space-xs;
+}
+
+.content {
+  min-inline-size: 0;
+}
+
+.footer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: ord.$space-xs ord.$space-m;
+  padding-block-start: ord.$space-xs;
+  border-block-start-width: ord.$border-width-default;
+  border-block-start-style: solid;
+  border-block-start-color: ord.$color-border-divider-secondary;
+  color: ord.$color-text-secondary;
+}
+
+.mark-footer-start,
+.mark-footer-end {
+  inset-block-start: calc(-1 * #{ord.$border-width-default});
+}
+
+.mark-footer-start {
+  inset-inline-start: calc(-1 * #{$half-mark});
+}
+
+.mark-footer-end {
+  inset-inline-end: calc(-1 * #{$half-mark});
 }
 
 .fit-height {
   block-size: 100%;
-  overflow: hidden;
 
-  > .content {
+  > .layout {
+    grid-template-rows: minmax(0, 1fr);
+    block-size: 100%;
+  }
+
+  .main {
+    min-block-size: 0;
+  }
+
+  .content {
     flex: 1 1 auto;
     min-block-size: 0;
     overflow-y: auto;
   }
 }
 
-// The header is labelled like a drawing sheet: the title sits on the sheet itself, with one ink rule
-// under it instead of a separate bar.
-.header {
-  padding-block: ord.$space-scaled-m ord.$space-scaled-s;
-  padding-inline: ord.$space-container;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-strong;
-}
+@container (max-inline-size: #{$side-by-side-min-width - 1px}) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.label {
-  @include drawing.mono-caption;
-  overflow-wrap: anywhere;
-}
+  .side-line,
+  .mark-side-start,
+  .mark-side-end {
+    display: none;
+  }
 
-.content {
-  padding-block: ord.$space-container;
-  padding-inline: ord.$space-container;
-}
+  // With nothing to stand on, the dimension line takes its own row at the top of the content.
+  .measure {
+    position: relative;
+    inset: auto;
+    transform: none;
+  }
 
-.footer {
-  padding-block: ord.$space-m;
-  padding-inline: ord.$space-container;
-  border-block-start-width: ord.$border-width-default;
-  border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-divider;
-}
+  .actions {
+    justify-content: flex-start;
+  }
 
-.header,
-.content,
-.footer {
-  &.no-paddings {
-    padding-block: 0;
-    padding-inline: 0;
+  .fit-height > .layout {
+    grid-template-rows: auto minmax(0, 1fr);
   }
 }

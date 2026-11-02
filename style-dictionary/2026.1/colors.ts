@@ -102,4 +102,10 @@ export const tokens: ColorsDictionary = {
   colorBorderChalkboardSecondary: { light: '{colorChalk300}', dark: '{colorChalk300}' },
   colorBorderChalkboardAccent: { light: '{colorCyan400}', dark: '{colorCyan400}' },
   colorBorderChalkboardError: { light: '{colorRed400}', dark: '{colorRed400}' },
+  // What a section holds, carried by its construction lines, hash marks and reference. Each keeps at
+  // least 4.5:1 against the container background, since the reference is text.
+  colorKindConfiguration: { light: '{colorBlue600}', dark: '{colorCyan400}' },
+  colorKindResource: { light: '{colorTeal600}', dark: '{colorTeal400}' },
+  colorKindPolicy: { light: '{colorPlum600}', dark: '{colorPlum400}' },
+  colorKindNeutral: { light: '{colorGrey600}', dark: '{colorChalk300}' },
 };

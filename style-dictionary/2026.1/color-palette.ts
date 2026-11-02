@@ -44,4 +44,10 @@ export const tokens: ColorPaletteDictionary = {
   colorCobalt300: '#8FA2FF',
   colorSunflower400: '#F5C542',
   colorSunflower100: '#FDF1C6',
+  // Section kinds: teal for resources and plum for policy, beside the drafting blue for configuration.
+  // None of them is a status hue, so a section is never read as healthy, late or failed.
+  colorTeal600: '#176B73',
+  colorTeal400: '#6FCFD6',
+  colorPlum600: '#7A3E6E',
+  colorPlum400: '#D69BC8',
 };

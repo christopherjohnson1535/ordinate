@@ -6,7 +6,6 @@ import LineChart, { LineChartProps } from '~charts/line-chart';
 import Box from '~components/box';
 import Button from '~components/button';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import { eightSeries, hourFormatter, latency, months, numberFormatter, requests } from '../charts/data';
 import { EmptyState, NoMatchState } from '../charts/states';
@@ -35,7 +34,7 @@ export default function LineChartPermutations() {
     <article className={styles.page}>
       <h1>Line chart</h1>
 
-      <Container header={<Header variant="h2">Requests per minute</Header>}>
+      <Container heading="Requests per minute">
         <LineChart
           series={requestSeries}
           xScaleType="time"
@@ -52,7 +51,7 @@ export default function LineChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Controlled filter and highlight</Header>}>
+      <Container heading="Controlled filter and highlight">
         <div className={styles.stack}>
           <Box color="text-body-secondary" fontSize="body-s">
             Visible: {visibleSeries.map(series => series.title).join(', ') || 'none'} · Highlighted:{' '}
@@ -73,7 +72,7 @@ export default function LineChartPermutations() {
         </div>
       </Container>
 
-      <Container header={<Header variant="h2">Eight series on a categorical axis</Header>}>
+      <Container heading="Eight series on a categorical axis">
         <LineChart
           series={eightLines}
           xScaleType="categorical"
@@ -86,7 +85,7 @@ export default function LineChartPermutations() {
       </Container>
 
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Log x axis</Header>}>
+        <Container heading="Log x axis">
           <LineChart
             series={latencySeries}
             xScaleType="log"
@@ -97,7 +96,7 @@ export default function LineChartPermutations() {
             ariaLabel="Latency by payload size"
           />
         </Container>
-        <Container header={<Header variant="h2">Narrow</Header>}>
+        <Container heading="Narrow">
           <div className={styles.narrow}>
             <LineChart
               series={requestSeries.slice(0, 2)}
@@ -112,10 +111,10 @@ export default function LineChartPermutations() {
       </div>
 
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Loading</Header>}>
+        <Container heading="Loading">
           <LineChart series={[]} statusType="loading" loadingText="Loading requests" height={160} />
         </Container>
-        <Container header={<Header variant="h2">Error</Header>}>
+        <Container heading="Error">
           <LineChart
             series={[]}
             statusType="error"
@@ -124,10 +123,10 @@ export default function LineChartPermutations() {
             height={160}
           />
         </Container>
-        <Container header={<Header variant="h2">Empty</Header>}>
+        <Container heading="Empty">
           <LineChart series={[]} empty={<EmptyState />} height={160} />
         </Container>
-        <Container header={<Header variant="h2">No match</Header>}>
+        <Container heading="No match">
           <LineChart series={requestSeries} visibleSeries={[]} noMatch={<NoMatchState />} height={160} />
         </Container>
       </div>

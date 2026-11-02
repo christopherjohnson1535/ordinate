@@ -1,0 +1,47 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/drawing';
+@use '../../styles/tokens' as ord;
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.rule {
+  flex: 1 1 0;
+  min-inline-size: ord.$space-xs;
+  block-size: ord.$border-width-default;
+  background-color: currentColor;
+}
+
+.label {
+  @include drawing.font-caption;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  padding-inline: ord.$space-xs;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+// Each end carries a short extension tick across the line and a hash mark on it.
+.end {
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: ord.$border-width-default;
+  block-size: ord.$size-hash-mark;
+  background-color: currentColor;
+
+  &::after {
+    @include drawing.hash-mark;
+    content: '';
+    inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+    inset-inline-start: calc(50% - #{ord.$size-hash-mark} / 2);
+  }
+}

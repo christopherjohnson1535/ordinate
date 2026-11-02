@@ -4,7 +4,6 @@ import React from 'react';
 
 import MixedLineBarChart, { MixedLineBarChartProps } from '~charts/mixed-line-bar-chart';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import { months } from '../charts/data';
 import { EmptyState, NoMatchState } from '../charts/states';
@@ -30,7 +29,7 @@ export default function MixedLineBarChartPermutations() {
     <article className={styles.page}>
       <h1>Mixed line and bar chart</h1>
 
-      <Container header={<Header variant="h2">Drawings per month</Header>}>
+      <Container heading="Drawings per month">
         <MixedLineBarChart
           series={drawingSeries}
           xTitle="Month"
@@ -42,7 +41,7 @@ export default function MixedLineBarChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Stacked bars with a line</Header>}>
+      <Container heading="Stacked bars with a line">
         <MixedLineBarChart
           series={drawingSeries}
           stackedBars={true}
@@ -54,7 +53,7 @@ export default function MixedLineBarChartPermutations() {
       </Container>
 
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Narrow</Header>}>
+        <Container heading="Narrow">
           <div className={styles.narrow}>
             <MixedLineBarChart
               series={
@@ -69,7 +68,7 @@ export default function MixedLineBarChartPermutations() {
             />
           </div>
         </Container>
-        <Container header={<Header variant="h2">Error</Header>}>
+        <Container heading="Error">
           <MixedLineBarChart
             series={[]}
             statusType="error"

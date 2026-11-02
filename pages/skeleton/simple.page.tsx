@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 import Button from '~components/button';
 import Container from '~components/container';
-import Header from '~components/header';
 import Skeleton, { SkeletonProps } from '~components/skeleton';
 
 import styles from './styles.module.scss';
@@ -48,7 +47,7 @@ export default function SkeletonSimple() {
             {loading ? 'Finish loading' : 'Load again'}
           </Button>
         </div>
-        <Container header={<Header>Usage this month</Header>}>
+        <Container heading="Usage this month">
           <Skeleton loading={loading} variant="block" height="medium" loadingText="Loading usage">
             <p className={styles.loaded}>
               north-annex used 4,120 instance hours and 2.4 TB of transfer, 12% more than last month.

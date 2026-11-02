@@ -53,10 +53,10 @@ const header = (
 function Content() {
   return (
     <SpaceBetween size="l">
-      <Container header={<Header>Details</Header>}>
+      <Container heading="Details">
         Instance type m5.large, 2 cores, 8 GB of memory, launched 31 October 2026.
       </Container>
-      <Container header={<Header>Storage</Header>}>One 50 GB root volume and one 200 GB data volume.</Container>
+      <Container heading="Storage">One 50 GB root volume and one 200 GB data volume.</Container>
     </SpaceBetween>
   );
 }

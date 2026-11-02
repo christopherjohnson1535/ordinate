@@ -5,58 +5,90 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
 import Container from '../../../lib/components/container';
-import Header from '../../../lib/components/header';
-import createWrapper, { HeaderWrapper } from '../../../lib/components/test-utils/dom';
+import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 import styles from '../../../lib/components/container/styles.css.js';
 
+const container = () => createWrapper().findContainer()!;
+
 describe('Container', () => {
-  test('renders only the content when there is no header or footer', () => {
+  test('renders only the content when nothing else is given', () => {
     render(<Container>Content</Container>);
-    const container = createWrapper().findContainer()!;
-    expect(container.findContent().getText()).toBe('Content');
-    expect(container.findHeader()).toBeNull();
-    expect(container.findFooter()).toBeNull();
+    expect(container().findContent().getText()).toBe('Content');
+    expect(container().findHeading()).toBeNull();
+    expect(container().findMeasure()).toBeNull();
+    expect(container().findActions()).toBeNull();
+    expect(container().findFooter()).toBeNull();
+    expect(container().getElement().querySelector(`.${styles.layout}`)).toHaveClass(styles['no-margin']);
   });
 
-  test.each([
-    ['disableHeaderPaddings', 'findHeader'],
-    ['disableContentPaddings', 'findContent'],
-    ['disableFooterPaddings', 'findFooter'],
-  ] as const)('%s removes the padding of that part', (prop, finder) => {
+  test('sets the reference, heading and description in the margin', () => {
     render(
-      <Container header="Header" footer="Footer" {...{ [prop]: true }}>
+      <Container reference="R1" heading="Services" description="Showing 4 of 7.">
         Content
       </Container>
     );
-    const container = createWrapper().findContainer()!;
-    expect(container[finder]()!.getElement()).toHaveClass(styles['no-paddings']);
-    const others = (['findHeader', 'findContent', 'findFooter'] as const).filter(name => name !== finder);
-    others.forEach(name => expect(container[name]()!.getElement()).not.toHaveClass(styles['no-paddings']));
+    expect(container().findReference()!.getText()).toBe('R1');
+    expect(container().findHeading()!.getText()).toBe('Services');
+    expect(container().findDescription()!.getText()).toBe('Showing 4 of 7.');
+    expect(container().getElement().querySelector(`.${styles.layout}`)).not.toHaveClass(styles['no-margin']);
   });
 
-  test('draws a plain text header as a sheet label', () => {
-    render(<Container header="Environment">Content</Container>);
-    const container = createWrapper().findContainer()!;
-    expect(container.findHeaderLabel()!.getText()).toBe('Environment');
-    expect(container.findHeader()!.getText()).toBe('Environment');
-  });
-
-  test('keeps a Header component as it is', () => {
-    render(<Container header={<Header>Usage</Header>}>Content</Container>);
-    const container = createWrapper().findContainer()!;
-    expect(container.findHeaderLabel()).toBeNull();
-    expect(screen.getByRole('heading', { level: 2, name: 'Usage' })).toBeInTheDocument();
-  });
-
-  test('applies fitHeight and the variant', () => {
-    render(
-      <Container fitHeight={true} variant="stacked">
+  test('labels the section with its heading, at level 2 by default', () => {
+    const { rerender } = render(<Container heading="Services">Content</Container>);
+    expect(screen.getByRole('region', { name: 'Services' })).toBe(container().getElement());
+    expect(screen.getByRole('heading', { level: 2, name: 'Services' })).toBeInTheDocument();
+    rerender(
+      <Container heading="Services" headingLevel={3}>
         Content
       </Container>
     );
-    expect(createWrapper().findContainer()!.getElement()).toHaveClass(styles['fit-height'], styles['variant-stacked']);
+    expect(screen.getByRole('heading', { level: 3, name: 'Services' })).toBeInTheDocument();
+  });
+
+  test('is not a region without a heading', () => {
+    render(<Container reference="R1">Content</Container>);
+    expect(screen.queryByRole('region')).toBeNull();
+  });
+
+  test('draws the measure as a dimension line and keeps its label readable', () => {
+    render(<Container measure="7 services">Content</Container>);
+    expect(container().findMeasure()!.getText()).toBe('7 services');
+    expect(screen.getByText('7 services')).not.toHaveAttribute('aria-hidden');
+  });
+
+  test('renders actions and footer', () => {
+    render(
+      <Container actions={<button>Deploy</button>} footer={<a href="#all">Show all 7 services</a>}>
+        Content
+      </Container>
+    );
+    expect(container().findActions()!.getText()).toBe('Deploy');
+    expect(container().findFooter()!.getText()).toBe('Show all 7 services');
+  });
+
+  test.each(['configuration', 'resource', 'policy', 'neutral'] as const)('applies the %s kind', kind => {
+    render(<Container kind={kind}>Content</Container>);
+    expect(container().getElement()).toHaveClass(styles[`kind-${kind}`]);
+  });
+
+  test('is neutral by default and applies fitHeight', () => {
+    render(<Container fitHeight={true}>Content</Container>);
+    expect(container().getElement()).toHaveClass(styles['kind-neutral'], styles['fit-height']);
+  });
+
+  test('keeps the drawing marks out of the accessibility tree', () => {
+    render(
+      <Container heading="Services" footer="Note">
+        Content
+      </Container>
+    );
+    const marks = container()
+      .getElement()
+      .querySelectorAll(`.${styles.mark}, .${styles['top-line']}, .${styles['side-line']}`);
+    expect(marks.length).toBeGreaterThan(0);
+    marks.forEach(mark => expect(mark).toHaveAttribute('aria-hidden', 'true'));
   });
 
   test('passes id and data attributes', () => {
@@ -70,25 +102,35 @@ describe('Container', () => {
 });
 
 describe('Container test utilities and accessibility', () => {
-  test('the wrapper reads every part and reaches a nested header', () => {
+  test('the wrapper reads every part and stops at a nested container', () => {
     render(
-      <Container header={<Header description="Last 30 days.">Usage</Header>} footer="Updated hourly.">
+      <Container heading="Usage" measure="3 zones" footer="Updated hourly.">
         <Container>Nested content</Container>
       </Container>
     );
     const [outer, inner] = createWrapper().findAllContainers();
-    expect(outer.findHeader()!.findComponent(HeaderWrapper)!.findHeadingText().getText()).toBe('Usage');
+    expect(outer.findHeading()!.getText()).toBe('Usage');
+    expect(outer.findMeasure()!.getText()).toBe('3 zones');
     expect(outer.findFooter()!.getText()).toBe('Updated hourly.');
     expect(outer.findContent().getText()).toBe('Nested content');
-    expect(inner.findHeader()).toBeNull();
+    expect(inner.findHeading()).toBeNull();
+    expect(inner.findFooter()).toBeNull();
   });
 
   test('has no accessibility violations', async () => {
-    const { container } = render(
-      <Container header={<Header actions={<button>Export</button>}>Usage</Header>} footer={<a href="#all">View all</a>}>
+    const { container: root } = render(
+      <Container
+        kind="resource"
+        reference="R1"
+        heading="Usage"
+        description="Last 30 days."
+        measure="12 nodes"
+        actions={<button>Export</button>}
+        footer={<a href="#all">View all</a>}
+      >
         <p>12 nodes are running.</p>
       </Container>
     );
-    await expectNoAxeViolations(container);
+    await expectNoAxeViolations(root);
   });
 });

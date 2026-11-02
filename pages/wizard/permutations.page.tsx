@@ -61,7 +61,7 @@ export default function WizardPermutations() {
             steps={makeSteps(5, [2, 3])}
             submitButtonText="Start copying"
             aside={
-              <Container header={<Box variant="h3">Title block</Box>}>
+              <Container heading="Title block" headingLevel={3}>
                 <KeyValuePairs
                   columns={1}
                   items={[

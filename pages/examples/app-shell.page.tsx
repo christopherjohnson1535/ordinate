@@ -98,7 +98,7 @@ function useProject() {
 function DetailsTab({ status }: { status: Status }) {
   return (
     <SpaceBetween size="l">
-      <Container header={<Header>Overview</Header>}>
+      <Container heading="Overview">
         <KeyValuePairs
           columns={3}
           items={[
@@ -119,7 +119,7 @@ function DetailsTab({ status }: { status: Status }) {
           ]}
         />
       </Container>
-      <Container header={<Header description="Resets on the first of each month.">Usage this month</Header>}>
+      <Container heading="Usage this month" description="Resets on the first of each month.">
         <SpaceBetween size="m">
           <ProgressBar value={64} label="Compute hours" additionalInfo="6,400 of 10,000 hours" />
           <ProgressBar value={22} label="Storage" additionalInfo="220 of 1,000 GiB" />
@@ -131,7 +131,7 @@ function DetailsTab({ status }: { status: Status }) {
 
 function ActivityTab() {
   return (
-    <Container header={<Header counter={<Badge>3</Badge>}>Recent events</Header>}>
+    <Container heading="Recent events" measure={<Badge>3</Badge>}>
       <SpaceBetween size="s">
         <ExpandableSection headerText="Node 14 replaced" defaultExpanded={true}>
           <Box color="text-body-secondary">The health check failed three times in a row, so the node was replaced.</Box>
@@ -149,7 +149,7 @@ function ActivityTab() {
 
 function ConnectTab() {
   return (
-    <Container header={<Header>Connect from the command line</Header>}>
+    <Container heading="Connect from the command line">
       <TextContent>
         <p>Install the client, then sign in with your project key.</p>
         <pre>ordinate login --project north-annex</pre>

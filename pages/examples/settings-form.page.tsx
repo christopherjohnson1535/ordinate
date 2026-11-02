@@ -91,7 +91,7 @@ export default function SettingsForm() {
             </Alert>
           )}
 
-          <Container header={<Header description="How the project appears in the console.">General</Header>}>
+          <Container heading="General" description="How the project appears in the console.">
             <SpaceBetween size="l">
               <FormField
                 label="Project name"
@@ -107,11 +107,9 @@ export default function SettingsForm() {
           </Container>
 
           <Container
-            header={
-              <Header counter={<Badge color="blue">Beta</Badge>} description="Where and how the nodes run.">
-                Capacity
-              </Header>
-            }
+            heading="Capacity"
+            measure={<Badge color="blue">Beta</Badge>}
+            description="Where and how the nodes run."
           >
             <SpaceBetween size="l">
               <FormField label="Region">
@@ -148,7 +146,7 @@ export default function SettingsForm() {
             </SpaceBetween>
           </Container>
 
-          <Container header={<Header>Data</Header>}>
+          <Container heading="Data">
             <SpaceBetween size="s">
               <Checkbox
                 checked={encrypt}

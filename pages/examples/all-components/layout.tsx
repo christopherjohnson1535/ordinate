@@ -65,7 +65,7 @@ function AppLayoutSpecimen() {
               </Header>
             }
           >
-            <Container header={<Header headingTagOverride="h5">Environment</Header>}>
+            <Container kind="configuration" reference="C1" heading="Environment" measure="3 settings">
               <KeyValuePairs
                 columns={3}
                 items={[
@@ -222,11 +222,11 @@ export default function LayoutGroup({ number }: { number: number }) {
       </Cell>
       <Cell name="Container">
         <Container
-          header={
-            <Header headingTagOverride="h4" description="Leith, open Tuesday to Sunday">
-              Fixit Bikes workshop
-            </Header>
-          }
+          kind="resource"
+          reference="W1"
+          heading="Fixit Bikes workshop"
+          description="Leith, open Tuesday to Sunday"
+          measure="6 mechanics"
           footer={
             <Link href="#hours" onFollow={stayOnPage}>
               Opening hours

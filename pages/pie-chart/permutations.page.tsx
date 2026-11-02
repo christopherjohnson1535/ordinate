@@ -6,7 +6,6 @@ import PieChart, { PieChartProps } from '~charts/pie-chart';
 import Box from '~components/box';
 import Button from '~components/button';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import { sitesByVisits, storageByKind } from '../charts/data';
 import { EmptyState, NoMatchState } from '../charts/states';
@@ -25,7 +24,7 @@ export default function PieChartPermutations() {
     <article className={styles.page}>
       <h1>Pie chart</h1>
 
-      <Container header={<Header variant="h2">Visits by site</Header>}>
+      <Container heading="Visits by site">
         <PieChart
           data={sitesByVisits}
           segmentDescription={visits}
@@ -38,7 +37,7 @@ export default function PieChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Donut with an inner metric</Header>}>
+      <Container heading="Donut with an inner metric">
         <div className={styles.stack}>
           <Box color="text-body-secondary" fontSize="body-s">
             Highlighted: {highlighted?.title ?? 'none'}
@@ -63,10 +62,10 @@ export default function PieChartPermutations() {
       </Container>
 
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Small, no titles</Header>}>
+        <Container heading="Small, no titles">
           <PieChart data={storageByKind} size="small" hideTitles={true} hideFilter={true} ariaLabel="Storage, small" />
         </Container>
-        <Container header={<Header variant="h2">Small donut, titles only</Header>}>
+        <Container heading="Small donut, titles only">
           <PieChart
             data={storageByKind}
             size="small"
@@ -79,10 +78,10 @@ export default function PieChartPermutations() {
             ariaLabel="Storage, small donut"
           />
         </Container>
-        <Container header={<Header variant="h2">Loading</Header>}>
+        <Container heading="Loading">
           <PieChart data={[]} size="small" statusType="loading" loadingText="Loading visits" />
         </Container>
-        <Container header={<Header variant="h2">Empty</Header>}>
+        <Container heading="Empty">
           <PieChart data={[]} size="small" empty={<EmptyState />} />
         </Container>
       </div>

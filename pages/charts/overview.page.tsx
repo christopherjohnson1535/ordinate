@@ -8,7 +8,6 @@ import LineChart from '~charts/line-chart';
 import MixedLineBarChart from '~charts/mixed-line-bar-chart';
 import PieChart from '~charts/pie-chart';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import { hourFormatter, months, numberFormatter, quarters, requests, sitesByVisits, spendByTeam } from './data';
 
@@ -22,7 +21,7 @@ export default function ChartsOverview() {
     <article className={styles.page}>
       <h1>Charts</h1>
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Line</Header>}>
+        <Container heading="Line">
           <LineChart
             series={[
               { title: 'North annex', type: 'line', data: requests.north, valueFormatter: numberFormatter },
@@ -38,7 +37,7 @@ export default function ChartsOverview() {
             ariaLabel="Requests per minute"
           />
         </Container>
-        <Container header={<Header variant="h2">Area</Header>}>
+        <Container heading="Area">
           <AreaChart
             series={[
               { title: 'North annex', type: 'area', data: requests.north },
@@ -54,7 +53,7 @@ export default function ChartsOverview() {
             ariaLabel="Requests per minute, stacked"
           />
         </Container>
-        <Container header={<Header variant="h2">Bar</Header>}>
+        <Container heading="Bar">
           <BarChart
             series={spendByTeam.map(team => ({
               title: team.title,
@@ -67,7 +66,7 @@ export default function ChartsOverview() {
             ariaLabel="Spend by team"
           />
         </Container>
-        <Container header={<Header variant="h2">Stacked bar</Header>}>
+        <Container heading="Stacked bar">
           <BarChart
             series={spendByTeam.map(team => ({
               title: team.title,
@@ -81,7 +80,7 @@ export default function ChartsOverview() {
             ariaLabel="Spend by team, stacked"
           />
         </Container>
-        <Container header={<Header variant="h2">Mixed</Header>}>
+        <Container heading="Mixed">
           <MixedLineBarChart
             series={[
               { title: 'Issued', type: 'bar', data: months.map((x, i) => ({ x, y: 40 + ((i * 7) % 30) })) },
@@ -95,7 +94,7 @@ export default function ChartsOverview() {
             ariaLabel="Drawings per month"
           />
         </Container>
-        <Container header={<Header variant="h2">Pie and donut</Header>}>
+        <Container heading="Pie and donut">
           <div className={styles.pair}>
             <PieChart
               data={sitesByVisits.slice(0, 4)}

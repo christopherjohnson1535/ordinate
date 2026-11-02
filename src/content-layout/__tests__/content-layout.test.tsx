@@ -109,7 +109,7 @@ describe('ContentLayout', () => {
           </Header>
         }
       >
-        <Container header={<Header>Summary</Header>}>12 instances are running.</Container>
+        <Container heading="Summary">12 instances are running.</Container>
       </ContentLayout>
     );
     await expectNoAxeViolations(container);

@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import Button from '~components/button';
 import Container from '~components/container';
 import ErrorBoundary from '~components/error-boundary';
-import Header from '~components/header';
 
 import styles from './styles.module.scss';
 
@@ -41,7 +40,7 @@ export default function ErrorBoundarySimple() {
             Reset
           </Button>
         </div>
-        <Container header={<Header>Usage</Header>}>
+        <Container heading="Usage">
           <ErrorBoundary
             key={resets}
             errorBoundaryId="usage-chart"

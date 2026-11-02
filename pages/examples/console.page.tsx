@@ -216,7 +216,7 @@ function ServicesTable({ selected, onSelect }: ServicesTableProps) {
 function Overview() {
   return (
     <SpaceBetween size="l">
-      <Container header={<Header>Environment</Header>}>
+      <Container kind="configuration" reference="C1" heading="Environment" measure="4 settings">
         <KeyValuePairs
           columns={4}
           items={[
@@ -227,7 +227,7 @@ function Overview() {
           ]}
         />
       </Container>
-      <Container>
+      <Container kind="resource" reference="R1" heading="Health" measure="Last 24 hours">
         <ColumnLayout columns={4} borders="vertical" variant="text-grid">
           {metrics.map(metric => (
             <Measure key={String(metric.label)} {...metric} />
@@ -411,7 +411,7 @@ export default function Console() {
                       id: 'logs',
                       label: 'Logs',
                       content: (
-                        <Container header={<Header>vault-store</Header>}>
+                        <Container kind="resource" reference="R2" heading="vault-store" measure="Last 3 lines">
                           <TextContent>
                             <pre>
                               {'14:02:11 health check failed: connection refused\n'}

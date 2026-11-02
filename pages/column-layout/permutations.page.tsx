@@ -5,7 +5,6 @@ import React from 'react';
 import Box from '~components/box';
 import ColumnLayout, { ColumnLayoutProps } from '~components/column-layout';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import styles from './styles.module.scss';
 
@@ -65,7 +64,7 @@ export default function ColumnLayoutPermutations() {
 
       <section className={styles.section}>
         <Box variant="h2">Text grid in a container</Box>
-        <Container header={<Header>Details</Header>}>
+        <Container heading="Details">
           <ColumnLayout columns={3} variant="text-grid">
             {factCells()}
           </ColumnLayout>

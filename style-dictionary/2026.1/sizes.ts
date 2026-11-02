@@ -32,4 +32,8 @@ export const tokens: SizesDictionary = {
   sizeMeasureNarrow: '48ch',
   sizeMeasureDefault: '64ch',
   sizeMeasureWide: '72ch',
+  // The 45-degree tick drawn wherever a construction or dimension line ends or meets another.
+  sizeHashMark: '9px',
+  // The widest the heading column of a container grows.
+  sizeMarginColumn: '192px',
 };

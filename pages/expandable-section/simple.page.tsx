@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import Button from '~components/button';
 import Container from '~components/container';
 import ExpandableSection from '~components/expandable-section';
-import Header from '~components/header';
 import Link from '~components/link';
 
 import styles from './styles.module.scss';
@@ -37,7 +36,7 @@ export default function ExpandableSectionSimple() {
       <section className={styles.section}>
         <h2>Footer</h2>
         <Container
-          header={<Header>Instance</Header>}
+          heading="Instance"
           footer={
             <ExpandableSection variant="footer" headerText="Additional details" defaultExpanded={true}>
               {body}

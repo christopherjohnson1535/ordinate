@@ -51,7 +51,7 @@ export default function TruncatedTextPermutations() {
       <section className={styles.section}>
         <Box variant="h2">Resizable</Box>
         <div className={styles.resizable}>
-          <Container header="Drag the corner to resize">
+          <Container heading="Drag the corner to resize">
             <TruncatedText lines={2}>{paragraph}</TruncatedText>
           </Container>
         </div>

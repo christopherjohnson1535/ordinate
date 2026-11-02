@@ -70,7 +70,7 @@ Only a fixed set of tokens is themeable. The set lives in `style-dictionary/util
 - **Font families:** base, display and mono.
 - **Corner radii:** every `border-radius-*` token.
 
-Status colors (error, warning, success, info) are not themeable, because their meaning has to stay the same in every product. Body text colors are not themeable either, because they carry the contrast guarantees. Spacing, sizes and motion belong to the revision and density layers.
+Status colors (error, warning, success, info) and kind colors (configuration, resource, policy) are not themeable, because their meaning has to stay the same in every product. Body text colors are not themeable either, because they carry the contrast guarantees. Spacing, sizes and motion belong to the revision and density layers.
 
 A theme cannot target one component instance. It applies to every component on the page, or in one subtree, so all buttons still look the same.
 

@@ -91,7 +91,7 @@ export default function ItemCardPermutations() {
       </div>
 
       <Box variant="h2">Embedded</Box>
-      <Container header="Selected node">
+      <Container heading="Selected node">
         <ItemCard
           variant="embedded"
           header="node-01"

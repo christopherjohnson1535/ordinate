@@ -41,6 +41,10 @@ export const colorPaletteTokenNames = [
   'colorCobalt300',
   'colorSunflower400',
   'colorSunflower100',
+  'colorTeal600',
+  'colorTeal400',
+  'colorPlum600',
+  'colorPlum400',
 ] as const;
 
 export const colorsTokenNames = [
@@ -133,6 +137,10 @@ export const colorsTokenNames = [
   'colorBorderChalkboardSecondary',
   'colorBorderChalkboardAccent',
   'colorBorderChalkboardError',
+  'colorKindConfiguration',
+  'colorKindResource',
+  'colorKindPolicy',
+  'colorKindNeutral',
 ] as const;
 
 export const bordersTokenNames = [
@@ -258,6 +266,8 @@ export const sizesTokenNames = [
   'sizeMeasureNarrow',
   'sizeMeasureDefault',
   'sizeMeasureWide',
+  'sizeHashMark',
+  'sizeMarginColumn',
 ] as const;
 
 export const motionTokenNames = [
@@ -271,7 +281,13 @@ export const motionTokenNames = [
   'motionDurationFlow',
 ] as const;
 
-export const effectsTokenNames = ['opacityDimmed', 'opacityDimmedText', 'opacityLeader', 'opacityMediaHover'] as const;
+export const effectsTokenNames = [
+  'opacityDimmed',
+  'opacityDimmedText',
+  'opacityLeader',
+  'opacityMediaHover',
+  'opacityConstruction',
+] as const;
 
 export type ColorPaletteTokenName = (typeof colorPaletteTokenNames)[number];
 export type ColorsTokenName = (typeof colorsTokenNames)[number];

@@ -85,7 +85,7 @@ export default function TablePermutations() {
 
       <section className={styles.section}>
         <h2>Embedded in a container</h2>
-        <Container header={<Header>Fleet</Header>}>
+        <Container heading="Fleet">
           <Table
             variant="embedded"
             caption="Schedule of instances"

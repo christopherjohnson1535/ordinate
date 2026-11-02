@@ -4,7 +4,6 @@ import React from 'react';
 
 import ColumnLayout from '~components/column-layout';
 import Container from '~components/container';
-import Header from '~components/header';
 import KeyValuePairs from '~components/key-value-pairs';
 import Measure from '~components/measure';
 
@@ -38,7 +37,7 @@ export default function MeasurePermutations() {
 
       <section className={styles.section}>
         <h2>In key-value pairs</h2>
-        <Container header={<Header>Storage</Header>}>
+        <Container heading="Storage">
           <KeyValuePairs
             columns={3}
             items={[

@@ -91,7 +91,7 @@ export default function MaintenanceWindow() {
             </Alert>
           )}
 
-          <Container header={<Header description="Weekdays only.">Window</Header>}>
+          <Container heading="Window" description="Weekdays only.">
             <SpaceBetween size="l">
               <FormField label="Start date" constraintText="YYYY/MM/DD" errorText={show(errors.date)}>
                 <DatePicker
@@ -139,7 +139,7 @@ export default function MaintenanceWindow() {
             </SpaceBetween>
           </Container>
 
-          <Container header={<Header>Runbook and labels</Header>}>
+          <Container heading="Runbook and labels">
             <SpaceBetween size="l">
               <FormField label="Runbook" description="Attach the steps the on-call engineer follows.">
                 <FileUpload

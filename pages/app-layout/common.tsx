@@ -125,7 +125,7 @@ export function ProjectContent({ sections = 3, info }: { sections?: number; info
         north-annex
       </Header>
       {Array.from({ length: sections }, (_, index) => (
-        <Container key={index} header={<Header>{index === 0 ? 'Overview' : `Section ${index + 1}`}</Header>}>
+        <Container key={index} heading={index === 0 ? 'Overview' : `Section ${index + 1}`}>
           <KeyValuePairs
             columns={3}
             items={[

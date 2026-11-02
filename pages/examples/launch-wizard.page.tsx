@@ -8,7 +8,6 @@ import Checkbox from '~components/checkbox';
 import Container from '~components/container';
 import Flashbar, { FlashbarProps } from '~components/flashbar';
 import FormField from '~components/form-field';
-import Header from '~components/header';
 import Hotspot from '~components/hotspot';
 import Input from '~components/input';
 import KeyValuePairs from '~components/key-value-pairs';
@@ -220,7 +219,7 @@ function useSteps(draft: Draft, update: (patch: Partial<Draft>) => void, checked
 function Summary({ draft }: { draft: Draft }) {
   return (
     <Hotspot hotspotId="launch-review">
-      <Container header={<Header>Summary</Header>}>
+      <Container heading="Summary">
         <KeyValuePairs
           columns={1}
           items={[

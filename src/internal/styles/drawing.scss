@@ -84,3 +84,23 @@
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-strong;
 }
+
+// A 45-degree tick, the mark a draughtsman puts wherever a construction or dimension line ends or meets
+// another. Draw it on an empty element positioned with `inset-*`; it takes the element's text color.
+// The tick is centered on the point, so offset the element by half of `ord.$size-hash-mark`.
+@mixin hash-mark {
+  position: absolute;
+  inline-size: ord.$size-hash-mark;
+  block-size: ord.$border-width-default;
+  background-color: currentColor;
+  transform: rotate(-45deg);
+  pointer-events: none;
+}
+
+// A thin construction line in the element's text color, held back so the content leads.
+@mixin construction-line {
+  position: absolute;
+  background-color: currentColor;
+  opacity: ord.$opacity-construction;
+  pointer-events: none;
+}

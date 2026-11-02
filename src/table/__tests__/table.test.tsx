@@ -6,9 +6,10 @@ import { describe, expect, test, vi } from 'vitest';
 
 import Header from '../../../lib/components/header';
 import Table, { TableProps } from '../../../lib/components/table';
-import createWrapper, { ContainerWrapper } from '../../../lib/components/test-utils/dom';
+import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import frameStyles from '../../../lib/components/internal/components/sheet-frame/styles.css.js';
 import rowStyles from '../../../lib/components/table-row/styles.css.js';
 
 interface Part {
@@ -89,9 +90,10 @@ describe('Table rendering', () => {
         footer="Updated hourly."
       />
     );
-    const container = createWrapper().findComponent(ContainerWrapper)!;
-    expect(container.getElement()).toBe(table().getElement());
-    expect(container.findHeader()!.getElement()).toContainElement(table().findHeaderSlot()!.getElement());
+    expect(table().getElement()).toHaveClass(frameStyles.root);
+    expect(table().find(`:scope > .${frameStyles.header}`)!.getElement()).toContainElement(
+      table().findHeaderSlot()!.getElement()
+    );
     expect(table().findHeaderSlot()!.getText()).toBe('Parts (5)');
     expect(table().findTextFilter()!.find('input')).not.toBeNull();
     expect(table().findPagination()!.getText()).toBe('Page 1');

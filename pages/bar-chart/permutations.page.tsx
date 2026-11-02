@@ -4,7 +4,6 @@ import React from 'react';
 
 import BarChart, { BarChartProps } from '~charts/bar-chart';
 import Container from '~components/container';
-import Header from '~components/header';
 
 import { eightSeries, months, quarters, spendByTeam } from '../charts/data';
 import { EmptyState, NoMatchState } from '../charts/states';
@@ -64,7 +63,7 @@ export default function BarChartPermutations() {
     <article className={styles.page}>
       <h1>Bar chart</h1>
 
-      <Container header={<Header variant="h2">Spend by team, grouped</Header>}>
+      <Container heading="Spend by team, grouped">
         <BarChart
           series={teamSeries}
           xTitle="Quarter"
@@ -77,7 +76,7 @@ export default function BarChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Spend by team, stacked</Header>}>
+      <Container heading="Spend by team, stacked">
         <BarChart
           series={teamSeries.slice(0, 4)}
           stackedBars={true}
@@ -90,7 +89,7 @@ export default function BarChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Horizontal, long category names</Header>}>
+      <Container heading="Horizontal, long category names">
         <BarChart
           series={siteSeries}
           horizontalBars={true}
@@ -102,7 +101,7 @@ export default function BarChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Horizontal and stacked</Header>}>
+      <Container heading="Horizontal and stacked">
         <BarChart
           series={siteSeries}
           horizontalBars={true}
@@ -113,12 +112,12 @@ export default function BarChartPermutations() {
         />
       </Container>
 
-      <Container header={<Header variant="h2">Eight series, every pattern</Header>}>
+      <Container heading="Eight series, every pattern">
         <BarChart series={eightBars} hideFilter={true} height={260} ariaLabel="Eight series" />
       </Container>
 
       <div className={styles.grid}>
-        <Container header={<Header variant="h2">Negative values</Header>}>
+        <Container heading="Negative values">
           <BarChart
             series={varianceSeries}
             hideFilter={true}
@@ -128,7 +127,7 @@ export default function BarChartPermutations() {
             ariaLabel="Variance against plan by month"
           />
         </Container>
-        <Container header={<Header variant="h2">Loading</Header>}>
+        <Container heading="Loading">
           <BarChart series={[]} statusType="loading" loadingText="Loading spend" height={200} />
         </Container>
       </div>

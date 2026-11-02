@@ -49,11 +49,11 @@ export default function ListPermutations() {
     <div className={styles.page}>
       <Box variant="h1">List</Box>
 
-      <Container header="Icons, secondary text and actions">
+      <Container heading="Icons, secondary text and actions">
         <List ariaLabel="Pipeline stages" items={stages} renderItem={renderStage} />
       </Container>
 
-      <Container header="Plain, ordered">
+      <Container heading="Plain, ordered">
         <List
           ariaLabel="Steps"
           tagOverride="ol"
@@ -62,7 +62,7 @@ export default function ListPermutations() {
         />
       </Container>
 
-      <Container header="Sortable">
+      <Container heading="Sortable">
         <SortableStages />
       </Container>
     </div>

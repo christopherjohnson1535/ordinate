@@ -127,7 +127,7 @@ export default function GuidedHelp() {
             <Header variant="h1" description="Open the tutorial in the help column to be walked through this page.">
               Project settings
             </Header>
-            <Container header={<Header description="Where and how the project runs.">General</Header>}>
+            <Container heading="General" description="Where and how the project runs.">
               <div className={styles.fields}>
                 <Hotspot hotspotId="project-name">
                   <FormField label="Project name" constraintText="Lowercase letters, numbers and hyphens.">

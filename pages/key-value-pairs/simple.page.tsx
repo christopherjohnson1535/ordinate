@@ -3,7 +3,6 @@
 import React from 'react';
 
 import Container from '~components/container';
-import Header from '~components/header';
 import KeyValuePairs, { KeyValuePairsProps } from '~components/key-value-pairs';
 import Link from '~components/link';
 import ProgressBar from '~components/progress-bar';
@@ -71,7 +70,7 @@ export default function KeyValuePairsSimple() {
           <h2>
             {columns} {columns === 1 ? 'column' : 'columns'}
           </h2>
-          <Container header={<Header>Instance details</Header>}>
+          <Container heading="Instance details">
             <KeyValuePairs columns={columns} items={pairs} ariaLabel="Instance details" />
           </Container>
         </section>
@@ -79,7 +78,7 @@ export default function KeyValuePairsSimple() {
 
       <section className={styles.section}>
         <h2>Groups</h2>
-        <Container header={<Header>Configuration</Header>}>
+        <Container heading="Configuration">
           <KeyValuePairs columns={3} items={grouped} />
         </Container>
       </section>

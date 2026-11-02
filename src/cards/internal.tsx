@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { CheckboxProps } from '../checkbox/interfaces';
 import { InternalCheckbox } from '../checkbox/internal';
-import { InternalContainer } from '../container/internal';
+import { SheetFrame } from '../internal/components/sheet-frame';
 import { FormFieldContext } from '../internal/context/form-field-context';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useResizeObserver } from '../internal/hooks/use-resize-observer';
@@ -191,7 +191,7 @@ export function InternalCards<T>({
   return (
     <div {...rest} ref={rootRef} className={clsx(styles.root, styles[`variant-${variant}`])}>
       {variant === 'container' ? (
-        <InternalContainer header={heading}>{body}</InternalContainer>
+        <SheetFrame header={heading}>{body}</SheetFrame>
       ) : (
         <>
           {heading}
