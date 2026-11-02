@@ -47,7 +47,8 @@ export default function TabsPermutations() {
         <h2>Default</h2>
         <Tabs
           ariaLabel="Project"
-          tabs={projectTabs}
+          kind="resource"
+          tabs={projectTabs.map((tab, index) => ({ ...tab, reference: `R${index + 1}` }))}
           activeTabId={active}
           onChange={event => setActive(event.detail.activeTabId)}
         />
@@ -55,7 +56,7 @@ export default function TabsPermutations() {
 
       <section className={styles.section}>
         <h2>Container</h2>
-        <Tabs ariaLabel="Project details" variant="container" tabs={projectTabs} />
+        <Tabs ariaLabel="Project details" variant="container" kind="configuration" tabs={projectTabs} />
       </section>
 
       <section className={styles.section}>

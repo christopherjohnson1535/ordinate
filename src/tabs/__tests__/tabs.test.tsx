@@ -8,6 +8,9 @@ import Tabs, { TabsProps } from '../../../lib/components/tabs';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+import tabsStyles from '../../../lib/components/tabs/styles.css.js';
+
 const tabs: TabsProps.Tab[] = [
   { id: 'overview', label: 'Overview', content: 'Overview content' },
   { id: 'nodes', label: 'Nodes', content: 'Nodes content' },
@@ -217,6 +220,34 @@ describe('Tabs', () => {
     render(<Controlled i18nStrings={{ scrollLeftAriaLabel: 'Back', scrollRightAriaLabel: 'Forward' }} />);
     expect(wrapper().findScrollLeftButton()!.getElement()).toHaveAccessibleName('Back');
     expect(wrapper().findScrollRightButton()!.getElement()).toHaveAccessibleName('Forward');
+  });
+});
+
+describe('Tabs drawing', () => {
+  test('one set of open ink crop marks marks the active tab, hidden from assistive technology', () => {
+    render(<Controlled />);
+    const marks = wrapper().findAllByClassName(marksStyles.root);
+    expect(marks).toHaveLength(1);
+    const element = marks[0].getElement();
+    expect(element).toHaveAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass(marksStyles.selected, marksStyles.open);
+    expect(element.parentElement).toHaveClass(tabsStyles.marker);
+  });
+
+  test("shows each tab's reference after its label, as part of its name", () => {
+    render(
+      <Tabs
+        ariaLabel="Cluster"
+        kind="resource"
+        tabs={[
+          { id: 'a', label: 'Overview', reference: 'R1', content: 'A' },
+          { id: 'b', label: 'Nodes', content: 'B' },
+        ]}
+      />
+    );
+    expect(screen.getByRole('tab', { name: 'Overview R1' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Nodes' })).toBeInTheDocument();
+    expect(wrapper().getElement()).toHaveClass(tabsStyles['kind-resource']);
   });
 });
 

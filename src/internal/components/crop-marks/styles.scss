@@ -119,6 +119,38 @@
   }
 }
 
+// Corners only, smaller and lighter, for a mark that moves along a row of short items such as tabs.
+.open {
+  .frame {
+    opacity: 0;
+  }
+
+  .corner {
+    inline-size: ord.$space-xs;
+    block-size: ord.$space-xs;
+  }
+
+  .start-start {
+    border-block-start-width: ord.$border-width-icon;
+    border-inline-start-width: ord.$border-width-icon;
+  }
+
+  .start-end {
+    border-block-start-width: ord.$border-width-icon;
+    border-inline-end-width: ord.$border-width-icon;
+  }
+
+  .end-start {
+    border-block-end-width: ord.$border-width-icon;
+    border-inline-start-width: ord.$border-width-icon;
+  }
+
+  .end-end {
+    border-block-end-width: ord.$border-width-icon;
+    border-inline-end-width: ord.$border-width-icon;
+  }
+}
+
 // Only on devices with a real pointer, so a tap does not leave the marks stretched.
 @media (hover: hover) and (pointer: fine) {
   *:hover > .interactive > .corner {

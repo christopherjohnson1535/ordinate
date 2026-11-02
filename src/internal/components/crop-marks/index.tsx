@@ -20,6 +20,11 @@ export interface CropMarksProps {
    * Lets the marks reach further while the pointer is over the parent, for a card that responds to a click.
    */
   interactive?: boolean;
+  /**
+   * With `selected`, draws only the heavier ink corners and leaves the sides open, for a mark that moves
+   * between items in a row, such as the open tab.
+   */
+  open?: boolean;
 }
 
 /**
@@ -27,14 +32,15 @@ export interface CropMarksProps {
  * A card drawn this way needs no box. Drawing only, hidden from screen readers. Render it as a direct child of
  * the card, so the card's hover can reach it.
  */
-export function CropMarks({ kind = 'neutral', selected = false, interactive = false }: CropMarksProps) {
+export function CropMarks({ kind = 'neutral', selected = false, interactive = false, open = false }: CropMarksProps) {
   return (
     <span
       className={clsx(
         styles.root,
         styles[`kind-${kind}`],
         selected && styles.selected,
-        interactive && styles.interactive
+        interactive && styles.interactive,
+        open && styles.open
       )}
       aria-hidden="true"
     >

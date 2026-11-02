@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/layers';
 @use '../internal/styles/tokens' as ord;
 
@@ -24,13 +25,41 @@
   padding-block: ord.$space-l ord.$space-s;
 }
 
-// The base rule is an inset shadow so the active tab's thicker rule can be drawn over it.
+// The row stands on a construction line in the kind's color, run past both ends like the line that opens
+// a section.
 .header {
   position: relative;
   display: flex;
   align-items: stretch;
   min-inline-size: 0;
-  box-shadow: inset 0 calc(-1 * #{ord.$border-width-default}) 0 ord.$color-border-divider;
+
+  &::after {
+    @include drawing.construction-line;
+    content: '';
+    inset-block-end: 0;
+    inset-inline: calc(-1 * #{ord.$space-s});
+    block-size: ord.$border-width-default;
+    color: ord.$color-kind-neutral;
+  }
+}
+
+.kind-configuration > .header::after,
+.kind-configuration .reference {
+  color: ord.$color-kind-configuration;
+}
+
+.kind-resource > .header::after,
+.kind-resource .reference {
+  color: ord.$color-kind-resource;
+}
+
+.kind-policy > .header::after,
+.kind-policy .reference {
+  color: ord.$color-kind-policy;
+}
+
+.kind-neutral .reference {
+  color: ord.$color-kind-neutral;
 }
 
 .scroller {
@@ -46,6 +75,7 @@
 }
 
 .tab-row {
+  position: relative;
   display: flex;
   align-items: stretch;
   inline-size: max-content;
@@ -69,6 +99,7 @@
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
+  gap: ord.$space-xs;
   box-sizing: border-box;
   min-block-size: ord.$size-control-height;
   padding-block: ord.$space-scaled-xs;
@@ -97,27 +128,33 @@
   }
 }
 
-// A short tick between tabs, like the division marks on a scale.
-.tab:not(:first-child)::before {
-  content: '';
-  position: absolute;
-  inset-block: ord.$space-scaled-s;
-  inset-inline-start: 0;
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
-}
-
 .tab-active {
   color: ord.$color-text-body;
+}
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset-block-end: 0;
-    inset-inline: 0;
-    block-size: ord.$border-width-section;
-    background-color: ord.$color-border-strong;
+// A short reference after the label, such as R1, in the kind's color.
+.reference {
+  @include drawing.font-caption;
+  font-size: ord.$font-size-small;
+
+  .tab-disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+// Ink crop marks at the corners of the open tab. The script places the marker on the tab and it slides to the
+// next one, quickly and slowing as it lands.
+.marker {
+  position: absolute;
+  inset-block: ord.$space-xxs;
+  pointer-events: none;
+}
+
+.marker-placed {
+  @include styles.with-motion {
+    transition-property: inset-inline-start, inline-size;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
   }
 }
 

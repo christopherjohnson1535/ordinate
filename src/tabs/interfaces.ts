@@ -10,6 +10,7 @@ export interface TabsProps extends BaseComponentProps {
    * The tabs, in order. Each tab has:
    * * `id` (string): Identifies the tab in `activeTabId` and `onChange`.
    * * `label` (ReactNode): The text of the tab.
+   * * `reference` (ReactNode): A short reference after the label, such as R1, in the color of `kind`.
    * * `content` (ReactNode): Shown in the panel below the tabs while the tab is active.
    * * `disabled` (boolean): The tab cannot be activated. Keyboard users can still reach it to read why.
    * * `disabledReason` (string): Says why the tab is disabled. Shown on hover and focus.
@@ -31,11 +32,16 @@ export interface TabsProps extends BaseComponentProps {
   onChange?: NonCancelableEventHandler<TabsProps.ChangeDetail>;
   /**
    * The style of the tabs:
-   * * `default` places the tabs over the page, with a rule under the row.
+   * * `default` places the tabs over the page, on a construction line.
    * * `container` draws the tabs and their content as one container.
    * * `stacked` is a container that shares borders with stacked containers next to it.
    */
   variant?: TabsProps.Variant;
+  /**
+   * What the views show, told by the color of the construction lines and the tab references:
+   * `configuration`, `resource`, `policy` or `neutral`. Neutral graphite when left out.
+   */
+  kind?: TabsProps.Kind;
   /**
    * Accessible name of the tab list.
    */
@@ -60,9 +66,12 @@ export interface TabsProps extends BaseComponentProps {
 export namespace TabsProps {
   export type Variant = 'default' | 'container' | 'stacked';
 
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
+
   export interface Tab {
     id: string;
     label: React.ReactNode;
+    reference?: React.ReactNode;
     content?: React.ReactNode;
     disabled?: boolean;
     disabledReason?: string;

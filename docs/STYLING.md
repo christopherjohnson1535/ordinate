@@ -97,6 +97,8 @@ Every container is drawn this way. Container puts the heading in a margin column
 
 Cards have no box. ItemCard, the cards inside Cards, ActionCard and Tiles draw `CropMarks` from `src/internal/components/crop-marks` at their four corners, in the kind's color at `opacity-construction`, with arms of `size-crop-mark`. A chosen card or tile closes the marks into a frame in ink with heavier corners, and its reference turns ink too. Where the whole card answers a click, the marks reach out to `size-crop-mark-reach` while the pointer is over it, on devices with a real pointer only. ActionCard points at its destination with a leader arrow that moves a little further on hover. The large answer tiles in a Journey question keep their box. Cards, ItemCard, ActionCard and Tiles take a `kind`, and ItemCard and Cards' `cardDefinition` take a `reference`, as Container does.
 
+Tabs use the same marks for the open view. The row stands on a construction line in the kind's color, with no dividers between tabs, and small ink crop marks stand at the corners of the open tab, taking in its action and close button. The marks slide to the next tab quickly and slow as they land; with reduced motion they move at once. Each tab can carry a `reference` after its label in the kind's color, and Tabs take a `kind`.
+
 KeyValuePairs borrow Container's margin at a small scale: each label is set right-aligned in a margin column against a faint construction line, with its value to the right in ink. Rows meet edge to edge, so the line runs unbroken down each column.
 
 ## Kinds

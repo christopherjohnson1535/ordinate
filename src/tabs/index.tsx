@@ -14,6 +14,7 @@ export default function Tabs({
   activeTabId,
   onChange,
   variant = 'default',
+  kind = 'neutral',
   ariaLabel,
   ariaLabelledby,
   disableContentPaddings = false,
@@ -27,6 +28,7 @@ export default function Tabs({
       activeTabId={activeTabId}
       onChange={onChange}
       variant={variant}
+      kind={kind}
       ariaLabel={ariaLabel}
       ariaLabelledby={ariaLabelledby}
       disableContentPaddings={disableContentPaddings}
