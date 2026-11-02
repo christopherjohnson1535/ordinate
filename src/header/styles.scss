@@ -55,8 +55,9 @@
 // The page title reads like the heading of a drawing sheet: large, light and tightly set. The family,
 // weight and tracking come from the style, so a website style's headline voice carries over.
 .variant-h1 {
+  // The actions stand on the same line as the last line of the heading block.
   .main {
-    align-items: flex-end;
+    align-items: last baseline;
   }
 
   .heading {

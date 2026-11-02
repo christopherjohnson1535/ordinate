@@ -170,7 +170,7 @@ export function InternalCards<T>({
     );
   }
 
-  // On a sheet the count stands in the dimension line on the opening construction line, as in Container.
+  // On a sheet the count stands in a dimension line under the heading, as in Container.
   // The heading still holds it for screen readers. The full-page variant has no sheet, so its header shows it.
   const onSheet = variant === 'container';
   const lifted = onSheet ? liftHeaderCounter(header, styles['screenreader-only']) : { header, measure: undefined };

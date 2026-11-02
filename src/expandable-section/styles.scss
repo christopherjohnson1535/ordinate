@@ -82,12 +82,9 @@
   @include styles.screenreader-only;
 }
 
-// The count lies on the construction line that opens the section.
+// The count stands in a dimension line under the heading, as in Container.
 .counter {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline: 0;
-  transform: translateY(-50%);
+  margin-block-start: ord.$space-xs;
   color: ord.$color-kind-neutral;
 }
 

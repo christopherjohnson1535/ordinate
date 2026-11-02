@@ -69,7 +69,7 @@ function FlashbarSpecimen() {
   const messages: FlashbarProps.MessageDefinition[] = [
     {
       id: 'vault-store',
-      type: 'error',
+      type: 'fault',
       header: 'vault-store failed its health check.',
       content: 'Check the logs before you redeploy it.',
       dismissible: true,
@@ -77,7 +77,7 @@ function FlashbarSpecimen() {
     },
     {
       id: 'web-v2',
-      type: 'in-progress',
+      type: 'note',
       loading: true,
       content: 'web:v2 is rolling out to gallery-east.',
     },

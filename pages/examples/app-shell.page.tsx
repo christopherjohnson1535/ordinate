@@ -50,7 +50,7 @@ function useProject() {
   const [items, setItems] = useState<FlashbarProps.MessageDefinition[]>(() => [
     {
       id: 'maintenance',
-      type: 'info',
+      type: 'note',
       header: 'Scheduled maintenance on November 4',
       content: 'Nodes in us-mountain-1 restart one at a time between 02:00 and 04:00 MST.',
       dismissible: true,
@@ -63,7 +63,7 @@ function useProject() {
     setStatus('restarting');
     show({
       id: 'restart',
-      type: 'in-progress',
+      type: 'note',
       loading: true,
       header: 'Restarting north-annex',
       content: 'Draining connections before each node restarts.',
@@ -78,7 +78,7 @@ function useProject() {
       setStatus('running');
       show({
         id: 'restart',
-        type: 'success',
+        type: 'complete',
         header: 'north-annex restarted',
         content: 'All 20 nodes are healthy.',
         dismissible: true,

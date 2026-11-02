@@ -274,7 +274,7 @@ export default function Console() {
   const [flashes, setFlashes] = useState<FlashbarProps.MessageDefinition[]>([
     {
       id: 'vault-store',
-      type: 'error',
+      type: 'fault',
       header: 'vault-store failed its health check.',
       content: 'Check the logs before you redeploy it.',
       action: <Button onClick={() => setActiveTabId('logs')}>Open logs</Button>,

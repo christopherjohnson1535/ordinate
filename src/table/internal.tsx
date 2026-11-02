@@ -225,7 +225,7 @@ export function InternalTable<T>({
     </InternalLiveRegion>
   );
 
-  // On a sheet the count stands in the dimension line on the opening construction line, as in Container.
+  // On a sheet the count stands in a dimension line under the heading, as in Container.
   // The heading still holds it for screen readers. Without a sheet there is no line to stand on, so the
   // header shows it.
   const lifted = hasSheet ? liftHeaderCounter(header, styles['screenreader-only']) : { header, measure: undefined };

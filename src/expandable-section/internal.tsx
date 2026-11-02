@@ -119,7 +119,7 @@ export const InternalExpandableSection = React.forwardRef(
             </p>
           )}
         </div>
-        {/* The count stands in the dimension line on the opening construction line, as in Container. The
+        {/* The count stands in a dimension line under the heading, as in Container. The
             button still holds it for screen readers, so the line is drawing only. */}
         {hasCounter && (
           <div className={styles.counter} aria-hidden="true">

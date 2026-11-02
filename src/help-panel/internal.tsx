@@ -9,9 +9,6 @@ import { HelpPanelProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-// The caption when no messages are loaded.
-const defaultCaption = 'Help';
-
 /**
  * Help drawn as a margin note: a faint construction line down the start edge, a mono caption above the
  * title, and the help text beside the line.
@@ -31,7 +28,7 @@ export function InternalHelpPanel({ header, children, footer, loading = false, l
     <div {...rest} className={styles.root}>
       {header && (
         <div className={styles['header-block']}>
-          <span className={styles.caption}>{i18n('captionText') ?? defaultCaption}</span>
+          <span className={styles.caption}>{i18n('captionText')}</span>
           <h2 className={styles.header}>{header}</h2>
         </div>
       )}

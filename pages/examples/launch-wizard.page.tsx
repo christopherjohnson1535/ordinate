@@ -289,7 +289,7 @@ export default function LaunchWizard() {
     setFlashes([
       {
         id: 'launched',
-        type: 'success',
+        type: 'complete',
         header: `${draft.name} is launching`,
         content: 'Nodes start in the order you chose. This takes about two minutes.',
         dismissible: true,

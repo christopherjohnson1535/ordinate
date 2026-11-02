@@ -4,7 +4,6 @@ import React, { useId, useState } from 'react';
 import clsx from 'clsx';
 
 import { useInternalI18n } from '../internal/i18n/context';
-import { formatMessage, MessageParams } from '../internal/i18n/format';
 import { Flash } from './flash';
 import { FlashbarProps } from './interfaces';
 import { NotificationBar } from './notification-bar';
@@ -22,18 +21,6 @@ const iconLabelKeys: Record<FlashbarProps.Type, IconLabelKey> = {
   fault: 'errorIconAriaLabel',
   caution: 'warningIconAriaLabel',
   note: 'infoIconAriaLabel',
-};
-
-// English text for messages the shared message file does not hold yet. The provider's messages still win.
-const fallbackMessages: Record<string, string> = {
-  underwayLabel: 'Underway',
-  showAllText: 'Show all {count}',
-  showFewerText: 'Show fewer',
-  faultCount: '{count, plural, one {# fault} other {# faults}}',
-  cautionCount: '{count, plural, one {# caution} other {# cautions}}',
-  completeCount: '{count, plural, other {# complete}}',
-  noteCount: '{count, plural, one {# note} other {# notes}}',
-  underwayCount: '{count, plural, other {# underway}}',
 };
 
 export interface InternalFlashbarProps extends Omit<FlashbarProps, 'items'> {
@@ -59,9 +46,6 @@ export function InternalFlashbar({
   const [stackExpanded, setStackExpanded] = useState(false);
   const listId = useId();
 
-  const message = (key: string, provided?: string, params?: MessageParams) =>
-    i18n(key, provided, params) ?? formatMessage(fallbackMessages[key], params, 'en');
-
   const isStacked = stackItems && items.length > 1;
   const isCollapsed = isStacked && !stackExpanded;
 
@@ -72,7 +56,7 @@ export function InternalFlashbar({
     i18nStrings?.[iconLabelKeys[item.type]];
 
   const countText = (type: FlashbarProps.CountType, count: number) =>
-    i18nStrings?.itemCountText?.(type, count) ?? message(`${type}Count`, undefined, { count });
+    i18nStrings?.itemCountText?.(type, count) ?? i18n(`${type}Count`, undefined, { count });
 
   return (
     <div {...rest} className={clsx(styles.root, className)}>
@@ -83,7 +67,7 @@ export function InternalFlashbar({
             item={item}
             hidden={isCollapsed && index > 0}
             statusIconAriaLabel={iconLabel(item)}
-            underwayLabel={message('underwayLabel', i18nStrings?.underwayLabel)}
+            underwayLabel={i18n('underwayLabel', i18nStrings?.underwayLabel)}
             dismissLabel={i18n('dismissLabel', item.dismissLabel)}
           />
         ))}
@@ -96,8 +80,8 @@ export function InternalFlashbar({
           ariaLabel={i18n('notificationBarText', i18nStrings?.notificationBarText)}
           buttonText={
             stackExpanded
-              ? message('showFewerText', i18nStrings?.showFewerText)
-              : message('showAllText', i18nStrings?.showAllText?.(items.length), { count: items.length })
+              ? i18n('showFewerText', i18nStrings?.showFewerText)
+              : i18n('showAllText', i18nStrings?.showAllText?.(items.length), { count: items.length })
           }
           countText={countText}
           onToggle={() => setStackExpanded(!stackExpanded)}

@@ -124,7 +124,7 @@ A Badge is a short label in small mono capitals, keyed by a colored square of `s
 
 An Alert is a margin note rather than a box. A construction line in the note's color opens it, the icon and a mono caption naming the kind of note sit in a narrow margin, and the title, text and action follow in ink. Its `type` is `note`, `complete`, `caution` or `fault`, and `i18nStrings` replaces the caption.
 
-The old names (`type`, `colorOverride`, Badge's `color`, the old status values and Alert's `info`, `success`, `warning` and `error`) still work with a warning until the next major version.
+The old names (`type`, `colorOverride`, Badge's `color`, the old status values, Alert's and Flashbar's `info`, `success`, `warning` and `error`, Flashbar's `in-progress`, ProgressBar's `in-progress`, `success` and `error`, and SideNavigation's item `code`) still work with a warning until the next major version.
 
 ## States
 
@@ -156,6 +156,20 @@ A hard ink offset means "an object above the sheet". It falls down and to the ri
 - Cards and tokens never get an offset.
 
 A leader, from `src/internal/components/leader`, means "this goes somewhere else": ActionCard, a button with a link, an external link and the joins between breadcrumbs.
+
+## Component families
+
+**Fields and forms.** Forms are the editable twin of KeyValuePairs. FormField sets its label right-aligned in a margin column of `size-margin-column` against a faint construction line, with the control, messages and constraint text to its right. Below 560 px, measured with a container query, or with `layout="stacked"`, the label sits above the control. Components that compose FormField inside tight panels use the stacked layout. Text fields share one drawing from `src/input/field.scss`: a hairline control edge with an ink baseline to write on. Dates and times are set in mono, and a character count is a dimension line under the control. A Form opens with a construction line in its kind's color and stands its actions on a rule closed by hash marks.
+
+**Choice controls.** Choice controls keep their familiar shapes. A checkbox is an ink key square: solid when checked, half filled from the start edge when partly checked and open when clear, like Badge's key. A radio button takes a heavier ink ring and a dot, and a toggle fills its track with ink when on. A chosen segment and a chosen calendar day are one of a set, so they carry open ink crop marks. A slider is a scale: a tick at each step, mono labels on the major ticks, an ink fill to the value and an index line with the value lettered above it, over the native range input. Calendars letter the month in mono capitals, circle today, hatch days that cannot be chosen, and letter a range's length below it. A file dropzone is a dashed construction line inside crop marks.
+
+**Buttons and links.** Buttons are drawn blocks. Normal and destructive buttons have a hairline ink edge and stand on a 2 px offset. The primary button is ink, and its offset is drawn apart from it by a hairline of paper. Link and icon buttons lie on the sheet with no offset and take a raised tint on hover. A split button shares one offset across both halves, and disabled buttons lie flat and hatched. A button that goes to another page ends in the shared leader. An external link in a Button, Link or menu carries a small diagonal leader instead. Links are ink with a light underline that turns ink on hover. CopyToClipboard confirms a copy with a short mono "Copied" stamp keyed in the complete color.
+
+**Plates and callouts.** Modal, Dialog, Popover, annotations and every list or menu that drops from a control are plates, and they fade and rise 4 px as they open. A modal carries its reference in the kind's color above the title and sets its actions on a rule closed by hash marks. A popover is a callout: a leader runs from an ink dot at its trigger to the plate's nearest edge and follows the side the plate lands on. A tooltip is an ink chip on a short stem. Split panels have an ink line toward the page that runs a little past the panel, and a resize grip of three ticks. Help is a margin note against a faint construction line. Tutorials number the places they point at with circled tags, and their steps take S references.
+
+**Collections.** A table is a schedule. Column captions are small mono capitals in a secondary ink over the head rule, rows are split by hairlines, and columns are kept apart by space alone. A column's `contentType` letters identifiers and figures in mono, with figures aligned to the end. The sorted column's caption turns ink and carries a small solid triangle. A picked row is raised, shows its checked key and carries an ink rule on its leading edge. Table, Cards and ExpandableSection draw their count in a dimension line under the heading, as Container does. Pagination letters its pages in mono, and sliding crop marks hold the current one. Tokens are hairline boxes with no offset. Property filters set the property and operator in mono, the value in sans and the joins in mono capitals.
+
+**Navigation, notes and progress.** Navigation reads like the index and title block of a drawing set. TopNavigation is a row of cells split by hairlines, standing on a 2 px ink rule. In SideNavigation each section hangs on its own faint construction line, closed by hash marks and titled in mono capitals, and items show their names only. The current page gets the position rule, as do the current heading in AnchorNavigation and the current node in TreeView. Breadcrumbs are joined by short leaders. Flashbar stacks Alert's margin notes, and when collapsed it keys each type with a count. ProgressBar is a dimension line that fills with ink, and Skeleton draws construction lines where text will land. The steps Wizard runs a step scale across the top: one tick per step, labeled S1, S2 and so on as Steps are, inked up to the current step.
 
 ## Icons
 
