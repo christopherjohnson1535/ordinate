@@ -47,17 +47,17 @@ function Example(props: Partial<FloatingPanelProps>) {
 }
 
 describe('FloatingPanel', () => {
-  test('places the panel on the preferred side, its arrow depth away from the trigger', () => {
+  test('places the panel on the preferred side, its leader length and the gap away from the trigger', () => {
     render(<Example preferredSide="top" gap={4} />);
     const panel = screen.getByRole('tooltip');
-    expect(panel.style.top).toBe(`${380 - 8 - 4 - 100}px`);
+    expect(panel.style.top).toBe(`${380 - 16 - 4 - 100}px`);
     expect(panel.style.left).toBe('400px');
   });
 
   test('flips logical sides in right-to-left layout', () => {
     document.documentElement.style.direction = 'rtl';
     render(<Example preferredSide="right" />);
-    expect(screen.getByRole('tooltip').style.left).toBe(`${480 - 8 - 4 - 200}px`);
+    expect(screen.getByRole('tooltip').style.left).toBe(`${480 - 16 - 2 - 200}px`);
   });
 
   test('stays in the document while hidden', () => {
