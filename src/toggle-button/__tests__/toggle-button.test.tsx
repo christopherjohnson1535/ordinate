@@ -75,11 +75,11 @@ describe('ToggleButton', () => {
 
   test('swaps to the pressed icon while pressed', () => {
     const { container, rerender } = render(
-      <ToggleButton pressed={false} variant="icon" iconName="star" pressedIconName="star-filled" ariaLabel="Favorite" />
+      <ToggleButton pressed={false} variant="icon" iconName="star" pressedIconName="star-solid" ariaLabel="Favorite" />
     );
     const unpressed = iconNames(container);
     rerender(
-      <ToggleButton pressed={true} variant="icon" iconName="star" pressedIconName="star-filled" ariaLabel="Favorite" />
+      <ToggleButton pressed={true} variant="icon" iconName="star" pressedIconName="star-solid" ariaLabel="Favorite" />
     );
     expect(iconNames(container)).not.toEqual(unpressed);
     expect(screen.getByRole('button', { name: 'Favorite' })).toHaveAttribute('aria-pressed', 'true');

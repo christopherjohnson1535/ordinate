@@ -144,7 +144,7 @@ describe('Button loading', () => {
 describe('Button icons', () => {
   test.each(['left', 'right'] as const)('places a built-in icon on the %s', iconAlign => {
     render(
-      <Button iconName="add-plus" iconAlign={iconAlign}>
+      <Button iconName="add" iconAlign={iconAlign}>
         Add service
       </Button>
     );
@@ -162,7 +162,7 @@ describe('Button icons', () => {
 
   test('the loading indicator replaces the icon', () => {
     render(
-      <Button iconName="add-plus" loading={true}>
+      <Button iconName="add" loading={true}>
         Add service
       </Button>
     );
@@ -276,7 +276,7 @@ describe('Button test utilities and accessibility', () => {
   test('the wrapper finds the text, icons and loading state', () => {
     render(
       <>
-        <Button iconName="add-plus">Add service</Button>
+        <Button iconName="add">Add service</Button>
         <Button href="https://example.com" external={true}>
           Docs
         </Button>
@@ -295,8 +295,8 @@ describe('Button test utilities and accessibility', () => {
   test('has no accessibility violations', async () => {
     const { container } = render(
       <>
-        <Button iconName="add-plus">Add service</Button>
-        <Button iconName="external" iconAlign="right">
+        <Button iconName="add">Add service</Button>
+        <Button iconName="open-outside" iconAlign="right">
           Open
         </Button>
         <Button loading={true} loadingText="Saving">

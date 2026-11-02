@@ -73,7 +73,7 @@ export function InternalPagination({
           disabled={disabled || current <= 1}
           onClick={previous}
         >
-          <InternalIcon name="angle-left" />
+          <InternalIcon name="chevron-left" />
         </button>
       </li>
       {getPageItems(current, count, openEnd).map(item =>
@@ -92,7 +92,7 @@ export function InternalPagination({
           </li>
         ) : (
           <li key={item} className={clsx(styles.item, styles.ellipsis)} aria-hidden="true">
-            <InternalIcon name="ellipsis" />
+            <InternalIcon name="more" />
           </li>
         )
       )}
@@ -104,7 +104,7 @@ export function InternalPagination({
           disabled={disabled || (!openEnd && current >= count)}
           onClick={next}
         >
-          <InternalIcon name="angle-right" />
+          <InternalIcon name="chevron-right" />
         </button>
       </li>
     </ul>

@@ -11,13 +11,13 @@ import { StatusIndicatorProps } from './interfaces';
 import styles from './styles.css.js';
 
 const typeToIcon: Record<Exclude<StatusIndicatorProps.Type, 'loading'>, IconProps.Name> = {
-  error: 'status-negative',
-  warning: 'status-warning',
-  success: 'status-positive',
-  info: 'status-info',
-  stopped: 'status-stopped',
-  pending: 'status-pending',
-  'in-progress': 'status-in-progress',
+  error: 'fault',
+  warning: 'caution',
+  success: 'complete',
+  info: 'note',
+  stopped: 'halted',
+  pending: 'waiting',
+  'in-progress': 'underway',
 };
 
 export interface InternalStatusIndicatorProps extends StatusIndicatorProps {

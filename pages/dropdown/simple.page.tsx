@@ -76,7 +76,7 @@ function TextDropdown({ label, ...rest }: Partial<DropdownProps> & { label: stri
       onOutsideClick={close}
       onEscape={close}
       trigger={
-        <Button formAction="none" iconName="angle-down" iconAlign="right" ariaExpanded={open} onClick={toggle}>
+        <Button formAction="none" iconName="chevron-down" iconAlign="right" ariaExpanded={open} onClick={toggle}>
           {label}
         </Button>
       }

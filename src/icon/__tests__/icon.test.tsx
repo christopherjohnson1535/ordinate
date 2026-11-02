@@ -11,22 +11,22 @@ import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 describe('Icon', () => {
   test('renders a built-in icon as decorative by default', () => {
-    render(<Icon name="search" />);
+    render(<Icon name="find" />);
     const icon = createWrapper().findIcon()!.getElement();
     expect(icon).toHaveAttribute('aria-hidden', 'true');
     expect(icon.querySelector('svg')).toHaveAttribute('focusable', 'false');
   });
 
   test('is announced when it has an ariaLabel', () => {
-    render(<Icon name="status-warning" ariaLabel="Warning" />);
+    render(<Icon name="caution" ariaLabel="Warning" />);
     expect(screen.getByRole('img', { name: 'Warning' })).toBeInTheDocument();
   });
 
   test('marks icons that point along the reading direction for mirroring', () => {
     const { container } = render(
       <>
-        <Icon name="angle-right" />
-        <Icon name="search" />
+        <Icon name="chevron-right" />
+        <Icon name="find" />
       </>
     );
     const [directional, neutral] = Array.from(container.children);
@@ -47,6 +47,36 @@ describe('Icon', () => {
     warn.mockRestore();
   });
 
+  test('still renders an icon by its old name, warns once, and draws the same artwork', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { container } = render(
+      <>
+        <Icon name="search" />
+        <Icon name="find" />
+      </>
+    );
+    const [legacy, current] = Array.from(container.children);
+    expect(legacy.innerHTML).toBe(current.innerHTML);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('"search" is now called "find"'));
+    warn.mockRestore();
+  });
+
+  test('keeps mirroring a directional icon given its old name', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { container } = render(<Icon name="angle-right" />);
+    expect((container.firstChild as HTMLElement).className).toMatch(/flip-in-rtl/);
+    vi.restoreAllMocks();
+  });
+
+  test('applies an IconProvider written with old names to the renamed icon', () => {
+    render(
+      <IconProvider icons={{ settings: <svg data-testid="wheel" /> }}>
+        <Icon name="adjust" />
+      </IconProvider>
+    );
+    expect(screen.getByTestId('wheel')).toBeInTheDocument();
+  });
+
   test('has no accessibility violations', async () => {
     const { container } = render(
       <>
@@ -61,8 +91,8 @@ describe('Icon', () => {
 describe('IconProvider', () => {
   test('replaces an icon for its subtree', () => {
     render(
-      <IconProvider icons={{ search: <svg data-testid="replacement" /> }}>
-        <Icon name="search" />
+      <IconProvider icons={{ find: <svg data-testid="replacement" /> }}>
+        <Icon name="find" />
       </IconProvider>
     );
     expect(screen.getByTestId('replacement')).toBeInTheDocument();
@@ -70,8 +100,8 @@ describe('IconProvider', () => {
 
   test('null hides an icon', () => {
     const { container } = render(
-      <IconProvider icons={{ search: null }}>
-        <Icon name="search" />
+      <IconProvider icons={{ find: null }}>
+        <Icon name="find" />
       </IconProvider>
     );
     expect(container).toBeEmptyDOMElement();
@@ -79,9 +109,9 @@ describe('IconProvider', () => {
 
   test('null for all icons restores the built-in set', () => {
     render(
-      <IconProvider icons={{ search: null }}>
+      <IconProvider icons={{ find: null }}>
         <IconProvider icons={null}>
-          <Icon name="search" />
+          <Icon name="find" />
         </IconProvider>
       </IconProvider>
     );

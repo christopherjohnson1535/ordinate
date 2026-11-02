@@ -166,7 +166,7 @@ export const InternalButtonDropdown = React.forwardRef(
         )}
         variant={triggerVariant}
         formAction="none"
-        iconName={isIconVariant ? (triggerIconName ?? 'ellipsis') : 'angle-down'}
+        iconName={isIconVariant ? (triggerIconName ?? 'more') : 'chevron-down'}
         iconAlign="right"
         disabled={disabled}
         loading={loading}

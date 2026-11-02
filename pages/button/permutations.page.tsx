@@ -54,12 +54,12 @@ export default function ButtonPermutations() {
                 </Button>
               </td>
               <td>
-                <Button variant={variant} formAction="none" iconName="add-plus">
+                <Button variant={variant} formAction="none" iconName="add">
                   Add service
                 </Button>
               </td>
               <td>
-                <Button variant={variant} formAction="none" iconName="angle-right" iconAlign="right">
+                <Button variant={variant} formAction="none" iconName="chevron-right" iconAlign="right">
                   Next step
                 </Button>
               </td>
@@ -128,7 +128,7 @@ export default function ButtonPermutations() {
           <Button href="https://example.com" target="_blank" rel="noopener">
             New tab, custom rel
           </Button>
-          <Button href="data:text/csv,name%0Anorth-annex" download="projects.csv" iconName="angle-down">
+          <Button href="data:text/csv,name%0Anorth-annex" download="projects.csv" iconName="chevron-down">
             Download CSV
           </Button>
           <Button variant="link" external={true} formAction="none">
@@ -142,7 +142,7 @@ export default function ButtonPermutations() {
         <div className={styles.row}>
           <Button
             formAction="none"
-            iconName={expanded ? 'angle-up' : 'angle-down'}
+            iconName={expanded ? 'chevron-up' : 'chevron-down'}
             iconAlign="right"
             ariaExpanded={expanded}
             ariaControls="button-details"
@@ -150,7 +150,7 @@ export default function ButtonPermutations() {
           >
             Details
           </Button>
-          <Button formAction="none" iconName="caret-down-filled" iconAlign="right" ariaHaspopup="menu">
+          <Button formAction="none" iconName="caret-down-solid" iconAlign="right" ariaHaspopup="menu">
             Actions
           </Button>
           <form id="button-page-form" onSubmit={event => event.preventDefault()} />
@@ -166,10 +166,10 @@ export default function ButtonPermutations() {
       <section className={styles.section}>
         <h2>Text wrapping</h2>
         <div className={styles.narrow}>
-          <Button formAction="none" iconName="add-plus">
+          <Button formAction="none" iconName="add">
             Add a service to the north-annex project
           </Button>
-          <Button formAction="none" iconName="add-plus" wrapText={false}>
+          <Button formAction="none" iconName="add" wrapText={false}>
             Add a service to the north-annex project
           </Button>
         </div>

@@ -109,7 +109,7 @@ export const InternalFileUpload = React.forwardRef(
               <div id={errorId} className={clsx(styles.message, styles.error)}>
                 <InternalIcon
                   className={styles['message-icon']}
-                  name="status-negative"
+                  name="fault"
                   size="small"
                   ariaLabel={i18n('errorIconAriaLabel', i18nStrings?.errorIconAriaLabel)}
                 />
@@ -120,7 +120,7 @@ export const InternalFileUpload = React.forwardRef(
               <div id={warningId} className={clsx(styles.message, styles.warning)}>
                 <InternalIcon
                   className={styles['message-icon']}
-                  name="status-warning"
+                  name="caution"
                   size="small"
                   ariaLabel={i18n('warningIconAriaLabel', i18nStrings?.warningIconAriaLabel)}
                 />

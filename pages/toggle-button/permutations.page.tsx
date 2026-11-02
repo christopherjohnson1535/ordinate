@@ -18,10 +18,10 @@ interface Variant {
 
 const variants: Variant[] = [
   { name: 'normal', props: { children: 'Bold' } },
-  { name: 'normal, icon', props: { children: 'Favorite', iconName: 'star', pressedIconName: 'star-filled' } },
+  { name: 'normal, icon', props: { children: 'Favorite', iconName: 'star', pressedIconName: 'star-solid' } },
   {
     name: 'icon',
-    props: { variant: 'icon', iconName: 'heart', pressedIconName: 'heart-filled', ariaLabel: 'Like' },
+    props: { variant: 'icon', iconName: 'heart', pressedIconName: 'heart-solid', ariaLabel: 'Like' },
   },
 ];
 
@@ -75,14 +75,14 @@ export default function ToggleButtonPermutations() {
           <Toggle
             variant="icon"
             iconName="thumbs-up"
-            pressedIconName="thumbs-up-filled"
+            pressedIconName="thumbs-up-solid"
             ariaLabel="Helpful"
             initial={false}
           />
           <Toggle
             variant="icon"
             iconName="thumbs-down"
-            pressedIconName="thumbs-down-filled"
+            pressedIconName="thumbs-down-solid"
             ariaLabel="Not helpful"
             initial={false}
           />

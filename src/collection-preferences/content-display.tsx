@@ -149,7 +149,7 @@ export function ContentDisplay({ preference, value, onChange }: ContentDisplayPr
                   }
                 }}
               >
-                <InternalIcon name="drag-indicator" />
+                <InternalIcon name="drag-handle" />
               </span>
               <span id={labelId} className={styles['option-label']}>
                 {option.label}

@@ -84,7 +84,7 @@ export function NavigationPanel({
             ref={closeButtonRef}
             variant="icon"
             formAction="none"
-            iconName={overlay ? 'close' : 'angle-left'}
+            iconName={overlay ? 'close' : 'chevron-left'}
             ariaLabel={closeLabel}
             ariaExpanded={true}
             ariaControls={id}

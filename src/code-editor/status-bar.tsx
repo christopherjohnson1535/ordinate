@@ -49,7 +49,7 @@ function DiagnosticButton({
       disabled={!active}
       onClick={() => onClick(severity)}
     >
-      <InternalIcon name={severity === 'error' ? 'status-negative' : 'status-warning'} size="small" />
+      <InternalIcon name={severity === 'error' ? 'fault' : 'caution'} size="small" />
       <span>{summary.text}</span>
     </button>
   );

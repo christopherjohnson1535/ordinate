@@ -86,7 +86,7 @@ export default function PopoverSimple() {
             fixed width
           </Popover>
           <Popover triggerType="custom" position="bottom" header="Node status" content="All 12 nodes are healthy.">
-            <Button variant="icon" iconName="status-info" ariaLabel="Node status" />
+            <Button variant="icon" iconName="note" ariaLabel="Node status" />
           </Popover>
           <Popover ref={refPopover} triggerType="custom" position="bottom" content="Opened with a button.">
             <Button formAction="none">Custom trigger</Button>

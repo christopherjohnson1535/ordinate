@@ -53,7 +53,7 @@ export const InternalActionCard = React.forwardRef(
           {children && <span className={styles.content}>{children}</span>}
         </span>
         <span className={styles.arrow}>
-          <InternalIcon name="angle-right" variant={disabled ? 'disabled' : 'subtle'} />
+          <InternalIcon name="chevron-right" variant={disabled ? 'disabled' : 'subtle'} />
         </span>
       </>
     );

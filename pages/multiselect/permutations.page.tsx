@@ -33,7 +33,7 @@ const grouped: MultiselectProps.Options = [
       { value: 'object', label: 'Object bucket' },
     ],
   },
-  { value: 'network', label: 'Network', iconName: 'external' },
+  { value: 'network', label: 'Network', iconName: 'open-outside' },
 ];
 
 const many: MultiselectProps.Option[] = Array.from({ length: 40 }, (_, index) => ({

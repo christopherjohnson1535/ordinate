@@ -120,7 +120,7 @@ export const InternalButton = React.forwardRef(
         {!isIconOnly && external && (
           <InternalIcon
             className={styles['external-icon']}
-            name="external"
+            name="open-outside"
             ariaLabel={target === '_blank' ? i18n('externalIconAriaLabel', externalIconAriaLabel) : undefined}
           />
         )}

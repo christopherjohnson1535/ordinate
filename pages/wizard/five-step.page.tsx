@@ -241,7 +241,7 @@ export default function WizardFiveStep() {
             ))}
             <Button
               formAction="none"
-              iconName="add-plus"
+              iconName="add"
               onClick={() => update({ tags: [...draft.tags, { key: '', value: '' }] })}
             >
               Add tag

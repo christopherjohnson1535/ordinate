@@ -23,7 +23,7 @@ export default function IconGallery() {
         <div className={styles.row}>
           {sizes.map(size => (
             <figure key={size} className={styles.sample}>
-              <Icon name="settings" size={size} />
+              <Icon name="adjust" size={size} />
               <figcaption>{size}</figcaption>
             </figure>
           ))}
@@ -34,7 +34,7 @@ export default function IconGallery() {
         <div className={styles.row}>
           {variants.map(variant => (
             <figure key={variant} className={styles.sample}>
-              <Icon name="status-info" size="medium" variant={variant} />
+              <Icon name="note" size="medium" variant={variant} />
               <figcaption>{variant}</figcaption>
             </figure>
           ))}

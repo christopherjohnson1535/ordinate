@@ -76,7 +76,7 @@ export function SelectTrigger({
       <span id={contentId} className={styles['trigger-content']}>
         {children}
       </span>
-      <InternalIcon className={styles['trigger-icon']} name="angle-down" />
+      <InternalIcon className={styles['trigger-icon']} name="chevron-down" />
     </button>
   );
 }

@@ -20,9 +20,9 @@ const views: SegmentedControlProps.Option[] = [
 ];
 
 const layouts: SegmentedControlProps.Option[] = [
-  { id: 'horizontal', text: 'Horizontal', iconName: 'view-horizontal' },
-  { id: 'vertical', text: 'Vertical', iconName: 'view-vertical' },
-  { id: 'full', text: 'Full', iconName: 'view-full', disabled: true },
+  { id: 'horizontal', text: 'Horizontal', iconName: 'layout-horizontal' },
+  { id: 'vertical', text: 'Vertical', iconName: 'layout-vertical' },
+  { id: 'full', text: 'Full', iconName: 'layout-full', disabled: true },
 ];
 
 function Example({ initial, ...props }: Omit<SegmentedControlProps, 'selectedId'> & { initial: string | null }) {

@@ -14,7 +14,7 @@ import { getHiddenCount } from './utils';
 
 import styles from './styles.css.js';
 
-const separator = <InternalIcon className={styles.separator} name="angle-right" />;
+const separator = <InternalIcon className={styles.separator} name="chevron-right" />;
 
 export function InternalBreadcrumbGroup<T extends BreadcrumbGroupProps.Item>({
   items,
@@ -132,7 +132,7 @@ export function InternalBreadcrumbGroup<T extends BreadcrumbGroupProps.Item>({
               }
             }}
           >
-            <InternalIcon name="ellipsis" />
+            <InternalIcon name="more" />
           </button>
         }
       >
@@ -174,7 +174,7 @@ export function InternalBreadcrumbGroup<T extends BreadcrumbGroupProps.Item>({
           ))}
           <li className={styles.item}>
             <span className={styles['expand-button']}>
-              <InternalIcon name="ellipsis" />
+              <InternalIcon name="more" />
             </span>
             {separator}
           </li>

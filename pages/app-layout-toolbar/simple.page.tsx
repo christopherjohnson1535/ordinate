@@ -8,7 +8,7 @@ import BreadcrumbGroup from '~components/breadcrumb-group';
 import styles from './styles.module.scss';
 
 const drawers: AppLayoutToolbarProps.Drawer[] = [
-  { id: 'help', ariaLabel: 'Help panel', iconName: 'status-info' },
+  { id: 'help', ariaLabel: 'Help panel', iconName: 'note' },
   { id: 'activity', ariaLabel: 'Activity', iconName: 'history' },
   { id: 'notifications', ariaLabel: 'Notifications', iconName: 'notification', badge: true },
 ];

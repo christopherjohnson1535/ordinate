@@ -47,7 +47,7 @@ function getStatusContent({
   if (statusType === 'loading') {
     return (
       <span className={styles['status-loading']}>
-        <InternalIcon name="status-in-progress" className={styles['status-spinner']} />
+        <InternalIcon name="underway" className={styles['status-spinner']} />
         <span>{loadingText}</span>
       </span>
     );
@@ -55,7 +55,7 @@ function getStatusContent({
   if (statusType === 'error') {
     return (
       <span className={styles['status-error']}>
-        <InternalIcon name="status-negative" variant="error" ariaLabel={errorIconAriaLabel} />
+        <InternalIcon name="fault" variant="error" ariaLabel={errorIconAriaLabel} />
         <span>{errorText}</span>
         {recoveryText && (
           <InternalButton className={styles.recovery} variant="link" formAction="none" onClick={onRecoveryClick}>

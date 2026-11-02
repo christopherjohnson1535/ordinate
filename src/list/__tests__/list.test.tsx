@@ -26,7 +26,7 @@ const renderItem = (item: Step): ListProps.RenderedItem => ({
   id: item.id,
   content: item.title,
   secondaryContent: item.detail,
-  icon: <Icon name="status-pending" />,
+  icon: <Icon name="waiting" />,
   actions: <Button variant="icon" iconName="edit" ariaLabel={`Edit ${item.title}`} />,
 });
 

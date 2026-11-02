@@ -308,7 +308,7 @@ function TokenGroupSpecimen() {
   const [items, setItems] = useState<TokenGroupProps.Item[]>([
     { label: 'us-mountain-1a', description: 'Denver' },
     { label: 'us-mountain-1b', description: 'Denver' },
-    { label: 'us-coast-2a', description: 'Portland', iconName: 'status-warning' },
+    { label: 'us-coast-2a', description: 'Portland', iconName: 'caution' },
   ]);
   return (
     <TokenGroup

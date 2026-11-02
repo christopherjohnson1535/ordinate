@@ -145,7 +145,7 @@ export function ResizeHandle({
       onPointerCancel={endDrag}
       onKeyDown={handleKeyDown}
     >
-      <InternalIcon className={styles.grip} name="drag-indicator" size="small" />
+      <InternalIcon className={styles.grip} name="drag-handle" size="small" />
     </div>
   );
 }

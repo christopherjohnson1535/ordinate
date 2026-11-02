@@ -19,7 +19,7 @@ describe('ItemCard', () => {
         header="node-01"
         description="Compute node"
         footer="Updated 2 minutes ago"
-        actions={<Button variant="icon" iconName="ellipsis" ariaLabel="Actions for node-01" />}
+        actions={<Button variant="icon" iconName="more" ariaLabel="Actions for node-01" />}
         media={<img src="rack.svg" alt="Rack elevation" />}
         selectionControl={<Checkbox checked={false} ariaLabel="Select node-01" />}
       >

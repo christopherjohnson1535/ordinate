@@ -124,7 +124,7 @@ export function InternalJourney({
           <div className={styles.error}>
             <InternalIcon
               className={styles['error-icon']}
-              name="status-negative"
+              name="fault"
               variant="error"
               ariaLabel={i18n('errorIconAriaLabel', i18nStrings?.errorIconAriaLabel)}
             />
@@ -137,7 +137,7 @@ export function InternalJourney({
           <InternalButton
             className={styles['back-button']}
             variant="link"
-            iconName="angle-left"
+            iconName="chevron-left"
             formAction="none"
             disabled={isLoading}
             onClick={() => navigate(activeStepIndex - 1, 'back')}

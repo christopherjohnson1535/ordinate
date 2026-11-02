@@ -25,7 +25,7 @@ export function ExpandIcon({ expanded, collapsedDirection = 'inline-end', classN
     <span
       className={clsx(styles.root, styles[`collapsed-${collapsedDirection}`], expanded && styles.expanded, className)}
     >
-      <InternalIcon name="caret-down-filled" />
+      <InternalIcon name="caret-down-solid" />
     </span>
   );
 }

@@ -204,7 +204,7 @@ export default function AppShell() {
               type: 'menu-dropdown',
               text: 'Dana Ruiz',
               description: 'dana@annex.example',
-              iconName: 'user-profile',
+              iconName: 'person',
               items: [
                 { id: 'profile', text: 'Profile' },
                 { id: 'preferences', text: 'Preferences' },

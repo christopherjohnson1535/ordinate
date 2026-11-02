@@ -164,9 +164,7 @@ export default function TreeViewSimple() {
             getItemId={getItemId}
             getItemChildren={getItemChildren}
             ariaLabel="Plant equipment, custom toggles"
-            renderItemToggleIcon={({ expanded }) => (
-              <Icon name={expanded ? 'caret-down-filled' : 'caret-right-filled'} />
-            )}
+            renderItemToggleIcon={({ expanded }) => <Icon name={expanded ? 'caret-down-solid' : 'caret-right-solid'} />}
             renderItem={entry => ({ content: entry.name })}
           />
         </div>

@@ -20,7 +20,7 @@ const items: ButtonGroupProps.ItemOrGroup[] = [
         id: 'dislike',
         text: 'Not helpful',
         iconName: 'thumbs-down',
-        pressedIconName: 'thumbs-down-filled',
+        pressedIconName: 'thumbs-down-solid',
         pressed: true,
       },
     ],

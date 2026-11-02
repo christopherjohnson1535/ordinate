@@ -28,7 +28,7 @@ export function InternalForm({
           <div className={styles.error}>
             <InternalIcon
               className={styles['error-icon']}
-              name="status-negative"
+              name="fault"
               variant="error"
               ariaLabel={errorIconAriaLabel}
             />

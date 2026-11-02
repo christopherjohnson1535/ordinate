@@ -3,11 +3,13 @@
 import React from 'react';
 
 import { BaseComponentProps } from '../internal/base-component';
+import { DeprecatedIconName } from './deprecated-names';
 import { IconName } from './generated/icons';
 
 export interface IconProps extends BaseComponentProps {
   /**
-   * The name of a built-in icon.
+   * The name of a built-in icon. Icons that were renamed still accept their old name, such as `search` for
+   * `find`, with a warning, until the next major version.
    */
   name?: IconProps.Name;
   /**
@@ -29,7 +31,7 @@ export interface IconProps extends BaseComponentProps {
 }
 
 export namespace IconProps {
-  export type Name = IconName;
+  export type Name = IconName | DeprecatedIconName;
 
   export type Size = 'small' | 'normal' | 'medium' | 'big' | 'large' | 'inherit';
 

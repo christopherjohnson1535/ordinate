@@ -22,7 +22,7 @@ const utilities: TopNavigationProps.Utility[] = [
   {
     type: 'menu-dropdown',
     text: 'Jane Doe',
-    iconName: 'user-profile',
+    iconName: 'person',
     title: 'Jane Doe',
     description: 'jane@example.com',
     items: [

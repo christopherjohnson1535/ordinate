@@ -138,7 +138,7 @@ export const InternalInput = React.forwardRef(
             {'\u203a'}
           </span>
         ) : (
-          isSearch && <InternalIcon className={styles['search-icon']} name="search" />
+          isSearch && <InternalIcon className={styles['search-icon']} name="find" />
         )}
         <div className={styles.main}>
           {inlineLabelText && (

@@ -48,7 +48,7 @@ export function InternalCopyToClipboard({
 
   const renderMessage = (succeeded: boolean) => (
     <span className={styles.feedback}>
-      <InternalIcon className={styles['feedback-icon']} name={succeeded ? 'check' : 'status-negative'} />
+      <InternalIcon className={styles['feedback-icon']} name={succeeded ? 'check' : 'fault'} />
       <span>{succeeded ? i18n('copySuccessText', copySuccessText) : i18n('copyErrorText', copyErrorText)}</span>
     </span>
   );

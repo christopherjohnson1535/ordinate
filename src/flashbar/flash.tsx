@@ -14,11 +14,11 @@ import { FlashbarProps } from './interfaces';
 import styles from './styles.css.js';
 
 export const typeIcons: Record<FlashbarProps.Type, IconProps.Name> = {
-  success: 'status-positive',
-  error: 'status-negative',
-  warning: 'status-warning',
-  info: 'status-info',
-  'in-progress': 'status-in-progress',
+  success: 'complete',
+  error: 'fault',
+  warning: 'caution',
+  info: 'note',
+  'in-progress': 'underway',
 };
 
 interface FlashProps {

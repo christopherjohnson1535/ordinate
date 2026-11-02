@@ -64,7 +64,7 @@ describe('overflow items', () => {
             { text: 'More', items: [{ id: 'sign-out', text: 'Sign out' }] },
           ],
         },
-        { type: 'button', ariaLabel: 'Settings', iconName: 'settings' },
+        { type: 'button', ariaLabel: 'Settings', iconName: 'adjust' },
       ],
       [0, 1, 2]
     );
@@ -82,7 +82,7 @@ describe('overflow items', () => {
       {
         id: '2:',
         text: 'Settings',
-        iconName: 'settings',
+        iconName: 'adjust',
         href: undefined,
         external: undefined,
         externalIconAriaLabel: undefined,

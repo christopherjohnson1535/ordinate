@@ -120,6 +120,8 @@ The kind colors the construction lines, hash marks, dimension line and reference
 
 Icons are SVG files in `src/icon/icons/`, drawn on a 16 by 16 grid as open strokes. Do not set colors or stroke widths in the file: the `Icon` component sets the stroke to the current text color and keeps the line weight the same at every size. Give solid parts `class="filled"`. The build checks each file and turns the folder into the icon name list.
 
+The file name is the icon's name. Name a new icon for what it means in Ordinate, in plain words, and give solid variants the suffix `-solid`. Icons renamed from their earlier names keep the old names as deprecated aliases in `src/icon/deprecated-names.ts`; [Icon names](ICON_NAMES.md) lists them.
+
 ## Motion
 
 Put every transition and animation inside the `with-motion` mixin. It only runs motion when the user has not asked for reduced motion and when `disableMotion` is off. Durations and easing are tokens, so a revision can change them.

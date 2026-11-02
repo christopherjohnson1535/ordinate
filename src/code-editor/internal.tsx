@@ -184,7 +184,7 @@ export const InternalCodeEditor = React.forwardRef(
               <div className={styles.pane}>
                 <div role="alert" className={styles['error-state']}>
                   <InternalIcon
-                    name="status-negative"
+                    name="fault"
                     variant="error"
                     ariaLabel={i18n('errorIconAriaLabel', i18nStrings?.errorIconAriaLabel)}
                   />
@@ -245,7 +245,7 @@ export const InternalCodeEditor = React.forwardRef(
                 aria-haspopup="dialog"
                 onClick={() => setPreferencesVisible(true)}
               >
-                <InternalIcon name="settings" size="small" />
+                <InternalIcon name="adjust" size="small" />
               </button>
             }
           />

@@ -293,7 +293,7 @@ export function GridHeader({ title, titleId, previousAriaLabel, nextAriaLabel, o
             className={styles['page-button']}
             variant="icon"
             formAction="none"
-            iconName="angle-left"
+            iconName="chevron-left"
             ariaLabel={previousAriaLabel}
             onClick={onPrevious}
           />
@@ -308,7 +308,7 @@ export function GridHeader({ title, titleId, previousAriaLabel, nextAriaLabel, o
             className={styles['page-button']}
             variant="icon"
             formAction="none"
-            iconName="angle-right"
+            iconName="chevron-right"
             ariaLabel={nextAriaLabel}
             onClick={onNext}
           />

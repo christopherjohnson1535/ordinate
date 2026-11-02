@@ -21,9 +21,9 @@ import styles from './styles.css.js';
 type Progress = 'success' | 'in-progress' | 'pending';
 
 const progressIcon: Record<Progress, IconProps.Name> = {
-  success: 'status-positive',
+  success: 'complete',
   'in-progress': 'hotspot',
-  pending: 'status-not-started',
+  pending: 'queued',
 };
 
 function progressOf(index: number, current: number, completed: boolean): Progress {
@@ -177,7 +177,7 @@ export function InternalTutorialPanel({
           {completed && (
             <div className={styles.completion}>
               <h3 className={clsx(styles['completion-title'], styles['focus-target'])}>
-                <InternalIcon name="status-positive" />
+                <InternalIcon name="complete" />
                 <span>{i18n('completionScreenTitle', i18nStrings?.completionScreenTitle)}</span>
               </h3>
               {currentTutorial.completedScreenDescription && (

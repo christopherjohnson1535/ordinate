@@ -12,7 +12,7 @@ const card = () => createWrapper().findActionCard()!;
 
 describe('ActionCard as a button', () => {
   test('is one button named by the header and described by the description', () => {
-    render(<ActionCard header="Create a cluster" description="Start with three nodes." iconName="add-plus" />);
+    render(<ActionCard header="Create a cluster" description="Start with three nodes." iconName="add" />);
     const button = screen.getByRole('button', { name: 'Create a cluster' });
     expect(button).toHaveAccessibleDescription('Start with three nodes.');
     expect(button).toHaveAttribute('type', 'button');
@@ -107,7 +107,7 @@ describe('ActionCard test utilities and accessibility', () => {
   test('has no accessibility violations', async () => {
     const { container } = render(
       <div>
-        <ActionCard header="Create a cluster" description="Three nodes." iconName="add-plus" />
+        <ActionCard header="Create a cluster" description="Three nodes." iconName="add" />
         <ActionCard header="Read the guide" href="/guide" description="Ten minutes." />
         <ActionCard header="Import" href="/import" disabled={true} />
       </div>

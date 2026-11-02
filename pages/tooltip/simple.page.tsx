@@ -21,7 +21,7 @@ export default function TooltipSimple() {
             <Button variant="icon" iconName="copy" ariaLabel="Copy" />
           </Tooltip>
           <Tooltip content="Open in a new tab">
-            <Button variant="icon" iconName="external" ariaLabel="Open" />
+            <Button variant="icon" iconName="open-outside" ariaLabel="Open" />
           </Tooltip>
           <Tooltip content="Remove this node from the project. Running jobs move to other nodes first.">
             <Button variant="icon" iconName="close" ariaLabel="Remove" />

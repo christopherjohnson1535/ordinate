@@ -210,7 +210,7 @@ export const InternalDateRangePicker = React.forwardRef(
       <div className={styles.footer}>
         {errorText && (
           <div className={styles.error} role="alert">
-            <InternalIcon name="status-negative" ariaLabel={label('errorIconAriaLabel')} />
+            <InternalIcon name="fault" ariaLabel={label('errorIconAriaLabel')} />
             <span>{errorText}</span>
           </div>
         )}

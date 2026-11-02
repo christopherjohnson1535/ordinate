@@ -18,8 +18,8 @@ const defaultResizableMinWidth = 80;
 
 const sortingIcons: Record<TableHeaderCellProps.SortingState, IconProps.Name> = {
   unsorted: 'caret-down',
-  ascending: 'caret-up-filled',
-  descending: 'caret-down-filled',
+  ascending: 'caret-up-solid',
+  descending: 'caret-down-solid',
 };
 
 const ariaSortValues: Record<TableHeaderCellProps.SortingState, React.AriaAttributes['aria-sort']> = {

@@ -110,7 +110,7 @@ export default function ModalSimple() {
             <Button formAction="none" onClick={() => setLines(Math.max(1, lines - 3))}>
               Fewer lines
             </Button>
-            <Button formAction="none" iconName="add-plus" onClick={() => setLines(lines + 3)}>
+            <Button formAction="none" iconName="add" onClick={() => setLines(lines + 3)}>
               More lines
             </Button>
           </>

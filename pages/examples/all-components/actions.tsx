@@ -104,7 +104,7 @@ function ToggleButtonSpecimen() {
       <ToggleButton
         variant="icon"
         iconName="star"
-        pressedIconName="star-filled"
+        pressedIconName="star-solid"
         ariaLabel="Favorite this bike"
         pressed={favorite}
         onChange={event => setFavorite(event.detail.pressed)}

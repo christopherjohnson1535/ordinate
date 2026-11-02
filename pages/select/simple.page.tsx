@@ -32,7 +32,7 @@ const grouped: SelectProps.Options = [
       { value: 'object', label: 'Object bucket' },
     ],
   },
-  { value: 'network', label: 'Network', iconName: 'external' },
+  { value: 'network', label: 'Network', iconName: 'open-outside' },
 ];
 
 const many: SelectProps.Options = Array.from({ length: 40 }, (_, index) => ({

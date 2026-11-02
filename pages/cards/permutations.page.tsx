@@ -70,7 +70,7 @@ function SelectableCards(props: Partial<CardsProps<Node>>) {
         </div>
       }
       pagination={<Pagination currentPageIndex={1} pagesCount={3} />}
-      preferences={<Button variant="icon" iconName="settings" ariaLabel="Preferences" />}
+      preferences={<Button variant="icon" iconName="adjust" ariaLabel="Preferences" />}
       {...props}
     />
   );

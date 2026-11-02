@@ -74,10 +74,10 @@ export function InternalHotspot({ hotspotId, children, side = 'right', direction
       >
         {isCurrent && (
           <span className={styles.pulse}>
-            <InternalIcon name="status-not-started" />
+            <InternalIcon name="queued" />
           </span>
         )}
-        <InternalIcon name={isCurrent ? 'hotspot' : 'status-not-started'} />
+        <InternalIcon name={isCurrent ? 'hotspot' : 'queued'} />
       </button>
       {open && (
         <Annotation

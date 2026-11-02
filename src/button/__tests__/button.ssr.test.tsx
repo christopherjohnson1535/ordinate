@@ -19,7 +19,7 @@ test('renders icons, loading and external links on the server', () => {
   );
   expect(loading).toContain('aria-disabled="true"');
   expect(loading).toContain('Saving');
-  expect(renderToString(<Button iconName="add-plus">Add</Button>)).toContain('<svg');
+  expect(renderToString(<Button iconName="add">Add</Button>)).toContain('<svg');
   const external = renderToString(
     <Button href="https://example.com" external={true}>
       Docs

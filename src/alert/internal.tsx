@@ -13,10 +13,10 @@ import { AlertProps } from './interfaces';
 import styles from './styles.css.js';
 
 const typeToIcon: Record<AlertProps.Type, IconProps.Name> = {
-  info: 'status-info',
-  success: 'status-positive',
-  warning: 'status-warning',
-  error: 'status-negative',
+  info: 'note',
+  success: 'complete',
+  warning: 'caution',
+  error: 'fault',
 };
 
 export const InternalAlert = React.forwardRef(

@@ -8,17 +8,9 @@ import IconProvider from '~components/icon-provider';
 
 import { Cell, Group, Row } from './specimen';
 
-const sampleIcons: IconProps.Name[] = [
-  'calendar',
-  'file',
-  'folder',
-  'map',
-  'settings',
-  'status-positive',
-  'status-warning',
-];
+const sampleIcons: IconProps.Name[] = ['calendar', 'file', 'folder', 'map', 'adjust', 'complete', 'caution'];
 
-// A spoked wheel in the same open 1.5 px stroke as the built-in icons, standing in for "settings".
+// A spoked wheel in the same open 1.5 px stroke as the built-in icons, standing in for "adjust".
 const wheel = (
   <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
     <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
@@ -39,14 +31,14 @@ export default function IconsGroup({ number }: { number: number }) {
           {sampleIcons.map(name => (
             <Icon key={name} name={name} ariaLabel={name} />
           ))}
-          <Icon name="settings" size="big" ariaLabel="settings, big" />
+          <Icon name="adjust" size="big" ariaLabel="settings, big" />
         </Row>
       </Cell>
       <Cell name="IconProvider" note="Swaps the settings icon for a wheel inside the workshop's tools.">
-        <IconProvider icons={{ settings: wheel }}>
+        <IconProvider icons={{ adjust: wheel }}>
           <Row>
-            <Icon name="settings" ariaLabel="Workshop settings" />
-            <Button iconName="settings">Workshop settings</Button>
+            <Icon name="adjust" ariaLabel="Workshop settings" />
+            <Button iconName="adjust">Workshop settings</Button>
           </Row>
         </IconProvider>
       </Cell>

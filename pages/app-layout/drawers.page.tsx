@@ -56,7 +56,7 @@ export default function AppLayoutDrawers() {
     },
     {
       id: 'assistant',
-      trigger: { iconName: 'gen-ai' },
+      trigger: { iconName: 'assist' },
       ariaLabels: { drawerName: 'Assistant' },
       content: <Drawer header="Assistant" loading={true} loadingText="Starting the assistant" />,
     },

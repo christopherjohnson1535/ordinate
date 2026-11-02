@@ -114,7 +114,7 @@ export function InternalTagEditor({
       const excessTags = activeCount - tagLimit;
       return (
         <span className={styles['limit-exceeded']}>
-          <InternalIcon className={styles['limit-icon']} name="status-negative" size="small" />
+          <InternalIcon className={styles['limit-icon']} name="fault" size="small" />
           <span>
             {strings?.tagLimitExceeded?.(tagLimit, excessTags) ??
               i18n('tagLimitExceeded', undefined, { tagLimit, excessTags })}

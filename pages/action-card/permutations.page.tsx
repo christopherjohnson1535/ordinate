@@ -18,7 +18,7 @@ export default function ActionCardPermutations() {
         <ActionCard
           header="Create a cluster"
           description="Start with three nodes in one region."
-          iconName="add-plus"
+          iconName="add"
           onClick={() => setClicks(count => count + 1)}
         />
         <ActionCard

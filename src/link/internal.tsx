@@ -89,7 +89,7 @@ export const InternalLink = React.forwardRef(
             {' '}
             <InternalIcon
               className={styles['external-icon']}
-              name="external"
+              name="open-outside"
               size="inherit"
               ariaLabel={i18n('externalIconAriaLabel', externalIconAriaLabel)}
             />

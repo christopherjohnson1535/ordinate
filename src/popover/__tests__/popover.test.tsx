@@ -118,7 +118,7 @@ describe('Popover options', () => {
   test('a custom trigger opens it and gets focus back', () => {
     render(
       <Popover triggerType="custom" header="Status" content="All nodes healthy.">
-        <Button variant="icon" iconName="status-info" ariaLabel="Status details" />
+        <Button variant="icon" iconName="note" ariaLabel="Status details" />
       </Popover>
     );
     const button = screen.getByRole('button', { name: 'Status details' });

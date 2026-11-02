@@ -56,7 +56,7 @@ function useUtilities(log: (entry: string) => void): TopNavigationProps.Utility[
     {
       type: 'menu-dropdown',
       text: 'Settings',
-      iconName: 'settings',
+      iconName: 'adjust',
       items: [
         { id: 'language', text: 'Language and region' },
         { id: 'theme', text: 'Theme' },
@@ -67,7 +67,7 @@ function useUtilities(log: (entry: string) => void): TopNavigationProps.Utility[
     {
       type: 'menu-dropdown',
       text: 'Ada Lovelace',
-      iconName: 'user-profile',
+      iconName: 'person',
       title: 'Ada Lovelace',
       description: 'ada@example.com',
       items: [

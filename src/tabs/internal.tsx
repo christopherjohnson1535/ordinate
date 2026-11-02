@@ -193,7 +193,7 @@ export function InternalTabs({
       disabled={direction === -1 ? overflow.atStart : overflow.atEnd}
       onClick={() => overflow.scrollStep(direction)}
     >
-      <InternalIcon name={direction === -1 ? 'angle-left' : 'angle-right'} />
+      <InternalIcon name={direction === -1 ? 'chevron-left' : 'chevron-right'} />
     </button>
   );
 

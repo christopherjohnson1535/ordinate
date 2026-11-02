@@ -100,7 +100,7 @@ export function InternalSplitPanel({
             ref={openButtonRef}
             variant="icon"
             formAction="none"
-            iconName="angle-left"
+            iconName="chevron-left"
             ariaLabel={openButtonLabel}
             ariaExpanded={false}
             onClick={toggle}
@@ -147,7 +147,7 @@ export function InternalSplitPanel({
               ref={openButtonRef}
               variant="icon"
               formAction="none"
-              iconName="angle-up"
+              iconName="chevron-up"
               ariaLabel={openButtonLabel}
               ariaExpanded={false}
               onClick={toggle}
@@ -191,7 +191,7 @@ export function InternalSplitPanel({
               className={styles['preferences-button']}
               variant="icon"
               formAction="none"
-              iconName="settings"
+              iconName="adjust"
               ariaLabel={preferencesTitle}
               ariaHaspopup="dialog"
               onClick={() => setPreferencesOpen(true)}
@@ -202,7 +202,7 @@ export function InternalSplitPanel({
             className={styles['close-button']}
             variant="icon"
             formAction="none"
-            iconName={position === 'bottom' ? 'angle-down' : 'angle-right'}
+            iconName={position === 'bottom' ? 'chevron-down' : 'chevron-right'}
             ariaLabel={i18n('closeButtonAriaLabel', i18nStrings?.closeButtonAriaLabel)}
             ariaExpanded={true}
             ariaControls={rest.id ?? panelId}

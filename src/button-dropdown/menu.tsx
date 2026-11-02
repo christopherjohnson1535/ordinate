@@ -223,7 +223,7 @@ export const Menu = React.forwardRef(
           {item.external && (
             <InternalIcon
               className={styles['external-icon']}
-              name="external"
+              name="open-outside"
               variant={disabled ? 'disabled' : 'normal'}
               ariaLabel={i18n('externalIconAriaLabel', item.externalIconAriaLabel)}
             />
@@ -298,7 +298,7 @@ export const Menu = React.forwardRef(
             <span className={styles['item-content']}>
               <span className={styles['item-text']}>{group.text}</span>
             </span>
-            <InternalIcon className={styles['expand-icon']} name="angle-down" />
+            <InternalIcon className={styles['expand-icon']} name="chevron-down" />
           </div>
           {isExpanded && (
             <ul role="group" aria-label={group.text} className={styles['sub-list']} data-parent-key={key}>

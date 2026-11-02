@@ -122,12 +122,7 @@ export function FileToken({
       />
       {errorText && (
         <div className={styles['error-text']}>
-          <InternalIcon
-            className={styles['message-icon']}
-            name="status-negative"
-            size="small"
-            ariaLabel={errorIconAriaLabel}
-          />
+          <InternalIcon className={styles['message-icon']} name="fault" size="small" ariaLabel={errorIconAriaLabel} />
           <span>{errorText}</span>
         </div>
       )}
@@ -135,7 +130,7 @@ export function FileToken({
         <div className={styles['warning-text']}>
           <InternalIcon
             className={styles['message-icon']}
-            name="status-warning"
+            name="caution"
             size="small"
             ariaLabel={warningIconAriaLabel}
           />

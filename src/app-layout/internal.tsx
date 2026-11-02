@@ -124,7 +124,7 @@ export const InternalAppLayout = React.forwardRef(
               triggerLabel: i18n('toolsToggle', ariaLabels?.toolsToggle) ?? '',
               closeLabel: i18n('toolsClose', ariaLabels?.toolsClose) ?? '',
               resizeLabel: '',
-              iconName: 'status-info' as const,
+              iconName: 'note' as const,
               badge: false,
               resizable: false,
               size: toolsWidth,

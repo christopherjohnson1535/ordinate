@@ -104,7 +104,7 @@ export function InternalFormField({
         <div id={errorId} className={styles.error}>
           <InternalIcon
             className={styles['message-icon']}
-            name="status-negative"
+            name="fault"
             size="small"
             ariaLabel={i18n('errorIconAriaLabel', errorIconAriaLabel)}
           />
@@ -115,7 +115,7 @@ export function InternalFormField({
         <div id={warningId} className={styles.warning}>
           <InternalIcon
             className={styles['message-icon']}
-            name="status-warning"
+            name="caution"
             size="small"
             ariaLabel={i18n('warningIconAriaLabel', warningIconAriaLabel)}
           />

@@ -87,7 +87,7 @@ export function InternalCollectionPreferences<Custom>({
         ref={triggerRef}
         className={styles.trigger}
         variant="icon"
-        iconName="settings"
+        iconName="adjust"
         formAction="none"
         ariaLabel={heading}
         ariaHaspopup="dialog"

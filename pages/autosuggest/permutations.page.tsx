@@ -25,9 +25,9 @@ const grouped: AutosuggestProps.Options = [
   {
     label: 'Commands',
     options: [
-      { value: 'deploy production', iconName: 'command-prompt' },
-      { value: 'rollback', iconName: 'command-prompt' },
-      { value: 'scale workers', iconName: 'command-prompt' },
+      { value: 'deploy production', iconName: 'terminal' },
+      { value: 'rollback', iconName: 'terminal' },
+      { value: 'scale workers', iconName: 'terminal' },
     ],
   },
 ];

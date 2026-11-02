@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { IconProviderContext } from '../icon-provider/context';
 import { warnOnce } from '../internal/logging';
+import { isDeprecatedIconName, legacyIconName, resolveIconName } from './deprecated-names';
 import icons from './generated/icons';
 import { IconProps } from './interfaces';
 
@@ -12,18 +13,18 @@ import styles from './styles.css.js';
 
 // Icons that point along the reading direction, mirrored in right-to-left layout.
 const directionalIcons = new Set<string>([
-  'angle-left',
-  'angle-left-double',
-  'angle-right',
-  'angle-right-double',
   'arrow-left',
   'arrow-right',
-  'caret-left-filled',
-  'caret-right-filled',
-  'external',
+  'caret-left-solid',
+  'caret-right-solid',
+  'chevron-left',
+  'chevron-left-double',
+  'chevron-right',
+  'chevron-right-double',
+  'node-expand',
+  'open-outside',
   'redo',
   'send',
-  'treeview-expand',
   'undo',
 ]);
 
@@ -44,7 +45,22 @@ export function InternalIcon({
   ...rest
 }: InternalIconProps) {
   const overrides = useContext(IconProviderContext);
-  const override = name ? overrides[name] : undefined;
+  if (name && isDeprecatedIconName(name)) {
+    warnOnce(
+      'Icon',
+      `The icon "${name}" is now called "${resolveIconName(name)}". The old name stops working in the next major version.`
+    );
+  }
+  const current = name ? resolveIconName(name) : undefined;
+  const legacy = current ? legacyIconName(current) : undefined;
+  // An IconProvider written with the old names still applies to the renamed icons.
+  const override = current
+    ? current in overrides
+      ? overrides[current]
+      : legacy
+        ? overrides[legacy]
+        : undefined
+    : undefined;
 
   if (override === null) {
     return null;
@@ -56,7 +72,7 @@ export function InternalIcon({
       styles.icon,
       styles[`size-${size}`],
       styles[`variant-${variant}`],
-      !svg && !override && name && directionalIcons.has(name) && styles['flip-in-rtl'],
+      !svg && !override && current && directionalIcons.has(current) && styles['flip-in-rtl'],
       className
     ),
     ...(ariaLabel ? { role: 'img', 'aria-label': ariaLabel } : { 'aria-hidden': true }),
@@ -67,7 +83,7 @@ export function InternalIcon({
     return <span {...props}>{custom}</span>;
   }
 
-  const markup = name ? icons[name] : undefined;
+  const markup = current ? icons[current] : undefined;
   if (!markup) {
     warnOnce('Icon', name ? `There is no icon named "${name}".` : 'Set either `name` or `svg`.');
     return null;
