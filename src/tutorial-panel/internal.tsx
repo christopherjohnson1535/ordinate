@@ -121,7 +121,7 @@ export function InternalTutorialPanel({
                   {tutorial.description && <div className={styles['tutorial-description']}>{tutorial.description}</div>}
                   {tutorial.prerequisitesNeeded && tutorial.prerequisitesAlert && (
                     <div className={styles.prerequisites}>
-                      <InternalAlert type="info">{tutorial.prerequisitesAlert}</InternalAlert>
+                      <InternalAlert type="note">{tutorial.prerequisitesAlert}</InternalAlert>
                     </div>
                   )}
                   <div className={styles['tutorial-actions']}>

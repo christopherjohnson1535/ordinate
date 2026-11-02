@@ -4,25 +4,26 @@ import React, { useId, useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
-import { IconProps } from '../icon/interfaces';
 import { InternalIcon } from '../icon/internal';
+import { ConstructionTopLine } from '../internal/components/construction';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { AlertProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-const typeToIcon: Record<AlertProps.Type, IconProps.Name> = {
-  info: 'note',
-  success: 'complete',
-  warning: 'caution',
-  error: 'fault',
-};
+export interface InternalAlertProps extends Omit<AlertProps, 'type'> {
+  type?: AlertProps.Type;
+}
 
+/**
+ * A note drawn like a section: a construction line in the note's color opens it, the icon and the kind of
+ * note sit in the margin, and the title, text and action follow in ink.
+ */
 export const InternalAlert = React.forwardRef(
   (
     {
-      type = 'info',
+      type = 'note',
       header,
       children,
       action,
@@ -30,13 +31,16 @@ export const InternalAlert = React.forwardRef(
       onDismiss,
       dismissAriaLabel,
       statusIconAriaLabel,
+      i18nStrings,
       ...rest
-    }: AlertProps,
+    }: InternalAlertProps,
     ref: React.Ref<AlertProps.Ref>
   ) => {
     const i18n = useInternalI18n('alert');
     const focusRef = useRef<HTMLDivElement>(null);
     const headerId = useId();
+    const labelKey = `${type}Label` as const;
+    const label = i18n(labelKey, i18nStrings?.[labelKey]);
 
     // The group only becomes focusable for the moment it is focused, so it never joins the tab order.
     useImperativeHandle(ref, () => ({
@@ -50,6 +54,7 @@ export const InternalAlert = React.forwardRef(
 
     return (
       <div {...rest} className={clsx(styles.alert, styles[`type-${type}`])}>
+        <ConstructionTopLine kind={type} />
         <div className={styles.layout}>
           <div
             ref={focusRef}
@@ -58,9 +63,12 @@ export const InternalAlert = React.forwardRef(
             aria-labelledby={header ? headerId : undefined}
             onBlur={() => focusRef.current?.removeAttribute('tabindex')}
           >
-            <span className={styles.icon}>
-              <InternalIcon name={typeToIcon[type]} ariaLabel={statusIconAriaLabel} />
-            </span>
+            <div className={styles.side}>
+              <span className={styles.icon}>
+                <InternalIcon name={type} ariaLabel={statusIconAriaLabel} />
+              </span>
+              <span className={styles.label}>{label}</span>
+            </div>
             <div className={styles.message}>
               {header && (
                 <div id={headerId} className={styles.header}>
@@ -68,9 +76,9 @@ export const InternalAlert = React.forwardRef(
                 </div>
               )}
               {children && <div className={styles.content}>{children}</div>}
+              {action && <div className={styles['action-slot']}>{action}</div>}
             </div>
           </div>
-          {action && <div className={styles['action-slot']}>{action}</div>}
           {dismissible && (
             <div className={styles.dismiss}>
               <InternalButton

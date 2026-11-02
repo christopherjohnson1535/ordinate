@@ -4,57 +4,37 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
+
+// The margin is narrower than a container's, since it only holds the icon and one word.
+$side-column: calc(#{ord.$size-margin-column} * 0.75);
+
+// Below this width the margin moves above the message, so the text keeps a readable measure.
+$stacked-max-width: 400px;
 
 .alert {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-alert);
-  container-type: inline-size;
+  position: relative;
   box-sizing: border-box;
-  padding-block: ord.$space-s;
-  padding-inline: ord.$space-m ord.$space-s;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  background-color: ord.$color-background-container;
+  min-inline-size: 0;
+  padding-block: ord.$space-l ord.$space-s;
   color: ord.$color-text-body;
+  container-type: inline-size;
 }
-
-// Below this width the action moves under the message, so the text keeps a readable measure.
-$stacked-max-width: 400px;
 
 .layout {
   display: flex;
   align-items: flex-start;
-  gap: ord.$space-xs ord.$space-m;
-}
-
-@container (max-inline-size: #{$stacked-max-width}) {
-  .layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .body {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .dismiss {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .action-slot {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: start;
-  }
+  gap: ord.$space-m;
 }
 
 .body {
-  display: flex;
+  display: grid;
   flex: 1 1 0;
-  gap: ord.$space-s;
+  grid-template-columns: minmax(0, $side-column) minmax(0, 1fr);
+  column-gap: ord.$space-xl;
+  row-gap: ord.$space-xs;
   min-inline-size: 0;
   outline-style: none;
 
@@ -63,14 +43,30 @@ $stacked-max-width: 400px;
   }
 }
 
-// The icon and the close button are centred on the first line of text. The button is taller than the
-// line and overflows it evenly into the alert's padding.
-.icon,
+// The icon and the close button are centred on the first line of text.
+.side,
 .dismiss {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+  min-block-size: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
+}
+
+.side {
+  align-self: start;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.label {
+  @include drawing.mono-caption;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
 }
 
 .message {
@@ -91,38 +87,30 @@ $stacked-max-width: 400px;
 
 .action-slot {
   display: flex;
-  align-self: center;
+  flex-wrap: wrap;
   gap: ord.$space-xs;
+  padding-block-start: ord.$space-xs;
 }
 
-.type-info {
-  border-color: ord.$color-border-status-info;
-
-  .icon {
-    color: ord.$color-text-status-info;
-  }
+// Only the icon and the word beside it carry the tone. The message stays in ink.
+.type-note .side {
+  color: ord.$color-text-status-info;
 }
 
-.type-success {
-  border-color: ord.$color-border-status-success;
-
-  .icon {
-    color: ord.$color-text-status-success;
-  }
+.type-complete .side {
+  color: ord.$color-text-status-success;
 }
 
-.type-warning {
-  border-color: ord.$color-border-status-warning;
-
-  .icon {
-    color: ord.$color-text-status-warning;
-  }
+.type-caution .side {
+  color: ord.$color-text-status-warning;
 }
 
-.type-error {
-  border-color: ord.$color-border-error;
+.type-fault .side {
+  color: ord.$color-text-error;
+}
 
-  .icon {
-    color: ord.$color-text-error;
+@container (max-inline-size: #{$stacked-max-width}) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

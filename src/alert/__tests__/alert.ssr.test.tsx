@@ -8,7 +8,7 @@ import Alert from '../../../lib/components/alert';
 
 test('renders on the server', () => {
   const html = renderToString(
-    <Alert type="warning" header="Certificate expires soon" dismissible={true}>
+    <Alert type="caution" header="Certificate expires soon" dismissible={true}>
       It expires in 6 days.
     </Alert>
   );

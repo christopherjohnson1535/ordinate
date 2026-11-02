@@ -6,7 +6,11 @@ const messages: I18nProviderProps.Messages = {
   '@ordinate/components': {
     en: {
       alert: {
+        cautionLabel: 'Caution',
+        completeLabel: 'Complete',
         dismissAriaLabel: 'Dismiss',
+        faultLabel: 'Fault',
+        noteLabel: 'Note',
       },
       'annotation-context': {
         finishButtonText: 'Finish',

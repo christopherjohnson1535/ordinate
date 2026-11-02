@@ -96,7 +96,7 @@ export function Annotation({ id, context, tutorialStep, trigger, direction, onDi
       <span className={styles.content}>{step.content}</span>
       {step.warningAlert && (
         <span className={styles.warning}>
-          <InternalAlert type="warning">{step.warningAlert}</InternalAlert>
+          <InternalAlert type="caution">{step.warningAlert}</InternalAlert>
         </span>
       )}
       <span className={styles.footer}>

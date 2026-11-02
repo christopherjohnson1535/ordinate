@@ -82,7 +82,7 @@ export default function MaintenanceWindow() {
         <SpaceBetween size="l">
           {scheduled && (
             <Alert
-              type="success"
+              type="complete"
               header="Maintenance scheduled"
               dismissible={true}
               onDismiss={() => setScheduled(false)}

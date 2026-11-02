@@ -34,7 +34,7 @@ function DefaultFallback({ feedbackHref, i18nStrings }: Pick<ErrorBoundaryProps,
 
   return (
     <InternalAlert
-      type="error"
+      type="fault"
       header={<span className={styles.header}>{i18n('headerText', i18nStrings?.headerText)}</span>}
       action={
         <InternalButton

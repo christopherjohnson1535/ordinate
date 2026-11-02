@@ -16,10 +16,10 @@ describe('Alert', () => {
   });
 
   test('the status icon is decorative unless it has a label', () => {
-    const { rerender } = render(<Alert type="error">Save failed.</Alert>);
+    const { rerender } = render(<Alert type="fault">Save failed.</Alert>);
     expect(screen.queryByRole('img')).toBeNull();
     rerender(
-      <Alert type="error" statusIconAriaLabel="Error">
+      <Alert type="fault" statusIconAriaLabel="Error">
         Save failed.
       </Alert>
     );
@@ -50,7 +50,7 @@ describe('Alert', () => {
   });
 
   test('applies a different class for each type', () => {
-    const types: AlertProps.Type[] = ['info', 'success', 'warning', 'error'];
+    const types: AlertProps.Type[] = ['note', 'complete', 'caution', 'fault'];
     render(
       <>
         {types.map(type => (
@@ -64,6 +64,47 @@ describe('Alert', () => {
       .findAllAlerts()
       .map(alert => alert.getElement().className);
     expect(new Set(classNames).size).toBe(types.length);
+  });
+
+  test('names the kind of note in the margin', () => {
+    const { rerender } = render(<Alert>Message</Alert>);
+    const label = () => createWrapper().findAlert()!.findLabel().getText();
+    expect(label()).toBe('Note');
+    rerender(<Alert type="complete">Message</Alert>);
+    expect(label()).toBe('Complete');
+    rerender(<Alert type="caution">Message</Alert>);
+    expect(label()).toBe('Caution');
+    rerender(<Alert type="fault">Message</Alert>);
+    expect(label()).toBe('Fault');
+  });
+
+  test('i18nStrings replaces the margin label', () => {
+    render(
+      <Alert type="caution" i18nStrings={{ cautionLabel: 'Warning' }}>
+        Message
+      </Alert>
+    );
+    expect(createWrapper().findAlert()!.findLabel().getText()).toBe('Warning');
+  });
+
+  test('still accepts the old type names, with a warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const legacy: [AlertProps.LegacyType, AlertProps.Type][] = [
+      ['info', 'note'],
+      ['success', 'complete'],
+      ['warning', 'caution'],
+      ['error', 'fault'],
+    ];
+    for (const [old, current] of legacy) {
+      const { container: before, unmount: unmountBefore } = render(<Alert type={old}>Message</Alert>);
+      const legacyHtml = before.innerHTML;
+      unmountBefore();
+      const { container: after, unmount } = render(<Alert type={current}>Message</Alert>);
+      expect(legacyHtml).toBe(after.innerHTML);
+      unmount();
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining(`"${old}" is now called "${current}"`));
+    }
+    warn.mockRestore();
   });
 
   test('focus() moves focus to the message without adding it to the tab order', () => {
@@ -119,13 +160,13 @@ describe('Alert test utilities and accessibility', () => {
     const { container } = render(
       <>
         <Alert header="Maintenance window">Updates run on Sunday at 02:00.</Alert>
-        <Alert type="success" statusIconAriaLabel="Success" dismissible={true}>
+        <Alert type="complete" statusIconAriaLabel="Complete" dismissible={true}>
           Backup complete.
         </Alert>
-        <Alert type="warning" header="Certificate expires soon" action={<button>Renew</button>}>
+        <Alert type="caution" header="Certificate expires soon" action={<button>Renew</button>}>
           It expires in 6 days.
         </Alert>
-        <Alert type="error" header="Save failed" />
+        <Alert type="fault" header="Save failed" />
       </>
     );
     await expectNoAxeViolations(container);

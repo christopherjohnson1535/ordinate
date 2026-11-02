@@ -23,7 +23,7 @@ function AlertSpecimen() {
   const [visible, setVisible] = useState(true);
   return visible ? (
     <Alert
-      type="warning"
+      type="caution"
       header="Brake pads on order"
       dismissible={true}
       onDismiss={() => setVisible(false)}

@@ -118,7 +118,9 @@ States are named like their icons: `complete`, `caution`, `fault`, `note`, `unde
 
 A Badge is a short label in small mono capitals, keyed by a colored square of `size-key-square`, like the key beside a legend entry. Its `tone` is one of `neutral`, `note`, `complete` and `fault`, or the severity scale `critical`, `high`, `medium` and `low`. The scale is also told by the square's fill: solid for critical and high, half for medium, open for low, with critical in bold.
 
-The old names (`type`, `colorOverride`, Badge's `color` and the old status values) still work with a warning until the next major version.
+An Alert is a margin note rather than a box. A construction line in the note's color opens it, the icon and a mono caption naming the kind of note sit in a narrow margin, and the title, text and action follow in ink. Its `type` is `note`, `complete`, `caution` or `fault`, and `i18nStrings` replaces the caption.
+
+The old names (`type`, `colorOverride`, Badge's `color`, the old status values and Alert's `info`, `success`, `warning` and `error`) still work with a warning until the next major version.
 
 ## States
 

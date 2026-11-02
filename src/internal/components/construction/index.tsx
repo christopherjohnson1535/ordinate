@@ -7,11 +7,16 @@ import styles from './styles.css.js';
 
 export type ConstructionKind = 'configuration' | 'resource' | 'policy' | 'neutral';
 
+/**
+ * Status colors, for drawn parts that report a state, such as an alert.
+ */
+export type ConstructionTone = 'note' | 'complete' | 'caution' | 'fault';
+
 interface KindProps {
   /**
-   * The kind color of the lines and marks. Neutral graphite when left out.
+   * The color of the lines and marks: a section kind, or a status tone. Neutral graphite when left out.
    */
-  kind?: ConstructionKind;
+  kind?: ConstructionKind | ConstructionTone;
 }
 
 /**

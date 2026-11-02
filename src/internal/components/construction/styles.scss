@@ -25,6 +25,22 @@ $half-mark: calc(#{ord.$size-hash-mark} / 2);
   color: ord.$color-kind-neutral;
 }
 
+.kind-note {
+  color: ord.$color-text-status-info;
+}
+
+.kind-complete {
+  color: ord.$color-text-status-success;
+}
+
+.kind-caution {
+  color: ord.$color-text-status-warning;
+}
+
+.kind-fault {
+  color: ord.$color-text-error;
+}
+
 .line {
   @include drawing.construction-line;
 }

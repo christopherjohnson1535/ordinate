@@ -8,6 +8,13 @@ import styles from '../../../alert/styles.css.js';
 export default class AlertWrapper extends ComponentWrapper {
   static rootSelector = `.${styles.alert}`;
 
+  /**
+   * The word in the margin that names the kind of note, such as "Caution".
+   */
+  findLabel(): ElementWrapper {
+    return this.findByClassName(styles.label)!;
+  }
+
   findHeader(): ElementWrapper | null {
     return this.findByClassName(styles.header);
   }

@@ -86,7 +86,7 @@ export default function SettingsForm() {
       >
         <SpaceBetween size="l">
           {saved && (
-            <Alert type="success" header="Settings saved" dismissible={true} onDismiss={() => setSaved(false)}>
+            <Alert type="complete" header="Settings saved" dismissible={true} onDismiss={() => setSaved(false)}>
               New nodes will use these settings.
             </Alert>
           )}
