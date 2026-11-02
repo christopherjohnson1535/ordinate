@@ -9,7 +9,7 @@ import { HelpPanelProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-// Used until the built-in English messages carry `help-panel.captionText`.
+// The caption when no messages are loaded.
 const defaultCaption = 'Help';
 
 /**

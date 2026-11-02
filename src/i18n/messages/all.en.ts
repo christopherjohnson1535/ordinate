@@ -211,6 +211,7 @@ const messages: I18nProviderProps.Messages = {
         warningIconAriaLabel: 'Warning',
       },
       'help-panel': {
+        captionText: 'Help',
         loadingText: 'Loading',
       },
       input: {

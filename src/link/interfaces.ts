@@ -12,9 +12,9 @@ export interface LinkProps extends BaseComponentProps {
   children?: React.ReactNode;
   /**
    * The style of the link:
-   * * `primary` is underlined. Use it for links next to other text, such as in a paragraph,
-   *   a table cell or an alert.
-   * * `secondary` is underlined only on hover. Use it where the context already shows that
+   * * `primary` has a light underline that turns ink on hover. Use it for links next to other text,
+   *   such as in a paragraph, a table cell or an alert.
+   * * `secondary` is ink and underlined only on hover. Use it where the context already shows that
    *   the text is a link, such as a list of links.
    * * `info` is a small bold link that opens help content, shown next to a heading or label.
    * * `value-large` shows a large number or value as a link, such as a count on a dashboard.

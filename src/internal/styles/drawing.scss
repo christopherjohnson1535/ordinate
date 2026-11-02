@@ -41,7 +41,9 @@
 
 // A solid ink surface with light text. The text, rule, control and status tokens are pointed at their ink
 // counterparts for the whole subtree, so content placed on it by other components, such as a status
-// indicator, a link or a checkbox, stays readable without knowing about the ink.
+// indicator, a link or a checkbox, stays readable without knowing about the ink. That includes the element
+// itself: its own focus ring and any `offset-block-ink` turn light too, so set those colors directly on an
+// element that needs them in ink.
 @mixin on-ink {
   background-color: ord.$color-background-ink;
   color: ord.$color-text-on-ink;

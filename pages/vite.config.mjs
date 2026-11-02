@@ -31,6 +31,8 @@ export default defineConfig({
     },
   },
   build: {
+    // Browsers that support :dir(), so right-to-left rules reach the pages as the library ships them.
+    cssTarget: ['chrome120', 'firefox120', 'safari17'],
     outDir: 'dist',
     emptyOutDir: true,
   },
