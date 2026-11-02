@@ -41,8 +41,17 @@ export default class ButtonWrapper extends ComponentWrapper {
     return element ? new IconWrapper(element) : null;
   }
 
-  findExternalIcon(): IconWrapper | null {
-    const element = this.getElement().querySelector<HTMLElement>(`.${styles['external-icon']}`);
-    return element ? new IconWrapper(element) : null;
+  /**
+   * The diagonal leader of an external link, which carries the "opens in a new tab" label.
+   */
+  findExternalIcon(): ElementWrapper | null {
+    return this.findByClassName(styles['external-icon']);
+  }
+
+  /**
+   * The leader at the end of a button that goes to another page of the application.
+   */
+  findLeader(): ElementWrapper | null {
+    return this.findByClassName(styles.leader);
   }
 }

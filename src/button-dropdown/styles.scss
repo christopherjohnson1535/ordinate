@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 @mixin start-radius($radius) {
@@ -16,10 +17,26 @@
   border-end-end-radius: $radius;
 }
 
+// A faint construction line across the top of a group, from edge to edge of the menu.
 @mixin divider-above {
-  border-block-start-width: ord.$border-width-default;
-  border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-divider;
+  position: relative;
+
+  &::before {
+    @include drawing.construction-line;
+    content: '';
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: ord.$border-width-default;
+    color: ord.$color-kind-neutral;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
 }
 
 .root {
@@ -48,9 +65,40 @@
   border-color: transparent;
   background-color: transparent;
 
-  &:hover {
-    background-color: ord.$color-background-item-hover;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: ord.$color-background-button-normal-hover;
+    }
   }
+}
+
+// The main action and the arrow are drawn as one block on one offset, and press flat together.
+.split {
+  @include styles.border-radius(ord.$border-radius-button);
+  @include drawing.offset-block;
+
+  @include styles.with-motion {
+    @include drawing.offset-press-transition;
+  }
+
+  &:has(.segment:active:not(:disabled, [aria-disabled='true'])) {
+    @include drawing.offset-press;
+  }
+}
+
+.split-primary {
+  @include drawing.offset-block-ink;
+}
+
+.split-disabled {
+  box-shadow: none;
+}
+
+// Two classes and the state, so the halves stay put over the button's own offset and press.
+.split .segment,
+.split .segment:active {
+  box-shadow: none;
+  translate: none;
 }
 
 .split .main-action {
@@ -118,13 +166,12 @@
 }
 
 .group-label {
-  @include styles.font-label;
+  @include drawing.mono-caption;
   display: flex;
   align-items: center;
   gap: ord.$space-xs;
   padding-block: ord.$space-scaled-xs ord.$space-xxs;
   padding-inline: ord.$space-input-horizontal;
-  font-size: ord.$font-size-description;
   color: ord.$color-text-secondary;
 }
 
@@ -139,10 +186,14 @@
   text-decoration-line: none;
   cursor: pointer;
 
-  &:hover,
+  // The highlighted item is a raised row. Hovering moves focus to the item, so focus draws it for both.
   &:focus {
     outline-width: 0;
-    background-color: ord.$color-background-item-hover;
+    background-color: ord.$color-background-button-normal-hover;
+  }
+
+  @include hover {
+    background-color: ord.$color-background-button-normal-hover;
   }
 
   // Drawn inside the item so the scrolling list does not clip it.
@@ -206,9 +257,12 @@
   }
 }
 
+// Shortcuts and short values are lettered in mono, as measures are.
 .secondary-text {
   flex-shrink: 0;
   margin-inline-start: ord.$space-s;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
   white-space: nowrap;
 }
 

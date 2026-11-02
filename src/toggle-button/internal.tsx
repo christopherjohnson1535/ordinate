@@ -43,7 +43,13 @@ export const InternalToggleButton = React.forwardRef(
       <InternalButton
         {...rest}
         ref={ref}
-        className={clsx(styles['toggle-button'], pressed && styles.pressed, className)}
+        className={clsx(
+          styles['toggle-button'],
+          styles[`variant-${variant}`],
+          pressed && styles.pressed,
+          loading && styles.loading,
+          className
+        )}
         variant={variant}
         formAction="none"
         iconName={pressed ? (pressedIconName ?? iconName) : iconName}

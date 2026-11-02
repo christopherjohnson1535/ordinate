@@ -160,6 +160,7 @@ export const InternalButtonDropdown = React.forwardRef(
         className={clsx(
           styles.trigger,
           variant === 'inline-icon' && styles['inline-icon'],
+          isSplit && styles.segment,
           isSplit && styles['split-trigger'],
           isSplit && variant === 'primary' && styles['split-trigger-primary'],
           triggerClassName
@@ -184,7 +185,7 @@ export const InternalButtonDropdown = React.forwardRef(
 
     const mainActionButton = isSplit && mainAction && (
       <InternalButton
-        className={styles['main-action']}
+        className={clsx(styles['main-action'], styles.segment)}
         variant={variant === 'primary' ? 'primary' : 'normal'}
         formAction="none"
         iconName={mainAction.iconName}
@@ -204,7 +205,13 @@ export const InternalButtonDropdown = React.forwardRef(
     return (
       <div
         {...rest}
-        className={clsx(styles.root, isSplit && styles.split, className)}
+        className={clsx(
+          styles.root,
+          isSplit && styles.split,
+          isSplit && variant === 'primary' && styles['split-primary'],
+          isSplit && disabled && (mainAction?.disabled ?? false) && styles['split-disabled'],
+          className
+        )}
         onBlur={event => {
           if (open && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
             closeMenu(false);

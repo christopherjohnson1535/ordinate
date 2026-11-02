@@ -3,10 +3,10 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
-import { InternalIcon } from '../icon/internal';
 import { fireCancelableEvent, fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { warnOnce } from '../internal/logging';
+import { ExternalLeader } from './external-leader';
 import { LinkProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -78,21 +78,17 @@ export const InternalLink = React.forwardRef(
       styles[`variant-${variant}`],
       styles[fontSizeClass(variant, fontSize)],
       styles[`color-${variant === 'info' ? 'normal' : color}`],
+      external && styles.external,
       className
     );
 
     const content = (
       <>
-        {children}
+        {external ? <span className={styles['external-text']}>{children}</span> : children}
         {external && (
           <>
-            {' '}
-            <InternalIcon
-              className={styles['external-icon']}
-              name="open-outside"
-              size="inherit"
-              ariaLabel={i18n('externalIconAriaLabel', externalIconAriaLabel)}
-            />
+            {' '}
+            <ExternalLeader ariaLabel={i18n('externalIconAriaLabel', externalIconAriaLabel)} />
           </>
         )}
       </>

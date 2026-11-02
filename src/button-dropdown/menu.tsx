@@ -7,6 +7,7 @@ import { InternalIcon } from '../icon/internal';
 import { getLogicalArrowStep } from '../internal/direction';
 import { useInternalI18n } from '../internal/i18n/context';
 import { getRovingIndex, RovingMove } from '../internal/roving-focus';
+import { ExternalLeader } from '../link/external-leader';
 import { ButtonDropdownProps } from './interfaces';
 import { getGroupKey, isCheckboxItem, isItemGroup } from './utils';
 
@@ -221,10 +222,8 @@ export const Menu = React.forwardRef(
           {/* Separates the icon's label from the text in the accessible name. Flex layout drops it visually. */}
           {item.external && ' '}
           {item.external && (
-            <InternalIcon
+            <ExternalLeader
               className={styles['external-icon']}
-              name="open-outside"
-              variant={disabled ? 'disabled' : 'normal'}
               ariaLabel={i18n('externalIconAriaLabel', item.externalIconAriaLabel)}
             />
           )}

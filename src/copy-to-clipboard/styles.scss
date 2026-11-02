@@ -3,6 +3,7 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -39,8 +40,10 @@
   border-color: transparent;
   background-color: transparent;
 
-  &:hover {
-    background-color: ord.$color-background-item-hover;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not([disabled], [aria-disabled='true']) {
+      background-color: ord.$color-background-button-normal-hover;
+    }
   }
 
   // Without a frame, a hatched square reads as a stray mark; the dimmed icon is enough.
@@ -59,4 +62,23 @@
 
 .feedback-icon {
   flex-shrink: 0;
+}
+
+// The "Copied" stamp, in small mono capitals. It sits in the ink feedback panel, so the key takes the complete
+// color made for ink.
+.stamp {
+  @include drawing.mono-caption;
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xxs;
+  font-size: ord.$font-size-caption;
+  white-space: nowrap;
+}
+
+.stamp-key {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  inline-size: ord.$size-key-square;
+  block-size: ord.$size-key-square;
+  background-color: ord.$color-text-status-success-on-ink;
 }

@@ -4,19 +4,32 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// On is an ink fill. The colors are the ones `drawing.on-ink` uses, set here directly because that mixin also
+// repoints the focus ring and ink edge tokens, which the button draws on itself.
 // Two classes, so the pressed state wins over the button's own variant and hover rules.
-.toggle-button.pressed,
-.toggle-button.pressed:hover {
-  border-color: ord.$color-background-button-primary;
-  background-color: ord.$color-background-button-primary;
-  color: ord.$color-text-button-primary;
+.toggle-button.pressed {
+  border-color: ord.$color-background-ink;
+  background-color: ord.$color-background-ink;
+  color: ord.$color-text-on-ink;
 }
 
+// A pressed outline button keeps its offset, drawn apart from the ink as on the main button.
+.toggle-button.pressed.variant-normal {
+  @include drawing.offset-block-ink;
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    @include drawing.offset-press;
+  }
+}
+
+// A pressed button that is loading stays ink, as the main button does.
 .toggle-button.pressed:disabled,
-.toggle-button.pressed[aria-disabled='true'] {
+.toggle-button.pressed[aria-disabled='true']:not(.loading) {
   border-color: ord.$color-border-disabled;
   background-color: ord.$color-background-item-selected;
   color: ord.$color-text-disabled;
+  box-shadow: none;
 }
