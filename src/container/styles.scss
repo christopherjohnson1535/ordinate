@@ -7,8 +7,7 @@
 @use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// Geometry of the drawing. The top construction line sits on the top edge of the section and runs past
-// both ends by $overshoot. The side line stands halfway across the gap between the margin and the content
+// Geometry of the drawing. ConstructionTopLine draws the line along the top edge and its end marks. The side line stands halfway across the gap between the margin and the content
 // and runs past the top line and the end of the content by the same amount.
 $overshoot: ord.$space-s;
 // Keep these equal to the root padding and the layout column gap below, which must name the tokens.
@@ -50,25 +49,8 @@ $side-by-side-min-width: breakpoints.$xs;
   color: ord.$color-kind-neutral;
 }
 
-.top-line {
-  @include drawing.construction-line;
-  inset-block-start: 0;
-  inset-inline: calc(-1 * #{$overshoot});
-  block-size: ord.$border-width-default;
-}
-
 .mark {
   @include drawing.hash-mark;
-}
-
-.mark-top-start {
-  inset-block-start: 0;
-  inset-inline-start: calc(-1 * #{$overshoot} - #{$half-mark});
-}
-
-.mark-top-end {
-  inset-block-start: 0;
-  inset-inline-end: calc(-1 * #{$overshoot} - #{$half-mark});
 }
 
 .layout {
@@ -180,19 +162,6 @@ $side-by-side-min-width: breakpoints.$xs;
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-divider-secondary;
   color: ord.$color-text-secondary;
-}
-
-.mark-footer-start,
-.mark-footer-end {
-  inset-block-start: calc(-1 * #{ord.$border-width-default});
-}
-
-.mark-footer-start {
-  inset-inline-start: calc(-1 * #{$half-mark});
-}
-
-.mark-footer-end {
-  inset-inline-end: calc(-1 * #{$half-mark});
 }
 
 .fit-height {

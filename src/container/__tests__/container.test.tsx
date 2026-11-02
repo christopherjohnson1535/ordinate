@@ -84,9 +84,7 @@ describe('Container', () => {
         Content
       </Container>
     );
-    const marks = container()
-      .getElement()
-      .querySelectorAll(`.${styles.mark}, .${styles['top-line']}, .${styles['side-line']}`);
+    const marks = container().getElement().querySelectorAll(`.${styles.mark}, .${styles['side-line']}`);
     expect(marks.length).toBeGreaterThan(0);
     marks.forEach(mark => expect(mark).toHaveAttribute('aria-hidden', 'true'));
   });

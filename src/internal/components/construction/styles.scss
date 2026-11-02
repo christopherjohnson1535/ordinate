@@ -1,0 +1,67 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/drawing';
+@use '../../styles/tokens' as ord;
+
+// How far a construction line runs past the corner it marks.
+$overshoot: ord.$space-s;
+$half-mark: calc(#{ord.$size-hash-mark} / 2);
+
+.kind-configuration {
+  color: ord.$color-kind-configuration;
+}
+
+.kind-resource {
+  color: ord.$color-kind-resource;
+}
+
+.kind-policy {
+  color: ord.$color-kind-policy;
+}
+
+.kind-neutral {
+  color: ord.$color-kind-neutral;
+}
+
+.line {
+  @include drawing.construction-line;
+}
+
+.mark {
+  @include drawing.hash-mark;
+}
+
+.top-line {
+  inset-block-start: 0;
+  inset-inline: calc(-1 * #{$overshoot});
+  block-size: ord.$border-width-default;
+}
+
+.top-start,
+.top-end {
+  inset-block-start: 0;
+}
+
+.top-start {
+  inset-inline-start: calc(-1 * #{$overshoot} - #{$half-mark});
+}
+
+.top-end {
+  inset-inline-end: calc(-1 * #{$overshoot} - #{$half-mark});
+}
+
+// A rule drawn as the ancestor's top border sits just above its padding box.
+.rule-start,
+.rule-end {
+  inset-block-start: calc(-1 * #{ord.$border-width-default});
+}
+
+.rule-start {
+  inset-inline-start: calc(-1 * #{$half-mark});
+}
+
+.rule-end {
+  inset-inline-end: calc(-1 * #{$half-mark});
+}

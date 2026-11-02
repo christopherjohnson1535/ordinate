@@ -3,6 +3,7 @@
 import React, { useId, useImperativeHandle, useRef, useState } from 'react';
 import clsx from 'clsx';
 
+import { ConstructionTopLine } from '../internal/components/construction';
 import { ExpandIcon } from '../internal/components/expand-icon';
 import { fireNonCancelableEvent } from '../internal/events';
 import { warnOnce } from '../internal/logging';
@@ -103,6 +104,7 @@ export const InternalExpandableSection = React.forwardRef(
         {...rest}
         className={clsx(styles.root, styles[`variant-${variant}`], expanded && styles.expanded, className)}
       >
+        {isContainer && <ConstructionTopLine />}
         <div className={styles.header}>
           <div className={styles['header-row']}>
             {HeadingTag ? <HeadingTag className={styles.heading}>{trigger}</HeadingTag> : trigger}

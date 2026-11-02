@@ -3,6 +3,7 @@
 import React, { useId } from 'react';
 import clsx from 'clsx';
 
+import { ConstructionTopLine, RuleEndMarks } from '../internal/components/construction';
 import { DimensionLine } from '../internal/components/dimension-line';
 import { Heading } from '../internal/components/heading';
 import { ContainerProps } from './interfaces';
@@ -42,9 +43,7 @@ export function InternalContainer({
       aria-labelledby={hasHeading ? headingId : undefined}
       className={clsx(styles.root, styles[`kind-${kind}`], fitHeight && styles['fit-height'])}
     >
-      <span className={clsx(styles.ink, styles['top-line'])} aria-hidden="true" />
-      <span className={clsx(styles.ink, styles.mark, styles['mark-top-start'])} aria-hidden="true" />
-      <span className={clsx(styles.ink, styles.mark, styles['mark-top-end'])} aria-hidden="true" />
+      <ConstructionTopLine kind={kind} />
       <div className={clsx(styles.layout, !hasMargin && styles['no-margin'])}>
         {hasMargin && (
           <div className={styles.margin}>
@@ -66,8 +65,7 @@ export function InternalContainer({
           <div className={styles.content}>{children}</div>
           {isPresent(footer) && (
             <div className={styles.footer}>
-              <span className={clsx(styles.ink, styles.mark, styles['mark-footer-start'])} aria-hidden="true" />
-              <span className={clsx(styles.ink, styles.mark, styles['mark-footer-end'])} aria-hidden="true" />
+              <RuleEndMarks kind={kind} />
               {footer}
             </div>
           )}

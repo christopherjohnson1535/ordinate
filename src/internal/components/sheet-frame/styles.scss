@@ -7,40 +7,28 @@
 
 .root {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-container);
+  position: relative;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   min-inline-size: 0;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-divider;
-  background-color: ord.$color-background-container;
+  padding-block: ord.$space-l ord.$space-s;
   color: ord.$color-text-body;
 }
 
 .header {
-  padding-block: ord.$space-scaled-m ord.$space-scaled-s;
-  padding-inline: ord.$space-container;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-strong;
+  padding-block-end: ord.$space-s;
 }
 
 .content {
-  padding-block: ord.$space-container;
-  padding-inline: ord.$space-container;
-
-  &.no-paddings {
-    padding-block: 0;
-    padding-inline: 0;
-  }
+  min-inline-size: 0;
 }
 
 .footer {
-  padding-block: ord.$space-m;
-  padding-inline: ord.$space-container;
+  position: relative;
+  padding-block-start: ord.$space-xs;
   border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-divider;
+  border-block-start-color: ord.$color-border-divider-secondary;
+  color: ord.$color-text-secondary;
 }

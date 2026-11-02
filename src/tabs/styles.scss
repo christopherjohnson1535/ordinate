@@ -16,32 +16,12 @@
   color: ord.$color-text-body;
 }
 
+// The container and stacked variants are drawn like Container: a construction line opens the tabs and runs
+// past both ends. Stacked tabs follow the sections around them closely, like the parts of one detail.
 .variant-container,
 .variant-stacked {
-  @include styles.border-radius(ord.$border-radius-container);
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-divider;
-  background-color: ord.$color-background-container;
-}
-
-// Stacked tabs join the containers around them into one sheet, as stacked containers do.
-.variant-stacked {
-  @include styles.border-radius(0);
-}
-
-.variant-stacked + .variant-stacked {
-  border-block-start-width: 0;
-}
-
-.variant-stacked:not(.variant-stacked + .variant-stacked) {
-  border-start-start-radius: ord.$border-radius-container;
-  border-start-end-radius: ord.$border-radius-container;
-}
-
-.variant-stacked:not(:has(+ .variant-stacked)) {
-  border-end-start-radius: ord.$border-radius-container;
-  border-end-end-radius: ord.$border-radius-container;
+  position: relative;
+  padding-block: ord.$space-l ord.$space-s;
 }
 
 // The base rule is an inset shadow so the active tab's thicker rule can be drawn over it.
@@ -243,8 +223,8 @@
 
 .variant-container > .panel,
 .variant-stacked > .panel {
-  padding-block: ord.$space-container;
-  padding-inline: ord.$space-container;
+  padding-block: ord.$space-m 0;
+  padding-inline: 0;
 }
 
 .root.no-paddings > .panel {

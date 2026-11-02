@@ -148,23 +148,19 @@
   }
 }
 
+// The container and stacked variants are drawn like Container: a construction line opens each section and
+// runs past both ends, and the content sits under the heading. Stacked sections follow one another closely,
+// like the parts of one detail.
 .variant-container,
 .variant-stacked {
-  @include styles.border-radius(ord.$border-radius-container);
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-divider;
-  background-color: ord.$color-background-container;
-
-  .header {
-    padding-block: ord.$space-m;
-    padding-inline: ord.$space-container;
-  }
+  position: relative;
+  padding-block: ord.$space-l ord.$space-s;
 
   .heading,
   .trigger {
     @include styles.font-heading;
-    font-size: ord.$font-size-heading-s;
+    font-size: ord.$font-size-heading-m;
+    font-weight: ord.$font-weight-label;
   }
 
   .description {
@@ -173,34 +169,12 @@
   }
 
   .content {
-    padding-block: ord.$space-container;
-    padding-inline: ord.$space-container;
-  }
-
-  &.expanded .header {
-    border-block-end-width: ord.$border-width-default;
-    border-block-end-style: solid;
-    border-block-end-color: ord.$color-border-divider;
+    padding-block: ord.$space-s 0;
   }
 }
 
-// Stacked sections read as one sheet split into parts, like stacked containers.
-.variant-stacked {
-  @include styles.border-radius(0);
-}
-
-.variant-stacked + .variant-stacked {
-  border-block-start-width: 0;
-}
-
-.variant-stacked:not(.variant-stacked + .variant-stacked) {
-  border-start-start-radius: ord.$border-radius-container;
-  border-start-end-radius: ord.$border-radius-container;
-}
-
-.variant-stacked:not(:has(+ .variant-stacked)) {
-  border-end-start-radius: ord.$border-radius-container;
-  border-end-end-radius: ord.$border-radius-container;
+.variant-container + .variant-container {
+  margin-block-start: ord.$space-l;
 }
 
 .content.no-paddings {

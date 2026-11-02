@@ -4,6 +4,7 @@ import React, { useId, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
+import { ConstructionTopLine } from '../internal/components/construction';
 import { getLogicalArrowStep } from '../internal/direction';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
@@ -203,6 +204,7 @@ export function InternalTabs({
       {...rest}
       className={clsx(styles.root, styles[`variant-${variant}`], disableContentPaddings && styles['no-paddings'])}
     >
+      {variant !== 'default' && <ConstructionTopLine />}
       <div ref={headerRef} className={styles.header}>
         {overflow.overflowing && scrollButton(-1)}
         <div ref={scrollerRef} className={styles.scroller} onScroll={overflow.measure}>

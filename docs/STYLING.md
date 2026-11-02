@@ -93,6 +93,8 @@ The console borrows the marks of a drawing set, and `src/internal/styles/drawing
 
 Sections are drawn with construction lines rather than boxes. A thin line opens each section and runs past both ends; a second line stands between the heading column and the content and runs past the top and the bottom. Both use `construction-line`, which holds them back with `opacity-construction`. A 45-degree `hash-mark` sits wherever a line ends or meets another. A dimension line, from `src/internal/components/dimension-line`, lies on the top line and carries a short measure of what the section holds, such as "7 services". The line breaks around its label, so it needs no background. The lines and marks are drawing only; the label is text.
 
+Every container is drawn this way. Container puts the heading in a margin column. The container variants of Table, Cards, ExpandableSection and Tabs keep their heading on top, because they need the full width, and draw the same opening line with `ConstructionTopLine` from `src/internal/components/construction`. `RuleEndMarks` puts the hash marks on a footer rule.
+
 ## Kinds
 
 A section's color says what it holds. Kinds are not decoration and not status, so the three hues stay clear of green, amber and red.

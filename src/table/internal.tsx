@@ -200,9 +200,8 @@ export function InternalTable<T>({
       contentDensity={contentDensity}
       layout={widths.layout}
       minInlineSize={widths.minTableWidth}
-      edgeInset={hasSheet ? 'container' : 'flush'}
+      edgeInset="flush"
       ruleWeight={hasSheet ? 'heavy' : 'light'}
-      className={hasSheet && !footer ? styles['rows-end-sheet'] : undefined}
     >
       <InternalTableHead>{headerRow}</InternalTableHead>
       <InternalTableBody>{bodyRows}</InternalTableBody>
@@ -236,10 +235,9 @@ export function InternalTable<T>({
     return (
       <SheetFrame
         {...rest}
-        className={clsx(styles.root, styles[`variant-${variant}`], styles.sheet)}
+        className={clsx(styles.root, styles[`variant-${variant}`])}
         header={headerArea}
         footer={footerSlot}
-        disableContentPaddings={true}
       >
         {table}
         {liveRegion}
@@ -251,9 +249,7 @@ export function InternalTable<T>({
     <div {...rest} className={clsx(styles.root, styles[`variant-${variant}`])}>
       {headerArea}
       {variant === 'full-page' ? (
-        <SheetFrame className={styles.sheet} footer={footerSlot} disableContentPaddings={true}>
-          {table}
-        </SheetFrame>
+        <SheetFrame footer={footerSlot}>{table}</SheetFrame>
       ) : (
         <>
           {table}
