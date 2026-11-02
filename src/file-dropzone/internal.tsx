@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 
+import { CropMarks } from '../internal/components/crop-marks';
 import { fireNonCancelableEvent } from '../internal/events';
 import { hasFiles, useFilesDragging } from '../internal/hooks/use-files-dragging';
 import { FileDropzoneProps } from './interfaces';
@@ -58,6 +59,8 @@ export function InternalFileDropzone({ onChange, children, className, ...rest }:
       onDragLeave={leave}
       onDrop={drop}
     >
+      <span className={styles.boundary} aria-hidden="true" />
+      <CropMarks kind="neutral" />
       <div className={styles.content}>{children}</div>
     </div>
   );

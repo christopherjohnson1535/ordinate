@@ -6,26 +6,27 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
-@mixin start-radius($radius) {
-  border-start-start-radius: $radius;
-  border-end-start-radius: $radius;
-}
-
-@mixin end-radius($radius) {
-  border-start-end-radius: $radius;
-  border-end-end-radius: $radius;
-}
-
+// A hairline frame holding the segments, with short ticks between them. The chosen segment is one of a set, so
+// it is lettered in ink and marked with the same sliding crop marks as the open tab.
 .root {
+  @include styles.border-radius(ord.$border-radius-button);
+  position: relative;
   display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
   max-inline-size: 100%;
+  padding-block: ord.$space-xxxs;
+  padding-inline: ord.$space-xxxs;
+  border-width: ord.$border-width-control;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
   vertical-align: middle;
 }
 
-// Each segment draws its own frame, so the selected one can take an ink edge and the
-// focus ring is never clipped by the group.
 .segment {
   @include styles.font-label;
+  @include styles.border-radius(ord.$border-radius-checkbox);
   position: relative;
   display: inline-flex;
   flex: 0 1 auto;
@@ -34,38 +35,20 @@
   gap: ord.$space-xs;
   box-sizing: border-box;
   min-inline-size: 0;
-  min-block-size: ord.$size-control-height;
+  min-block-size: calc(#{ord.$size-control-height} - 2 * #{ord.$space-xxxs} - 2 * #{ord.$border-width-control});
   margin-block: 0;
   margin-inline: 0;
   padding-block: ord.$space-xxs;
   padding-inline: ord.$space-button-horizontal;
-  border-block-width: ord.$border-width-control;
-  border-inline-start-width: 0;
-  border-inline-end-width: ord.$border-width-control;
-  border-style: solid;
-  border-color: ord.$color-border-control;
-  background-color: ord.$color-background-button-normal;
+  border-width: 0;
+  background-color: transparent;
   color: ord.$color-text-body-secondary;
   cursor: pointer;
 
   @include styles.with-motion {
-    transition-property: background-color, border-color, color;
+    transition-property: background-color, color;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
-  }
-
-  &:first-child {
-    @include start-radius(ord.$border-radius-button);
-    border-inline-start-width: ord.$border-width-control;
-  }
-
-  &:last-child {
-    @include end-radius(ord.$border-radius-button);
-  }
-
-  &:hover {
-    background-color: ord.$color-background-button-normal-hover;
-    color: ord.$color-text-body;
   }
 
   &:focus-visible {
@@ -74,29 +57,43 @@
   }
 }
 
+// A short tick between two segments, left out beside the chosen one so its marks stand clear.
+.segment + .segment::before {
+  content: '';
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$space-s} / 2);
+  inset-inline-start: 0;
+  inline-size: ord.$border-width-default;
+  block-size: ord.$space-s;
+  background-color: ord.$color-border-control;
+  pointer-events: none;
+}
+
+.selected::before,
+.selected + .segment::before {
+  visibility: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .segment:not(.selected, .disabled):hover {
+    background-color: ord.$color-background-button-normal-hover;
+    color: ord.$color-text-body;
+  }
+}
+
 .icon-only {
-  min-inline-size: ord.$size-control-height;
+  min-inline-size: calc(#{ord.$size-control-height} - 2 * #{ord.$space-xxxs});
   padding-inline: ord.$space-xs;
 }
 
-.selected,
-.selected:hover {
-  border-color: ord.$color-background-button-primary;
-  background-color: ord.$color-background-button-primary;
-  color: ord.$color-text-button-primary;
+.selected {
+  color: ord.$color-text-body;
 }
 
-.disabled,
-.disabled:hover {
+.disabled {
   @include styles.hatch;
-  background-color: ord.$color-background-button-normal;
   color: ord.$color-text-disabled;
   cursor: default;
-}
-
-.selected.disabled {
-  border-color: ord.$color-border-control;
-  background-color: ord.$color-background-item-selected;
 }
 
 .icon {

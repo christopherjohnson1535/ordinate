@@ -8,6 +8,8 @@ import FileDropzone from '../../../lib/components/file-dropzone';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+
 const plan = new File(['plan'], 'site-plan.pdf', { type: 'application/pdf' });
 const section = new File(['section'], 'section-a.png', { type: 'image/png' });
 
@@ -28,6 +30,13 @@ describe('FileDropzone', () => {
   test('renders its children', () => {
     render(<FileDropzone>Drop drawings here</FileDropzone>);
     expect(dropzone().findContent().getText()).toBe('Drop drawings here');
+  });
+
+  test('draws crop marks at its corners, hidden from assistive technology', () => {
+    render(<FileDropzone>Drop drawings here</FileDropzone>);
+    const marks = dropzone().findAllByClassName(marksStyles.root);
+    expect(marks).toHaveLength(1);
+    expect(marks[0].getElement()).toHaveAttribute('aria-hidden', 'true');
   });
 
   test('fires onChange with the dropped files', () => {

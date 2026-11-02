@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -15,6 +16,7 @@
   max-block-size: var(--dropdown-available-block-size, none);
 }
 
+// The trigger is drawn as a text field: a hairline edge with an ink baseline to write on, as Input is.
 .trigger {
   @include styles.font-body;
   @include styles.border-radius(ord.$border-radius-input);
@@ -30,12 +32,13 @@
   border-style: solid;
   border-color: ord.$color-border-control;
   background-color: ord.$color-background-control;
+  box-shadow: inset 0 calc(-1 * #{ord.$border-width-default}) 0 0 ord.$color-text-secondary;
   color: ord.$color-text-body;
   text-align: start;
   cursor: pointer;
 
   @include styles.with-motion {
-    transition-property: border-color, background-color;
+    transition-property: border-color, background-color, box-shadow;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
   }
@@ -50,6 +53,11 @@
     box-shadow: none;
     color: ord.$color-text-disabled;
     cursor: default;
+
+    // Matches the specificity of the right-to-left status edge.
+    &:dir(rtl) {
+      box-shadow: none;
+    }
   }
 }
 
@@ -59,17 +67,36 @@
 
 .read-only {
   background-color: ord.$color-background-control-read-only;
+  box-shadow: none;
   cursor: default;
 }
 
+// An error or a warning draws the edge, the baseline and a leading mark in the status color. Box shadows have
+// no logical form, so the mark changes sides for right-to-left layout.
 .invalid {
   border-color: ord.$color-border-error;
-  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-error;
+  box-shadow:
+    inset 0 calc(-1 * #{ord.$border-width-default}) 0 0 ord.$color-border-error,
+    inset ord.$border-width-section 0 0 0 ord.$color-border-error;
+
+  &:dir(rtl) {
+    box-shadow:
+      inset 0 calc(-1 * #{ord.$border-width-default}) 0 0 ord.$color-border-error,
+      inset calc(-1 * #{ord.$border-width-section}) 0 0 0 ord.$color-border-error;
+  }
 }
 
 .warning {
   border-color: ord.$color-border-status-warning;
-  box-shadow: inset ord.$border-width-section 0 0 ord.$color-border-status-warning;
+  box-shadow:
+    inset 0 calc(-1 * #{ord.$border-width-default}) 0 0 ord.$color-border-status-warning,
+    inset ord.$border-width-section 0 0 0 ord.$color-border-status-warning;
+
+  &:dir(rtl) {
+    box-shadow:
+      inset 0 calc(-1 * #{ord.$border-width-default}) 0 0 ord.$color-border-status-warning,
+      inset calc(-1 * #{ord.$border-width-section}) 0 0 0 ord.$color-border-status-warning;
+  }
 }
 
 .trigger-icon {
@@ -124,6 +151,22 @@
   display: flex;
   flex-direction: column;
   gap: ord.$space-scaled-xs;
+}
+
+// The months, with the range length right under them.
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
+}
+
+// The length of the chosen or previewed range, lettered as a measure under the months.
+.range-length {
+  @include drawing.font-caption;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+  text-transform: none;
+  color: ord.$color-kind-neutral;
 }
 
 .inputs,

@@ -109,7 +109,7 @@ export function InternalTagEditor({
       : (strings?.removeButtonAriaLabel?.(tag) ?? i18n('removeButtonAriaLabel', undefined, { key: tag.key }));
   };
 
-  const limitInfo = () => {
+  const limitText = () => {
     if (activeCount > tagLimit) {
       const excessTags = activeCount - tagLimit;
       return (
@@ -128,6 +128,7 @@ export function InternalTagEditor({
     const availableTags = tagLimit - activeCount;
     return strings?.tagLimit?.(availableTags, tagLimit) ?? i18n('tagLimit', undefined, { availableTags, tagLimit });
   };
+  const limitInfo = () => <span className={styles.limit}>{limitText()}</span>;
 
   const valueLabel = (
     <>

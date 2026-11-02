@@ -8,6 +8,7 @@ import { isSameDay, isSameMonth } from '../../dates/arithmetic';
 import { getMonthGrid, getYearGrid } from '../../dates/grid';
 import { formatIsoDate } from '../../dates/iso';
 import { formatDayNumber, formatFullDate, formatMonthName, formatMonthYear, getWeekdayNames } from '../../dates/locale';
+import { CropMarks } from '../crop-marks';
 
 import styles from './styles.css.js';
 
@@ -132,6 +133,7 @@ function GridCell({
     >
       <span className={styles.mark} aria-hidden="true">
         {text}
+        {state.selected && <CropMarks selected={true} open={true} />}
       </span>
       {reason && (
         <span id={reasonId} hidden={true}>

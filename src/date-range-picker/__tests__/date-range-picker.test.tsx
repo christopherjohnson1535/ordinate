@@ -209,6 +209,15 @@ describe('DateRangePicker', () => {
     expect(onChange).toHaveBeenCalledWith(absolute('2026-03-02', '2026-03-06'));
   });
 
+  test('letters the length of the range under the months', () => {
+    render(<Controlled rangeSelectorMode="absolute-only" dateOnly={true} />);
+    wrapper().openDropdown();
+    expect(wrapper().findRangeLength()).toBeNull();
+    wrapper().findCalendar()!.findDate('2026-03-02')!.click();
+    wrapper().findCalendar()!.findDate('2026-03-06')!.click();
+    expect(wrapper().findRangeLength()!.getText()).toBe('5 days');
+  });
+
   test('moves through both months with the keyboard and pages with the buttons', () => {
     render(<Controlled rangeSelectorMode="absolute-only" />);
     wrapper().openDropdown();

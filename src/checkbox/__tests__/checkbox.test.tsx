@@ -66,6 +66,19 @@ describe('Checkbox', () => {
     expect(checkbox.indeterminate).toBe(true);
   });
 
+  test('draws a tick only when checked; partly checked is a half fill', () => {
+    const { container, rerender } = render(<Checkbox checked={true}>Back up nightly</Checkbox>);
+    expect(container.querySelectorAll('svg')).toHaveLength(1);
+    rerender(
+      <Checkbox checked={false} indeterminate={true}>
+        Back up nightly
+      </Checkbox>
+    );
+    expect(container.querySelectorAll('svg')).toHaveLength(0);
+    rerender(<Checkbox checked={false}>Back up nightly</Checkbox>);
+    expect(container.querySelectorAll('svg')).toHaveLength(0);
+  });
+
   test('does not fire onChange when disabled', () => {
     const onChange = vi.fn();
     render(

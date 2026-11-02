@@ -9,6 +9,8 @@ import I18nProvider from '../../../lib/components/i18n';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import marksStyles from '../../../lib/components/internal/components/crop-marks/styles.css.js';
+
 function Controlled({ onChangeSpy, ...props }: Partial<CalendarProps> & { onChangeSpy?: (value: string) => void }) {
   const [value, setValue] = useState(props.value ?? '');
   return (
@@ -60,6 +62,15 @@ describe('Calendar', () => {
     expect(selected).toHaveAttribute('aria-selected', 'true');
     expect(selected).toHaveAttribute('tabindex', '0');
     expect(wrapper().findSelectedDates()).toHaveLength(1);
+  });
+
+  test('marks the selected day with open ink crop marks, hidden from assistive technology', () => {
+    render(<Controlled value="2026-03-05" />);
+    const marks = wrapper().findAllByClassName(marksStyles.root);
+    expect(marks).toHaveLength(1);
+    expect(marks[0].getElement()).toHaveClass(marksStyles.selected, marksStyles.open);
+    expect(marks[0].getElement().closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(marks[0].getElement().closest('[data-date]')).toHaveAttribute('data-date', '2026-03-05');
   });
 
   test('marks today', () => {

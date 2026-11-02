@@ -10,8 +10,11 @@ import { SliderProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-// More ticks than this would merge into a solid band.
-const maxTicks = 101;
+// With `tickMarks` left out, a tick is drawn at every step up to this many steps. Past it the scale shows
+// its major ticks only, so the graduations do not merge into a solid band.
+const autoStepTicks = 40;
+// The most step ticks drawn when `tickMarks` asks for them.
+const maxStepTicks = 100;
 
 function joinIds(...ids: (string | undefined)[]): string | undefined {
   return ids.filter(Boolean).join(' ') || undefined;
@@ -21,13 +24,38 @@ function positionStyle(property: string, position: number): React.CSSProperties 
   return { [property]: position } as React.CSSProperties;
 }
 
-function getTickPositions(min: number, max: number, step: number): number[] {
-  const count = Math.floor((max - min) / step + 1e-9);
-  if (count + 1 > maxTicks) {
-    warnOnce('Slider', `\`tickMarks\` is ignored when there are more than ${maxTicks} steps.`);
+interface Tick {
+  position: number;
+  major: boolean;
+}
+
+// The graduations of the scale: one at every step when they fit, and a major tick at the minimum, the
+// maximum and each reference value. A step that falls on a major position is drawn once, as major.
+function getTicks(min: number, max: number, step: number, tickMarks: boolean | undefined, majors: number[]): Tick[] {
+  const range = max - min;
+  if (range <= 0) {
     return [];
   }
-  return Array.from({ length: count + 1 }, (_, index) => (index * step) / (max - min));
+  const ticks = new Map<string, Tick>();
+  const add = (position: number, major: boolean) => {
+    const key = position.toFixed(6);
+    ticks.set(key, { position, major: major || Boolean(ticks.get(key)?.major) });
+  };
+  const count = step > 0 ? Math.floor(range / step + 1e-9) : 0;
+  const limit = tickMarks ? maxStepTicks : autoStepTicks;
+  if (tickMarks !== false && count > 0) {
+    if (count > limit) {
+      if (tickMarks) {
+        warnOnce('Slider', `\`tickMarks\` draws major ticks only when there are more than ${maxStepTicks} steps.`);
+      }
+    } else {
+      for (let index = 0; index <= count; index++) {
+        add((index * step) / range, false);
+      }
+    }
+  }
+  majors.forEach(position => add(position, true));
+  return Array.from(ticks.values()).sort((a, b) => a.position - b.position);
 }
 
 export const InternalSlider = React.forwardRef(
@@ -40,7 +68,7 @@ export const InternalSlider = React.forwardRef(
       onChange,
       disabled = false,
       readOnly = false,
-      tickMarks = false,
+      tickMarks,
       hideFillLine = false,
       referenceValues = [],
       valueFormatter,
@@ -70,8 +98,8 @@ export const InternalSlider = React.forwardRef(
     const toPosition = (number: number) => (range > 0 ? Math.min(Math.max((number - min) / range, 0), 1) : 0);
     const format = (number: number) => (valueFormatter ? valueFormatter(number) : String(number));
 
-    const ticks = tickMarks && range > 0 && step > 0 ? getTickPositions(min, max, step) : [];
     const references = referenceValues.filter(reference => reference > min && reference < max);
+    const ticks = getTicks(min, max, step, tickMarks, [0, 1, ...references.map(toPosition)]);
     const status = field.invalid ? 'invalid' : field.warning ? 'warning' : undefined;
 
     return (
@@ -89,16 +117,14 @@ export const InternalSlider = React.forwardRef(
           <div className={styles.track} aria-hidden="true">
             <span className={styles.rail} />
             {!hideFillLine && <span className={styles.fill} />}
-            {ticks.map((position, index) => (
-              <span key={index} className={styles.tick} style={positionStyle('--slider-tick', position)} />
-            ))}
-            {references.map(reference => (
+            {ticks.map(tick => (
               <span
-                key={reference}
-                className={clsx(styles.tick, styles['tick-reference'])}
-                style={positionStyle('--slider-tick', toPosition(reference))}
+                key={tick.position}
+                className={clsx(styles.tick, tick.major && styles['tick-major'])}
+                style={positionStyle('--slider-tick', tick.position)}
               />
             ))}
+            <span className={styles.handle} />
             <span className={styles.readout}>
               <span className={styles['readout-text']}>{format(value)}</span>
             </span>

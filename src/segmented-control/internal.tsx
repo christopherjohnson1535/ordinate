@@ -4,6 +4,7 @@ import React, { useImperativeHandle, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
+import { SlidingMarker, useSlidingMarker } from '../internal/components/sliding-marker';
 import { getLogicalArrowStep } from '../internal/direction';
 import { fireNonCancelableEvent } from '../internal/events';
 import { warnOnce } from '../internal/logging';
@@ -31,6 +32,7 @@ export const InternalSegmentedControl = React.forwardRef(
     { options = [], selectedId, onChange, label, ariaLabelledby, ...rest }: SegmentedControlProps,
     ref: React.Ref<SegmentedControlProps.Ref>
   ) => {
+    const rootRef = useRef<HTMLDivElement>(null);
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
     // The segment that keeps the tab stop after the user moves through the group with arrow keys.
     const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -40,6 +42,10 @@ export const InternalSegmentedControl = React.forwardRef(
     const tabStopIndex = [focusedIndex, selectedIndex].find(index => index >= 0 && canFocus(index)) ?? -1;
     const fallbackIndex = getRovingIndex('first', -1, options.length, canFocus);
     const tabbableIndex = tabStopIndex >= 0 ? tabStopIndex : fallbackIndex;
+    const marker = useSlidingMarker(rootRef, () => {
+      const button = buttonRefs.current[selectedIndex];
+      return button ? [button] : [];
+    });
 
     useImperativeHandle(ref, () => ({
       focus: () => {
@@ -71,6 +77,7 @@ export const InternalSegmentedControl = React.forwardRef(
     return (
       <div
         {...rest}
+        ref={rootRef}
         role="group"
         className={styles.root}
         aria-label={ariaLabelledby ? undefined : label}
@@ -114,6 +121,7 @@ export const InternalSegmentedControl = React.forwardRef(
             </button>
           );
         })}
+        <SlidingMarker position={marker.position} placed={marker.placed} />
       </div>
     );
   }

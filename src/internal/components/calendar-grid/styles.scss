@@ -4,10 +4,12 @@
 */
 
 @use '../../styles' as styles;
+@use '../../styles/drawing';
 @use '../../styles/tokens' as ord;
 
-// A month is drawn like a table on a drawing sheet: a ruled header row, figures of equal width,
-// and a mark on each day that the states fill or outline.
+// A month is drawn like a schedule on a drawing sheet: the month lettered in mono capitals, figures of equal
+// width, today circled, the chosen day marked with ink crop marks as one of a set, and days that cannot be
+// chosen hatched.
 
 .header {
   display: flex;
@@ -23,9 +25,8 @@
 }
 
 .title {
-  @include styles.font-heading;
+  @include drawing.mono-caption;
   flex: 1 1 auto;
-  font-size: ord.$font-size-heading-xs;
   font-variant-numeric: tabular-nums;
   text-align: center;
   color: ord.$color-text-body;
@@ -46,13 +47,10 @@
 }
 
 .weekday {
-  @include styles.font-label;
+  @include drawing.font-caption;
   padding-block: ord.$space-scaled-xxs;
   padding-inline: 0;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
-  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
   text-align: center;
   color: ord.$color-text-secondary;
 }
@@ -71,38 +69,20 @@
   outline-style: none;
   cursor: pointer;
 
-  // The band that joins the days of a range; it stops halfway into the first and last day.
-  &::before {
-    position: absolute;
-    inset-block: ord.$space-xxxs;
-    inset-inline: 0;
-    content: '';
-  }
-
   &:empty {
     cursor: default;
   }
 }
 
-.in-range::before {
-  background-color: ord.$color-background-item-selected;
-}
-
-.range-start::before {
-  inset-inline-start: 50%;
-}
-
-.range-end::before {
-  inset-inline-end: 50%;
-}
-
-.range-start.range-end::before {
-  content: none;
+// The days between the ends of a range take a raised tint, one band across the week. The ends carry the crop
+// marks instead.
+.in-range:not(.range-start, .range-end) {
+  background-color: ord.$color-background-control-read-only;
 }
 
 .mark {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-button);
+  @include styles.border-radius(ord.$border-radius-checkbox);
   position: relative;
   display: flex;
   align-items: center;
@@ -121,10 +101,6 @@
     transition-timing-function: ord.$motion-easing-standard;
   }
 
-  .cell:hover > & {
-    background-color: ord.$color-background-item-hover;
-  }
-
   .cell:focus-visible > & {
     @include styles.focus-ring;
   }
@@ -133,28 +109,32 @@
     color: ord.$color-text-secondary;
   }
 
-  .current > & {
-    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-strong;
+  // Today is circled, as a drafter rings a figure to call it out.
+  .current > &::before {
+    @include styles.border-radius(ord.$border-radius-radio);
+    content: '';
+    position: absolute;
+    inset-block: ord.$border-width-default;
+    inset-inline: ord.$border-width-default;
+    border-width: ord.$border-width-default;
+    border-style: solid;
+    border-color: ord.$color-text-secondary;
+    pointer-events: none;
   }
 
-  .disabled > &,
-  .disabled:hover > & {
+  .disabled > & {
     @include styles.hatch;
-    background-color: transparent;
     color: ord.$color-text-disabled;
   }
 
-  .selected > &,
-  .selected:hover > & {
-    background-color: ord.$color-background-control-checked;
-    color: ord.$color-foreground-control-checked;
+  .selected > & {
+    font-weight: ord.$font-weight-heading;
   }
+}
 
-  // Today keeps a ring when it is selected, drawn inside the fill in the fill's text color.
-  .selected.current > & {
-    box-shadow:
-      inset 0 0 0 ord.$border-width-section ord.$color-background-control-checked,
-      inset 0 0 0 calc(2 * #{ord.$border-width-section}) ord.$color-foreground-control-checked;
+@media (hover: hover) and (pointer: fine) {
+  .cell:not(.disabled, .selected, :empty):hover > .mark {
+    background-color: ord.$color-background-item-hover;
   }
 }
 
