@@ -95,6 +95,8 @@ Sections are drawn with construction lines rather than boxes. A thin line opens 
 
 Every container is drawn this way. Container puts the heading in a margin column. The container variants of Table, Cards, ExpandableSection and Tabs keep their heading on top, because they need the full width, and draw the same opening line with `ConstructionTopLine` from `src/internal/components/construction`. `RuleEndMarks` puts the hash marks on a footer rule.
 
+KeyValuePairs borrow Container's margin at a small scale: each label is set right-aligned in a margin column against a faint construction line, with its value to the right in ink. Rows meet edge to edge, so the line runs unbroken down each column.
+
 ## Kinds
 
 A section's color says what it holds. Kinds are not decoration and not status, so the three hues stay clear of green, amber and red.

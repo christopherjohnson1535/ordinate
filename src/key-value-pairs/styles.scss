@@ -4,8 +4,10 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// Keep equal to the list's column-gap, which has to name the token.
 $column-gap: ord.$space-xl;
 // The narrowest a column may get before the grid drops a column.
 $column-min: calc(#{ord.$space-xxxl} * 3);
@@ -28,7 +30,8 @@ $column-min: calc(#{ord.$space-xxxl} * 3);
       1fr
     )
   );
-  gap: ord.$space-scaled-l $column-gap;
+  // No row gap: rows meet edge to edge so the construction line runs unbroken down each column.
+  column-gap: ord.$space-xl;
   margin-block: 0;
   margin-inline: 0;
 }
@@ -45,18 +48,38 @@ $column-min: calc(#{ord.$space-xxxl} * 3);
   --key-value-columns: 4;
 }
 
+// Each pair is a row: the label right-aligned in a margin column against a faint construction line, the value
+// to its right. Rows in a column sit edge to edge, so the line runs unbroken down the column.
 .pair {
+  display: grid;
+  // The label column takes 40% of the pair, up to the width of Container's margin column.
+  grid-template-columns: minmax(0, min(40%, #{ord.$size-margin-column})) minmax(0, 1fr);
+  align-items: baseline;
   min-inline-size: 0;
 }
 
 .label {
-  @include styles.font-label;
+  @include styles.font-body;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  justify-content: flex-end;
   gap: ord.$space-xs;
-  margin-block-end: ord.$space-xxxs;
-  color: ord.$color-text-body;
+  align-self: stretch;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline-end: ord.$space-s;
+  color: ord.$color-text-secondary;
+  text-align: end;
+
+  &::after {
+    @include drawing.construction-line;
+    content: '';
+    inset-block: 0;
+    inset-inline-end: 0;
+    inline-size: ord.$border-width-default;
+    color: ord.$color-kind-neutral;
+  }
 }
 
 .label-text {
@@ -71,23 +94,23 @@ $column-min: calc(#{ord.$space-xxxl} * 3);
 .value {
   margin-block: 0;
   margin-inline: 0;
-  color: ord.$color-text-body-secondary;
+  padding-block: ord.$space-scaled-xxs;
+  padding-inline-start: ord.$space-s;
+  color: ord.$color-text-body;
   overflow-wrap: break-word;
 }
 
 .group {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxs;
   min-inline-size: 0;
+  padding-block-end: ord.$space-scaled-l;
 }
 
-// The title is ruled off from its pairs like the heading of a schedule on a drawing.
 .group-title {
-  @include styles.font-heading;
-  margin-block-end: ord.$space-scaled-s;
-  padding-block-end: ord.$space-xs;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
-  font-size: ord.$font-size-heading-xs;
+  @include styles.font-label;
+  color: ord.$color-text-secondary;
 
   &:empty {
     display: none;
@@ -102,7 +125,6 @@ $column-min: calc(#{ord.$space-xxxl} * 3);
 .group-list {
   display: flex;
   flex-direction: column;
-  gap: ord.$space-scaled-m;
   margin-block: 0;
   margin-inline: 0;
 }
