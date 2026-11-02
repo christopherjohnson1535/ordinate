@@ -205,7 +205,10 @@ export function Dropdown({
   if (expandToViewport && placement.fixed) {
     // Measured from the viewport, so these are physical coordinates in either direction.
     popupStyle.top = placement.fixed.top;
-    popupStyle.bottom = placement.fixed.bottom;
+    // Opening upward, the plate stands off by its offset too, which the stylesheet adds.
+    if (placement.fixed.bottom !== undefined) {
+      popupStyle['--dropdown-fixed-bottom'] = `${placement.fixed.bottom}px`;
+    }
     popupStyle.left = placement.fixed.left;
     popupStyle.minWidth = minWidth === 'trigger' ? placement.fixed.minWidth : undefined;
   }

@@ -61,6 +61,13 @@ export class TutorialTaskWrapper extends ElementWrapper {
   }
 
   /**
+   * The S references of the task's steps, such as S1, in order.
+   */
+  findStepReferences(): ElementWrapper[] {
+    return this.findAllByClassName(styles['step-reference']);
+  }
+
+  /**
    * The step the user is on, or `null` when it is in another task.
    */
   findCurrentStep(): ElementWrapper | null {
@@ -95,6 +102,14 @@ export default class TutorialPanelWrapper extends ComponentWrapper {
    */
   findTasks(): TutorialTaskWrapper[] {
     return this.findAllByClassName(styles.task).map(task => new TutorialTaskWrapper(task.getElement()));
+  }
+
+  /**
+   * The progress measure of the current tutorial, such as "1 / 4". It is drawing only and hidden from
+   * screen readers.
+   */
+  findProgress(): ElementWrapper | null {
+    return this.findByClassName(styles['progress-measure']);
   }
 
   findExitButton(): ButtonWrapper | null {

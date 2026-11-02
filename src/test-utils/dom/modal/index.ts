@@ -16,6 +16,13 @@ export default class ModalWrapper extends ComponentWrapper {
     return this.findByClassName(styles.heading);
   }
 
+  /**
+   * The reference above the title, set with `reference`.
+   */
+  findReference(): ElementWrapper | null {
+    return this.findByClassName(styles.reference);
+  }
+
   findContent(): ElementWrapper | null {
     return this.findByClassName(styles.content);
   }

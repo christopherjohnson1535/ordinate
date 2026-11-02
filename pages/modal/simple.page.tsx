@@ -55,7 +55,14 @@ export default function ModalSimple() {
       </div>
       {lastReason && <p>Last dismissed by: {lastReason}</p>}
 
-      <Modal visible={open === 'default'} header="Delete north-annex?" onDismiss={onDismiss} footer={deleteFooter}>
+      <Modal
+        visible={open === 'default'}
+        kind="policy"
+        reference="P2"
+        header="Delete north-annex?"
+        onDismiss={onDismiss}
+        footer={deleteFooter}
+      >
         This removes the project, its 12 nodes and all stored logs. You cannot undo this.
       </Modal>
 

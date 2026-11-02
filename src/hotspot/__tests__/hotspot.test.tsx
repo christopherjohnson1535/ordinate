@@ -76,6 +76,33 @@ describe('Hotspot', () => {
     expect(marker.getAttribute('aria-controls')).toBe(hotspot().findAnnotation()!.getElement().id);
   });
 
+  test('the marker is a circled number for the step in its task', () => {
+    render(
+      <AnnotationContext
+        currentTutorial={{
+          title: 'Tour',
+          tasks: [
+            {
+              title: 'Look around',
+              steps: [
+                { title: 'The name', content: 'Type here.', hotspotId: 'name' },
+                { title: 'The region', content: 'Pick one.', hotspotId: 'region' },
+              ],
+            },
+          ],
+        }}
+      >
+        <Hotspot hotspotId="name" />
+        <Hotspot hotspotId="region" />
+      </AnnotationContext>
+    );
+    const [name, region] = createWrapper().findAllHotspots();
+    expect(name.findMarker()!.getText()).toBe('1');
+    expect(region.findMarker()!.getText()).toBe('2');
+    expect(name.isCurrent()).toBe(true);
+    expect(region.isCurrent()).toBe(false);
+  });
+
   test('passes id and data attributes to the root', () => {
     render(<Hotspot hotspotId="name" id="anchor" data-testid="anchor" />);
     expect(screen.getByTestId('anchor')).toHaveAttribute('id', 'anchor');

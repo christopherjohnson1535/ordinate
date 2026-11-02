@@ -4,6 +4,7 @@
 */
 
 @use '../../styles' as styles;
+@use '../../styles/drawing';
 @use '../../styles/layers';
 @use '../../styles/tokens' as ord;
 
@@ -12,8 +13,10 @@
   display: block;
 }
 
+// Every list or panel that drops from a control is a plate, lifted off the sheet onto a hard offset. The
+// items inside belong to the component that fills it.
 .popup {
-  @include styles.border-radius(ord.$border-radius-dropdown);
+  @include drawing.plate(ord.$border-radius-dropdown);
   position: absolute;
   inset-block-start: 100%;
   inset-inline-start: 0;
@@ -28,23 +31,21 @@
     var(--dropdown-available-block-size, #{ord.$size-dropdown-max-height})
   );
   margin-block-start: ord.$space-xxxs;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
-  background-color: ord.$color-background-container;
   color: ord.$color-text-body;
   overflow: hidden;
 
   @include styles.with-motion {
     animation-name: popup-enter;
-    animation-duration: ord.$motion-duration-responsive;
+    animation-duration: ord.$motion-duration-expressive;
     animation-timing-function: ord.$motion-easing-standard;
   }
 }
 
+// The offset falls below the plate, so a plate that opens upward stands further off the trigger to keep
+// the offset clear of it.
 .popup-above {
   inset-block-start: auto;
-  inset-block-end: 100%;
+  inset-block-end: calc(100% + #{ord.$size-offset-plate});
   margin-block-start: 0;
   margin-block-end: ord.$space-xxxs;
 }
@@ -62,6 +63,10 @@
   inset-inline-start: auto;
   inset-inline-end: auto;
   min-inline-size: 0;
+}
+
+.popup-fixed.popup-above {
+  inset-block-end: calc(var(--dropdown-fixed-bottom) + #{ord.$size-offset-plate});
 }
 
 .min-width-small {
@@ -113,5 +118,6 @@
 @keyframes popup-enter {
   from {
     opacity: 0;
+    transform: translateY(ord.$size-offset-plate);
   }
 }

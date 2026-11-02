@@ -38,13 +38,14 @@ export interface FloatingPositionInput {
    */
   viewport: Size;
   /**
-   * The arrow's size: `depth` is how far it sticks out of the panel, `breadth` how wide its base is.
+   * The size of the mark that ties the panel to the trigger, such as a leader: `depth` is how far it
+   * reaches out of the panel, `breadth` how wide it is across.
    */
   arrow: { depth: number; breadth: number };
   preferredSide: FloatingSide;
   rtl: boolean;
   /**
-   * Space between the arrow's tip and the trigger.
+   * Space between the end of the mark and the trigger.
    */
   gap: number;
   /**
@@ -65,7 +66,7 @@ export interface FloatingPositionResult {
   top: number;
   left: number;
   /**
-   * Where the middle of the arrow sits along the panel edge facing the trigger, measured
+   * Where the middle of the mark sits along the panel edge facing the trigger, measured
    * from the panel's left edge (top and bottom sides) or top edge (left and right sides).
    */
   arrowOffset: number;
@@ -96,7 +97,7 @@ function candidateSides(preferred: FloatingSide): FloatingSide[] {
  * side, then the two sides across, and takes the first one where the panel fits inside
  * the viewport. When none fits it takes the side with the most room. Along the edge, the
  * panel is centered on the trigger and then pushed back inside the viewport, and the
- * arrow follows the trigger's center so it keeps pointing at it.
+ * mark follows the trigger's center so it keeps pointing at it.
  */
 export function computeFloatingPosition(input: FloatingPositionInput): FloatingPositionResult {
   const { trigger, panel, viewport, arrow, preferredSide, rtl, gap, margin } = input;
@@ -137,7 +138,7 @@ export function computeFloatingPosition(input: FloatingPositionInput): FloatingP
 
   const edgeLength = isVertical(physicalSide) ? panel.width : panel.height;
   const triggerCenter = isVertical(physicalSide) ? centerX - left : centerY - top;
-  // Keeps the arrow off the panel's corners.
+  // Keeps the mark off the panel's corners.
   const inset = arrow.breadth / 2 + arrow.depth;
   const arrowOffset = edgeLength < 2 * inset ? edgeLength / 2 : clamp(triggerCenter, inset, edgeLength - inset);
 

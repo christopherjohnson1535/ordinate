@@ -3,6 +3,7 @@
 import React, { useCallback, useId, useRef } from 'react';
 
 import { InternalButton } from '../button/internal';
+import { RuleEndMarks } from '../internal/components/construction';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { DialogProps } from './interfaces';
@@ -96,7 +97,12 @@ export function InternalDialog({
           {closeButton}
         </div>
       )}
-      {footer && <div className={styles.footer}>{footer}</div>}
+      {footer && (
+        <div className={styles.footer}>
+          <RuleEndMarks />
+          {footer}
+        </div>
+      )}
     </div>
   );
 }

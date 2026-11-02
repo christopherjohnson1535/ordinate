@@ -152,6 +152,8 @@ export function InternalTutorialPanel({
 
   const completed = Boolean(currentTutorial.completed);
   const current = context.steps[context.currentStepIndex];
+  const totalSteps = context.steps.length;
+  const doneSteps = completed ? totalSteps : (current?.index ?? 0);
   const stepsOfTask = (taskIndex: number) => context.steps.filter(entry => entry.taskIndex === taskIndex);
 
   const renderStep = (entry: TutorialStep) => {
@@ -165,6 +167,7 @@ export function InternalTutorialPanel({
         <span className={styles['step-marker']}>
           <InternalIcon name={progressIcon[progress]} ariaLabel={statusLabel(progress)} />
         </span>
+        <span className={styles['step-reference']}>S{entry.indexInTask + 1}</span>
         <span className={styles['step-title']}>{entry.step.title}</span>
       </li>
     );
@@ -174,6 +177,21 @@ export function InternalTutorialPanel({
     <div {...rest} ref={rootRef} className={styles.root}>
       <InternalHelpPanel header={currentTutorial.title} footer={feedback}>
         <div className={styles.body}>
+          {totalSteps > 0 && (
+            // Drawn as a measure. The task and step statuses say the same in words, so it stays out of the
+            // accessibility tree.
+            <div className={styles.progress} aria-hidden="true">
+              <span className={styles['progress-scale']}>
+                <span
+                  className={styles['progress-done']}
+                  style={{ inlineSize: `${(doneSteps / totalSteps) * 100}%` }}
+                />
+              </span>
+              <span className={styles['progress-measure']}>
+                {doneSteps} / {totalSteps}
+              </span>
+            </div>
+          )}
           {completed && (
             <div className={styles.completion}>
               <h3 className={clsx(styles['completion-title'], styles['focus-target'])}>

@@ -184,6 +184,16 @@ describe('Popover options', () => {
     expect(queryPanel()).toBeNull();
   });
 
+  test('ties the plate to its trigger with a leader from a dot, hidden from screen readers', () => {
+    renderPopover();
+    fireEvent.click(getTrigger());
+    const leader = createWrapper().findPopover()!.findLeader()!.getElement();
+    expect(leader).toHaveAttribute('aria-hidden', 'true');
+    expect(leader).toHaveTextContent('');
+    // The dot at the trigger end.
+    expect(leader.children).toHaveLength(1);
+  });
+
   test('passes id and data attributes to the root', () => {
     renderPopover({ id: 'usage', ...{ 'data-testid': 'usage-popover' } });
     const root = createWrapper().findPopover()!.getElement();

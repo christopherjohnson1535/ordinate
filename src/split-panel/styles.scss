@@ -17,33 +17,41 @@
   color: ord.$color-text-body;
 }
 
+// A sheet pulled in from the edge of the page. The edge toward the page is an ink line that runs a little
+// past the panel, as a construction line does, and carries the resize grip. At the bottom it is the same
+// sheet turned 90 degrees.
+.open::after {
+  content: '';
+  position: absolute;
+  background-color: ord.$color-border-strong;
+  pointer-events: none;
+}
+
 .position-bottom {
   inline-size: 100%;
-  border-block-start-width: ord.$border-width-section;
+}
+
+.position-bottom.collapsed {
+  border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-strong;
 }
 
-// At the side the panel is a detail callout: a sheet framed in heavy ink, joined to the content by a short
-// leader line level with its title.
+.position-bottom.open::after {
+  inset-block-start: 0;
+  inset-inline: calc(-1 * #{ord.$space-s});
+  block-size: ord.$border-width-default;
+}
+
 .position-side {
   block-size: 100%;
   max-inline-size: 100%;
-  border-width: ord.$border-width-section;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset-block-start: calc(#{ord.$space-scaled-s} + #{ord.$size-control-height} / 2);
-    inset-inline-end: 100%;
-    inline-size: ord.$space-m;
-    border-block-start-width: ord.$border-width-icon;
-    border-block-start-style: solid;
-    border-block-start-color: ord.$color-border-strong;
-    pointer-events: none;
-  }
+.position-side.open::after {
+  inset-block: calc(-1 * #{ord.$space-s});
+  inset-inline-start: 0;
+  inline-size: ord.$border-width-default;
 }
 
 // At the bottom there is room for the actions beside the title; at the side they go below it,
@@ -63,12 +71,6 @@
   grid-template-areas:
     'main buttons'
     'actions actions';
-}
-
-.open > .header {
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-strong;
 }
 
 .header-main {
@@ -98,9 +100,10 @@
   min-inline-size: 0;
 }
 
+// The reference that points back at the item the panel describes.
 .kicker {
   @include drawing.mono-caption;
-  color: ord.$color-text-secondary;
+  color: ord.$color-kind-neutral;
 }
 
 .heading {
@@ -149,7 +152,7 @@
 .content {
   flex: 1 1 auto;
   min-block-size: 0;
-  padding-block: ord.$space-scaled-m;
+  padding-block: ord.$space-xs ord.$space-scaled-m;
   padding-inline: ord.$space-scaled-l;
   overflow: auto;
 }

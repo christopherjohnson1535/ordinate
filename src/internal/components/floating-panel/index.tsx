@@ -24,8 +24,9 @@ export interface FloatingPanelProps extends Omit<React.HTMLAttributes<HTMLSpanEl
    */
   preferredSide: FloatingSide;
   /**
-   * `sheet` is a white sheet with an ink rule, for interactive content such as a popover.
-   * `inverse` is filled with ink, for short labels such as a tooltip.
+   * `sheet` is a plate, for interactive content such as a popover. A leader runs from a dot at the
+   * trigger to the plate's nearest edge.
+   * `inverse` is an ink chip on a short stem, for short labels such as a tooltip.
    */
   variant?: 'sheet' | 'inverse';
   /**
@@ -34,14 +35,15 @@ export interface FloatingPanelProps extends Omit<React.HTMLAttributes<HTMLSpanEl
    */
   renderWithPortal?: boolean;
   /**
-   * Space in pixels between the arrow's tip and the trigger.
+   * Space in pixels between the end of the leader and the trigger.
    */
   gap?: number;
 }
 
 /**
- * A panel that floats next to a trigger with an arrow pointing at it. It flips to the
- * opposite side when the preferred side has no room and stays inside the viewport.
+ * A panel that floats next to a trigger, tied to it by a leader. It flips to the opposite side
+ * when the preferred side has no room and stays inside the viewport. The leader follows the side
+ * the panel ends up on and is drawing only, hidden from screen readers.
  *
  * It only positions and frames its content. The component that owns it decides when it
  * is shown, what role it has and how it is dismissed. Keep it mounted with `hidden` when
@@ -60,7 +62,7 @@ export const FloatingPanel = React.forwardRef(
       preferredSide,
       variant = 'sheet',
       renderWithPortal = false,
-      gap,
+      gap = 2,
       hidden,
       className,
       children,
@@ -69,12 +71,12 @@ export const FloatingPanel = React.forwardRef(
     ref: React.Ref<HTMLSpanElement>
   ) => {
     const panelRef = useRef<HTMLSpanElement | null>(null);
-    const arrowRef = useRef<HTMLSpanElement>(null);
-    const { physicalSide, panelStyle, arrowStyle } = useFloatingPosition({
+    const leaderRef = useRef<HTMLSpanElement>(null);
+    const { physicalSide, panelStyle, leaderStyle } = useFloatingPosition({
       open: !hidden,
       trigger,
       panel: panelRef,
-      arrow: arrowRef,
+      leader: leaderRef,
       preferredSide,
       gap,
     });
@@ -100,7 +102,14 @@ export const FloatingPanel = React.forwardRef(
         style={panelStyle}
       >
         {children}
-        <span ref={arrowRef} className={clsx(styles.arrow, styles[`arrow-${physicalSide}`])} style={arrowStyle} />
+        <span
+          ref={leaderRef}
+          className={clsx(styles.leader, styles[`leader-${physicalSide}`])}
+          style={leaderStyle}
+          aria-hidden="true"
+        >
+          {variant === 'sheet' && <span className={styles.dot} />}
+        </span>
       </span>
     );
 

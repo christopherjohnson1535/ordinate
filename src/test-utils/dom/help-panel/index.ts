@@ -11,6 +11,13 @@ export default class HelpPanelWrapper extends ComponentWrapper {
     return this.findByClassName(styles.header);
   }
 
+  /**
+   * The mono caption above the title.
+   */
+  findCaption(): ElementWrapper | null {
+    return this.findByClassName(styles.caption);
+  }
+
   findContent(): ElementWrapper | null {
     return this.findByClassName(styles.content);
   }

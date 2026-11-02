@@ -7,6 +7,20 @@ import { NonCancelableEventHandler } from '../internal/events';
 
 export interface ModalProps extends BaseComponentProps {
   /**
+   * What the modal is about. The kind colors its reference and the marks on its footer rule, as for a
+   * container. The reference letter carries the same meaning for anyone who cannot rely on color.
+   * - `configuration` for settings people change, drawn in drafting blue.
+   * - `resource` for things that exist or run, drawn in teal.
+   * - `policy` for rules the system follows, drawn in plum.
+   * - `neutral` for anything else, drawn in graphite.
+   */
+  kind?: ModalProps.Kind;
+  /**
+   * A short reference set above the title, as on a drawing set, such as `P2`. Other parts of the page can
+   * point back to the modal with it.
+   */
+  reference?: string;
+  /**
    * Whether the modal is open. The modal is controlled: set this to `false` in `onDismiss`.
    */
   visible: boolean;
@@ -20,7 +34,7 @@ export interface ModalProps extends BaseComponentProps {
    */
   header?: React.ReactNode;
   /**
-   * Content of the footer, usually the actions.
+   * Content of the footer, usually the actions. It stands on a rule closed by hash marks.
    */
   footer?: React.ReactNode;
   /**
@@ -54,6 +68,8 @@ export interface ModalProps extends BaseComponentProps {
 }
 
 export namespace ModalProps {
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
+
   export type Size = 'small' | 'medium' | 'large';
 
   export type Position = 'center' | 'top';

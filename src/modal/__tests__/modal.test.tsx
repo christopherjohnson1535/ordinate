@@ -28,6 +28,32 @@ describe('Modal', () => {
     expect(getDialog().open).toBe(false);
   });
 
+  test('sets the reference above the title and closes the footer rule with hash marks', () => {
+    render(
+      <Modal visible={true} kind="policy" reference="P2" header="Turn on the window?" footer={<button>Turn on</button>}>
+        Content
+      </Modal>
+    );
+    const modal = createWrapper().findModal()!;
+    expect(modal.findReference()!.getText()).toBe('P2');
+    expect(modal.findHeader()!.getText()).toBe('Turn on the window?');
+    expect(screen.getByRole('dialog', { name: 'Turn on the window?' })).toBeInTheDocument();
+    const footer = modal.findFooter()!.getElement();
+    expect(footer).toHaveTextContent('Turn on');
+    const marks = footer.querySelectorAll('[aria-hidden="true"]');
+    expect(marks).toHaveLength(2);
+    marks.forEach(mark => expect(mark).toBeEmptyDOMElement());
+  });
+
+  test('leaves out the reference when it is not set', () => {
+    render(
+      <Modal visible={true} header="Delete project">
+        Content
+      </Modal>
+    );
+    expect(createWrapper().findModal()!.findReference()).toBeNull();
+  });
+
   test('uses the header as its accessible name', () => {
     render(
       <Modal visible={true} header="Delete project">

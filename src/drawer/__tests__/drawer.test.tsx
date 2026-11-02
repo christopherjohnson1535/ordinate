@@ -55,6 +55,18 @@ describe('Drawer', () => {
     expect(createWrapper().findDrawer()!.findContent()!.getElement().className).not.toBe(before);
   });
 
+  test('sets the reference above the title', () => {
+    render(
+      <Drawer kind="policy" reference="P1" header="Access policy">
+        Content
+      </Drawer>
+    );
+    const drawer = createWrapper().findDrawer()!;
+    expect(drawer.findReference()!.getText()).toBe('P1');
+    expect(drawer.findHeader()!.getText()).toBe('Access policy');
+    expect(screen.getByRole('heading', { level: 2, name: 'Access policy' })).toBeInTheDocument();
+  });
+
   test('passes id and data attributes to the root', () => {
     render(<Drawer id="activity" data-testid="drawer" />);
     expect(screen.getByTestId('drawer')).toHaveAttribute('id', 'activity');

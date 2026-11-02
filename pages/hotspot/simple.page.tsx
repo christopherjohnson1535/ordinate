@@ -44,8 +44,8 @@ export default function HotspotSimple() {
     <article className={styles.page}>
       <h1>Hotspot</h1>
       <p className={styles.note}>
-        Markers show for every step of the current task. The current step&apos;s marker is drawn in ink and pulses when
-        motion is on; choose another marker to open its step.
+        Markers show for every step of the current task, each a circled number. The current step&apos;s marker is drawn
+        heavier and in ink; choose another marker to open its step.
       </p>
       <div className={styles.row}>
         <Button onClick={() => setCurrent(current ? null : tutorial)}>

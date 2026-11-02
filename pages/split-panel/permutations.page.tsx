@@ -96,7 +96,7 @@ export default function SplitPanelPermutations() {
         Split panels live in an app layout, which tells them their position, size and open state. Each example below is
         a small app layout.
       </p>
-      <Example title="Side, as a detail callout with a tag" position="side" rich={true} headerTag="S3" />
+      <Example title="Side, with a tag" position="side" rich={true} headerTag="S3" />
       <Example title="Bottom, with a tag, description, info and actions" position="bottom" rich={true} headerTag="S3" />
       <Example title="Side, without a tag" position="side" rich={true} />
       <Example title="Bottom, without a tag" position="bottom" />

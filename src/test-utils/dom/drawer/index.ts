@@ -11,6 +11,13 @@ export default class DrawerWrapper extends ComponentWrapper {
     return this.findByClassName(styles.header);
   }
 
+  /**
+   * The reference above the title, set with `reference`.
+   */
+  findReference(): ElementWrapper | null {
+    return this.findByClassName(styles.reference);
+  }
+
   findContent(): ElementWrapper | null {
     return this.findByClassName(styles.content);
   }

@@ -62,6 +62,25 @@ describe('HelpPanel', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Wird geladen');
   });
 
+  test('sets a caption above the title', () => {
+    render(<HelpPanel header="Nodes">A node is one machine.</HelpPanel>);
+    const panel = createWrapper().findHelpPanel()!;
+    expect(panel.findCaption()!.getText()).toBe('Help');
+    expect(panel.findHeader()!.getText()).toBe('Nodes');
+  });
+
+  test('an I18nProvider can replace the caption', () => {
+    render(
+      <I18nProvider
+        locale="de"
+        messages={[{ '@ordinate/components': { de: { 'help-panel': { captionText: 'Hilfe' } } } }]}
+      >
+        <HelpPanel header="Knoten" />
+      </I18nProvider>
+    );
+    expect(createWrapper().findHelpPanel()!.findCaption()!.getText()).toBe('Hilfe');
+  });
+
   test('passes id and data attributes to the root', () => {
     render(<HelpPanel id="help" data-testid="help-panel" />);
     expect(screen.getByTestId('help-panel')).toHaveAttribute('id', 'help');

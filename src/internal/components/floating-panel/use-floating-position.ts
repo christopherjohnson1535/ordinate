@@ -22,13 +22,14 @@ export interface FloatingPositionOptions {
    */
   panel: React.RefObject<HTMLElement | null>;
   /**
-   * The arrow, absolutely positioned inside the panel. Its rendered size decides how far the
-   * panel sits from the trigger.
+   * The leader, absolutely positioned inside the panel and drawn across the gap to the trigger. Its
+   * longer side is its length, which decides how far the panel sits from the trigger; its shorter
+   * side is its breadth.
    */
-  arrow?: React.RefObject<HTMLElement | null>;
+  leader?: React.RefObject<HTMLElement | null>;
   preferredSide: FloatingSide;
   /**
-   * Space in pixels between the arrow's tip and the trigger.
+   * Space in pixels between the end of the leader and the trigger.
    */
   gap?: number;
 }
@@ -39,7 +40,7 @@ export interface FloatingPosition {
    */
   side: FloatingSide;
   /**
-   * The side the panel is on in screen terms. Use it to draw the arrow.
+   * The side the panel is on in screen terms. Use it to draw the leader.
    */
   physicalSide: PhysicalSide;
   /**
@@ -48,9 +49,9 @@ export interface FloatingPosition {
    */
   panelStyle: React.CSSProperties;
   /**
-   * Style for the arrow, relative to the panel's padding box.
+   * Style for the leader, relative to the panel's padding box.
    */
-  arrowStyle: React.CSSProperties;
+  leaderStyle: React.CSSProperties;
 }
 
 interface Layout {
@@ -58,8 +59,8 @@ interface Layout {
   physicalSide: PhysicalSide;
   top: number;
   left: number;
-  arrowTop: number;
-  arrowLeft: number;
+  leaderTop: number;
+  leaderLeft: number;
 }
 
 function sameLayout(a: Layout | null, b: Layout) {
@@ -68,20 +69,21 @@ function sameLayout(a: Layout | null, b: Layout) {
     a.side === b.side &&
     a.top === b.top &&
     a.left === b.left &&
-    a.arrowTop === b.arrowTop &&
-    a.arrowLeft === b.arrowLeft
+    a.leaderTop === b.leaderTop &&
+    a.leaderLeft === b.leaderLeft
   );
 }
 
 function measure(
   trigger: Element,
   panel: HTMLElement,
-  arrow: HTMLElement | null,
+  leader: HTMLElement | null,
   preferredSide: FloatingSide,
   gap: number
 ): Layout {
-  const depth = arrow ? Math.min(arrow.offsetWidth, arrow.offsetHeight) : 0;
-  const breadth = arrow ? Math.max(arrow.offsetWidth, arrow.offsetHeight) : 0;
+  // The leader is drawn along the side the panel is on, so its longer side is always its length.
+  const depth = leader ? Math.max(leader.offsetWidth, leader.offsetHeight) : 0;
+  const breadth = leader ? Math.min(leader.offsetWidth, leader.offsetHeight) : 0;
   const root = trigger.ownerDocument.documentElement;
   const result = computeFloatingPosition({
     trigger: trigger.getBoundingClientRect(),
@@ -94,7 +96,7 @@ function measure(
     margin: viewportMargin,
   });
 
-  // The arrow is positioned from the panel's padding box, so its base covers the panel border.
+  // The leader is positioned from the panel's padding box, so it starts on the panel border.
   const { physicalSide, arrowOffset } = result;
   const vertical = physicalSide === 'top' || physicalSide === 'bottom';
   const along = arrowOffset - breadth / 2 - (vertical ? panel.clientLeft : panel.clientTop);
@@ -110,8 +112,8 @@ function measure(
     physicalSide,
     top: Math.round(result.top),
     left: Math.round(result.left),
-    arrowTop: Math.round(vertical ? across : along),
-    arrowLeft: Math.round(vertical ? along : across),
+    leaderTop: Math.round(vertical ? across : along),
+    leaderLeft: Math.round(vertical ? along : across),
   };
 }
 
@@ -127,7 +129,7 @@ export function useFloatingPosition({
   open,
   trigger,
   panel,
-  arrow,
+  leader,
   preferredSide,
   gap = 4,
 }: FloatingPositionOptions): FloatingPosition {
@@ -143,8 +145,8 @@ export function useFloatingPosition({
       if (!triggerElement || !panelElement) {
         return;
       }
-      const arrowElement = arrow === undefined ? null : arrow.current;
-      const next = measure(triggerElement, panelElement, arrowElement, preferredSide, gap);
+      const leaderElement = leader === undefined ? null : leader.current;
+      const next = measure(triggerElement, panelElement, leaderElement, preferredSide, gap);
       setLayout(current => (sameLayout(current, next) ? current : next));
     };
     update();
@@ -162,7 +164,7 @@ export function useFloatingPosition({
       window.removeEventListener('scroll', update, true);
       observer?.disconnect();
     };
-  }, [open, trigger, panel, arrow, preferredSide, gap]);
+  }, [open, trigger, panel, leader, preferredSide, gap]);
 
   return {
     side: layout?.side ?? preferredSide,
@@ -171,6 +173,6 @@ export function useFloatingPosition({
     panelStyle: layout
       ? { top: layout.top, left: layout.left }
       : { top: 0, left: 0, opacity: 0, pointerEvents: 'none' },
-    arrowStyle: layout ? { top: layout.arrowTop, left: layout.arrowLeft } : {},
+    leaderStyle: layout ? { top: layout.leaderTop, left: layout.leaderLeft } : {},
   };
 }

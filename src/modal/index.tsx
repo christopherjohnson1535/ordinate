@@ -10,6 +10,8 @@ import { InternalModal } from './internal';
 export type { ModalProps };
 
 export default function Modal({
+  kind = 'neutral',
+  reference,
   visible,
   onDismiss,
   header,
@@ -25,6 +27,8 @@ export default function Modal({
   return (
     <InternalModal
       {...getBaseProps(props)}
+      kind={kind}
+      reference={reference}
       visible={visible}
       onDismiss={onDismiss}
       header={header}
