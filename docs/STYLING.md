@@ -128,11 +128,34 @@ The old names (`type`, `colorOverride`, Badge's `color`, the old status values a
 
 ## States
 
+"Selected" means four different things, and each is drawn its own way. They are never mixed.
+
+| Meaning              | Mark                                                                 | Used by                                                          |
+| -------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| One of a set         | Ink crop marks: `CropMarks` with `selected`, or `SlidingMarker`      | Tabs, SegmentedControl, Pagination, Cards, Tiles, a calendar day |
+| On or off            | Ink fill, with the `on-ink` mixin                                    | Toggle, ToggleButton, a checked Checkbox                         |
+| You are here         | A short ink rule on the leading edge, with the `position-rule` mixin | SideNavigation, AnchorNavigation, TreeView                       |
+| Picked for an action | A checked key, a raised row and a position rule                      | Selected table rows                                              |
+
+`SlidingMarker` and `useSlidingMarker`, in `src/internal/components/sliding-marker`, measure the chosen item of a row and slide the marks to the next one, quickly and slowing as they land, or at once with reduced motion.
+
+The other states:
+
 - Focus: a solid 2 px ink outline, offset 2 px. Use the `focus-ring` mixin.
-- Hover: a raised grey background on controls and list items.
-- Selected: ink fill with white text for toggles, segmented controls, navigation items and selected table rows. Inside an ink fill, use the `on-ink` mixin from `drawing.scss` so links, status text and controls stay readable.
-- Disabled: dimmed text and hatched with the `hatch` mixin.
-- Error: an error-colored border with a 2 px inset mark on the leading edge, and the message below the control.
+- Hover: a raised grey background on rows, list items and quiet controls, on devices with a real pointer only.
+- Disabled: dimmed text and hatched with the `hatch` mixin. Give the reason in words nearby.
+- Read-only: a raised fill without the ink baseline. The text stays ink.
+- Error: an error-colored border with a 2 px inset mark on the leading edge, and the message below the control with the fault icon.
+
+## Offsets and plates
+
+A hard ink offset means "an object above the sheet". It falls down and to the right, like a shadow, in either reading direction, and it is never blurred.
+
+- Buttons that can be pressed stand `size-offset-control` off their offset and move onto it when pressed. Use `offset-block`, or `offset-block-ink` for an ink-filled button, with `offset-press` on `:active` and `offset-press-transition` inside `with-motion`. Link and icon buttons have no offset, so toolbars stay light.
+- Plates sit on a deeper `size-offset-plate` offset: modals, popovers, menus and the lists that drop from a select. Use the `plate` mixin. A modal lays its plate over a paper veil, `color-background-overlay`, so the page recedes without going dark.
+- Cards and tokens never get an offset.
+
+A leader, from `src/internal/components/leader`, means "this goes somewhere else": ActionCard, a button with a link, an external link and the joins between breadcrumbs.
 
 ## Icons
 
