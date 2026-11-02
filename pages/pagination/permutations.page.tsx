@@ -58,6 +58,22 @@ export default function PaginationPermutations() {
       </section>
 
       <section className={styles.section}>
+        <h2>Page label</h2>
+        <Pagination currentPageIndex={3} pagesCount={12} showPageLabel={true} />
+        <Pagination
+          currentPageIndex={3}
+          pagesCount={12}
+          showPageLabel={true}
+          ariaLabels={{ pageLabel: page => `Sheet ${page} of 12` }}
+        />
+      </section>
+
+      <section className={styles.section}>
+        <h2>Over 100 pages</h2>
+        <Example pagesCount={140} initial={120} />
+      </section>
+
+      <section className={styles.section}>
         <h2>Disabled</h2>
         <Pagination currentPageIndex={4} pagesCount={9} disabled={true} />
       </section>

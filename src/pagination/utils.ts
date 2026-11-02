@@ -36,3 +36,11 @@ export function getPageItems(current: number, count: number, openEnd: boolean): 
   }
   return [1, 'ellipsis-start', current - 1, current, current + 1, 'ellipsis-end', count];
 }
+
+/**
+ * The page number as it is lettered on the button. Under 100 pages, numbers take two digits, "03", so the
+ * buttons keep one width, like the sheet numbers of a drawing set.
+ */
+export function formatPageNumber(pageNumber: number, count: number): string {
+  return count < 100 ? String(pageNumber).padStart(2, '0') : String(pageNumber);
+}

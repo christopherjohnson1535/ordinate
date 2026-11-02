@@ -95,6 +95,25 @@ describe('Cards', () => {
     expect(cards().findHeader()!.getText()).toBe('Nodes');
   });
 
+  test('draws the header counter in the dimension line of the sheet', () => {
+    const { rerender } = render(
+      <Cards items={nodes} cardDefinition={cardDefinition} header={<Header counter="(3)">Nodes</Header>} />
+    );
+    expect(cards().findMeasure()!.getText()).toBe('3');
+    expect(cards().findMeasure()!.getElement()).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByRole('heading', { name: 'Nodes (3)' })).toBeInTheDocument();
+    rerender(
+      <Cards
+        items={nodes}
+        cardDefinition={cardDefinition}
+        variant="full-page"
+        header={<Header counter="(3)">Nodes</Header>}
+      />
+    );
+    expect(cards().findMeasure()).toBeNull();
+    expect(cards().findHeader()!.getText()).toBe('Nodes (3)');
+  });
+
   test('renders the filter, pagination and preferences slots', () => {
     render(
       <Cards

@@ -13,6 +13,7 @@ export default function TableBodyCell({
   children,
   isRowHeader = false,
   verticalAlign = 'middle',
+  contentType = 'text',
   colSpan,
   rowTag,
   selectionType,
@@ -28,6 +29,7 @@ export default function TableBodyCell({
       {...getBaseProps(props)}
       isRowHeader={isRowHeader}
       verticalAlign={verticalAlign}
+      contentType={contentType}
       colSpan={colSpan}
       rowTag={rowTag}
       selectionType={selectionType}

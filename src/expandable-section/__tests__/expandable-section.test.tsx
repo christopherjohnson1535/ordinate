@@ -188,7 +188,9 @@ describe('ExpandableSection test utilities and accessibility', () => {
     const section = createWrapper().findExpandableSection()!;
     expect(section.isExpanded()).toBe(false);
     expect(section.findHeaderText().getText()).toBe('Instances (3)');
-    expect(section.findHeaderCounter()!.getText()).toBe('(3)');
+    // The dimension line draws the count without its brackets; the button keeps it for screen readers.
+    expect(section.findHeaderCounter()!.getText()).toBe('3');
+    expect(section.findHeaderCounter()!.getElement()).toHaveAttribute('aria-hidden', 'true');
     expect(section.findHeaderDescription()!.getText()).toBe('Running');
     expect(section.findHeaderActions()!.getText()).toBe('Add');
     section.findExpandButton().click();

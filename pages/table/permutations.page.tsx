@@ -52,6 +52,18 @@ export default function TablePermutations() {
 
       <Example title="Container" footer={<a href="#all">View all instances</a>} />
       <Example
+        title="Kind and reference"
+        kind="resource"
+        reference="R2"
+        selectionType="multi"
+        selectedItems={[items[1]]}
+        header={
+          <Header counter="6 nodes · 1 picked" actions={<Button>Launch</Button>}>
+            Nodes
+          </Header>
+        }
+      />
+      <Example
         title="Schedule: caption, row tags and a selected row"
         caption="Schedule of instances"
         rowTag={rowTag}
@@ -106,8 +118,9 @@ export default function TablePermutations() {
         variant="full-page"
         caption="Schedule of instances"
         rowTag={rowTag}
+        kind="configuration"
         header={
-          <Header variant="h1" code="Sheet A-02">
+          <Header variant="h1" code="Sheet A-02" counter={`(${items.length})`}>
             Instances
           </Header>
         }

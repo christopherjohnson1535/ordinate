@@ -22,8 +22,8 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   max-inline-size: 100%;
 }
 
-// The query line: one ruled line holding the conditions, the input for the next one and the result count,
-// set in mono like a line of a specification.
+// The query line holds the conditions, the input for the next one and the result count. It is drawn as a text
+// field: a hairline edge on the sheet with an ink baseline under it.
 .query {
   @include styles.border-radius(ord.$border-radius-input);
   display: flex;
@@ -36,18 +36,17 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   min-block-size: ord.$size-control-height;
   padding-block: ord.$space-xxxs;
   padding-inline: ord.$space-s ord.$space-xs;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-control;
+  box-shadow: inset 0 calc(-1 * #{ord.$border-width-default}) 0 ord.$color-text-secondary;
+  color: ord.$color-text-body;
 
-  // Once the conditions wrap, the lines need room between them and the rule.
+  // Once the conditions wrap, the lines need room between them and the edge.
   &:has(.token-list > :nth-child(2)) {
     padding-block: ord.$space-xxs;
   }
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-control;
-  color: ord.$color-text-body;
-  font-family: ord.$font-family-mono;
-  font-size: ord.$font-size-body;
 
   &:has(input:focus) {
     @include styles.focus-ring;
@@ -56,15 +55,17 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   .disabled > & {
     @include styles.hatch;
     border-color: ord.$color-border-disabled;
+    box-shadow: none;
     color: ord.$color-text-disabled;
   }
 }
 
+// "Where" and the joins between conditions are lettered in small mono capitals, like the words of a note
+// on a drawing.
 .query-word,
 .operation-text {
-  @include styles.font-code;
+  @include drawing.mono-caption;
   flex-shrink: 0;
-  font-size: ord.$font-size-body;
   color: ord.$color-text-secondary;
 
   .disabled & {
@@ -97,21 +98,19 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   padding-inline-start: 0;
 }
 
-.query input[role='combobox'] {
-  font-family: ord.$font-family-mono;
-
-  &:not([type='search']) {
-    padding-inline: 0;
-  }
+.query input[role='combobox']:not([type='search']) {
+  padding-inline: 0;
 }
 
 .dropdown {
   inline-size: 100%;
 }
 
+// The result count is a measure, lettered in small mono capitals at the end of the line.
 .count {
-  @include styles.font-code;
+  @include drawing.mono-caption;
   flex-shrink: 0;
+  margin-inline-start: auto;
   color: ord.$color-text-secondary;
   white-space: nowrap;
 }
@@ -133,38 +132,39 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   min-inline-size: 0;
 }
 
-// Each condition is an ink chip: the filter as text, then a remove mark.
+// Each condition is a token: a hairline box on the sheet holding the filter, then a dismiss mark. Like every
+// token it has no offset, since it lies on the sheet.
 .token-chip {
   @include styles.border-radius(ord.$border-radius-badge);
-  @include drawing.on-ink;
   display: flex;
   align-items: stretch;
   box-sizing: border-box;
   min-inline-size: 0;
   max-inline-size: 100%;
   min-block-size: $token-inner-height;
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
 
   .token-disabled & {
     @include styles.hatch;
-    background-color: transparent;
-    box-shadow: inset 0 0 0 ord.$border-width-default ord.$color-border-disabled;
+    border-color: ord.$color-border-disabled;
     color: ord.$color-text-disabled;
   }
 }
 
-// Focus is drawn inside the chip, in the chip's text color. The transparent outline stays for forced colors,
-// where box shadows are not drawn.
-@mixin chip-focus {
-  outline-width: ord.$border-width-focus-ring;
-  outline-style: solid;
-  outline-color: transparent;
+// Focus is drawn close around the part of the token, so it does not run into its neighbors.
+@mixin token-focus {
+  @include styles.focus-ring;
   outline-offset: 0;
-  box-shadow: inset 0 0 0 ord.$border-width-focus-ring ord.$color-text-on-ink;
 }
 
-// Scoped under the token so the select's trigger reads as a word of the line, whichever stylesheet loads first.
+// Scoped under the token so the select's trigger reads as a join word of the line, whichever stylesheet loads
+// first.
 .token .operation [aria-haspopup='listbox'] {
-  @include styles.font-code;
+  @include drawing.mono-caption;
   @include styles.border-radius(0);
   min-block-size: $token-inner-height;
   padding-inline: 0;
@@ -172,18 +172,19 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   background-color: transparent;
   box-shadow: none;
   color: ord.$color-text-secondary;
-  font-size: ord.$font-size-body;
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-underline-offset: ord.$border-focus-ring-offset;
 
-  &:hover:not(:disabled) {
-    color: ord.$color-text-body;
-  }
-
   &:disabled {
     background-image: none;
     color: ord.$color-text-disabled;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .token .operation [aria-haspopup='listbox']:hover:not(:disabled) {
+    color: ord.$color-text-body;
   }
 }
 
@@ -193,31 +194,24 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
 }
 
 .token-button {
-  @include styles.font-code;
+  @include styles.font-body;
   @include styles.border-radius(0);
   display: flex;
   align-items: center;
-  gap: ord.$space-xs;
+  gap: ord.$space-xxs;
   box-sizing: border-box;
   min-inline-size: 0;
   max-inline-size: 100%;
-  min-block-size: $token-inner-height;
   padding-block: 0;
   padding-inline: ord.$space-xs ord.$space-xxs;
   border-width: 0;
   background-color: transparent;
   color: inherit;
-  font-size: ord.$font-size-body;
   text-align: start;
   cursor: pointer;
 
-  &:hover:not(:disabled) .token-value {
-    text-decoration-line: underline;
-    text-underline-offset: ord.$border-focus-ring-offset;
-  }
-
   &:focus-visible {
-    @include chip-focus;
+    @include token-focus;
   }
 
   &:disabled {
@@ -225,12 +219,20 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   }
 }
 
-.token-property {
-  flex-shrink: 0;
+@media (hover: hover) and (pointer: fine) {
+  .token-button:hover:not(:disabled) .token-value {
+    text-decoration-line: underline;
+    text-underline-offset: ord.$border-focus-ring-offset;
+  }
 }
 
+// The property and the operator are lettered in mono, as a drafter writes a reference; the value stays in the
+// body face because people read it.
+.token-property,
 .token-operator {
   flex-shrink: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
   color: ord.$color-text-secondary;
 
   .token-disabled & {
@@ -247,21 +249,20 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
 // Scoped under the token so these win over the button's own size and colors, whichever stylesheet loads first.
 .token .token-remove {
   @include styles.border-radius(0);
+  border-start-end-radius: ord.$border-radius-badge;
+  border-end-end-radius: ord.$border-radius-badge;
   flex-shrink: 0;
   align-self: stretch;
   inline-size: $token-inner-height;
   min-block-size: 0;
+  block-size: auto;
   border-width: 0;
   background-color: transparent;
+  box-shadow: none;
   color: ord.$color-text-secondary;
 
-  &:hover:not(:disabled) {
-    background-color: transparent;
-    color: ord.$color-text-body;
-  }
-
   &:focus-visible {
-    @include chip-focus;
+    @include token-focus;
   }
 
   &:disabled {
@@ -270,9 +271,29 @@ $token-inner-height: calc(#{ord.$size-control-height-small} - 2 * #{ord.$space-x
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .token .token-remove:hover:not(:disabled) {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
+  }
+}
+
+// A quiet button that unfolds the conditions past the limit, as a token group does.
 .query .token-toggle {
-  @include styles.font-code;
+  @include styles.font-label;
+  min-block-size: $token-inner-height;
+  padding-inline: ord.$space-xs;
+  border-color: transparent;
+  background-color: transparent;
+  color: ord.$color-text-body;
   font-size: ord.$font-size-small;
+  text-decoration-line: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .query .token-toggle:hover {
+    background-color: ord.$color-background-item-hover;
+  }
 }
 
 .actions {

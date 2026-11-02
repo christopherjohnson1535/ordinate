@@ -7,6 +7,7 @@ import styles from './styles.css.js';
 
 interface HeaderAreaProps {
   header?: React.ReactNode;
+  reference?: string;
   filter?: React.ReactNode;
   pagination?: React.ReactNode;
   preferences?: React.ReactNode;
@@ -14,17 +15,22 @@ interface HeaderAreaProps {
 }
 
 /**
- * The header slot and, below it, the tools row: the filter takes the free space, and pagination
- * and preferences sit at the end of the row.
+ * The reference and header slot and, below them, the tools row: the filter takes the free space, and
+ * pagination and preferences sit at the end of the row.
  */
-export function HeaderArea({ header, filter, pagination, preferences, className }: HeaderAreaProps) {
+export function HeaderArea({ header, reference, filter, pagination, preferences, className }: HeaderAreaProps) {
   const hasTools = Boolean(filter || pagination || preferences);
-  if (!header && !hasTools) {
+  if (!header && !reference && !hasTools) {
     return null;
   }
   return (
     <div className={clsx(styles['header-area'], className)}>
-      {header && <div className={styles['header-slot']}>{header}</div>}
+      {(reference || header) && (
+        <div className={styles.heading}>
+          {reference && <span className={clsx(styles.ink, styles.reference)}>{reference}</span>}
+          {header && <div className={styles['header-slot']}>{header}</div>}
+        </div>
+      )}
       {hasTools && (
         <div className={styles.tools}>
           {filter && <div className={styles['tools-filter']}>{filter}</div>}

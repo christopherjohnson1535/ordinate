@@ -3,24 +3,31 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
-@use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: ord.$space-xs ord.$space-s;
+  min-inline-size: 0;
 }
 
 .input {
+  position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
 }
 
+// The match count is a measure, lettered in small mono capitals at the end of the field, just before the
+// clear button.
 .count {
-  @include styles.font-body;
-  flex-shrink: 0;
+  @include drawing.mono-caption;
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: calc(#{ord.$size-control-height-small} + #{ord.$space-xxs} + #{ord.$border-width-default});
+  display: flex;
+  align-items: center;
+  padding-inline: ord.$space-xs;
   color: ord.$color-text-secondary;
   white-space: nowrap;
+  pointer-events: none;
 }

@@ -14,6 +14,7 @@ export default function TableHeaderCell({
   sortingState,
   sortingDisabled = false,
   onSortingChange,
+  contentType = 'text',
   width,
   minWidth,
   maxWidth,
@@ -36,6 +37,7 @@ export default function TableHeaderCell({
       sortingState={sortingState}
       sortingDisabled={sortingDisabled}
       onSortingChange={onSortingChange}
+      contentType={contentType}
       width={width}
       minWidth={minWidth}
       maxWidth={maxWidth}

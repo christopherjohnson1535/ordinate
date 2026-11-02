@@ -6,7 +6,8 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
-// A token reads like a callout tag on a drawing: a ruled box, with the dismiss button behind a hairline.
+// A token is a small label you can remove: a hairline box on the sheet, so it reads as a thing, with a dismiss
+// mark at its end. It lies on the sheet, so it has no offset.
 .root {
   @include styles.font-body;
   @include styles.border-radius(ord.$border-radius-input);
@@ -121,19 +122,19 @@
   inline-size: ord.$size-control-height-small;
   min-block-size: 0;
   border-width: 0;
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
   background-color: transparent;
+  box-shadow: none;
   color: ord.$color-text-secondary;
-
-  &:hover {
-    background-color: ord.$color-background-item-hover;
-    color: ord.$color-text-body;
-  }
 
   &:focus-visible {
     outline-offset: 0;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root .dismiss-button:hover {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
   }
 }
 

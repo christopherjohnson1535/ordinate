@@ -14,6 +14,7 @@ export default function Pagination({
   pagesCount,
   openEnd = false,
   disabled = false,
+  showPageLabel = false,
   ariaLabels,
   onChange,
   onNextPageClick,
@@ -27,6 +28,7 @@ export default function Pagination({
       pagesCount={pagesCount}
       openEnd={openEnd}
       disabled={disabled}
+      showPageLabel={showPageLabel}
       ariaLabels={ariaLabels}
       onChange={onChange}
       onNextPageClick={onNextPageClick}

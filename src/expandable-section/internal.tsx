@@ -4,9 +4,11 @@ import React, { useId, useImperativeHandle, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { ConstructionTopLine } from '../internal/components/construction';
+import { DimensionLine } from '../internal/components/dimension-line';
 import { ExpandIcon } from '../internal/components/expand-icon';
 import { fireNonCancelableEvent } from '../internal/events';
 import { warnOnce } from '../internal/logging';
+import { toMeasure } from '../table/header-counter';
 import { ExpandableSectionProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -92,7 +94,7 @@ export const InternalExpandableSection = React.forwardRef(
           {hasCounter && (
             <>
               {' '}
-              <span className={styles.counter}>{headerCounter}</span>
+              <span className={styles['screenreader-only']}>{headerCounter}</span>
             </>
           )}
         </span>
@@ -117,6 +119,13 @@ export const InternalExpandableSection = React.forwardRef(
             </p>
           )}
         </div>
+        {/* The count stands in the dimension line on the opening construction line, as in Container. The
+            button still holds it for screen readers, so the line is drawing only. */}
+        {hasCounter && (
+          <div className={styles.counter} aria-hidden="true">
+            <DimensionLine label={toMeasure(headerCounter)} />
+          </div>
+        )}
         <div
           id={contentId}
           role="group"

@@ -68,6 +68,8 @@ export interface CardsProps<T = unknown> extends BaseComponentProps {
   /**
    * The heading of the collection. Use the Header component, with a counter and actions as needed.
    * It also names the list of cards for assistive technology, unless `ariaLabels.cardsLabel` is set.
+   * In the `container` variant the counter is drawn in the dimension line on the construction line that
+   * opens the sheet, as Container draws its `measure`, and brackets around it are dropped: "(12)" reads "12".
    */
   header?: React.ReactNode;
   /**

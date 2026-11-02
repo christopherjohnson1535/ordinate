@@ -45,6 +45,8 @@ export default function Table<T>({
   totalItemsCount,
   onRowClick,
   renderAriaLive,
+  kind = 'neutral',
+  reference,
   ...props
 }: TableProps<T>) {
   return (
@@ -85,6 +87,8 @@ export default function Table<T>({
       totalItemsCount={totalItemsCount}
       onRowClick={onRowClick}
       renderAriaLive={renderAriaLive}
+      kind={kind}
+      reference={reference}
     />
   );
 }

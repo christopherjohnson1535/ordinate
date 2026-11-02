@@ -65,6 +65,8 @@ export default function TableCollection() {
         columnDefinitions={definitions}
         columnDisplay={columnDefinitions.map(({ id }) => ({ id: id!, visible: !hiddenColumns.includes(id!) }))}
         trackBy="id"
+        kind="resource"
+        reference="R2"
         selectionType="multi"
         selectedItems={selectedItems}
         onSelectionChange={event => setSelectedItems(event.detail.selectedItems)}
@@ -86,7 +88,11 @@ export default function TableCollection() {
         }}
         header={
           <Header
-            counter={selectedItems.length ? `(${selectedItems.length}/${sorted.length})` : `(${sorted.length})`}
+            counter={
+              selectedItems.length
+                ? `${sorted.length} instances · ${selectedItems.length} picked`
+                : `${sorted.length} instances`
+            }
             description={
               lastClicked ? `Last clicked: ${lastClicked}` : 'Click a row, sort a column, or drag a heading edge.'
             }
@@ -113,6 +119,8 @@ export default function TableCollection() {
         }
         pagination={
           <Pagination
+            showPageLabel={true}
+            ariaLabels={{ pageLabel: pageNumber => `Sheet ${pageNumber} of ${pagesCount}` }}
             currentPageIndex={currentPage}
             pagesCount={pagesCount}
             onChange={event => setPage(event.detail.currentPageIndex)}

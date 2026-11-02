@@ -22,6 +22,11 @@ export interface PaginationProps extends BaseComponentProps {
    */
   disabled?: boolean;
   /**
+   * Shows the current page in small mono capitals before the page numbers, such as "Page 3 of 12", like the
+   * sheet number in a title block. The text is the current page's `pageLabel`.
+   */
+  showPageLabel?: boolean;
+  /**
    * Accessible names for the buttons and the list. Each one replaces the built-in message.
    * * `paginationLabel` names the list of pages.
    * * `previousPageLabel` and `nextPageLabel` name the arrow buttons.

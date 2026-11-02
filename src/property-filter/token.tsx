@@ -42,8 +42,8 @@ export interface FilterTokenProps {
 }
 
 /**
- * One condition of the query line: the operation word that joins it to the previous condition, then an
- * ink chip holding the filter, as a button that opens its editor, and a remove button.
+ * One condition of the query line: the join word that ties it to the previous condition, then a token holding
+ * the filter, as a button that opens its editor, and a remove button.
  */
 export const FilterToken = React.forwardRef(
   (

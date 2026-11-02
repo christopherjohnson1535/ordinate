@@ -17,6 +17,20 @@ export default class TableWrapper extends TableGridWrapper {
     return this.findByClassName(styles['header-slot']);
   }
 
+  /**
+   * The `reference` set above the header.
+   */
+  findReference(): ElementWrapper | null {
+    return this.findByClassName(styles.reference);
+  }
+
+  /**
+   * The dimension line on the construction line that opens the sheet, which holds the header's counter.
+   */
+  findMeasure(): ElementWrapper | null {
+    return this.findByClassName(styles.measure);
+  }
+
   findFooterSlot(): ElementWrapper | null {
     return this.findByClassName(styles['footer-slot']);
   }

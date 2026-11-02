@@ -9,7 +9,7 @@ import Table, { TableProps } from '../../../lib/components/table';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
-import frameStyles from '../../../lib/components/internal/components/sheet-frame/styles.css.js';
+import styles from '../../../lib/components/table/styles.css.js';
 import rowStyles from '../../../lib/components/table-row/styles.css.js';
 
 interface Part {
@@ -90,15 +90,58 @@ describe('Table rendering', () => {
         footer="Updated hourly."
       />
     );
-    expect(table().getElement()).toHaveClass(frameStyles.root);
-    expect(table().find(`:scope > .${frameStyles.header}`)!.getElement()).toContainElement(
+    expect(table().getElement()).toHaveClass(styles.sheet);
+    expect(table().find(`:scope > .${styles['header-area']}`)!.getElement()).toContainElement(
       table().findHeaderSlot()!.getElement()
     );
-    expect(table().findHeaderSlot()!.getText()).toBe('Parts (5)');
+    // The heading keeps its count for screen readers, while the dimension line draws it.
+    expect(screen.getByRole('heading', { name: 'Parts (5)' })).toBeInTheDocument();
+    expect(table().findMeasure()!.getText()).toBe('5');
+    expect(table().findMeasure()!.getElement()).toHaveAttribute('aria-hidden', 'true');
     expect(table().findTextFilter()!.find('input')).not.toBeNull();
     expect(table().findPagination()!.getText()).toBe('Page 1');
     expect(table().findCollectionPreferences()!.getText()).toBe('Preferences');
     expect(table().findFooterSlot()!.getText()).toBe('Updated hourly.');
+  });
+
+  test('full-page draws the count on its sheet; embedded and borderless leave it in the header', () => {
+    const header = <Header counter="(5)">Parts</Header>;
+    const { rerender } = render(<Parts variant="full-page" header={header} />);
+    expect(table().findMeasure()!.getText()).toBe('5');
+    rerender(<Parts variant="embedded" header={header} />);
+    expect(table().findMeasure()).toBeNull();
+    expect(table().findHeaderSlot()!.getText()).toBe('Parts (5)');
+  });
+
+  test('a header that is not a Header keeps its content and draws no count', () => {
+    render(<Parts header={<h2>Parts (5)</h2>} />);
+    expect(table().findMeasure()).toBeNull();
+    expect(table().findHeaderSlot()!.getText()).toBe('Parts (5)');
+  });
+
+  test('kind and reference mark the table like a container', () => {
+    render(<Parts kind="resource" reference="R2" header={<Header counter="12 parts">Parts</Header>} />);
+    expect(table().getElement()).toHaveClass(styles['kind-resource']);
+    expect(table().findReference()!.getText()).toBe('R2');
+    expect(table().findReference()!.getElement()).toHaveClass(styles.ink);
+    expect(table().findMeasure()!.getText()).toBe('12 parts');
+  });
+
+  test('contentType letters identifier and number columns in mono and aligns numbers to the end', () => {
+    render(
+      <Parts
+        columnDefinitions={[
+          { id: 'number', header: 'Part no.', cell: item => item.number, contentType: 'identifier' },
+          { id: 'name', header: 'Name', cell: item => item.name },
+          { id: 'quantity', header: 'Quantity', cell: item => item.quantity, contentType: 'number' },
+        ]}
+      />
+    );
+    const [identifier, text, number] = table().findRows()[0].findCells();
+    expect(identifier.getElement().className).toMatch(/content-identifier/);
+    expect(text.getElement().className).not.toMatch(/content-/);
+    expect(number.getElement().className).toMatch(/content-number/);
+    expect(table().findColumnHeaders()[2].getElement().className).toMatch(/content-number/);
   });
 
   test.each(['embedded', 'borderless', 'full-page'] as const)('the %s variant keeps every slot', variant => {

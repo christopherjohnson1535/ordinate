@@ -22,6 +22,14 @@ export interface TableBodyCellProps extends BaseComponentProps {
    */
   verticalAlign?: TableBodyCellProps.VerticalAlign;
   /**
+   * What the cell holds, which sets how it is lettered.
+   * - `text` is set in the body face. The default.
+   * - `identifier` is for names and codes such as `na-04` or an address, set in mono.
+   * - `number` is for figures, set in mono with even figures and aligned to the end of the cell. Give the
+   *   column's `TableHeaderCell` the same `contentType` so its heading lines up.
+   */
+  contentType?: TableBodyCellProps.ContentType;
+  /**
    * The number of columns the cell spans, for example for a message that fills the whole row.
    */
   colSpan?: number;
@@ -62,6 +70,8 @@ export interface TableBodyCellProps extends BaseComponentProps {
 
 export namespace TableBodyCellProps {
   export type VerticalAlign = 'middle' | 'top';
+
+  export type ContentType = 'text' | 'identifier' | 'number';
 
   export type SelectionType = 'single' | 'multi';
 

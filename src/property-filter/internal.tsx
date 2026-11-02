@@ -150,7 +150,7 @@ export const InternalPropertyFilter = React.forwardRef(
     const hasTokens = tokens.length > 0;
 
     // The filters read as one query line: "where status = running and image ^ web", then the input for the
-    // next condition and the result count, all on the same ruled line.
+    // next condition and the result count, all in the same field.
     return (
       <div {...rest} className={clsx(styles.root, disabled && styles.disabled)}>
         {customControl && <div className={styles['custom-control']}>{customControl}</div>}

@@ -29,6 +29,19 @@
   min-inline-size: 0;
 }
 
+.screenreader-only {
+  @include styles.screenreader-only;
+}
+
+// The count lies on the construction line that opens the sheet, which is the top edge of the frame.
+.measure {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  transform: translateY(-50%);
+  color: ord.$color-kind-neutral;
+}
+
 .tools {
   display: flex;
   flex-wrap: wrap;

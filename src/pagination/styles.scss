@@ -4,10 +4,36 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
   @include styles.font-body;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xxs ord.$space-s;
+  color: ord.$color-text-body;
+}
+
+// The current sheet of the set, lettered like the sheet number in a title block.
+.page-label {
+  @include drawing.mono-caption;
+  color: ord.$color-text-secondary;
+  white-space: nowrap;
+
+  .root-disabled & {
+    color: ord.$color-text-disabled;
+  }
+}
+
+// The row is the offset parent of the page buttons, so the marker can find the current one.
+.row {
+  position: relative;
+  display: flex;
+}
+
+.list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -16,7 +42,6 @@
   margin-inline: 0;
   padding-block: 0;
   padding-inline: 0;
-  color: ord.$color-text-body;
   list-style: none;
 }
 
@@ -24,6 +49,7 @@
   display: flex;
 }
 
+// A page button: no edge and no fill, so only the crop marks stand out.
 .button {
   @include styles.border-radius(ord.$border-radius-button);
   display: inline-flex;
@@ -34,23 +60,15 @@
   block-size: ord.$size-control-height-small;
   padding-block: 0;
   padding-inline: ord.$space-xxs;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: transparent;
+  border-width: 0;
   background-color: transparent;
-  color: ord.$color-text-body-secondary;
-  font: inherit;
+  color: ord.$color-text-secondary;
   cursor: pointer;
 
   @include styles.with-motion {
-    transition-property: background-color, border-color, color;
+    transition-property: background-color, color;
     transition-duration: ord.$motion-duration-responsive;
     transition-timing-function: ord.$motion-easing-standard;
-  }
-
-  &:hover:not(:disabled) {
-    background-color: ord.$color-background-item-hover;
-    color: ord.$color-text-body;
   }
 
   &:focus-visible {
@@ -63,25 +81,33 @@
   }
 }
 
-// Page numbers are set in the mono face with even figures, like the numbering on a drawing sheet.
-.page-number {
-  font-family: ord.$font-family-mono;
-  font-size: ord.$font-size-code;
-  font-variant-numeric: tabular-nums;
-}
-
-.current-page {
-  border-color: ord.$color-border-strong;
-  color: ord.$color-text-body;
-  font-weight: ord.$font-weight-label;
-
-  &:disabled {
-    border-color: ord.$color-border-disabled;
+@media (hover: hover) and (pointer: fine) {
+  .button:hover:not(:disabled) {
+    background-color: ord.$color-background-item-hover;
+    color: ord.$color-text-body;
   }
 }
 
-.arrow {
+// Page numbers are lettered in mono with even figures, like the numbering of the sheets in a set.
+.page-number {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  font-weight: ord.$font-weight-label;
+  font-variant-numeric: tabular-nums;
+}
+
+// The current page is told by its crop marks and its ink, never by a fill.
+.current-page {
   color: ord.$color-text-body;
+}
+
+// The marks hug the page button from top to bottom.
+.row > .marker {
+  inset-block: 0;
+}
+
+.root-disabled .marker > span {
+  color: ord.$color-text-disabled;
 }
 
 .ellipsis {
@@ -95,7 +121,12 @@
   color: ord.$color-text-disabled;
 }
 
+// Scoped under the list so the arrows match the page buttons, whichever stylesheet loads first.
+.list .arrow,
 .previous-page,
 .next-page {
   flex-shrink: 0;
+  inline-size: ord.$size-control-height-small;
+  min-block-size: ord.$size-control-height-small;
+  block-size: ord.$size-control-height-small;
 }

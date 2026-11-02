@@ -40,6 +40,13 @@ export default class CardsWrapper extends ComponentWrapper {
     return this.findByClassName(styles.header);
   }
 
+  /**
+   * The dimension line on the construction line that opens the sheet, which holds the header's counter.
+   */
+  findMeasure(): ElementWrapper | null {
+    return this.findByClassName(styles.measure);
+  }
+
   findFilterSlot(): ElementWrapper | null {
     return this.findByClassName(styles.filter);
   }

@@ -3,6 +3,7 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
+@use '../../styles' as styles;
 @use '../../styles/tokens' as ord;
 
 .root {
@@ -35,6 +36,23 @@
   max-inline-size: 100%;
 }
 
+// The tokens past the limit fold into a quiet button, "+4 more": no edge, ink text and a raised tint under the
+// pointer. Scoped under the root so these win over the button's own look, whichever stylesheet loads first.
 .root .toggle {
+  @include styles.font-label;
   min-block-size: ord.$size-control-height-small;
+  padding-block: 0;
+  padding-inline: ord.$space-xs;
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  color: ord.$color-text-body;
+  font-size: ord.$font-size-small;
+  text-decoration-line: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root .toggle:hover {
+    background-color: ord.$color-background-item-hover;
+  }
 }

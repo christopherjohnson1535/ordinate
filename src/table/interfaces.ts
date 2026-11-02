@@ -36,8 +36,24 @@ export interface TableProps<T = unknown> extends BaseComponentProps {
    */
   empty?: React.ReactNode;
   /**
+   * What the table holds. The kind colors the construction line that opens the sheet, its hash marks, the
+   * dimension line and the reference, as in Container.
+   * - `configuration` for settings people change, drawn in drafting blue.
+   * - `resource` for things that exist or run, drawn in teal.
+   * - `policy` for rules the system follows, drawn in plum.
+   * - `neutral` for anything else, drawn in graphite.
+   */
+  kind?: TableProps.Kind;
+  /**
+   * A short reference set above the header, such as `R2`, in the color of `kind`. Other parts of the page
+   * can point back to the table with it.
+   */
+  reference?: string;
+  /**
    * The heading area of the table. Use the Header component, with the item count as its `counter`
-   * and actions in `actions`.
+   * and actions in `actions`. In the `container` and `full-page` variants the counter is drawn in the
+   * dimension line on the construction line that opens the sheet, as Container draws its `measure`, and
+   * brackets around it are dropped: "(12)" reads "12".
    */
   header?: React.ReactNode;
   /**
@@ -139,8 +155,8 @@ export interface TableProps<T = unknown> extends BaseComponentProps {
    */
   contentDensity?: TableProps.ContentDensity;
   /**
-   * The table is drawn as a schedule: column labels in small mono capitals, a heavy ink rule under them,
-   * thin rules between the columns and the selected row in solid ink.
+   * The table is drawn as a schedule: column labels in small mono capitals over an ink rule and hairlines
+   * between the rows. A selected row is raised, with its checked key and an ink rule on its leading edge.
    *
    * - `container` draws the table on its own sheet, framed by a heavy ink rule, with the header and footer inside it.
    * - `full-page` is for a table that is the main content of a page: the header sits above the framed sheet.
@@ -188,6 +204,10 @@ export namespace TableProps {
   export type ContentDensity = 'comfortable' | 'compact';
 
   export type Variant = 'container' | 'embedded' | 'borderless' | 'full-page';
+
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
+
+  export type ContentType = 'text' | 'identifier' | 'number';
 
   export type VerticalAlign = 'middle' | 'top';
 
@@ -238,6 +258,14 @@ export namespace TableProps {
      * Vertical alignment of the cells. `top` suits columns whose content wraps onto several lines.
      */
     verticalAlign?: VerticalAlign;
+    /**
+     * What the cells hold, which sets how they are lettered.
+     * - `text` is set in the body face. The default.
+     * - `identifier` is for names and codes such as `na-04` or an address, set in mono.
+     * - `number` is for figures, set in mono with even figures and aligned to the end of the column,
+     *   heading included.
+     */
+    contentType?: ContentType;
   }
 
   export interface SortingColumn<T> {

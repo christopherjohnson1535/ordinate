@@ -3,7 +3,8 @@
 import React, { useId, useRef } from 'react';
 import clsx from 'clsx';
 
-import { SheetFrame } from '../internal/components/sheet-frame';
+import { ConstructionTopLine, RuleEndMarks } from '../internal/components/construction';
+import { DimensionLine } from '../internal/components/dimension-line';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { InternalLiveRegion } from '../live-region/internal';
@@ -15,6 +16,7 @@ import { InternalTableHeaderCell } from '../table-header-cell/internal';
 import { InternalTableRoot } from '../table-root/internal';
 import { InternalTableRow } from '../table-row/internal';
 import { HeaderArea } from './header-area';
+import { liftHeaderCounter } from './header-counter';
 import { TableProps } from './interfaces';
 import { columnKeyAttribute, useColumnWidths } from './use-column-widths';
 import { useSelection } from './use-selection';
@@ -58,6 +60,8 @@ export function InternalTable<T>({
   totalItemsCount,
   onRowClick,
   renderAriaLive,
+  kind = 'neutral',
+  reference,
   ...rest
 }: TableProps<T>) {
   const i18n = useInternalI18n('table');
@@ -120,6 +124,7 @@ export function InternalTable<T>({
                 isDescending: event.detail.descending,
               })
             }
+            contentType={definition.contentType}
             width={resizableColumns ? widths.widthOf(key) : definition.width}
             minWidth={definition.minWidth}
             maxWidth={definition.maxWidth}
@@ -170,6 +175,7 @@ export function InternalTable<T>({
             key={key}
             isRowHeader={definition.isRowHeader}
             verticalAlign={definition.verticalAlign}
+            contentType={definition.contentType}
           >
             {definition.cell(item)}
           </InternalTableBodyCell>
@@ -219,9 +225,20 @@ export function InternalTable<T>({
     </InternalLiveRegion>
   );
 
+  // On a sheet the count stands in the dimension line on the opening construction line, as in Container.
+  // The heading still holds it for screen readers. Without a sheet there is no line to stand on, so the
+  // header shows it.
+  const lifted = hasSheet ? liftHeaderCounter(header, styles['screenreader-only']) : { header, measure: undefined };
+  const measure = lifted.measure !== undefined && (
+    <div className={clsx(styles.ink, styles.measure)} aria-hidden="true">
+      <DimensionLine label={lifted.measure} />
+    </div>
+  );
+
   const headerArea = (
     <HeaderArea
-      header={header}
+      header={lifted.header}
+      reference={reference}
       filter={filter}
       pagination={pagination}
       preferences={preferences}
@@ -230,26 +247,36 @@ export function InternalTable<T>({
   );
 
   const footerSlot = footer ? <div className={styles['footer-slot']}>{footer}</div> : undefined;
+  const sheetFooter = footerSlot && (
+    <div className={styles['sheet-footer']}>
+      <RuleEndMarks kind={kind} />
+      {footerSlot}
+    </div>
+  );
 
   if (variant === 'container') {
     return (
-      <SheetFrame
-        {...rest}
-        className={clsx(styles.root, styles[`variant-${variant}`])}
-        header={headerArea}
-        footer={footerSlot}
-      >
-        {table}
+      <div {...rest} className={clsx(styles.root, styles[`kind-${kind}`], styles.sheet, styles[`variant-${variant}`])}>
+        <ConstructionTopLine kind={kind} />
+        {headerArea}
+        {measure}
+        <div className={styles['sheet-content']}>{table}</div>
+        {sheetFooter}
         {liveRegion}
-      </SheetFrame>
+      </div>
     );
   }
 
   return (
-    <div {...rest} className={clsx(styles.root, styles[`variant-${variant}`])}>
+    <div {...rest} className={clsx(styles.root, styles[`kind-${kind}`], styles[`variant-${variant}`])}>
       {headerArea}
       {variant === 'full-page' ? (
-        <SheetFrame footer={footerSlot}>{table}</SheetFrame>
+        <div className={styles.sheet}>
+          <ConstructionTopLine kind={kind} />
+          {measure}
+          <div className={styles['sheet-content']}>{table}</div>
+          {sheetFooter}
+        </div>
       ) : (
         <>
           {table}
