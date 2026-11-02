@@ -79,6 +79,15 @@ export default function FormFieldSimple() {
       <FormField label="Billing account">
         <Input value="" placeholder="Not available on the free plan" disabled={true} />
       </FormField>
+      <FormField label="Forced stacked" layout="stacked" description="The label always sits above the control.">
+        <Input value="stacked" onChange={() => {}} />
+      </FormField>
+      <h2>Narrow column</h2>
+      <div className={styles.narrow}>
+        <FormField label="Stacks below 560 px" description="This column is 420 px wide.">
+          <Input value="north-annex" onChange={() => {}} />
+        </FormField>
+      </div>
       <div className={styles.actions}>
         <Button formAction="none">Cancel</Button>
         <Button variant="primary">Create project</Button>

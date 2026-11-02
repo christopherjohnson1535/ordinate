@@ -5,6 +5,7 @@
 
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
+@use '../input/field';
 
 .root {
   display: block;
@@ -21,9 +22,7 @@
   margin-inline: 0;
   padding-block: ord.$space-xs;
   padding-inline: ord.$space-input-horizontal;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
+  @include field.edge;
   background-color: ord.$color-background-control;
   color: ord.$color-text-body;
 
@@ -42,15 +41,9 @@
     @include styles.focus-ring;
   }
 
-  &[readonly] {
-    background-color: ord.$color-background-control-read-only;
-  }
-
-  &:disabled {
-    @include styles.hatch;
-    border-color: ord.$color-border-disabled;
-    color: ord.$color-text-disabled;
-    cursor: default;
+  // Kept at the specificity of one class, so an error drawn later still shows on a read-only textarea.
+  &:where([readonly]) {
+    @include field.read-only;
   }
 }
 
@@ -63,11 +56,15 @@
 }
 
 .invalid {
-  border-color: ord.$color-border-error;
-  @include styles.leading-mark(ord.$color-border-error);
+  @include field.status-edge(error);
 }
 
 .warning {
-  border-color: ord.$color-border-status-warning;
-  @include styles.leading-mark(ord.$color-border-status-warning);
+  @include field.status-edge(warning);
+}
+
+// Last, so it wins over the status edges.
+.textarea:disabled {
+  @include field.disabled;
+  cursor: default;
 }

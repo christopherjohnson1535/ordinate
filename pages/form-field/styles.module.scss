@@ -7,7 +7,14 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-inline-size: 480px;
+  max-inline-size: 760px;
+}
+
+.narrow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-inline-size: 420px;
 }
 
 .actions {

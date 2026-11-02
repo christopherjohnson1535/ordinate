@@ -5,6 +5,7 @@
 
 @use '../../styles' as styles;
 @use '../../styles/tokens' as ord;
+@use '../../../input/field';
 
 .trigger {
   @include styles.font-body;
@@ -17,9 +18,7 @@
   min-block-size: ord.$size-control-height;
   padding-block: 0;
   padding-inline: ord.$space-input-horizontal;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
+  @include field.edge;
   background-color: ord.$color-background-control;
   color: ord.$color-text-body;
   text-align: start;
@@ -34,14 +33,6 @@
   &:focus-visible {
     @include styles.focus-ring;
   }
-
-  &:disabled {
-    @include styles.hatch;
-    border-color: ord.$color-border-disabled;
-    box-shadow: none;
-    color: ord.$color-text-disabled;
-    cursor: default;
-  }
 }
 
 .trigger-open {
@@ -49,18 +40,22 @@
 }
 
 .read-only {
-  background-color: ord.$color-background-control-read-only;
+  @include field.read-only;
   cursor: default;
 }
 
 .invalid {
-  border-color: ord.$color-border-error;
-  @include styles.leading-mark(ord.$color-border-error);
+  @include field.status-edge(error);
 }
 
 .warning {
-  border-color: ord.$color-border-status-warning;
-  @include styles.leading-mark(ord.$color-border-status-warning);
+  @include field.status-edge(warning);
+}
+
+// Last, so it wins over the status edges.
+.trigger:disabled {
+  @include field.disabled;
+  cursor: default;
 }
 
 .trigger-content {

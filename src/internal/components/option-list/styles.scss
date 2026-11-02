@@ -4,7 +4,24 @@
 */
 
 @use '../../styles' as styles;
+@use '../../styles/drawing';
 @use '../../styles/tokens' as ord;
+
+// A faint construction line across the full width of the list, along the top or bottom of the element. The
+// element needs `position: relative`.
+@mixin divider($edge) {
+  content: '';
+  @include drawing.construction-line;
+  inset-inline: 0;
+  block-size: ord.$border-width-default;
+  color: ord.$color-kind-neutral;
+
+  @if $edge == start {
+    inset-block-start: 0;
+  } @else {
+    inset-block-end: 0;
+  }
+}
 
 .list {
   margin-block: 0;
@@ -23,7 +40,23 @@
 }
 
 .group {
+  position: relative;
   display: block;
+
+  // Groups after the first are ruled off from what comes before them.
+  &:not(:first-child) {
+    margin-block-start: ord.$space-xxs;
+    padding-block-start: ord.$space-xxs;
+
+    &::before {
+      @include divider(start);
+    }
+  }
+
+  // A row such as "Select all" already rules itself off.
+  .option-extra + &::before {
+    display: none;
+  }
 }
 
 .group-options {
@@ -34,11 +67,20 @@
   list-style: none;
 }
 
+// Group headers are lettered in small mono capitals, like the captions on a drawing.
 .group-label {
-  @include styles.font-label;
+  @include drawing.mono-caption;
   padding-block: ord.$space-xs ord.$space-xxs;
   padding-inline: ord.$space-input-horizontal;
-  color: ord.$color-text-body;
+  color: ord.$color-text-secondary;
+
+  .option-description,
+  .option-tags {
+    @include styles.font-body;
+    font-size: ord.$font-size-description;
+    letter-spacing: normal;
+    text-transform: none;
+  }
 }
 
 .option {
@@ -58,17 +100,21 @@
 
 // Rows such as "Select all" are ruled off from the options, like a heading row in a schedule.
 .option-extra {
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
+  position: relative;
+
+  &::after {
+    @include divider(end);
+  }
 }
 
+// The option under the pointer or the arrow keys is a raised row.
 .option-highlighted {
   background-color: ord.$color-background-item-hover;
 }
 
+// The selected option is told by its ink check alone, so the raised row keeps one meaning.
 .option-selected {
-  background-color: ord.$color-background-highlight;
+  color: ord.$color-text-body;
 }
 
 // Drawn inside the option so that it is not clipped by the scrolling list.
@@ -143,6 +189,11 @@
   flex-shrink: 0;
   align-self: center;
   inline-size: ord.$size-icon;
+  color: ord.$color-text-body;
+
+  .option-disabled & {
+    color: inherit;
+  }
 }
 
 // One line tall, so the checkbox lines up with the first line of the label.
@@ -170,10 +221,26 @@
   color: ord.$color-foreground-control-checked;
 }
 
-.checkbox-checked,
-.checkbox-indeterminate {
+.checkbox-checked {
   border-color: ord.$color-background-control-checked;
   background-color: ord.$color-background-control-checked;
+}
+
+// Some, not all: the key square is half filled, as Checkbox and Badge draw it. The fill sits on the start side,
+// so it changes sides in right-to-left layout.
+.checkbox-indeterminate {
+  position: relative;
+  overflow: hidden;
+  border-color: ord.$color-background-control-checked;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 50%;
+    background-color: ord.$color-background-control-checked;
+  }
 }
 
 .checkbox-disabled {
@@ -181,22 +248,31 @@
   border-color: ord.$color-border-disabled;
   background-color: ord.$color-background-control;
 
-  &.checkbox-checked,
-  &.checkbox-indeterminate {
+  &.checkbox-checked {
     border-color: ord.$color-text-disabled;
     background-color: ord.$color-text-disabled;
   }
+
+  &.checkbox-indeterminate {
+    border-color: ord.$color-text-disabled;
+
+    &::before {
+      background-color: ord.$color-text-disabled;
+    }
+  }
 }
 
+// The footer under the options is a mono caption on a construction line, like a count on a drawing.
 .status {
-  @include styles.font-body;
+  @include drawing.mono-caption;
+  position: relative;
   padding-block: ord.$space-xs;
   padding-inline: ord.$space-input-horizontal;
-  border-block-start-width: ord.$border-width-default;
-  border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-divider;
-  font-size: ord.$font-size-description;
   color: ord.$color-text-secondary;
+
+  &::before {
+    @include divider(start);
+  }
 }
 
 .status-loading,
@@ -206,7 +282,12 @@
   gap: ord.$space-xs;
 }
 
+// An error is a sentence to read, so it stays in sans, with the fault icon, as FormField draws one.
 .status-error {
+  @include styles.font-body;
+  font-size: ord.$font-size-description;
+  letter-spacing: normal;
+  text-transform: none;
   color: ord.$color-text-error;
 }
 

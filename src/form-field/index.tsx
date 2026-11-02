@@ -23,6 +23,7 @@ export default function FormField({
   stretch = false,
   children,
   secondaryControl,
+  layout = 'margin',
   ...props
 }: FormFieldProps) {
   return (
@@ -40,6 +41,7 @@ export default function FormField({
       controlId={controlId}
       stretch={stretch}
       secondaryControl={secondaryControl}
+      layout={layout}
     >
       {children}
     </InternalFormField>

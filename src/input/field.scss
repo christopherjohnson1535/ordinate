@@ -1,0 +1,63 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+// The drawing every text field shares: Input, Textarea, the Select and Multiselect triggers, Autosuggest,
+// DateInput, TimeInput and PromptInput. A light hairline edge with a darker ink baseline to write on, as on a
+// paper form. Read-only drops the baseline and takes a raised fill; disabled is hatched; an error or warning
+// draws its edge, baseline and a leading mark in the status color.
+
+@use '../internal/styles' as styles;
+@use '../internal/styles/tokens' as ord;
+
+$baseline-color: ord.$color-text-secondary;
+$baseline: inset 0 calc(-1 * #{ord.$border-width-default}) 0 0;
+$mark-width: ord.$border-width-section;
+
+@mixin edge {
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-control;
+  box-shadow: $baseline $baseline-color;
+}
+
+@mixin read-only {
+  background-color: ord.$color-background-control-read-only;
+  box-shadow: none;
+}
+
+// The edge, baseline and leading mark of a field with an `error` or a `warning`. Box shadows have no logical
+// form, so the mark changes sides for right-to-left layout.
+@mixin status-edge($status) {
+  $color: ord.$color-border-status-warning;
+
+  // Named in full, so Stylelint can see the border color is a token.
+  @if $status == error {
+    $color: ord.$color-border-error;
+    border-color: ord.$color-border-error;
+  } @else {
+    border-color: ord.$color-border-status-warning;
+  }
+  box-shadow:
+    $baseline $color,
+    inset $mark-width 0 0 0 $color;
+
+  &:dir(rtl) {
+    box-shadow:
+      $baseline $color,
+      inset calc(-1 * #{$mark-width}) 0 0 0 $color;
+  }
+}
+
+@mixin disabled {
+  @include styles.hatch;
+  border-color: ord.$color-border-disabled;
+  box-shadow: none;
+  color: ord.$color-text-disabled;
+
+  // Matches the specificity of the right-to-left status edge.
+  &:dir(rtl) {
+    box-shadow: none;
+  }
+}

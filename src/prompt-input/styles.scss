@@ -5,6 +5,7 @@
 
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
+@use '../input/field';
 
 // The root draws the box, so attachments, text and actions all sit inside one border.
 .root {
@@ -12,9 +13,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-control;
+  @include field.edge;
   background-color: ord.$color-background-control;
   color: ord.$color-text-body;
 
@@ -30,24 +29,19 @@
 }
 
 .read-only {
-  background-color: ord.$color-background-control-read-only;
+  @include field.read-only;
 }
 
-// The leading mark is a wider start border rather than an inset shadow, so it follows the reading direction.
 .invalid {
-  border-color: ord.$color-border-error;
-  border-inline-start-width: ord.$border-width-section;
+  @include field.status-edge(error);
 }
 
 .warning {
-  border-color: ord.$color-border-status-warning;
-  border-inline-start-width: ord.$border-width-section;
+  @include field.status-edge(warning);
 }
 
 .disabled {
-  @include styles.hatch;
-  border-color: ord.$color-border-disabled;
-  color: ord.$color-text-disabled;
+  @include field.disabled;
 }
 
 .secondary-content {

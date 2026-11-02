@@ -79,7 +79,7 @@ function Checkbox({ state, disabled }: { state: OptionState; disabled: boolean }
   return (
     <span className={styles['checkbox-line']}>
       <span className={clsx(styles.checkbox, styles[`checkbox-${mark}`], disabled && styles['checkbox-disabled'])}>
-        {mark !== 'unchecked' && <InternalIcon name={mark === 'checked' ? 'check' : 'remove'} size="small" />}
+        {mark === 'checked' && <InternalIcon name="check" size="small" />}
       </span>
     </span>
   );

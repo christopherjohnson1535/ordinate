@@ -64,6 +64,27 @@ describe('Form', () => {
   });
 });
 
+describe('Form drawing', () => {
+  test('sets the reference above the header', () => {
+    render(<Form kind="configuration" reference="C4" header={<h1>Create a node</h1>} />);
+    const form = createWrapper().findForm()!;
+    expect(form.findReference()!.getText()).toBe('C4');
+    expect(form.getElement()).toHaveTextContent(/^C4Create a node/);
+  });
+
+  test('leaves out the reference when there is none', () => {
+    render(<Form header={<h1>Create a node</h1>} />);
+    expect(createWrapper().findForm()!.findReference()).toBeNull();
+  });
+
+  test('hides the construction marks from screen readers', () => {
+    const { container } = render(<Example />);
+    const marks = container.querySelectorAll('[aria-hidden="true"]');
+    expect(marks.length).toBeGreaterThanOrEqual(5);
+    marks.forEach(mark => expect(mark).toBeEmptyDOMElement());
+  });
+});
+
 describe('Form test utilities and accessibility', () => {
   test('the wrapper finds the parts', () => {
     render(<Example errorText="The request failed." />);
