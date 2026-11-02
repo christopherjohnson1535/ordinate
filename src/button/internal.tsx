@@ -4,9 +4,11 @@ import React, { useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
+import { Leader } from '../internal/components/leader';
 import { fireCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { warnOnce } from '../internal/logging';
+import { ExternalLeader } from '../link/external-leader';
 import { ButtonProps } from './interfaces';
 
 import styles from './styles.css.js';
@@ -69,6 +71,9 @@ export const InternalButton = React.forwardRef(
     const inactive = disabled || loading;
     const nativeDisabled = disabled && !focusableWhenDisabled;
     const target = targetProp ?? (external && href !== undefined ? '_blank' : undefined);
+    // A button that goes to another page of the application ends in a leader. One that acts in place, opens a
+    // new tab or already shows an icon does not.
+    const hasLeader = href !== undefined && !external && target !== '_blank' && !hasIcon && !isIconOnly;
 
     if (isIconOnly && !ariaLabel) {
       warnOnce('Button', 'The icon variant needs an `ariaLabel`.');
@@ -118,13 +123,13 @@ export const InternalButton = React.forwardRef(
         )}
         {!isIconOnly && external && ' '}
         {!isIconOnly && external && (
-          <InternalIcon
+          <ExternalLeader
             className={styles['external-icon']}
-            name="open-outside"
             ariaLabel={target === '_blank' ? i18n('externalIconAriaLabel', externalIconAriaLabel) : undefined}
           />
         )}
         {rightIcon}
+        {hasLeader && <Leader className={styles.leader} />}
       </>
     );
 

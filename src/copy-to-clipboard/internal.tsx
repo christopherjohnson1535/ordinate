@@ -46,12 +46,19 @@ export function InternalCopyToClipboard({
   const iconLabel = i18n('copyButtonAriaLabel', copyButtonAriaLabel ?? copyButtonText);
   const showsReason = disabled && Boolean(disabledReason);
 
-  const renderMessage = (succeeded: boolean) => (
-    <span className={styles.feedback}>
-      <InternalIcon className={styles['feedback-icon']} name={succeeded ? 'check' : 'fault'} />
-      <span>{succeeded ? i18n('copySuccessText', copySuccessText) : i18n('copyErrorText', copyErrorText)}</span>
-    </span>
-  );
+  // Success is a short stamp keyed by a complete square. A failure keeps the fault icon and the full message.
+  const renderMessage = (succeeded: boolean) =>
+    succeeded ? (
+      <span className={styles.stamp}>
+        <span className={styles['stamp-key']} aria-hidden="true" />
+        <span>{i18n('copySuccessText', copySuccessText)}</span>
+      </span>
+    ) : (
+      <span className={styles.feedback}>
+        <InternalIcon className={styles['feedback-icon']} name="fault" />
+        <span>{i18n('copyErrorText', copyErrorText)}</span>
+      </span>
+    );
 
   const copy = () => {
     const token = start();

@@ -4,7 +4,27 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
+
+// How far the leader steps forward while the pointer is over the button.
+$leader-reach: ord.$space-xxs;
+
+// The state rules sit in `:where()` so they weigh no more than a variant class, and components that restyle
+// a button with two classes, such as a pressed toggle or the halves of a split button, still win.
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:where(:hover:not(.disabled, .loading)) {
+      @content;
+    }
+  }
+}
+
+@mixin press {
+  &:where(:active:not(.disabled, .loading)) {
+    @content;
+  }
+}
 
 .button {
   @include styles.font-label;
@@ -17,9 +37,9 @@
   min-block-size: ord.$size-control-height;
   padding-block: ord.$space-xxs;
   padding-inline: ord.$space-button-horizontal;
-  border-width: ord.$border-width-control;
+  border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-control;
+  border-color: transparent;
   background-color: ord.$color-background-button-normal;
   color: ord.$color-text-body;
   text-align: center;
@@ -27,13 +47,7 @@
   cursor: pointer;
 
   @include styles.with-motion {
-    transition-property: background-color, border-color, color;
-    transition-duration: ord.$motion-duration-responsive;
-    transition-timing-function: ord.$motion-easing-standard;
-  }
-
-  &:hover {
-    background-color: ord.$color-background-button-normal-hover;
+    @include drawing.offset-press-transition;
   }
 
   &:focus-visible {
@@ -41,34 +55,57 @@
   }
 }
 
+// Outline buttons stand on a hard ink offset and press flat onto it.
+.variant-normal,
+.variant-destructive {
+  @include drawing.offset-block;
+
+  @include hover {
+    background-color: ord.$color-background-button-normal-hover;
+  }
+
+  @include press {
+    @include drawing.offset-press;
+  }
+}
+
+// The fault color stays on the edge; the words stay in ink.
+.variant-destructive {
+  border-color: ord.$color-border-error;
+}
+
 .variant-primary {
+  @include drawing.offset-block-ink;
   border-color: ord.$color-background-button-primary;
   background-color: ord.$color-background-button-primary;
   color: ord.$color-text-button-primary;
 
-  &:hover {
+  @include hover {
     border-color: ord.$color-background-button-primary-hover;
     background-color: ord.$color-background-button-primary-hover;
   }
-}
 
-.variant-link {
-  padding-inline: ord.$space-xxs;
-  border-color: transparent;
-  background-color: transparent;
-  text-decoration-line: underline;
-  text-decoration-thickness: ord.$border-width-default;
-  text-underline-offset: ord.$space-xxs;
-
-  &:hover {
-    background-color: transparent;
-    text-decoration-thickness: ord.$border-width-control;
+  @include press {
+    @include drawing.offset-press;
   }
 }
 
-.variant-destructive {
-  border-color: ord.$color-border-error;
-  color: ord.$color-text-error;
+// Quiet buttons lie on the sheet, so they have no offset and only dip a little when pressed.
+.variant-link,
+.variant-icon {
+  background-color: transparent;
+
+  @include styles.with-motion {
+    transition-property: scale, background-color, color;
+  }
+
+  @include hover {
+    background-color: ord.$color-background-button-normal-hover;
+  }
+
+  @include press {
+    scale: 0.97;
+  }
 }
 
 .variant-icon {
@@ -87,6 +124,24 @@
 .icon,
 .external-icon {
   flex-shrink: 0;
+}
+
+.leader {
+  @include styles.with-motion {
+    transition-property: translate;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .button:hover:not(.disabled, .loading) & {
+      translate: $leader-reach 0;
+    }
+
+    .button:hover:not(.disabled, .loading) &:dir(rtl) {
+      translate: calc(-1 * #{$leader-reach}) 0;
+    }
+  }
 }
 
 .loading-indicator {
@@ -123,40 +178,25 @@
   inline-size: 100%;
 }
 
+// Not available: hatched and dimmed, lying flat on the sheet.
 .disabled {
   @include styles.hatch;
-  border-width: ord.$border-width-default;
   border-color: ord.$color-border-disabled;
   background-color: ord.$color-background-button-normal;
   color: ord.$color-text-disabled;
+  box-shadow: none;
   cursor: default;
-
-  &:hover {
-    border-color: ord.$color-border-disabled;
-    background-color: ord.$color-background-button-normal;
-  }
-
-  &.variant-link {
-    border-color: transparent;
-    background-image: none;
-  }
-}
-
-.loading {
-  border-color: ord.$color-border-disabled;
-  background-color: ord.$color-background-button-normal;
-  color: ord.$color-text-disabled;
-  cursor: default;
-
-  &:hover {
-    border-color: ord.$color-border-disabled;
-    background-color: ord.$color-background-button-normal;
-  }
 
   &.variant-link {
     border-color: transparent;
     background-color: transparent;
+    background-image: none;
   }
+}
+
+// Keeps its look and its offset while the action runs, but does not answer the pointer.
+.loading {
+  cursor: default;
 }
 
 @keyframes loading-rotate {

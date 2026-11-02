@@ -220,6 +220,43 @@ describe('Button links', () => {
   });
 });
 
+describe('Button leader', () => {
+  const findButton = () => createWrapper().findButton()!;
+
+  test('a link within the application ends in a leader hidden from screen readers', () => {
+    render(<Button href="/billing">Open billing</Button>);
+    const leader = findButton().findLeader();
+    expect(leader).not.toBeNull();
+    expect(leader!.getElement()).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByRole('link')).toHaveAccessibleName('Open billing');
+  });
+
+  test.each<[string, Partial<ButtonProps>]>([
+    ['without href', {}],
+    ['with an icon', { href: '/billing', iconName: 'add' }],
+    ['in a new tab', { href: '/billing', target: '_blank' }],
+    ['to another site', { href: 'https://example.com', external: true }],
+  ])('has no leader %s', (_, props) => {
+    render(<Button {...props}>Open billing</Button>);
+    expect(findButton().findLeader()).toBeNull();
+  });
+
+  test('the icon variant has no leader', () => {
+    render(<Button variant="icon" href="/billing" iconName="copy" ariaLabel="Open billing" />);
+    expect(findButton().findLeader()).toBeNull();
+  });
+
+  test('an external link carries the diagonal leader with its label', () => {
+    render(
+      <Button href="https://example.com" external={true}>
+        Read the docs
+      </Button>
+    );
+    expect(findButton().findExternalIcon()).not.toBeNull();
+    expect(screen.getByRole('img', { name: 'Opens in a new tab' })).toBeInTheDocument();
+  });
+});
+
 describe('Button attributes', () => {
   test('form associates the button with a form elsewhere on the page', () => {
     render(

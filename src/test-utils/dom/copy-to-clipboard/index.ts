@@ -29,4 +29,12 @@ export default class CopyToClipboardWrapper extends ComponentWrapper {
     const element = container.querySelector<HTMLElement>(`.${feedbackStyles.panel}`);
     return element ? new ElementWrapper(element) : null;
   }
+
+  /**
+   * The "Copied" stamp shown after a successful copy, while it is visible. Takes `inPortal` as `findStatusText` does.
+   */
+  findSuccessStamp(inPortal = false): ElementWrapper | null {
+    const element = this.findStatusText(inPortal)?.getElement().querySelector<HTMLElement>(`.${styles.stamp}`);
+    return element ? new ElementWrapper(element) : null;
+  }
 }

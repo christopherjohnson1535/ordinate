@@ -29,27 +29,23 @@
   vertical-align: top;
 }
 
-// Frameless until hovered. A pressed toggle keeps its ink fill from the toggle button.
+// Icon buttons lie on the sheet with no offset, so a toolbar stays light. Without a frame, a hatched square
+// reads as a stray mark; the dimmed icon is enough. A pressed toggle keeps its ink fill.
 .variant-icon .button:not([aria-pressed='true']) {
-  border-color: transparent;
-  background-color: transparent;
-
-  &:hover:not(:disabled):not([aria-disabled='true']) {
-    background-color: ord.$color-background-item-hover;
-  }
-
-  // Without a frame, a hatched square reads as a stray mark; the dimmed icon is enough.
   &:disabled,
   &[aria-disabled='true'] {
+    border-color: transparent;
+    background-color: transparent;
     background-image: none;
   }
 }
 
+// A short tick between groups of actions.
 .divider {
-  align-self: stretch;
-  margin-block: ord.$space-xxs;
+  flex: 0 0 auto;
+  align-self: center;
+  inline-size: ord.$border-width-default;
+  block-size: ord.$size-icon;
   margin-inline: ord.$space-xxs;
-  border-inline-start-width: ord.$border-width-default;
-  border-inline-start-style: solid;
-  border-inline-start-color: ord.$color-border-divider;
+  background-color: ord.$color-border-divider;
 }

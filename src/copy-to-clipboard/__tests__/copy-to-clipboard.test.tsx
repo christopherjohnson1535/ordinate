@@ -60,6 +60,7 @@ describe('CopyToClipboard', () => {
     expect(writeText).toHaveBeenCalledWith('node-7f3a');
     expect(getStatus()).toHaveTextContent('Copied');
     expect(wrapper().findStatusText()!.getText()).toBe('Copied');
+    expect(wrapper().findSuccessStamp()!.getText()).toBe('Copied');
   });
 
   test('announces an error when the browser refuses', async () => {
@@ -67,6 +68,7 @@ describe('CopyToClipboard', () => {
     renderCopy();
     await clickCopy();
     expect(getStatus()).toHaveTextContent('Failed to copy');
+    expect(wrapper().findSuccessStamp()).toBeNull();
   });
 
   test('announces an error when there is no clipboard API', async () => {
