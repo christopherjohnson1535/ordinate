@@ -16,6 +16,14 @@
   min-inline-size: 0;
 }
 
+.reference {
+  color: ord.$color-kind-neutral;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  letter-spacing: ord.$letter-spacing-caption;
+}
+
 .header {
   color: ord.$color-text-body;
   font-weight: ord.$font-weight-label;

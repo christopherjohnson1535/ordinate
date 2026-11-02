@@ -12,6 +12,13 @@ export class TreeViewItemWrapper extends ElementWrapper<HTMLLIElement> {
     return this.getElement().dataset.itemId ?? '';
   }
 
+  /**
+   * Whether the item is the one set by `currentItemId`.
+   */
+  isCurrent(): boolean {
+    return this.getElement().getAttribute('aria-current') === 'true';
+  }
+
   isExpanded(): boolean {
     return this.getElement().getAttribute('aria-expanded') === 'true';
   }
@@ -66,5 +73,12 @@ export default class TreeViewWrapper extends ComponentWrapper {
 
   findItemById(id: string): TreeViewItemWrapper | null {
     return this.findVisibleItems().find(item => item.getId() === id) ?? null;
+  }
+
+  /**
+   * The item set by `currentItemId`, while it is rendered.
+   */
+  findCurrentItem(): TreeViewItemWrapper | null {
+    return this.findVisibleItems().find(item => item.isCurrent()) ?? null;
   }
 }

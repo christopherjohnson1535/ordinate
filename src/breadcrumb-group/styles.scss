@@ -51,9 +51,11 @@
     transition-timing-function: ord.$motion-easing-standard;
   }
 
-  &:hover {
-    color: ord.$color-text-link-hover;
-    text-decoration-line: underline;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ord.$color-text-body;
+      text-decoration-line: underline;
+    }
   }
 
   &:focus-visible {
@@ -70,7 +72,7 @@
 
 .separator {
   flex-shrink: 0;
-  margin-inline: ord.$space-xxs;
+  margin-inline: ord.$space-xs;
   color: ord.$color-text-secondary;
 }
 

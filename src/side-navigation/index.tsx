@@ -4,8 +4,10 @@
 import React from 'react';
 
 import { getBaseProps } from '../internal/base-component';
+import { warnOnce } from '../internal/logging';
 import { SideNavigationProps } from './interfaces';
 import { InternalSideNavigation } from './internal';
+import { containsCode } from './utils';
 
 export type { SideNavigationProps };
 
@@ -19,6 +21,12 @@ export default function SideNavigation({
   onChange,
   ...props
 }: SideNavigationProps) {
+  if (containsCode(items)) {
+    warnOnce(
+      'SideNavigation',
+      'Item codes are no longer drawn: the navigation shows item names only. `code` stops working in the next major version.'
+    );
+  }
   return (
     <InternalSideNavigation
       {...getBaseProps(props)}

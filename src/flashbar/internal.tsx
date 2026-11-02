@@ -4,40 +4,50 @@ import React, { useId, useState } from 'react';
 import clsx from 'clsx';
 
 import { useInternalI18n } from '../internal/i18n/context';
+import { formatMessage, MessageParams } from '../internal/i18n/format';
 import { Flash } from './flash';
 import { FlashbarProps } from './interfaces';
 import { NotificationBar } from './notification-bar';
 
 import styles from './styles.css.js';
 
-type IconLabelKey = keyof Omit<FlashbarProps.I18nStrings, 'ariaLabel' | 'notificationBarText' | 'itemCountText'>;
+export interface InternalMessageDefinition extends Omit<FlashbarProps.MessageDefinition, 'type'> {
+  type: FlashbarProps.Type;
+}
+
+type IconLabelKey = 'successIconAriaLabel' | 'errorIconAriaLabel' | 'warningIconAriaLabel' | 'infoIconAriaLabel';
 
 const iconLabelKeys: Record<FlashbarProps.Type, IconLabelKey> = {
-  success: 'successIconAriaLabel',
-  error: 'errorIconAriaLabel',
-  warning: 'warningIconAriaLabel',
-  info: 'infoIconAriaLabel',
-  'in-progress': 'inProgressIconAriaLabel',
+  complete: 'successIconAriaLabel',
+  fault: 'errorIconAriaLabel',
+  caution: 'warningIconAriaLabel',
+  note: 'infoIconAriaLabel',
 };
 
-const countKeys: Record<FlashbarProps.Type, string> = {
-  success: 'successCount',
-  error: 'errorCount',
-  warning: 'warningCount',
-  info: 'infoCount',
-  'in-progress': 'inProgressCount',
+// English text for messages the shared message file does not hold yet. The provider's messages still win.
+const fallbackMessages: Record<string, string> = {
+  underwayLabel: 'Underway',
+  showAllText: 'Show all {count}',
+  showFewerText: 'Show fewer',
+  faultCount: '{count, plural, one {# fault} other {# faults}}',
+  cautionCount: '{count, plural, one {# caution} other {# cautions}}',
+  completeCount: '{count, plural, other {# complete}}',
+  noteCount: '{count, plural, one {# note} other {# notes}}',
+  underwayCount: '{count, plural, other {# underway}}',
 };
 
-// A collapsed stack draws at most this many sheet edges under the first item, however many it holds.
-const maxStackEdges = 2;
-
-export interface InternalFlashbarProps extends FlashbarProps {
+export interface InternalFlashbarProps extends Omit<FlashbarProps, 'items'> {
+  items: ReadonlyArray<InternalMessageDefinition>;
   /**
    * Lets other components position the flashbar. Not part of the public API.
    */
   className?: string;
 }
 
+/**
+ * A stack of Alert's margin notes. Collapsed, the first note stays and a summary row keys each type with a
+ * count.
+ */
 export function InternalFlashbar({
   items,
   stackItems = false,
@@ -49,16 +59,20 @@ export function InternalFlashbar({
   const [stackExpanded, setStackExpanded] = useState(false);
   const listId = useId();
 
+  const message = (key: string, provided?: string, params?: MessageParams) =>
+    i18n(key, provided, params) ?? formatMessage(fallbackMessages[key], params, 'en');
+
   const isStacked = stackItems && items.length > 1;
   const isCollapsed = isStacked && !stackExpanded;
 
-  const iconLabel = (item: FlashbarProps.MessageDefinition) => {
-    const key = iconLabelKeys[item.type ?? 'info'];
-    return item.statusIconAriaLabel ?? i18n(key, i18nStrings?.[key]);
-  };
+  // Only a label set by the consumer is used. The margin already names the type, so a default would be read twice.
+  const iconLabel = (item: InternalMessageDefinition) =>
+    item.statusIconAriaLabel ??
+    (item.loading ? i18nStrings?.inProgressIconAriaLabel : undefined) ??
+    i18nStrings?.[iconLabelKeys[item.type]];
 
-  const countText = (type: FlashbarProps.Type, count: number) =>
-    i18nStrings?.itemCountText?.(type, count) ?? i18n(countKeys[type], undefined, { count });
+  const countText = (type: FlashbarProps.CountType, count: number) =>
+    i18nStrings?.itemCountText?.(type, count) ?? message(`${type}Count`, undefined, { count });
 
   return (
     <div {...rest} className={clsx(styles.root, className)}>
@@ -67,26 +81,24 @@ export function InternalFlashbar({
           <Flash
             key={item.id ?? index}
             item={item}
-            position={index + 1}
             hidden={isCollapsed && index > 0}
             statusIconAriaLabel={iconLabel(item)}
+            underwayLabel={message('underwayLabel', i18nStrings?.underwayLabel)}
             dismissLabel={i18n('dismissLabel', item.dismissLabel)}
           />
         ))}
       </ul>
-      {isCollapsed && (
-        <div className={styles['stack-edges']} aria-hidden="true">
-          {Array.from({ length: Math.min(items.length - 1, maxStackEdges) }, (_, index) => (
-            <div key={index} className={styles['stack-edge']} />
-          ))}
-        </div>
-      )}
       {isStacked && (
         <NotificationBar
           items={items}
           expanded={stackExpanded}
           controlsId={listId}
-          text={i18n('notificationBarText', i18nStrings?.notificationBarText)}
+          ariaLabel={i18n('notificationBarText', i18nStrings?.notificationBarText)}
+          buttonText={
+            stackExpanded
+              ? message('showFewerText', i18nStrings?.showFewerText)
+              : message('showAllText', i18nStrings?.showAllText?.(items.length), { count: items.length })
+          }
           countText={countText}
           onToggle={() => setStackExpanded(!stackExpanded)}
         />

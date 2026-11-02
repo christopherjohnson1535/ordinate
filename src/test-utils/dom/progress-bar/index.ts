@@ -21,17 +21,25 @@ export default class ProgressBarWrapper extends ComponentWrapper {
   }
 
   /**
-   * The element with the `progressbar` role. Only rendered while the status is `in-progress`.
+   * The element with the `progressbar` role. Only present while the status is `underway`; once the operation
+   * has finished, the line stays drawn but is hidden from screen readers.
    */
   findBar(): ElementWrapper | null {
     return this.findByClassName(styles.track);
   }
 
   /**
-   * The printed percentage. Only rendered while the status is `in-progress`.
+   * The printed measure, such as "64%". Only rendered while the status is `underway`.
    */
   findPercentageText(): ElementWrapper | null {
     return this.findByClassName(styles.percentage);
+  }
+
+  /**
+   * The state's icon and word, shown in place of the measure once the operation has finished.
+   */
+  findStatus(): ElementWrapper | null {
+    return this.findByClassName(styles.status);
   }
 
   /**

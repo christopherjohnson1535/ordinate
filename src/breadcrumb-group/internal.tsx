@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
 import { Dropdown } from '../internal/components/dropdown';
+import { Leader } from '../internal/components/leader';
 import { fireCancelableEvent } from '../internal/events';
 import { useResizeObserver } from '../internal/hooks/use-resize-observer';
 import { useInternalI18n } from '../internal/i18n/context';
@@ -14,7 +15,8 @@ import { getHiddenCount } from './utils';
 
 import styles from './styles.css.js';
 
-const separator = <InternalIcon className={styles.separator} name="chevron-right" />;
+// Each step leads to the next with a short leader, the mark for "goes somewhere else".
+const separator = <Leader size="short" className={styles.separator} />;
 
 export function InternalBreadcrumbGroup<T extends BreadcrumbGroupProps.Item>({
   items,

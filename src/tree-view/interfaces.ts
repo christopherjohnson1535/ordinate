@@ -38,6 +38,12 @@ export interface TreeViewProps<T = unknown> extends BaseComponentProps {
    */
   expandedItems?: ReadonlyArray<string>;
   /**
+   * The ID of the item the user is on, such as the file open beside the tree. It is marked with the
+   * position rule and read as the current item by screen readers. It does not move focus or expand the
+   * items above it.
+   */
+  currentItemId?: string;
+  /**
    * Called when the user expands or collapses an item, with the item, its ID and the new
    * state in `detail.expanded`.
    */

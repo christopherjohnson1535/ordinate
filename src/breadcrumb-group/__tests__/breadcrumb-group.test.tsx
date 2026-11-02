@@ -59,6 +59,16 @@ describe('BreadcrumbGroup', () => {
     expect(current.getElement()).toHaveAttribute('aria-current', 'page');
   });
 
+  test('joins the items with short leaders hidden from screen readers', () => {
+    render(<BreadcrumbGroup items={items} />);
+    const nav = screen.getByRole('navigation', { name: 'Breadcrumbs' });
+    const leaders = Array.from(nav.querySelectorAll('ol')[0].querySelectorAll('svg'));
+    expect(leaders).toHaveLength(items.length - 1);
+    for (const leader of leaders) {
+      expect(leader).toHaveAttribute('aria-hidden', 'true');
+    }
+  });
+
   test('ariaLabel names the navigation', () => {
     render(<BreadcrumbGroup items={items} ariaLabel="You are here" />);
     expect(screen.getByRole('navigation', { name: 'You are here' })).toBeInTheDocument();

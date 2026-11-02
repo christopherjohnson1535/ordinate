@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -40,55 +41,76 @@
   font-size: ord.$font-size-heading-s;
 }
 
-// A line is as tall as a line of the text it stands for, with the bar centred like the x-height.
+// A line is as tall as a line of the text it stands for. In it, a faint construction line marks where the
+// text will land, closed by a small tick at each end.
 .line {
   display: flex;
   align-items: center;
   block-size: calc(1em * #{ord.$line-height-body});
+  color: ord.$color-kind-neutral;
 }
 
 .variant-heading .line {
   block-size: calc(1em * #{ord.$line-height-heading});
 }
 
-.bar,
-.block {
+.bar {
   position: relative;
-  overflow: hidden;
+  flex: 1 1 auto;
+  block-size: ord.$size-hash-mark;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inline-size: ord.$border-width-default;
+    background-color: currentColor;
+  }
+
+  &::before {
+    inset-inline-start: 0;
+  }
+
+  &::after {
+    inset-inline-end: 0;
+  }
 }
 
-.bar {
-  @include styles.border-radius(ord.$border-radius-inline-code);
-  flex: 1 1 auto;
-  block-size: 0.75em;
-  background-color: ord.$color-background-item-selected;
+.rule {
+  @include drawing.construction-line;
+  inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+  inset-inline: 0;
+  block-size: ord.$border-width-default;
 }
 
 .line:last-child:not(:first-child) .bar {
   flex: 0 0 60%;
 }
 
-// An empty frame crossed corner to corner, the drafting mark for an area still to be filled in.
+// An empty frame of construction lines crossed corner to corner, the drafting mark for an area still to be
+// filled in.
 .block {
   @include styles.border-radius(ord.$border-radius-container);
+  position: relative;
   box-sizing: border-box;
   border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-divider;
-  background-color: ord.$color-background-control-read-only;
+  border-color: ord.$color-kind-neutral;
   background-image:
     linear-gradient(
       to top right,
       transparent calc(50% - 0.5px),
-      ord.$color-border-divider calc(50% - 0.5px) calc(50% + 0.5px),
+      ord.$color-kind-neutral calc(50% - 0.5px) calc(50% + 0.5px),
       transparent calc(50% + 0.5px)
     ),
     linear-gradient(
       to bottom right,
       transparent calc(50% - 0.5px),
-      ord.$color-border-divider calc(50% - 0.5px) calc(50% + 0.5px),
+      ord.$color-kind-neutral calc(50% - 0.5px) calc(50% + 0.5px),
       transparent calc(50% + 0.5px)
     );
+  opacity: ord.$opacity-construction;
 }
 
 .height-small {
@@ -103,34 +125,21 @@
   block-size: calc(#{ord.$space-xxxl} * 4);
 }
 
-// The shimmer is a band of paper colour sweeping back and forth across the shape. It only exists with
-// motion on, so a still page shows plain shapes. When motion is turned off at runtime the band stops
-// outside the shape, where it is clipped.
-.bar::after,
-.block::after {
+// The lines breathe while the content loads: they fade a little and back, without moving. Only with motion
+// on, so a still page shows plain lines.
+.bar,
+.block {
   @include styles.with-motion {
-    content: '';
-    position: absolute;
-    inset-block: 0;
-    inset-inline: 0;
-    // The sweep peaks at 70% of the container color.
-    background-image: linear-gradient(
-      90deg,
-      transparent,
-      color-mix(in srgb, #{ord.$color-background-container} 70%, transparent),
-      transparent
-    );
-    transform: translateX(-100%);
-    animation-name: shimmer;
-    animation-duration: ord.$motion-duration-rotation;
+    animation-name: breathe;
+    animation-duration: ord.$motion-duration-flow;
     animation-timing-function: ord.$motion-easing-standard;
     animation-iteration-count: infinite;
     animation-direction: alternate;
   }
 }
 
-@keyframes shimmer {
+@keyframes breathe {
   to {
-    transform: translateX(100%);
+    opacity: ord.$opacity-dimmed-text;
   }
 }

@@ -6,8 +6,8 @@
 @use '../internal/styles' as styles;
 @use '../internal/styles/tokens' as ord;
 
-// Three rows: the heading area, an overlap row shared by the band and the content, and the rest of
-// the content. The band and the content both span the overlap row, which avoids negative margins.
+// The page header sits on the sheet with the content, never on a band of its own. Three rows: the heading
+// area, a row the content starts in when the header overlaps it, and the rest of the content.
 .root {
   @include styles.font-body;
   display: grid;
@@ -19,12 +19,6 @@
 
 .overlap {
   grid-template-rows: auto ord.$space-xxl auto;
-}
-
-.band {
-  grid-column: 1;
-  grid-row: 1 / 3;
-  background-color: ord.$color-background-header-high-contrast;
 }
 
 .header-area,
@@ -79,16 +73,17 @@
   }
 }
 
-// The band uses dark colors in both modes. Switching the color scheme of the heading area makes every
-// token inside it resolve to its dark value, so nested components need no variant of their own.
+// Set off like the head of a title block: the heading area stands on a heavy ink rule, on the same sheet
+// as the content.
 .header-variant-high-contrast {
   > .header-area {
     padding-block-start: ord.$space-scaled-l;
-    color-scheme: dark;
-    color: ord.$color-text-body;
+    border-block-end-width: ord.$border-width-section;
+    border-block-end-style: solid;
+    border-block-end-color: ord.$color-border-strong;
   }
 
-  &:not(.overlap) > .content {
+  > .content {
     padding-block-start: ord.$space-scaled-l;
   }
 }

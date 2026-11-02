@@ -52,29 +52,42 @@ describe('ProgressBar', () => {
     expect(screen.getByRole('progressbar', { name: 'Migration' })).toHaveAccessibleDescription('Migration');
   });
 
-  test('replaces the bar with the result and announces it', () => {
+  test('shows the result state and text in place of the measure, and announces them', () => {
     vi.useFakeTimers();
-    render(<ProgressBar status="error" label="Upload" resultText="Upload failed" />);
+    render(<ProgressBar status="fault" value={31} label="Upload" resultText="Upload failed" />);
     expect(screen.queryByRole('progressbar')).toBeNull();
-    expect(createWrapper().findProgressBar()!.findResultText()!.getText()).toBe('Upload failed');
+    const wrapper = createWrapper().findProgressBar()!;
+    expect(wrapper.findPercentageText()).toBeNull();
+    expect(wrapper.findStatus()!.getText()).toBe('Fault');
+    expect(wrapper.findResultText()!.getText()).toBe('Upload failed');
     act(() => {
       vi.runAllTimers();
     });
     const announcer = document.querySelector('[aria-live="polite"]');
-    expect(announcer).toHaveTextContent('Upload failed');
+    expect(announcer).toHaveTextContent('Fault Upload failed');
+  });
+
+  test('accepts the old status names with a warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { rerender } = render(<ProgressBar status="in-progress" value={10} label="Upload" />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '10');
+    rerender(<ProgressBar status="success" label="Upload" />);
+    expect(createWrapper().findProgressBar()!.findStatus()!.getText()).toBe('Complete');
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('"success" is now called "complete"'));
+    warn.mockRestore();
   });
 
   test('fires onResultButtonClick from the result button', () => {
     const onClick = vi.fn();
     render(
-      <ProgressBar status="error" resultText="Upload failed" resultButtonText="Retry" onResultButtonClick={onClick} />
+      <ProgressBar status="fault" resultText="Upload failed" resultButtonText="Retry" onResultButtonClick={onClick} />
     );
     fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
     expect(onClick).toHaveBeenCalledOnce();
   });
 
   test('the flash variant leaves announcing the result to the flash', () => {
-    render(<ProgressBar variant="flash" status="success" resultText="Done" />);
+    render(<ProgressBar variant="flash" status="complete" resultText="Done" />);
     expect(document.querySelector('[aria-live]')).toBeNull();
   });
 
@@ -116,7 +129,7 @@ describe('ProgressBar test utilities and accessibility', () => {
     expect(wrapper.findResultButton()).toBeNull();
     rerender(
       <ProgressBar
-        status="success"
+        status="complete"
         label="Upload"
         resultText="Done"
         resultButtonText="View"
@@ -133,8 +146,8 @@ describe('ProgressBar test utilities and accessibility', () => {
       <>
         <ProgressBar value={40} label="Uploading" description="backup.tar" additionalInfo="2 minutes left" />
         <ProgressBar value={60} ariaLabel="Copying" variant="key-value" />
-        <ProgressBar status="success" label="Upload" resultText="Done" />
-        <ProgressBar status="error" label="Upload" resultText="Failed" resultButtonText="Retry" variant="flash" />
+        <ProgressBar status="complete" label="Upload" resultText="Done" />
+        <ProgressBar status="fault" label="Upload" resultText="Failed" resultButtonText="Retry" variant="flash" />
       </>
     );
     await expectNoAxeViolations(container);

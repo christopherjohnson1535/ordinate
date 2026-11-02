@@ -3,7 +3,6 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { StepTrack } from '../internal/components/step-track';
 import { WizardProps } from './interfaces';
 import { getStepStatus, NavigationState, StepStatus } from './utils';
 
@@ -13,6 +12,10 @@ export interface WizardNavigationProps {
   state: NavigationState;
   stepNumberLabel: (stepNumber: number) => string | undefined;
   optionalLabel: string | undefined;
+  /**
+   * Shows the references only, with the names kept for screen readers, when the wizard is too narrow for them.
+   */
+  compact: boolean;
   onStepClick: (index: number, status: StepStatus) => void;
 }
 
@@ -31,9 +34,14 @@ function StepTitle({
   stepNumberLabel: string | undefined;
   onStepClick: WizardNavigationProps['onStepClick'];
 }) {
+  // The step number is read from the hidden label, so the reference beside it is drawing only.
   const content = (
     <>
-      <span className={styles['screenreader-only']}>{stepNumberLabel}</span> {step.title}
+      <span className={styles['screenreader-only']}>{stepNumberLabel}</span>
+      <span className={styles['navigation-reference']} aria-hidden="true">
+        S{index + 1}
+      </span>{' '}
+      <span className={styles['navigation-name']}>{step.title}</span>
     </>
   );
   if (inert && status !== 'active') {
@@ -63,39 +71,59 @@ function StepTitle({
 }
 
 /**
- * The list of steps beside the form. Steps the user has reached, and later ones that can be
- * skipped to, are buttons; the rest are plain text.
+ * The step scale across the top of the wizard: a dimension line with a tick for each step, inked up to the
+ * current step, whose tick stands tallest. Each tick is labelled with the step's reference and name. Steps
+ * the user has reached, and later ones that can be skipped to, are buttons; the rest are plain text.
  */
-export function WizardNavigation({ state, stepNumberLabel, optionalLabel, onStepClick }: WizardNavigationProps) {
+export function WizardNavigation({
+  state,
+  stepNumberLabel,
+  optionalLabel,
+  compact,
+  onStepClick,
+}: WizardNavigationProps) {
+  const count = state.steps.length;
+  // Each step owns an equal share of the line, with its tick in the middle of the share.
+  const tickAt = (index: number) => `${((index + 0.5) / count) * 100}%`;
+
   return (
-    <StepTrack
-      className={styles['navigation-list']}
-      markerSize="balloon"
-      items={state.steps.map((step, index) => {
-        const status = getStepStatus(index, state);
-        return {
-          key: String(index),
-          upcoming: index > state.farthestStepIndex,
-          itemProps: { className: styles['navigation-item'] },
-          marker: (
-            <span className={clsx(styles.balloon, styles[`balloon-${status}`])} aria-hidden="true">
-              {index + 1}
-            </span>
-          ),
-          head: (
-            <StepTitle
-              step={step}
-              index={index}
-              status={status}
-              // While the next step loads, the steps keep their look but cannot be chosen.
-              inert={state.isLoadingNextStep}
-              stepNumberLabel={stepNumberLabel(index + 1)}
-              onStepClick={onStepClick}
-            />
-          ),
-          details: step.isOptional ? <span className={styles['navigation-optional']}>{optionalLabel}</span> : null,
-        };
-      })}
-    />
+    <div className={clsx(styles.scale, compact && styles['scale-compact'])}>
+      <div className={styles['scale-line']} aria-hidden="true">
+        <span className={styles['scale-done']} style={{ inlineSize: tickAt(state.activeStepIndex) }} />
+        {state.steps.map((_, index) => (
+          <span
+            key={index}
+            className={clsx(
+              styles['scale-tick'],
+              index < state.activeStepIndex && styles['scale-tick-done'],
+              index === state.activeStepIndex && styles['scale-tick-active']
+            )}
+            style={{ insetInlineStart: tickAt(index) }}
+          />
+        ))}
+      </div>
+      <ol className={styles['navigation-list']} style={{ gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))` }}>
+        {state.steps.map((step, index) => {
+          const status = getStepStatus(index, state);
+          return (
+            <li
+              key={index}
+              className={clsx(styles['navigation-item'], index < state.activeStepIndex && styles['navigation-done'])}
+            >
+              <StepTitle
+                step={step}
+                index={index}
+                status={status}
+                // While the next step loads, the steps keep their look but cannot be chosen.
+                inert={state.isLoadingNextStep}
+                stepNumberLabel={stepNumberLabel(index + 1)}
+                onStepClick={onStepClick}
+              />
+              {step.isOptional && <span className={styles['navigation-optional']}>{optionalLabel}</span>}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }

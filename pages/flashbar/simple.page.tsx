@@ -8,36 +8,41 @@ import ProgressBar from '~components/progress-bar';
 
 import styles from './styles.module.scss';
 
-const samples: Record<FlashbarProps.Type, { header: string; content: string }> = {
-  success: { header: 'Backup complete', content: 'All 12 nodes of north-annex were backed up in 4 minutes.' },
-  error: { header: 'Deployment failed', content: 'Two nodes did not respond within 30 seconds.' },
-  warning: { header: 'Certificate expires soon', content: 'The certificate for api.north-annex expires in 6 days.' },
-  info: { header: 'Maintenance window', content: 'Updates run on Sunday at 02:00 UTC.' },
-  'in-progress': { header: 'Creating instance', content: 'north-annex-13 is starting.' },
+type SampleType = FlashbarProps.Type | 'underway';
+
+const samples: Record<SampleType, { header: string; content: string }> = {
+  fault: { header: 'Deployment failed', content: 'Two nodes did not respond within 30 seconds.' },
+  caution: { header: 'Certificate expires soon', content: 'The certificate for api.north-annex expires in 6 days.' },
+  complete: { header: 'Backup complete', content: 'All 12 nodes of north-annex were backed up in 4 minutes.' },
+  note: { header: 'Maintenance window', content: 'Updates run on Sunday at 02:00 UTC.' },
+  underway: { header: 'Creating instance', content: 'north-annex-13 is starting.' },
 };
 
-const types = Object.keys(samples) as FlashbarProps.Type[];
+const types = Object.keys(samples) as SampleType[];
+
+function toItem(type: SampleType): FlashbarProps.MessageDefinition {
+  return type === 'underway' ? { type: 'note', loading: true, ...samples.underway } : { type, ...samples[type] };
+}
 
 let nextId = 0;
 
 interface Entry {
   id: string;
-  type: FlashbarProps.Type;
+  type: SampleType;
 }
 
-function makeItem(type: FlashbarProps.Type): Entry {
+function makeItem(type: SampleType): Entry {
   return { id: `item-${nextId++}`, type };
 }
 
 function StackDemo() {
   const [entries, setEntries] = useState(() =>
-    (['error', 'warning', 'success', 'error'] as const).map(type => makeItem(type))
+    (['fault', 'caution', 'complete', 'underway', 'fault'] as const).map(type => makeItem(type))
   );
-  const add = (type: FlashbarProps.Type) => setEntries(current => [makeItem(type), ...current]);
+  const add = (type: SampleType) => setEntries(current => [makeItem(type), ...current]);
   const items: FlashbarProps.MessageDefinition[] = entries.map(({ id, type }) => ({
     id,
-    type,
-    ...samples[type],
+    ...toItem(type),
     dismissible: true,
     onDismiss: () => setEntries(current => current.filter(entry => entry.id !== id)),
   }));
@@ -66,7 +71,7 @@ export default function FlashbarSimple() {
 
       <section className={styles.section}>
         <h2>Types</h2>
-        <Flashbar items={types.map(type => ({ type, ...samples[type] }))} />
+        <Flashbar items={types.map(toItem)} />
       </section>
 
       <section className={styles.section}>
@@ -74,14 +79,14 @@ export default function FlashbarSimple() {
         <Flashbar
           items={[
             {
-              type: 'error',
-              ...samples.error,
+              type: 'fault',
+              ...samples.fault,
               action: <Button formAction="none">Retry</Button>,
               dismissible: true,
               ariaRole: 'alert',
             },
-            { type: 'success', header: 'Changes saved', dismissible: true },
-            { type: 'info', content: 'You are viewing revision 2026.1 of this project.' },
+            { type: 'complete', header: 'Changes saved', dismissible: true },
+            { type: 'note', content: 'You are viewing revision 2026.1 of this project.' },
           ]}
         />
       </section>
@@ -100,7 +105,7 @@ export default function FlashbarSimple() {
           items={[
             {
               id: 'upload',
-              type: finished ? 'success' : 'in-progress',
+              type: finished ? 'complete' : 'note',
               loading: !finished,
               header: finished ? 'Upload complete' : 'Uploading backup',
               content: (
@@ -109,7 +114,7 @@ export default function FlashbarSimple() {
                   value={progress}
                   label="north-annex.tar"
                   additionalInfo={finished ? undefined : 'About 2 minutes left'}
-                  status={finished ? 'success' : 'in-progress'}
+                  status={finished ? 'complete' : 'underway'}
                   resultText="Uploaded 4.2 GB"
                 />
               ),
@@ -129,7 +134,7 @@ export default function FlashbarSimple() {
           <Flashbar
             items={[
               {
-                type: 'warning',
+                type: 'caution',
                 header: 'Some nodes are running an old agent',
                 content: 'Nodes north-annex-04, north-annex-07 and north-annex-11 are on agent 3.2.',
                 action: <Button formAction="none">Update agents</Button>,

@@ -16,9 +16,9 @@ $panel-top: var(--ord-app-layout-panel-top, 0px);
 $rail-size: calc(#{ord.$size-control-height} + 2 * #{ord.$space-xs});
 $notes-width: var(--ord-app-layout-notes-width, 320px);
 
-// A drawing set: the grey frame holds the index (the navigation), the rails and the margin notes,
-// and the content sits on a white sheet framed in heavy ink, lettered along its top edge and
-// closed by a title block along its foot.
+// A drawing set laid on paper: the paper holds the rails and the margin notes, the navigation is a sheet
+// index along the side, and the content sits on a white sheet with a hairline edge, lettered along its top
+// edge and closed by a title block along its foot. Drawers come in from the edge with an ink edge.
 .root {
   @include styles.font-body;
   position: relative;
@@ -59,6 +59,10 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
+  border-inline-end-color: ord.$color-border-divider;
+  background-color: ord.$color-background-container;
 
   &[hidden] {
     display: none;
@@ -163,9 +167,9 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
   flex-direction: column;
   box-sizing: border-box;
   min-inline-size: 0;
-  border-width: ord.$border-width-section;
+  border-width: ord.$border-width-default;
   border-style: solid;
-  border-color: ord.$color-border-strong;
+  border-color: ord.$color-border-divider;
   background-color: ord.$color-background-container;
 }
 
@@ -176,7 +180,7 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
   flex-shrink: 0;
   border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-strong;
+  border-block-end-color: ord.$color-border-divider;
   color: ord.$color-text-secondary;
   user-select: none;
 }
@@ -301,9 +305,8 @@ $notes-width: var(--ord-app-layout-notes-width, 320px);
     background-color: ord.$color-background-container;
   }
 
-  // The index keeps the grey ground of the frame when it covers the content.
   .navigation.overlay {
-    background-color: ord.$color-background-layout-main;
+    border-inline-end-width: 0;
   }
 
   .main {

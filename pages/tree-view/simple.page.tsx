@@ -93,13 +93,14 @@ export default function TreeViewSimple() {
       <h1>Tree view</h1>
 
       <section className={styles.section}>
-        <h2 id="files-heading">Icons, secondary content and actions</h2>
+        <h2 id="files-heading">Icons, secondary content, actions and the current file</h2>
         <div className={styles.frame}>
           <TreeView
             items={files}
             getItemId={getItemId}
             getItemChildren={getItemChildren}
             ariaLabelledby="files-heading"
+            currentItemId="src/button/internal.tsx"
             {...fileState}
             renderItem={entry => ({
               content: entry.name,

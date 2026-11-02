@@ -16,6 +16,13 @@ describe('Spinner', () => {
     expect(spinner.querySelector('svg')).toHaveAttribute('focusable', 'false');
   });
 
+  test('draws the underway icon', () => {
+    render(<Spinner />);
+    const svg = createWrapper().findSpinner()!.getElement().querySelector('svg')!;
+    expect(svg.querySelector('circle')).not.toBeNull();
+    expect(svg.querySelector('.filled')).not.toBeNull();
+  });
+
   test('passes id and data attributes, but not className', () => {
     const props = { id: 'loading', 'data-testid': 'spinner', className: 'custom' } as SpinnerProps;
     render(<Spinner {...props} />);

@@ -57,50 +57,45 @@ const items: SideNavigationProps.Item[] = [
   { type: 'link', text: 'Documentation', href: 'https://example.com/docs', external: true },
 ];
 
-// Codes number the sheets like a drawing index, and section codes letter the sets.
-const sheetIndex: SideNavigationProps.Item[] = [
-  { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
-  { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
-  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03', info: <Badge tone="note">2</Badge> },
+// Each section group hangs on its own construction line, as in the console mockup.
+const grouped: SideNavigationProps.Item[] = [
+  { type: 'link', text: 'Overview', href: '#/overview' },
   {
-    type: 'link-group',
-    text: 'Logs',
-    href: '#/logs',
-    code: 'A-04',
+    type: 'section-group',
+    title: 'Resources',
     items: [
-      { type: 'link', text: 'Requests', href: '#/logs/requests', code: 'A-04a' },
-      { type: 'link', text: 'Audit trail', href: '#/logs/audit' },
+      { type: 'link', text: 'Clusters', href: '#/clusters' },
+      { type: 'link', text: 'Nodes', href: '#/nodes', info: <Badge tone="note">2</Badge> },
+      { type: 'link', text: 'Volumes', href: '#/volumes' },
+    ],
+  },
+  {
+    type: 'section',
+    text: 'Configuration',
+    items: [
+      { type: 'link', text: 'Networks', href: '#/networks' },
+      {
+        type: 'expandable-link-group',
+        text: 'Images',
+        href: '#/images',
+        items: [{ type: 'link', text: 'plate-24.04.2', href: '#/images/plate-24' }],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    text: 'Policy',
+    items: [
+      { type: 'link', text: 'Access', href: '#/access' },
+      { type: 'link', text: 'Maintenance', href: '#/maintenance' },
     ],
   },
   { type: 'divider' },
-  {
-    type: 'section',
-    text: 'Account',
-    code: 'Set B',
-    items: [
-      { type: 'link', text: 'People and access', href: '#/people', code: 'B-01' },
-      { type: 'link', text: 'Billing', href: '#/billing', code: 'B-02' },
-    ],
-  },
-  {
-    type: 'section-group',
-    title: 'Reference',
-    code: 'Set C',
-    items: [
-      {
-        type: 'expandable-link-group',
-        text: 'Guides',
-        href: '#/guides',
-        code: 'C-01',
-        items: [{ type: 'link', text: 'Rolling out an image', href: '#/guides/rollout', code: 'C-01a' }],
-      },
-      { type: 'link', text: 'Status page', href: 'https://example.com/status', code: 'C-02', external: true },
-    ],
-  },
+  { type: 'link', text: 'Status page', href: 'https://example.com/status', external: true },
 ];
 
 export default function SideNavigationPermutations() {
-  const [indexHref, setIndexHref] = useState('#/services');
+  const [indexHref, setIndexHref] = useState('#/nodes');
   const [activeHref, setActiveHref] = useState('#/nodes');
   const [changes, setChanges] = useState<string[]>([]);
 
@@ -136,11 +131,11 @@ export default function SideNavigationPermutations() {
         </section>
 
         <section className={styles.section}>
-          <h2>Sheet index with codes and sets</h2>
+          <h2>Grouped lines</h2>
           <div className={styles.frame}>
             <SideNavigation
-              header={{ text: 'North Annex', href: '#/' }}
-              items={sheetIndex}
+              header={{ text: 'Compute', href: '#/' }}
+              items={grouped}
               activeHref={indexHref}
               onFollow={event => {
                 if (!event.detail.external) {

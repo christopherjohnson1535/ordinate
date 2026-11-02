@@ -14,7 +14,8 @@ export interface SideNavigationProps extends BaseComponentProps {
    */
   header?: SideNavigationProps.Header;
   /**
-   * The navigation items, in order, drawn as the index of a drawing set. Each item has a `type`:
+   * The navigation items, in order. Sections and section groups each hang on their own faint construction
+   * line, closed by a hash mark at each end, with the title in small mono capitals. Each item has a `type`:
    * * `link`: A link with `text` and `href`. Set `external` for links that leave the
    *   application, and `info` for content after the text, such as a badge.
    * * `section`: A titled set of items with `text` and `items`, which the user can
@@ -26,13 +27,13 @@ export interface SideNavigationProps extends BaseComponentProps {
    *   active link.
    * * `divider`: A break between two sets of items.
    *
-   * Links and link groups can also have a `code`, a short reference such as "A-01", shown in
-   * its own column before the text, the way sheets are numbered in a drawing index. Sections
-   * and section groups can have a `code` too, such as "Set B", shown before their title.
+   * Deprecated: items can still have a `code`, but it is no longer drawn. The navigation shows item
+   * names only. `code` stops working in the next major version.
    */
   items?: ReadonlyArray<SideNavigationProps.Item>;
   /**
-   * The `href` of the current page. The matching link is marked as current.
+   * The `href` of the current page. The matching link is marked with the position rule and its text is set
+   * in ink.
    */
   activeHref?: string;
   /**
@@ -70,6 +71,9 @@ export namespace SideNavigationProps {
     type: 'link';
     text: string;
     href: string;
+    /**
+     * Deprecated: no longer drawn.
+     */
     code?: string;
     external?: boolean;
     externalIconAriaLabel?: string;
@@ -83,6 +87,9 @@ export namespace SideNavigationProps {
   export interface Section {
     type: 'section';
     text: string;
+    /**
+     * Deprecated: no longer drawn.
+     */
     code?: string;
     items: ReadonlyArray<Item>;
     defaultExpanded?: boolean;
@@ -91,6 +98,9 @@ export namespace SideNavigationProps {
   export interface SectionGroup {
     type: 'section-group';
     title: string;
+    /**
+     * Deprecated: no longer drawn.
+     */
     code?: string;
     items: ReadonlyArray<Item>;
   }
@@ -99,6 +109,9 @@ export namespace SideNavigationProps {
     type: 'link-group';
     text: string;
     href: string;
+    /**
+     * Deprecated: no longer drawn.
+     */
     code?: string;
     items: ReadonlyArray<Item>;
     info?: React.ReactNode;
@@ -108,6 +121,9 @@ export namespace SideNavigationProps {
     type: 'expandable-link-group';
     text: string;
     href: string;
+    /**
+     * Deprecated: no longer drawn.
+     */
     code?: string;
     items: ReadonlyArray<Item>;
     defaultExpanded?: boolean;

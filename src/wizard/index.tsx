@@ -11,6 +11,8 @@ export type { WizardProps };
 
 export default function Wizard({
   variant = 'checklist',
+  kind = 'neutral',
+  reference,
   steps,
   activeStepIndex,
   onNavigate,
@@ -28,6 +30,8 @@ export default function Wizard({
     <InternalWizard
       {...getBaseProps(props)}
       variant={variant}
+      kind={kind}
+      reference={reference}
       steps={steps}
       activeStepIndex={activeStepIndex}
       onNavigate={onNavigate}

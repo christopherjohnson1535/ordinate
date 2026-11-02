@@ -38,7 +38,6 @@ export function InternalContentLayout({
       )}
       style={style}
     >
-      {highContrast && <div className={styles.band} />}
       {hasHeaderArea && (
         <div className={styles['header-area']}>
           {notifications && <div className={styles.notifications}>{notifications}</div>}

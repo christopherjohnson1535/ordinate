@@ -49,7 +49,7 @@ export function containsHref(items: ReadonlyArray<SideNavigationProps.Item>, hre
 }
 
 /**
- * Whether any link, at any depth, carries a code, so every link keeps a column for one.
+ * Whether any item, at any depth, carries the deprecated code.
  */
 export function containsCode(items: ReadonlyArray<SideNavigationProps.Item>): boolean {
   return items.some(item => {
@@ -58,9 +58,6 @@ export function containsCode(items: ReadonlyArray<SideNavigationProps.Item>): bo
         return false;
       case 'link':
         return Boolean(item.code);
-      case 'section':
-      case 'section-group':
-        return containsCode(item.items);
       default:
         return Boolean(item.code) || containsCode(item.items);
     }

@@ -111,6 +111,14 @@ describe('AnchorNavigation', () => {
     expect(FakeIntersectionObserver.instances).toHaveLength(0);
   });
 
+  test('draws a longer tick for deeper levels', () => {
+    render(<Page activeHref="#baseline" />);
+    const levels = wrapper()
+      .findAnchorLinks()
+      .map(anchor => anchor.getElement().className.match(/level-(\d)/)![1]);
+    expect(levels).toEqual(['1', '1', '2', '3', '1']);
+  });
+
   test('a plain click fires onFollow with the anchor, and preventDefault stops the jump', () => {
     const onFollow = vi.fn((event: CustomEvent<AnchorNavigationProps.FollowDetail>) => event.preventDefault());
     render(<Page onFollow={onFollow} />);

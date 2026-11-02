@@ -15,7 +15,7 @@ export default function ProgressBarSimple() {
       <h1>Progress bar</h1>
 
       <section className={styles.section}>
-        <h2>In progress</h2>
+        <h2>Underway</h2>
         <div className={styles.row}>
           <Button formAction="none" onClick={() => setValue(current => Math.min(100, current + 15))}>
             Advance
@@ -37,9 +37,10 @@ export default function ProgressBarSimple() {
 
       <section className={styles.section}>
         <h2>Results</h2>
-        <ProgressBar status="success" label="Upload" resultText="Uploaded 4.2 GB in 3 minutes" />
+        <ProgressBar status="complete" label="Upload" resultText="Uploaded 4.2 GB in 3 minutes" />
         <ProgressBar
-          status="error"
+          status="fault"
+          value={64}
           label="Upload"
           description="north-annex.tar"
           resultText="The connection was lost at 64%"
@@ -52,7 +53,7 @@ export default function ProgressBarSimple() {
         <h2>Key-value variant</h2>
         <div className={styles.grid}>
           <ProgressBar variant="key-value" value={72} label="Disk used" additionalInfo="144 of 200 GB" />
-          <ProgressBar variant="key-value" status="success" label="Health check" resultText="Passed" />
+          <ProgressBar variant="key-value" status="complete" label="Health check" resultText="Passed" />
         </div>
       </section>
 

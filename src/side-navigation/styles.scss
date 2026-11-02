@@ -7,9 +7,11 @@
 @use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// The index of a drawing set: sheet codes in a column, the current sheet inked solid, sets
-// lettered in small capitals and broken apart by ink rules. It draws no ground of its own, so it
-// sits on the grey frame of an app layout.
+// Grouped lines: each section hangs on its own faint construction line, closed by a hash mark at each
+// end and titled in small mono capitals. Items show their names only. The current page gets the
+// position rule and ink text. It draws no ground of its own, so it takes the surface it sits on.
+
+$half-mark: calc(#{ord.$size-hash-mark} / 2);
 
 .root {
   @include styles.font-body;
@@ -77,6 +79,7 @@
 
 .link {
   @include styles.border-radius(ord.$border-radius-input);
+  position: relative;
   display: flex;
   flex: 1 1 auto;
   align-items: baseline;
@@ -95,9 +98,11 @@
     transition-timing-function: ord.$motion-easing-standard;
   }
 
-  &:hover {
-    background-color: ord.$color-background-item-hover;
-    color: ord.$color-text-body;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: ord.$color-background-item-hover;
+      color: ord.$color-text-body;
+    }
   }
 
   &:focus-visible {
@@ -106,24 +111,12 @@
   }
 }
 
-// The current sheet is inked solid, like the filled box against its number in a printed index.
-.link-active,
-.link-active:hover {
-  background-color: ord.$color-background-control-checked;
-  color: ord.$color-foreground-control-checked;
+// You are here: the position rule on the leading edge and the text in ink. Inside a group the rule lies
+// on the group's line.
+.link-active {
+  @include drawing.position-rule;
+  color: ord.$color-text-body;
   font-weight: ord.$font-weight-label;
-}
-
-// Mono figures are all one width, so a fixed column keeps every text starting on the same line.
-.code {
-  @include drawing.font-caption;
-  flex: 0 0 auto;
-  min-inline-size: 6ch;
-  color: ord.$color-text-secondary;
-
-  .link-active & {
-    color: inherit;
-  }
 }
 
 .text {
@@ -131,8 +124,10 @@
   min-inline-size: 0;
   overflow-wrap: anywhere;
 
-  .link:hover & {
-    text-decoration-line: underline;
+  @media (hover: hover) and (pointer: fine) {
+    .link:hover & {
+      text-decoration-line: underline;
+    }
   }
 }
 
@@ -150,17 +145,8 @@
   align-items: center;
 }
 
-// With codes, nesting indents the text only, so the codes stay in one column.
 .nested {
   padding-inline-start: ord.$space-m;
-
-  .has-codes & {
-    padding-inline-start: 0;
-  }
-
-  .has-codes & .text {
-    padding-inline-start: ord.$space-s;
-  }
 }
 
 .section,
@@ -169,13 +155,46 @@
 }
 
 .set-label {
-  @include drawing.font-caption;
+  @include drawing.mono-caption;
   min-inline-size: 0;
   overflow-wrap: anywhere;
 }
 
-.set-code {
-  color: ord.$color-text-body;
+// The construction line runs down the start edge of the group, a little in from the title, and its
+// links start just past it.
+.group {
+  position: relative;
+  margin-block: ord.$space-xxs;
+  margin-inline-start: ord.$space-xs;
+
+  .link {
+    padding-inline-start: ord.$space-s;
+  }
+}
+
+.group-line,
+.group-mark {
+  color: ord.$color-kind-neutral;
+}
+
+.group-line {
+  @include drawing.construction-line;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: ord.$border-width-default;
+}
+
+.group-mark {
+  @include drawing.hash-mark;
+  inset-inline-start: calc(-1 * #{$half-mark});
+}
+
+.group-mark-start {
+  inset-block-start: 0;
+}
+
+.group-mark-end {
+  inset-block-end: 0;
 }
 
 .section-toggle {
@@ -195,8 +214,10 @@
   text-align: start;
   cursor: pointer;
 
-  &:hover {
-    color: ord.$color-text-body;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ord.$color-text-body;
+    }
   }
 
   &:focus-visible {
@@ -231,9 +252,11 @@
   color: ord.$color-text-secondary;
   cursor: pointer;
 
-  &:hover {
-    background-color: ord.$color-background-item-hover;
-    color: ord.$color-text-body;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: ord.$color-background-item-hover;
+      color: ord.$color-text-body;
+    }
   }
 
   &:focus-visible {
@@ -242,12 +265,12 @@
   }
 }
 
-// A set break: an ink rule across the index between two sets of sheets.
+// A break between two sets of items: a hairline across the navigation.
 .divider {
   margin-block: ord.$space-scaled-s;
   margin-inline: 0;
   border-width: 0;
   border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
-  border-block-start-color: ord.$color-border-strong;
+  border-block-start-color: ord.$color-border-divider;
 }

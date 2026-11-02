@@ -25,7 +25,7 @@ const breadcrumbs = (
 );
 
 const notifications = (
-  <Flashbar items={[{ type: 'success', header: 'Instance started', content: 'i-0f3a2c91d4 is running.' }]} />
+  <Flashbar items={[{ type: 'complete', header: 'Instance started', content: 'i-0f3a2c91d4 is running.' }]} />
 );
 
 const header = (

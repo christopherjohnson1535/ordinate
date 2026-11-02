@@ -4,10 +4,10 @@ import React, { useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
-import { InternalExpandableSection } from '../expandable-section/internal';
 import { InternalForm } from '../form/internal';
 import { InternalHeader } from '../header/internal';
 import { breakpointMinWidths } from '../internal/breakpoints';
+import { RuleEndMarks } from '../internal/components/construction';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useContainerWidth } from '../internal/hooks/use-container-width';
 import { useControllable } from '../internal/hooks/use-controllable';
@@ -23,7 +23,8 @@ import styles from './styles.css.js';
 export type StepsWizardProps = Omit<WizardProps, 'variant' | 'aside'>;
 
 /**
- * One step at a time, with the list of steps beside it and previous and next buttons.
+ * One step at a time, under a step scale that runs across the top, with the previous and next buttons on a
+ * rule at the foot. The step takes the full width.
  */
 export function StepsWizard({
   steps,
@@ -36,6 +37,8 @@ export function StepsWizard({
   submitButtonText,
   secondaryActions,
   i18nStrings,
+  kind = 'neutral',
+  reference,
   ...rest
 }: StepsWizardProps) {
   const i18n = useInternalI18n('wizard');
@@ -52,14 +55,12 @@ export function StepsWizard({
 
   const rootRef = useRef<HTMLDivElement>(null);
   const width = useContainerWidth(rootRef);
-  const collapsed = width !== null && width < breakpointMinWidths.xs;
-  const [navigationExpanded, setNavigationExpanded] = useState(false);
+  const compact = width !== null && width < breakpointMinWidths.xs;
 
   const headerRef = useFocusHeadingOnStepChange(activeStepIndex);
 
   const navigate = (requestedStepIndex: number, reason: WizardProps.NavigateReason) => {
     setCurrentIndex(requestedStepIndex);
-    setNavigationExpanded(false);
     fireNonCancelableEvent(onNavigate, { requestedStepIndex, reason });
   };
 
@@ -69,22 +70,12 @@ export function StepsWizard({
 
   const stepNumberLabel = (stepNumber: number) =>
     i18n('stepNumberLabel', i18nStrings?.stepNumberLabel?.(stepNumber), { stepNumber });
-  const collapsedStepsLabel = i18n(
-    'collapsedStepsLabel',
-    i18nStrings?.collapsedStepsLabel?.(activeStepIndex + 1, stepsCount),
-    { stepNumber: activeStepIndex + 1, stepsCount }
-  );
+  const stepCounter = i18n('collapsedStepsLabel', i18nStrings?.collapsedStepsLabel?.(activeStepIndex + 1, stepsCount), {
+    stepNumber: activeStepIndex + 1,
+    stepsCount,
+  });
   const optionalLabel = i18n('optional', i18nStrings?.optional);
   const navigationAriaLabel = i18n('navigationAriaLabel', i18nStrings?.navigationAriaLabel);
-
-  const navigation = (
-    <WizardNavigation
-      state={state}
-      stepNumberLabel={stepNumberLabel}
-      optionalLabel={optionalLabel}
-      onStepClick={(index: number, status: StepStatus) => navigate(index, status === 'skippable' ? 'skip' : 'step')}
-    />
-  );
 
   const actions = (
     <InternalSpaceBetween direction="horizontal" size="xs">
@@ -135,20 +126,15 @@ export function StepsWizard({
   );
 
   return (
-    <div {...rest} ref={rootRef} className={clsx(styles.root, styles['variant-steps'], collapsed && styles.collapsed)}>
+    <div {...rest} ref={rootRef} className={clsx(styles.root, styles['variant-steps'], styles[`kind-${kind}`])}>
       <nav className={styles.navigation} aria-label={navigationAriaLabel}>
-        {collapsed ? (
-          <InternalExpandableSection
-            className={styles['navigation-toggle']}
-            headerText={collapsedStepsLabel}
-            expanded={navigationExpanded}
-            onChange={event => setNavigationExpanded(event.detail.expanded)}
-          >
-            {navigation}
-          </InternalExpandableSection>
-        ) : (
-          navigation
-        )}
+        <WizardNavigation
+          state={state}
+          stepNumberLabel={stepNumberLabel}
+          optionalLabel={optionalLabel}
+          compact={compact}
+          onStepClick={(index: number, status: StepStatus) => navigate(index, status === 'skippable' ? 'skip' : 'step')}
+        />
       </nav>
       <div className={styles.main}>
         <InternalForm
@@ -156,6 +142,17 @@ export function StepsWizard({
             <div ref={headerRef} className={styles['step-header']}>
               <InternalHeader
                 variant="h1"
+                code={
+                  <span className={styles['step-counter']}>
+                    {reference && (
+                      <>
+                        {reference}
+                        <span aria-hidden="true">{' \u00b7 '}</span>
+                      </>
+                    )}
+                    {stepCounter}
+                  </span>
+                }
                 info={step.info}
                 description={step.description}
                 counter={
@@ -168,11 +165,14 @@ export function StepsWizard({
           }
           errorText={step.errorText}
           errorIconAriaLabel={i18n('errorIconAriaLabel', i18nStrings?.errorIconAriaLabel)}
-          secondaryActions={secondaryActions}
-          actions={actions}
         >
           <div className={styles.content}>{step.content}</div>
         </InternalForm>
+        <div className={styles['footer-rule']}>
+          <RuleEndMarks kind={kind} />
+          {secondaryActions && <div className={styles['secondary-actions']}>{secondaryActions}</div>}
+          <div className={styles['footer-actions']}>{actions}</div>
+        </div>
       </div>
     </div>
   );
