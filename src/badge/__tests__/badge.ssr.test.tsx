@@ -7,5 +7,5 @@ import { expect, test } from 'vitest';
 import Badge from '../../../lib/components/badge';
 
 test('renders on the server', () => {
-  expect(renderToString(<Badge color="blue">Beta</Badge>)).toContain('Beta');
+  expect(renderToString(<Badge tone="note">Beta</Badge>)).toContain('Beta');
 });

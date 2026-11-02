@@ -9,7 +9,7 @@ import styles from './styles.module.scss';
 
 const items: SideNavigationProps.Item[] = [
   { type: 'link', text: 'Dashboard', href: '#/dashboard' },
-  { type: 'link', text: 'Projects', href: '#/projects', info: <Badge color="blue">3</Badge> },
+  { type: 'link', text: 'Projects', href: '#/projects', info: <Badge tone="note">3</Badge> },
   { type: 'divider' },
   {
     type: 'section',
@@ -61,7 +61,7 @@ const items: SideNavigationProps.Item[] = [
 const sheetIndex: SideNavigationProps.Item[] = [
   { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
   { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
-  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03', info: <Badge color="blue">2</Badge> },
+  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03', info: <Badge tone="note">2</Badge> },
   {
     type: 'link-group',
     text: 'Logs',

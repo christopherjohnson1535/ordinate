@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 
 const pairs: KeyValuePairsProps.Pair[] = [
   { label: 'Instance ID', value: 'i-0f3a2c91d4' },
-  { label: 'State', value: <StatusIndicator type="success">Running</StatusIndicator> },
+  { label: 'State', value: <StatusIndicator state="complete">Running</StatusIndicator> },
   {
     label: 'Region',
     value: 'north-annex',

@@ -39,6 +39,11 @@ export interface StepTrackProps {
    * The size of the marker column: `icon` fits a status icon, `balloon` a numbered balloon.
    */
   markerSize?: 'icon' | 'balloon';
+  /**
+   * How the line between markers is drawn: `ink` for a firm drafting line, `construction` for a faint
+   * construction line in graphite, as Container draws its frame.
+   */
+  line?: 'ink' | 'construction';
   ariaLabel?: string;
   ariaLabelledby?: string;
   className?: string;
@@ -52,13 +57,20 @@ export function StepTrack({
   items,
   orientation = 'vertical',
   markerSize = 'icon',
+  line = 'ink',
   ariaLabel,
   ariaLabelledby,
   className,
 }: StepTrackProps) {
   return (
     <ol
-      className={clsx(styles.root, styles[`orientation-${orientation}`], styles[`marker-${markerSize}`], className)}
+      className={clsx(
+        styles.root,
+        styles[`orientation-${orientation}`],
+        styles[`marker-${markerSize}`],
+        styles[`line-${line}`],
+        className
+      )}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
     >

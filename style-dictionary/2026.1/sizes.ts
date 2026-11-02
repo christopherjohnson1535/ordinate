@@ -36,4 +36,6 @@ export const tokens: SizesDictionary = {
   sizeHashMark: '9px',
   // The widest the heading column of a container grows.
   sizeMarginColumn: '192px',
+  // The colored square that keys a badge, like the key beside a legend entry.
+  sizeKeySquare: '8px',
 };

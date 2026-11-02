@@ -49,9 +49,9 @@ export default function LiveRegionSimple() {
           Draft:{' '}
           <LiveRegion tagName="span">
             {saveState === 'idle' && 'Not saved'}
-            {saveState === 'saving' && <StatusIndicator type="loading">Saving</StatusIndicator>}
-            {saveState === 'saved' && <StatusIndicator type="success">Saved</StatusIndicator>}
-            {saveState === 'failed' && <StatusIndicator type="error">Save failed</StatusIndicator>}
+            {saveState === 'saving' && <StatusIndicator state="loading">Saving</StatusIndicator>}
+            {saveState === 'saved' && <StatusIndicator state="complete">Saved</StatusIndicator>}
+            {saveState === 'failed' && <StatusIndicator state="fault">Save failed</StatusIndicator>}
           </LiveRegion>
         </p>
       </section>

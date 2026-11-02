@@ -108,6 +108,16 @@ A section's color says what it holds. Kinds are not decoration and not status, s
 
 The kind colors the construction lines, hash marks, dimension line and reference. Each keeps at least 4.5:1 against the container background in its mode, because the reference is text. Pair a kind with a reference whose letter matches it, such as C1, R1 or P1, so the meaning does not rest on color alone.
 
+## Status and badges
+
+Only the mark carries color; words stay in ink. A StatusIndicator draws its state's icon in the state's color and its text in `color-text-body-secondary`, so a table full of states reads calmly and the icon's shape still tells the states apart. Steps hang their icons on a faint construction line.
+
+States are named like their icons: `complete`, `caution`, `fault`, `note`, `underway`, `waiting`, `halted`, `queued`, plus `loading`. `tone` replaces the mark's color without changing its shape.
+
+A Badge is a short label in small mono capitals, keyed by a colored square of `size-key-square`, like the key beside a legend entry. Its `tone` is one of `neutral`, `note`, `complete` and `fault`, or the severity scale `critical`, `high`, `medium` and `low`. The scale is also told by the square's fill: solid for critical and high, half for medium, open for low, with critical in bold.
+
+The old names (`type`, `colorOverride`, Badge's `color` and the old status values) still work with a warning until the next major version.
+
 ## States
 
 - Focus: a solid 2 px ink outline, offset 2 px. Use the `focus-ring` mixin.

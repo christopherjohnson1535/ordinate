@@ -153,9 +153,9 @@ export default function GuidedFlowsGroup({ number }: { number: number }) {
           <Steps
             ariaLabel="Rollout of web:v2"
             steps={[
-              { header: 'Build image web:v2', status: 'success', details: '4 min 12 s' },
-              { header: 'Roll out to gallery-east', status: 'in-progress', details: '3 of 5 replicas ready' },
-              { header: 'Roll out to north-annex-web', status: 'pending' },
+              { header: 'Build image web:v2', status: 'complete', details: '4 min 12 s' },
+              { header: 'Roll out to gallery-east', status: 'underway', details: '3 of 5 replicas ready' },
+              { header: 'Roll out to north-annex-web', status: 'waiting' },
             ]}
           />
         </Cell>

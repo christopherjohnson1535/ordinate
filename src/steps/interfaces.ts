@@ -35,9 +35,9 @@ export namespace StepsProps {
     header: React.ReactNode;
     /**
      * Where the step stands. It sets the icon and its color, as in a status indicator. The line
-     * leading into a `pending` step is dashed, to show the part of the sequence not reached yet.
+     * leading into a `waiting` or `queued` step is dashed, to show the part of the sequence not reached yet.
      */
-    status: StatusIndicatorProps.Type;
+    status: StatusIndicatorProps.State | StatusIndicatorProps.Type;
     /**
      * Accessible name of the status icon, such as "Completed". Set it when the header does not
      * say how the step went.

@@ -7,6 +7,6 @@ import { expect, test } from 'vitest';
 import StatusIndicator from '../../../lib/components/status-indicator';
 
 test('renders on the server', () => {
-  expect(renderToString(<StatusIndicator type="success">Running</StatusIndicator>)).toContain('Running');
-  expect(renderToString(<StatusIndicator type="loading">Loading</StatusIndicator>)).toContain('<svg');
+  expect(renderToString(<StatusIndicator state="complete">Running</StatusIndicator>)).toContain('Running');
+  expect(renderToString(<StatusIndicator state="loading">Loading</StatusIndicator>)).toContain('<svg');
 });

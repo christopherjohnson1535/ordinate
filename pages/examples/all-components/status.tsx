@@ -111,10 +111,10 @@ export default function StatusGroup({ number }: { number: number }) {
       <Cell name="Badge">
         <Row>
           <Badge>Draft</Badge>
-          <Badge color="blue">New</Badge>
-          <Badge color="green">Ready</Badge>
-          <Badge color="red">Overdue</Badge>
-          <Badge color="severity-high">High</Badge>
+          <Badge tone="note">New</Badge>
+          <Badge tone="complete">Ready</Badge>
+          <Badge tone="fault">Overdue</Badge>
+          <Badge tone="high">High</Badge>
         </Row>
       </Cell>
       <Cell name="ErrorBoundary" note="Break the ticket to see the fallback.">
@@ -161,11 +161,11 @@ export default function StatusGroup({ number }: { number: number }) {
       </Cell>
       <Cell name="StatusIndicator">
         <SpaceBetween size="xxs">
-          <StatusIndicator type="success">Running</StatusIndicator>
-          <StatusIndicator type="in-progress">Starting</StatusIndicator>
-          <StatusIndicator type="warning">Expiring in 3 days</StatusIndicator>
-          <StatusIndicator type="error">Failed</StatusIndicator>
-          <StatusIndicator type="stopped">Stopped</StatusIndicator>
+          <StatusIndicator state="complete">Running</StatusIndicator>
+          <StatusIndicator state="underway">Starting</StatusIndicator>
+          <StatusIndicator state="caution">Expiring in 3 days</StatusIndicator>
+          <StatusIndicator state="fault">Failed</StatusIndicator>
+          <StatusIndicator state="halted">Stopped</StatusIndicator>
         </SpaceBetween>
       </Cell>
     </Group>

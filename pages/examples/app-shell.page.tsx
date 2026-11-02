@@ -106,9 +106,9 @@ function DetailsTab({ status }: { status: Status }) {
               label: 'Status',
               value:
                 status === 'restarting' ? (
-                  <StatusIndicator type="in-progress">Restarting</StatusIndicator>
+                  <StatusIndicator state="underway">Restarting</StatusIndicator>
                 ) : (
-                  <StatusIndicator type="success">Running</StatusIndicator>
+                  <StatusIndicator state="complete">Running</StatusIndicator>
                 ),
             },
             { label: 'Region', value: 'us-mountain-1' },

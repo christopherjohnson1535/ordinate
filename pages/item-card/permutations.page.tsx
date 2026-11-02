@@ -48,7 +48,7 @@ function SelectableCard() {
         <Checkbox checked={selected} onChange={event => setSelected(event.detail.checked)} ariaLabel="Select node-02" />
       }
     >
-      <StatusIndicator type="success">Running</StatusIndicator>
+      <StatusIndicator state="complete">Running</StatusIndicator>
     </ItemCard>
   );
 }
@@ -71,7 +71,7 @@ export default function ItemCardPermutations() {
           footer={<Link href="#node-03">View details</Link>}
           media={<Plan />}
         >
-          <StatusIndicator type="stopped">Stopped</StatusIndicator>
+          <StatusIndicator state="halted">Stopped</StatusIndicator>
         </ItemCard>
 
         <ItemCard

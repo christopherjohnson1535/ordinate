@@ -11,8 +11,8 @@ test('renders on the server', () => {
     <Steps
       ariaLabel="Deployment"
       steps={[
-        { header: 'Build image', status: 'success', details: '2 minutes' },
-        { header: 'Deploy', status: 'pending' },
+        { header: 'Build image', status: 'complete', details: '2 minutes' },
+        { header: 'Deploy', status: 'waiting' },
       ]}
     />
   );

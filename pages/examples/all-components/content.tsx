@@ -73,7 +73,7 @@ export default function ContentGroup({ number }: { number: number }) {
           columns={2}
           items={[
             { label: 'Service', value: 'atrium-api' },
-            { label: 'Status', value: <StatusIndicator type="success">Running</StatusIndicator> },
+            { label: 'Status', value: <StatusIndicator state="complete">Running</StatusIndicator> },
             { label: 'Image', value: <Box variant="code">api:v7</Box> },
             { label: 'Nodes', value: '6 of 8' },
           ]}

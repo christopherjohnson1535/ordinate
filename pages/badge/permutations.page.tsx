@@ -6,14 +6,14 @@ import Badge, { BadgeProps } from '~components/badge';
 
 import styles from './styles.module.scss';
 
-const colors: BadgeProps.Color[] = ['grey', 'blue', 'green', 'red'];
+const tones: BadgeProps.Tone[] = ['neutral', 'note', 'complete', 'fault'];
 
-const severities: { color: BadgeProps.Color; label: string }[] = [
-  { color: 'severity-critical', label: 'Critical' },
-  { color: 'severity-high', label: 'High' },
-  { color: 'severity-medium', label: 'Medium' },
-  { color: 'severity-low', label: 'Low' },
-  { color: 'severity-neutral', label: 'Neutral' },
+const severities: { tone: BadgeProps.Tone; label: string }[] = [
+  { tone: 'critical', label: 'Critical' },
+  { tone: 'high', label: 'High' },
+  { tone: 'medium', label: 'Medium' },
+  { tone: 'low', label: 'Low' },
+  { tone: 'neutral', label: 'Neutral' },
 ];
 
 export default function BadgePermutations() {
@@ -21,11 +21,11 @@ export default function BadgePermutations() {
     <article className={styles.page}>
       <h1>Badge permutations</h1>
       <section className={styles.section}>
-        <h2>Colors</h2>
+        <h2>Tones</h2>
         <div className={styles.row}>
-          {colors.map(color => (
-            <Badge key={color} color={color}>
-              {color}
+          {tones.map(tone => (
+            <Badge key={tone} tone={tone}>
+              {tone}
             </Badge>
           ))}
           <Badge>12</Badge>
@@ -34,8 +34,8 @@ export default function BadgePermutations() {
       <section className={styles.section}>
         <h2>Severity</h2>
         <div className={styles.row}>
-          {severities.map(({ color, label }) => (
-            <Badge key={color} color={color}>
+          {severities.map(({ tone, label }) => (
+            <Badge key={tone} tone={tone}>
               {label}
             </Badge>
           ))}
@@ -44,7 +44,7 @@ export default function BadgePermutations() {
       <section className={styles.section}>
         <h2>In text</h2>
         <p>
-          Query builder <Badge color="blue">Beta</Badge>
+          Query builder <Badge tone="note">Beta</Badge>
         </p>
         <h3 className={styles.heading}>
           Open findings <Badge>24</Badge>

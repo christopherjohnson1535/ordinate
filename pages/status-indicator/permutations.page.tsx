@@ -6,18 +6,18 @@ import StatusIndicator, { StatusIndicatorProps } from '~components/status-indica
 
 import styles from './styles.module.scss';
 
-const types: { type: StatusIndicatorProps.Type; label: string }[] = [
-  { type: 'error', label: 'Failed' },
-  { type: 'warning', label: 'Degraded' },
-  { type: 'success', label: 'Running' },
-  { type: 'info', label: 'Scheduled' },
-  { type: 'stopped', label: 'Stopped' },
-  { type: 'pending', label: 'Pending' },
-  { type: 'in-progress', label: 'Provisioning' },
+const types: { type: StatusIndicatorProps.State; label: string }[] = [
+  { type: 'fault', label: 'Failed' },
+  { type: 'caution', label: 'Degraded' },
+  { type: 'complete', label: 'Running' },
+  { type: 'note', label: 'Scheduled' },
+  { type: 'halted', label: 'Stopped' },
+  { type: 'waiting', label: 'Pending' },
+  { type: 'underway', label: 'Provisioning' },
   { type: 'loading', label: 'Loading' },
 ];
 
-const colors: StatusIndicatorProps.Color[] = ['red', 'yellow', 'green', 'blue', 'grey'];
+const colors: StatusIndicatorProps.Tone[] = ['fault', 'caution', 'complete', 'note', 'neutral'];
 
 const longText = 'Waiting for north-annex-04 to finish draining connections before the restart';
 
@@ -26,18 +26,18 @@ export default function StatusIndicatorPermutations() {
     <article className={styles.page}>
       <h1>Status indicator permutations</h1>
       <section className={styles.section}>
-        <h2>Types</h2>
+        <h2>States</h2>
         {types.map(({ type, label }) => (
           <div key={type}>
-            <StatusIndicator type={type}>{label}</StatusIndicator>
+            <StatusIndicator state={type}>{label}</StatusIndicator>
           </div>
         ))}
       </section>
       <section className={styles.section}>
-        <h2>Color override</h2>
+        <h2>Tone</h2>
         {colors.map(color => (
           <div key={color}>
-            <StatusIndicator type="in-progress" colorOverride={color}>
+            <StatusIndicator state="underway" tone={color}>
               In progress, {color}
             </StatusIndicator>
           </div>
@@ -46,7 +46,7 @@ export default function StatusIndicatorPermutations() {
       <section className={styles.section}>
         <h2>Icon label</h2>
         <div>
-          <StatusIndicator type="error" iconAriaLabel="Error">
+          <StatusIndicator state="fault" iconAriaLabel="Error">
             2 minutes ago
           </StatusIndicator>
         </div>
@@ -54,10 +54,10 @@ export default function StatusIndicatorPermutations() {
       <section className={styles.section}>
         <h2>Long text</h2>
         <div className={styles.narrow}>
-          <StatusIndicator type="pending">{longText}</StatusIndicator>
+          <StatusIndicator state="waiting">{longText}</StatusIndicator>
         </div>
         <div className={styles.narrow}>
-          <StatusIndicator type="pending" wrapText={false}>
+          <StatusIndicator state="waiting" wrapText={false}>
             {longText}
           </StatusIndicator>
         </div>

@@ -55,11 +55,11 @@ const services: Service[] = [
 // Each service keeps its tag, S1 to S7, however the schedule is sorted, filtered or paged.
 const serviceTag = (service: Service) => `S${services.indexOf(service) + 1}`;
 
-const statusTypes: Record<Status, StatusIndicatorProps.Type> = {
-  Running: 'success',
-  Starting: 'in-progress',
-  Stopped: 'stopped',
-  Failed: 'error',
+const statusTypes: Record<Status, StatusIndicatorProps.State> = {
+  Running: 'complete',
+  Starting: 'underway',
+  Stopped: 'halted',
+  Failed: 'fault',
 };
 
 const metrics: MeasureProps[] = [
@@ -74,7 +74,7 @@ const columnDefinitions: TableProps.ColumnDefinition<Service>[] = [
   {
     id: 'status',
     header: 'Status',
-    cell: item => <StatusIndicator type={statusTypes[item.status]}>{item.status}</StatusIndicator>,
+    cell: item => <StatusIndicator state={statusTypes[item.status]}>{item.status}</StatusIndicator>,
     sortingField: 'status',
   },
   { id: 'image', header: 'Image', cell: item => <Box variant="code">{item.image}</Box>, sortingField: 'image' },
@@ -247,7 +247,7 @@ function ServiceDetail({ service }: { service: Service }) {
         items={[
           {
             label: 'Status',
-            value: <StatusIndicator type={statusTypes[service.status]}>{service.status}</StatusIndicator>,
+            value: <StatusIndicator state={statusTypes[service.status]}>{service.status}</StatusIndicator>,
           },
           { label: 'Image', value: <Box variant="code">{service.image}</Box> },
           { label: 'Nodes', value: `${service.nodes} of 8` },

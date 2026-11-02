@@ -84,7 +84,7 @@ export function InternalProgressBar({
       ) : (
         <ResultRegion>
           <div className={styles.result}>
-            <InternalStatusIndicator type={status}>
+            <InternalStatusIndicator state={status === 'error' ? 'fault' : 'complete'}>
               <span className={styles['result-text']}>{resultText}</span>
             </InternalStatusIndicator>
             {resultButtonText && (

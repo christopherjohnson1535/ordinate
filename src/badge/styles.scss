@@ -3,57 +3,67 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
-@use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// Small mono capitals in ink, keyed by a colored square. The square carries the tone and, for the severity
+// scale, its fill: solid for critical and high, half for medium, open for low.
 .badge {
-  @include styles.font-label;
-  @include styles.border-radius(ord.$border-radius-badge);
-  display: inline-block;
-  box-sizing: border-box;
-  padding-block: 0;
-  padding-inline: ord.$space-xs;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  font-size: ord.$font-size-small;
+  @include drawing.mono-caption;
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xxs;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
   white-space: nowrap;
   vertical-align: middle;
 }
 
-.color-grey,
-.color-severity-neutral {
-  border-color: ord.$color-border-control;
-  color: ord.$color-text-body-secondary;
+.key {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  inline-size: ord.$size-key-square;
+  block-size: ord.$size-key-square;
+  border-width: ord.$border-width-default;
+  border-style: solid;
 }
 
-.color-blue {
-  border-color: ord.$color-border-status-info;
-  color: ord.$color-text-status-info;
+.tone-neutral .key {
+  border-color: ord.$color-text-status-inactive;
+  background-color: ord.$color-text-status-inactive;
 }
 
-.color-green {
-  border-color: ord.$color-border-status-success;
-  color: ord.$color-text-status-success;
+.tone-note .key {
+  border-color: ord.$color-text-status-info;
+  background-color: ord.$color-text-status-info;
 }
 
-.color-red,
-.color-severity-critical,
-.color-severity-high {
-  border-color: ord.$color-border-error;
-  color: ord.$color-text-error;
+.tone-complete .key {
+  border-color: ord.$color-text-status-success;
+  background-color: ord.$color-text-status-success;
 }
 
-.color-severity-medium,
-.color-severity-low {
-  border-color: ord.$color-border-status-warning;
-  color: ord.$color-text-status-warning;
+.tone-fault .key,
+.tone-critical .key,
+.tone-high .key {
+  border-color: ord.$color-text-error;
+  background-color: ord.$color-text-error;
 }
 
-.color-severity-critical {
-  border-width: ord.$border-width-section;
+.tone-medium .key,
+.tone-low .key {
+  border-color: ord.$color-text-status-warning;
+  background-color: transparent;
+}
+
+.tone-medium .key {
+  background-image: linear-gradient(to right, ord.$color-text-status-warning 50%, transparent 50%);
+}
+
+[dir='rtl'] .tone-medium .key {
+  background-image: linear-gradient(to left, ord.$color-text-status-warning 50%, transparent 50%);
+}
+
+.tone-critical {
   font-weight: ord.$font-weight-heading;
-}
-
-.color-severity-low {
-  border-style: dashed;
 }

@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import Steps, { StepsProps } from '../../../lib/components/steps';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
 const steps: StepsProps.Step[] = [
-  { header: 'Build image', status: 'success', statusIconAriaLabel: 'Done', details: '2 minutes' },
-  { header: 'Run tests', status: 'error', statusIconAriaLabel: 'Failed', details: <a href="#report">Report</a> },
-  { header: 'Deploy', status: 'pending', statusIconAriaLabel: 'Pending' },
+  { header: 'Build image', status: 'complete', statusIconAriaLabel: 'Done', details: '2 minutes' },
+  { header: 'Run tests', status: 'fault', statusIconAriaLabel: 'Failed', details: <a href="#report">Report</a> },
+  { header: 'Deploy', status: 'waiting', statusIconAriaLabel: 'Pending' },
 ];
 
 const wrapper = () => createWrapper().findSteps()!;
@@ -46,7 +46,7 @@ describe('Steps', () => {
   });
 
   test('a status icon without a label is decorative', () => {
-    render(<Steps steps={[{ header: 'Build', status: 'success' }]} />);
+    render(<Steps steps={[{ header: 'Build', status: 'complete' }]} />);
     expect(screen.queryByRole('img')).toBeNull();
   });
 
@@ -64,6 +64,13 @@ describe('Steps', () => {
     render(<Steps steps={steps} id="steps" data-testid="steps" />);
     expect(wrapper().getElement()).toHaveAttribute('id', 'steps');
     expect(wrapper().getElement()).toHaveAttribute('data-testid', 'steps');
+  });
+
+  test('still accepts the old status names, with a warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<Steps steps={[{ header: 'Build', status: 'success' }]} />);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('"success" is now called "complete"'));
+    warn.mockRestore();
   });
 
   test('has no accessibility violations', async () => {

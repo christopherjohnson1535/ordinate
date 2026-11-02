@@ -74,9 +74,9 @@ export default function AppLayoutSplitPanel() {
                   {
                     label: 'Status',
                     value: selected.healthy ? (
-                      <StatusIndicator type="success">Healthy</StatusIndicator>
+                      <StatusIndicator state="complete">Healthy</StatusIndicator>
                     ) : (
-                      <StatusIndicator type="warning">Failing health checks</StatusIndicator>
+                      <StatusIndicator state="caution">Failing health checks</StatusIndicator>
                     ),
                   },
                   { label: 'Zone', value: selected.zone },

@@ -180,7 +180,7 @@ export function InternalTable<T>({
 
   const bodyRows = loading
     ? messageRow(
-        <InternalStatusIndicator type="loading">{i18n('loadingText', loadingText)}</InternalStatusIndicator>,
+        <InternalStatusIndicator state="loading">{i18n('loadingText', loadingText)}</InternalStatusIndicator>,
         styles.loading
       )
     : items.length === 0

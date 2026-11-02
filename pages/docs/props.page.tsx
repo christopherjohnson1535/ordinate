@@ -82,7 +82,7 @@ function Properties({ definition }: { definition: Definition }) {
               <code className={styles.name}>{property.name}</code>
               {!property.optional && (
                 <span className={styles.required}>
-                  <Badge color="grey">required</Badge>
+                  <Badge tone="neutral">required</Badge>
                 </span>
               )}
             </td>
@@ -121,7 +121,7 @@ function Regions({ definition }: { definition: Definition }) {
               <code className={styles.name}>{region.name}</code>
               {region.isDefault && (
                 <span className={styles.required}>
-                  <Badge color="blue">default</Badge>
+                  <Badge tone="note">default</Badge>
                 </span>
               )}
             </td>
@@ -152,7 +152,7 @@ function Events({ definition }: { definition: Definition }) {
               <code className={styles.name}>{event.name}</code>
               {event.cancelable && (
                 <span className={styles.required}>
-                  <Badge color="grey">cancelable</Badge>
+                  <Badge tone="neutral">cancelable</Badge>
                 </span>
               )}
             </td>

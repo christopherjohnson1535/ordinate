@@ -308,7 +308,7 @@ export default function WizardFiveStep() {
                 {
                   label: 'Autoscaling',
                   value: (
-                    <StatusIndicator type={draft.autoscale ? 'success' : 'stopped'}>
+                    <StatusIndicator state={draft.autoscale ? 'complete' : 'halted'}>
                       {draft.autoscale ? 'On' : 'Off'}
                     </StatusIndicator>
                   ),

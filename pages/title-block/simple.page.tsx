@@ -14,7 +14,7 @@ const sheet: TitleBlockProps.Item[] = [
   { label: 'Revision', value: <Link href="#title-block/simple">△2, 31 Oct 2026</Link> },
   { label: 'Drawn', value: 'M. Okafor' },
   { label: 'Checked', value: 'D. Ruiz' },
-  { label: 'Status', value: <StatusIndicator type="success">Issued</StatusIndicator> },
+  { label: 'Status', value: <StatusIndicator state="complete">Issued</StatusIndicator> },
 ];
 
 const bakery: TitleBlockProps.Item[] = [

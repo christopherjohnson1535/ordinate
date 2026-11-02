@@ -140,7 +140,7 @@ export function InternalCards<T>({
   if (loading) {
     body = (
       <div className={styles.loading}>
-        <InternalStatusIndicator type="loading">{i18n('loadingText', loadingText)}</InternalStatusIndicator>
+        <InternalStatusIndicator state="loading">{i18n('loadingText', loadingText)}</InternalStatusIndicator>
       </div>
     );
   } else if (items.length === 0) {

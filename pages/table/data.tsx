@@ -48,11 +48,11 @@ export function makeInstances(count: number): Instance[] {
   }));
 }
 
-const stateIndicator: Record<Instance['state'], StatusIndicatorProps.Type> = {
-  running: 'success',
-  stopped: 'stopped',
-  pending: 'pending',
-  error: 'error',
+const stateIndicator: Record<Instance['state'], StatusIndicatorProps.State> = {
+  running: 'complete',
+  stopped: 'halted',
+  pending: 'waiting',
+  error: 'fault',
 };
 
 export const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
@@ -67,7 +67,7 @@ export const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
   {
     id: 'state',
     header: 'State',
-    cell: item => <StatusIndicator type={stateIndicator[item.state]}>{item.state}</StatusIndicator>,
+    cell: item => <StatusIndicator state={stateIndicator[item.state]}>{item.state}</StatusIndicator>,
     sortingField: 'state',
   },
   { id: 'type', header: 'Type', cell: item => item.type, sortingField: 'type' },

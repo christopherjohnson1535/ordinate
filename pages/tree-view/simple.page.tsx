@@ -147,7 +147,7 @@ export default function TreeViewSimple() {
               content: (
                 <span className={styles.rich}>
                   {entry.name}
-                  {entry.id === 'b1' && <Badge color="red">Alarm</Badge>}
+                  {entry.id === 'b1' && <Badge tone="fault">Alarm</Badge>}
                 </span>
               ),
               announcementLabel: entry.id === 'b1' ? `${entry.name}, alarm` : entry.name,

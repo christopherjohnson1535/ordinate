@@ -66,11 +66,11 @@ export function ChartStatus({
   const content = (() => {
     switch (kind) {
       case 'loading':
-        return <StatusIndicator type="loading">{loadingText}</StatusIndicator>;
+        return <StatusIndicator state="loading">{loadingText}</StatusIndicator>;
       case 'error':
         return (
           <span className={styles['error-content']}>
-            <StatusIndicator type="error">{errorText}</StatusIndicator>
+            <StatusIndicator state="fault">{errorText}</StatusIndicator>
             {recoveryText && (
               <Button variant="link" formAction="none" onClick={() => fireNonCancelableEvent(onRecoveryClick, null)}>
                 {recoveryText}

@@ -30,11 +30,11 @@ export const services: Service[] = [
 
 export const serviceTag = (service: Service) => `S${services.indexOf(service) + 1}`;
 
-export const statusTypes: Record<ServiceStatus, StatusIndicatorProps.Type> = {
-  Running: 'success',
-  Starting: 'in-progress',
-  Stopped: 'stopped',
-  Failed: 'error',
+export const statusTypes: Record<ServiceStatus, StatusIndicatorProps.State> = {
+  Running: 'complete',
+  Starting: 'underway',
+  Stopped: 'halted',
+  Failed: 'fault',
 };
 
 export const sheets: SideNavigationProps.Item[] = [

@@ -71,7 +71,7 @@ function AppLayoutSpecimen() {
                 items={[
                   { label: 'Region', value: 'us-mountain-1' },
                   { label: 'Nodes', value: '20 of 32' },
-                  { label: 'Status', value: <StatusIndicator type="success">Running</StatusIndicator> },
+                  { label: 'Status', value: <StatusIndicator state="complete">Running</StatusIndicator> },
                 ]}
               />
             </Container>
@@ -175,7 +175,7 @@ function SplitPanelSpecimen() {
             <KeyValuePairs
               columns={2}
               items={[
-                { label: 'Status', value: <StatusIndicator type="error">Failed</StatusIndicator> },
+                { label: 'Status', value: <StatusIndicator state="fault">Failed</StatusIndicator> },
                 { label: 'Last check', value: '14:03, connection refused' },
               ]}
             />

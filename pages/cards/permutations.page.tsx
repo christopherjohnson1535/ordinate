@@ -31,7 +31,7 @@ const nodes: Node[] = [
 ];
 
 const stateLabels = { running: 'Running', stopped: 'Stopped', pending: 'Pending' } as const;
-const stateTypes = { running: 'success', stopped: 'stopped', pending: 'pending' } as const;
+const stateTypes = { running: 'complete', stopped: 'halted', pending: 'waiting' } as const;
 
 const cardDefinition: CardsProps.CardDefinition<Node> = {
   header: item => <Link href={`#${item.id}`}>{item.name}</Link>,
@@ -41,7 +41,7 @@ const cardDefinition: CardsProps.CardDefinition<Node> = {
     {
       id: 'state',
       header: 'State',
-      content: item => <StatusIndicator type={stateTypes[item.state]}>{stateLabels[item.state]}</StatusIndicator>,
+      content: item => <StatusIndicator state={stateTypes[item.state]}>{stateLabels[item.state]}</StatusIndicator>,
     },
   ],
 };

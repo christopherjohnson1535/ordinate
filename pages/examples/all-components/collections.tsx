@@ -38,7 +38,7 @@ const columnDefinitions: TableProps.ColumnDefinition<Service>[] = [
   {
     id: 'status',
     header: 'Status',
-    cell: item => <StatusIndicator type={statusTypes[item.status]}>{item.status}</StatusIndicator>,
+    cell: item => <StatusIndicator state={statusTypes[item.status]}>{item.status}</StatusIndicator>,
     sortingField: 'status',
   },
   { id: 'image', header: 'Image', cell: item => <Box variant="code">{item.image}</Box>, sortingField: 'image' },
@@ -153,7 +153,9 @@ function CardsSpecimen() {
             id: 'status',
             header: 'Status',
             content: item => (
-              <StatusIndicator type={item.status === 'In stock' ? 'success' : 'pending'}>{item.status}</StatusIndicator>
+              <StatusIndicator state={item.status === 'In stock' ? 'complete' : 'waiting'}>
+                {item.status}
+              </StatusIndicator>
             ),
           },
         ],
@@ -222,7 +224,7 @@ function ItemCardSpecimen() {
         />
       }
     >
-      <StatusIndicator type="success">Running</StatusIndicator>
+      <StatusIndicator state="complete">Running</StatusIndicator>
     </ItemCard>
   );
 }

@@ -77,6 +77,12 @@ $line-box: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
   border-color: ord.$color-border-control;
 }
 
+// A faint construction line in graphite, as Container draws its frame.
+.line-construction .connector {
+  border-color: ord.$color-kind-neutral;
+  opacity: ord.$opacity-construction;
+}
+
 .orientation-vertical {
   display: flex;
   flex-direction: column;

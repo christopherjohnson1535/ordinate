@@ -64,7 +64,7 @@ export default function SettingsForm() {
           <Header
             variant="h1"
             description="Changes apply to new nodes. Running nodes keep their settings until they restart."
-            actions={<StatusIndicator type="success">Running</StatusIndicator>}
+            actions={<StatusIndicator state="complete">Running</StatusIndicator>}
           >
             Project settings
           </Header>
@@ -108,7 +108,7 @@ export default function SettingsForm() {
 
           <Container
             heading="Capacity"
-            measure={<Badge color="blue">Beta</Badge>}
+            measure={<Badge tone="note">Beta</Badge>}
             description="Where and how the nodes run."
           >
             <SpaceBetween size="l">
