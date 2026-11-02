@@ -76,7 +76,7 @@ export interface FileUploadProps extends BaseComponentProps, FormFieldControlPro
    * * `uploadButtonText`: text of the button. Defaults to "Choose file", or "Choose files" with `multiple`.
    * * `dropzoneText`: text shown while files are dragged over the page.
    * * `removeFileAriaLabel(fileIndex, fileName)`: accessible name of a file's remove button.
-   * * `limitShowMore`: text of the button that shows the files beyond `tokenLimit`, such as "Show 3 more".
+   * * `limitShowMore`: text of the button that shows the files beyond `tokenLimit`, such as "+3 more".
    * * `limitShowFewer`: text of the button that hides them again.
    * * `errorIconAriaLabel`: what screen readers hear for the error icons.
    * * `warningIconAriaLabel`: what screen readers hear for the warning icons.

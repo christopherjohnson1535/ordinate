@@ -197,7 +197,7 @@ describe('FileTokenGroup', () => {
     render(<FileTokenGroup items={items} limit={1} />);
     expect(group().findFileTokens()).toHaveLength(1);
     const toggle = group().findTokenToggle()!;
-    expect(toggle.getText()).toBe('Show 2 more');
+    expect(toggle.getText()).toBe('+2 more');
     expect(toggle.getElement()).toHaveAttribute('aria-expanded', 'false');
     toggle.click();
     expect(group().findFileTokens()).toHaveLength(3);

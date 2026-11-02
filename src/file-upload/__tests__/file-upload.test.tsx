@@ -124,7 +124,7 @@ describe('FileUpload', () => {
   test('limits the tokens', () => {
     render(<FileUpload value={[plan, section, elevation]} multiple={true} tokenLimit={2} />);
     expect(upload().findFileTokens()).toHaveLength(2);
-    expect(upload().findTokenToggle()!.getText()).toBe('Show 1 more');
+    expect(upload().findTokenToggle()!.getText()).toBe('+1 more');
   });
 
   test('passes the remove label and toggle texts to the tokens', () => {

@@ -21,6 +21,6 @@ test('renders on the server', () => {
   expect(html).toContain('site-plan.pdf');
   expect(html).not.toContain('section-a.png');
   expect(html).toContain('4 B');
-  expect(html).toContain('Show 1 more');
+  expect(html).toContain('+1 more');
   expect(html).toContain('aria-label="Remove file 1, site-plan.pdf"');
 });

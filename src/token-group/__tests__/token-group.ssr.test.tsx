@@ -12,6 +12,6 @@ test('renders on the server', () => {
   );
   expect(html).toContain('US East');
   expect(html).not.toContain('US West');
-  expect(html).toContain('Show 1 more');
+  expect(html).toContain('+1 more');
   expect(html).toContain('aria-label="Remove US East"');
 });

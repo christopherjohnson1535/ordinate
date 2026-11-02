@@ -182,7 +182,7 @@ const messages: I18nProviderProps.Messages = {
       'file-token-group': {
         errorIconAriaLabel: 'Error',
         limitShowFewer: 'Show fewer',
-        limitShowMore: 'Show {count} more',
+        limitShowMore: '+{count} more',
         removeFileAriaLabel: 'Remove file {fileNumber}, {fileName}',
         warningIconAriaLabel: 'Warning',
       },
@@ -246,7 +246,7 @@ const messages: I18nProviderProps.Messages = {
         selectAllText: 'Select all',
         selectedCountText: '{count, plural, one {# option selected} other {# options selected}}',
         tokenLimitShowFewer: 'Show fewer',
-        tokenLimitShowMore: 'Show {count} more',
+        tokenLimitShowMore: '+{count} more',
       },
       opening: {
         navigationAriaLabel: 'Sections',
@@ -305,7 +305,7 @@ const messages: I18nProviderProps.Messages = {
         tokenAriaLabel:
           '{hasProperty, select, true {{propertyLabel} {operator} {value}} other {{showOperator, select, true {{operator} {value}} other {{value}}}}}',
         tokenLimitShowFewer: 'Show fewer',
-        tokenLimitShowMore: 'Show {count} more',
+        tokenLimitShowMore: '+{count} more',
         tokenOperatorAriaLabel: 'Combine filters with',
         valueText: 'Value',
       },
@@ -406,7 +406,7 @@ const messages: I18nProviderProps.Messages = {
       'token-group': {
         dismissLabel: 'Remove {label}',
         limitShowFewer: 'Show fewer',
-        limitShowMore: 'Show {count} more',
+        limitShowMore: '+{count} more',
       },
       'top-navigation': {
         overflowMenuTriggerText: 'More',

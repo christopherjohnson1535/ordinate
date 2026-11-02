@@ -82,7 +82,7 @@ describe('TokenGroup', () => {
     render(<TokenGroup items={regions} limit={2} />);
     expect(group().findTokens()).toHaveLength(2);
     const toggle = group().findTokenToggle()!;
-    expect(toggle.getText()).toBe('Show 2 more');
+    expect(toggle.getText()).toBe('+2 more');
     expect(toggle.getElement()).toHaveAttribute('aria-expanded', 'false');
     toggle.click();
     expect(group().findTokens()).toHaveLength(4);

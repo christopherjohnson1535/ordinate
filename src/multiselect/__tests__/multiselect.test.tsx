@@ -226,7 +226,7 @@ describe('Multiselect tokens', () => {
     const multiselect = createWrapper().findMultiselect()!;
     expect(multiselect.findTokens()).toHaveLength(2);
     const toggle = multiselect.findTokenToggle()!;
-    expect(toggle.getText()).toBe('Show 2 more');
+    expect(toggle.getText()).toBe('+2 more');
     expect(toggle.getElement()).toHaveAttribute('aria-expanded', 'false');
     toggle.click();
     expect(multiselect.findTokens()).toHaveLength(4);

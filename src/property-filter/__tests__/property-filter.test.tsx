@@ -300,7 +300,7 @@ describe('PropertyFilter tokens', () => {
     render(<Controlled query={query} tokenLimit={2} />);
     expect(wrapper().findTokens()).toHaveLength(2);
     const toggle = wrapper().findTokenToggle()!;
-    expect(toggle.getElement()).toHaveTextContent('Show 2 more');
+    expect(toggle.getElement()).toHaveTextContent('+2 more');
     expect(toggle.getElement()).toHaveAttribute('aria-expanded', 'false');
     toggle.click();
     expect(wrapper().findTokens()).toHaveLength(4);

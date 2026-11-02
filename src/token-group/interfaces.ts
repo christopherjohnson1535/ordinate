@@ -40,7 +40,7 @@ export interface TokenGroupProps extends BaseComponentProps {
   ariaLabel?: string;
   /**
    * Text for the button that shows or hides the tokens beyond `limit`:
-   * * `limitShowMore`: shows the hidden tokens, such as "Show 3 more".
+   * * `limitShowMore`: shows the hidden tokens, such as "+3 more".
    * * `limitShowFewer`: hides them again.
    */
   i18nStrings?: TokenGroupProps.I18nStrings;

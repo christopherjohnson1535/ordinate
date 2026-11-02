@@ -51,7 +51,7 @@ export interface FileTokenGroupProps extends BaseComponentProps {
   /**
    * Texts and formats used in the tokens:
    * * `removeFileAriaLabel(fileIndex, fileName)`: accessible name of a file's remove button.
-   * * `limitShowMore`: text of the button that shows the files beyond `limit`, such as "Show 3 more".
+   * * `limitShowMore`: text of the button that shows the files beyond `limit`, such as "+3 more".
    * * `limitShowFewer`: text of the button that hides them again.
    * * `errorIconAriaLabel`: what screen readers hear for the error icon.
    * * `warningIconAriaLabel`: what screen readers hear for the warning icon.
