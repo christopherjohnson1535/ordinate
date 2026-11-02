@@ -33,6 +33,9 @@ export default class ExpandableSectionWrapper extends ComponentWrapper {
     return this.findByClassName(styles.description);
   }
 
+  /**
+   * The dimension line on the construction line that opens the section, which holds `headerCounter`.
+   */
   findHeaderCounter(): ElementWrapper | null {
     return this.findByClassName(styles.counter);
   }

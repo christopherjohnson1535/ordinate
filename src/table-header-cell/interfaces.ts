@@ -28,6 +28,11 @@ export interface TableHeaderCellProps extends BaseComponentProps {
    */
   onSortingChange?: NonCancelableEventHandler<TableHeaderCellProps.SortingChangeDetail>;
   /**
+   * What the column holds. `number` aligns the heading to the end of the cell, over figures set with a
+   * `TableBodyCell` of the same `contentType`. `text` and `identifier` keep it at the start.
+   */
+  contentType?: TableHeaderCellProps.ContentType;
+  /**
    * Width of the column, as a number of pixels or any CSS length.
    */
   width?: number | string;
@@ -97,6 +102,8 @@ export namespace TableHeaderCellProps {
   export type SortingState = 'unsorted' | 'ascending' | 'descending';
 
   export type SelectionType = 'single' | 'multi';
+
+  export type ContentType = 'text' | 'identifier' | 'number';
 
   export interface SortingChangeDetail {
     descending: boolean;

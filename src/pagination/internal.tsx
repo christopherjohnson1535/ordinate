@@ -1,13 +1,15 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React from 'react';
+import React, { useRef } from 'react';
 import clsx from 'clsx';
 
+import { InternalButton } from '../button/internal';
 import { InternalIcon } from '../icon/internal';
+import { SlidingMarker, useSlidingMarker } from '../internal/components/sliding-marker';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { PaginationProps } from './interfaces';
-import { getPageItems } from './utils';
+import { formatPageNumber, getPageItems } from './utils';
 
 import styles from './styles.css.js';
 
@@ -20,6 +22,7 @@ export function InternalPagination({
   pagesCount,
   openEnd = false,
   disabled = false,
+  showPageLabel = false,
   ariaLabels,
   onChange,
   onNextPageClick,
@@ -30,6 +33,11 @@ export function InternalPagination({
   // An empty list still shows page 1, so the control keeps its shape while data loads.
   const count = Math.max(Math.floor(pagesCount), 1);
   const current = clamp(Math.floor(currentPageIndex), 1, count);
+
+  const rowRef = useRef<HTMLDivElement>(null);
+  const currentRef = useRef<HTMLButtonElement>(null);
+  // Crop marks stand at the corners of the current page and slide to the next one, as on the open tab.
+  const marker = useSlidingMarker(rowRef, () => (currentRef.current ? [currentRef.current] : []));
 
   const pageLabel = (pageNumber: number) =>
     i18n('pageLabel', ariaLabels?.pageLabel?.(pageNumber), {
@@ -60,53 +68,56 @@ export function InternalPagination({
   };
 
   return (
-    <ul
-      {...rest}
-      className={clsx(styles.root, disabled && styles['root-disabled'])}
-      aria-label={i18n('paginationLabel', ariaLabels?.paginationLabel)}
-    >
-      <li className={styles.item}>
-        <button
-          type="button"
-          className={clsx(styles.button, styles.arrow, styles['previous-page'])}
-          aria-label={i18n('previousPageLabel', ariaLabels?.previousPageLabel)}
-          disabled={disabled || current <= 1}
-          onClick={previous}
-        >
-          <InternalIcon name="chevron-left" />
-        </button>
-      </li>
-      {getPageItems(current, count, openEnd).map(item =>
-        typeof item === 'number' ? (
-          <li key={item} className={styles.item}>
-            <button
-              type="button"
-              className={clsx(styles.button, styles['page-number'], item === current && styles['current-page'])}
-              aria-label={pageLabel(item)}
-              aria-current={item === current ? 'true' : undefined}
-              disabled={disabled}
-              onClick={() => goTo(item)}
-            >
-              {item}
-            </button>
+    <div {...rest} className={clsx(styles.root, disabled && styles['root-disabled'])}>
+      {showPageLabel && <span className={styles['page-label']}>{pageLabel(current)}</span>}
+      <div ref={rowRef} className={styles.row}>
+        <ul className={styles.list} aria-label={i18n('paginationLabel', ariaLabels?.paginationLabel)}>
+          <li className={styles.item}>
+            <InternalButton
+              className={clsx(styles.arrow, styles['previous-page'])}
+              variant="icon"
+              iconName="chevron-left"
+              formAction="none"
+              ariaLabel={i18n('previousPageLabel', ariaLabels?.previousPageLabel)}
+              disabled={disabled || current <= 1}
+              onClick={previous}
+            />
           </li>
-        ) : (
-          <li key={item} className={clsx(styles.item, styles.ellipsis)} aria-hidden="true">
-            <InternalIcon name="more" />
+          {getPageItems(current, count, openEnd).map(item =>
+            typeof item === 'number' ? (
+              <li key={item} className={styles.item}>
+                <button
+                  ref={item === current ? currentRef : undefined}
+                  type="button"
+                  className={clsx(styles.button, styles['page-number'], item === current && styles['current-page'])}
+                  aria-label={pageLabel(item)}
+                  aria-current={item === current ? 'true' : undefined}
+                  disabled={disabled}
+                  onClick={() => goTo(item)}
+                >
+                  {formatPageNumber(item, count)}
+                </button>
+              </li>
+            ) : (
+              <li key={item} className={clsx(styles.item, styles.ellipsis)} aria-hidden="true">
+                <InternalIcon name="more" />
+              </li>
+            )
+          )}
+          <li className={styles.item}>
+            <InternalButton
+              className={clsx(styles.arrow, styles['next-page'])}
+              variant="icon"
+              iconName="chevron-right"
+              formAction="none"
+              ariaLabel={i18n('nextPageLabel', ariaLabels?.nextPageLabel)}
+              disabled={disabled || (!openEnd && current >= count)}
+              onClick={next}
+            />
           </li>
-        )
-      )}
-      <li className={styles.item}>
-        <button
-          type="button"
-          className={clsx(styles.button, styles.arrow, styles['next-page'])}
-          aria-label={i18n('nextPageLabel', ariaLabels?.nextPageLabel)}
-          disabled={disabled || (!openEnd && current >= count)}
-          onClick={next}
-        >
-          <InternalIcon name="chevron-right" />
-        </button>
-      </li>
-    </ul>
+        </ul>
+        <SlidingMarker position={marker.position} placed={marker.placed} className={styles.marker} />
+      </div>
+    </div>
   );
 }

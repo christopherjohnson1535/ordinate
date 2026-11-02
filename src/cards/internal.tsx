@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { CheckboxProps } from '../checkbox/interfaces';
 import { InternalCheckbox } from '../checkbox/internal';
+import { DimensionLine } from '../internal/components/dimension-line';
 import { SheetFrame } from '../internal/components/sheet-frame';
 import { FormFieldContext } from '../internal/context/form-field-context';
 import { fireNonCancelableEvent } from '../internal/events';
@@ -13,6 +14,7 @@ import { useInternalI18n } from '../internal/i18n/context';
 import { InternalItemCard } from '../item-card/internal';
 import { InternalRadioButton } from '../radio-button/internal';
 import { InternalStatusIndicator } from '../status-indicator/internal';
+import { liftHeaderCounter } from '../table/header-counter';
 import { CardsProps } from './interfaces';
 import { defaultCardsPerRow, getCardsPerRow, getSectionWidth, getTrackKey, getVisibleSections } from './utils';
 
@@ -168,13 +170,23 @@ export function InternalCards<T>({
     );
   }
 
+  // On a sheet the count stands in the dimension line on the opening construction line, as in Container.
+  // The heading still holds it for screen readers. The full-page variant has no sheet, so its header shows it.
+  const onSheet = variant === 'container';
+  const lifted = onSheet ? liftHeaderCounter(header, styles['screenreader-only']) : { header, measure: undefined };
+
   const hasTools = Boolean(filter || pagination || preferences);
   const heading =
     header || hasTools ? (
       <div className={styles.heading}>
         {header && (
           <div id={headerId} className={styles.header}>
-            {header}
+            {lifted.header}
+          </div>
+        )}
+        {lifted.measure !== undefined && (
+          <div className={styles.measure} aria-hidden="true">
+            <DimensionLine label={lifted.measure} />
           </div>
         )}
         {hasTools && (

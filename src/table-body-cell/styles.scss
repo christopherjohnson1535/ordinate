@@ -7,7 +7,7 @@
 @use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// Figures line up in columns, as they do in a schedule.
+// A row of a schedule: hairlines between the rows and none between the columns. Figures line up in columns.
 .root {
   @include styles.font-body;
   box-sizing: border-box;
@@ -16,21 +16,24 @@
   border-block-end-width: ord.$border-width-default;
   border-block-end-style: solid;
   border-block-end-color: ord.$color-border-divider;
-  border-inline-end-width: ord.$border-width-default;
-  border-inline-end-style: solid;
-  border-inline-end-color: ord.$color-border-divider;
   color: ord.$color-text-body;
   font-variant-numeric: tabular-nums;
   text-align: start;
-
-  &:last-child {
-    border-inline-end-width: 0;
-  }
 }
 
 .rules-light {
   border-block-end-color: ord.$color-border-divider-secondary;
-  border-inline-end-color: ord.$color-border-divider-secondary;
+}
+
+// Names, codes and figures are lettered in mono, as a drafter would write them.
+.content-identifier,
+.content-number {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+}
+
+.content-number {
+  text-align: end;
 }
 
 // The outer rule belongs to whatever surrounds the table, such as a container.
@@ -97,6 +100,8 @@ tr:last-child > .root {
   inline-size: calc(#{ord.$size-control-height-small} + 2 * #{ord.$space-scaled-s});
   padding-block: ord.$space-scaled-xs;
   padding-inline: ord.$space-scaled-s;
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
   border-inline-end-color: ord.$color-border-strong;
   white-space: nowrap;
 

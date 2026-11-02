@@ -16,6 +16,8 @@ import styles from './styles.css.js';
 
 const defaultResizableMinWidth = 80;
 
+// A small solid triangle marks the sorted column. An unsorted column shows an open one, only while hovered or
+// focused, so a row of headings does not fill with marks.
 const sortingIcons: Record<TableHeaderCellProps.SortingState, IconProps.Name> = {
   unsorted: 'caret-down',
   ascending: 'caret-up-solid',
@@ -40,6 +42,7 @@ export function InternalTableHeaderCell({
   sortingState,
   sortingDisabled = false,
   onSortingChange,
+  contentType = 'text',
   width,
   minWidth,
   maxWidth,
@@ -67,6 +70,7 @@ export function InternalTableHeaderCell({
     styles[`rules-${ruleWeight}`],
     edgeInset !== 'cell' && styles[`inset-${edgeInset}`],
     selectionType && styles.selection,
+    !selectionType && !rowTagColumn && contentType === 'number' && styles['content-number'],
     className
   );
 
@@ -123,7 +127,7 @@ export function InternalTableHeaderCell({
         >
           {label}
           <span className={styles['sorting-icon']}>
-            <InternalIcon name={sortingIcons[sortingState]} />
+            <InternalIcon name={sortingIcons[sortingState]} size="small" />
           </span>
         </button>
       ) : (

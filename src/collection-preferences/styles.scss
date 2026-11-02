@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -105,6 +106,7 @@
   border-block-start-color: ord.$color-border-divider;
 }
 
+// The columns are listed like the rows of a schedule, with hairlines between them.
 .content-display-option {
   display: flex;
   align-items: center;
@@ -117,12 +119,14 @@
   background-color: ord.$color-background-container;
 }
 
+// A row being dragged is lifted off the list: a hairline ink edge with the hard offset of an object above
+// the sheet.
 .dragging {
+  @include drawing.offset-block;
   position: relative;
-  background-color: ord.$color-background-item-hover;
-  outline-width: ord.$border-width-default;
-  outline-style: solid;
-  outline-color: ord.$color-border-strong;
+  z-index: 1;
+  border-width: ord.$border-width-default;
+  border-style: solid;
 }
 
 .drag-handle {
@@ -136,12 +140,15 @@
   touch-action: none;
   user-select: none;
 
-  &:hover {
-    color: ord.$color-text-body;
-  }
-
   .dragging & {
+    color: ord.$color-text-body;
     cursor: grabbing;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .drag-handle:hover {
+    color: ord.$color-text-body;
   }
 }
 

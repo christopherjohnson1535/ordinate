@@ -30,8 +30,9 @@ export interface ExpandableSectionProps extends BaseComponentProps {
    */
   headerDescription?: React.ReactNode;
   /**
-   * Secondary text shown after the header text, such as a count of items: `(12)`. Only shown in the
-   * `container` and `stacked` variants.
+   * A count of what the section holds, such as `12`. It is drawn in the dimension line on the construction
+   * line that opens the section, as Container draws its `measure`, and brackets around it are dropped:
+   * `(12)` reads `12`. Only shown in the `container` and `stacked` variants.
    */
   headerCounter?: React.ReactNode;
   /**

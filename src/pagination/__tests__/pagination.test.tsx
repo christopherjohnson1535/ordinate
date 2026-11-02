@@ -6,7 +6,7 @@ import { describe, expect, test, vi } from 'vitest';
 
 import I18nProvider from '../../../lib/components/i18n';
 import Pagination, { PaginationProps } from '../../../lib/components/pagination';
-import { getPageItems } from '../../../lib/components/pagination/utils';
+import { formatPageNumber, getPageItems } from '../../../lib/components/pagination/utils';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
@@ -53,6 +53,15 @@ describe('getPageItems', () => {
   });
 });
 
+describe('formatPageNumber', () => {
+  test('pads page numbers to two digits under 100 pages', () => {
+    expect(formatPageNumber(3, 12)).toBe('03');
+    expect(formatPageNumber(12, 12)).toBe('12');
+    expect(formatPageNumber(3, 100)).toBe('3');
+    expect(formatPageNumber(120, 140)).toBe('120');
+  });
+});
+
 describe('Pagination', () => {
   test('renders page buttons with the current page marked', () => {
     render(<Pagination currentPageIndex={3} pagesCount={5} />);
@@ -67,7 +76,7 @@ describe('Pagination', () => {
     render(<Controlled onChangeSpy={onChangeSpy} />);
     fireEvent.click(screen.getByRole('button', { name: 'Page 4 of 10' }));
     expect(onChangeSpy).toHaveBeenCalledWith(4);
-    expect(wrapper().findCurrentPage().getText()).toBe('4');
+    expect(wrapper().findCurrentPage().getText()).toBe('04');
   });
 
   test('clicking the current page does not fire onChange', () => {
@@ -108,7 +117,7 @@ describe('Pagination', () => {
 
   test('collapses long ranges with ellipses around the current page', () => {
     render(<Pagination currentPageIndex={10} pagesCount={20} />);
-    expect(shownPages()).toEqual(['1', '9', '10', '11', '20']);
+    expect(shownPages()).toEqual(['01', '09', '10', '11', '20']);
     expect(wrapper().findEllipses()).toHaveLength(2);
   });
 
@@ -143,7 +152,7 @@ describe('Pagination', () => {
 
   test('clamps the current page into range', () => {
     render(<Pagination currentPageIndex={9} pagesCount={3} />);
-    expect(wrapper().findCurrentPage().getText()).toBe('3');
+    expect(wrapper().findCurrentPage().getText()).toBe('03');
   });
 
   test('ariaLabels replace the built-in names', () => {
@@ -184,6 +193,36 @@ describe('Pagination', () => {
     expect(screen.getByRole('button', { name: 'Seite 2' })).toBeInTheDocument();
   });
 
+  test('showPageLabel letters the current page before the numbers', () => {
+    const { rerender } = render(<Pagination currentPageIndex={3} pagesCount={12} />);
+    expect(wrapper().findPageLabel()).toBeNull();
+    rerender(<Pagination currentPageIndex={3} pagesCount={12} showPageLabel={true} />);
+    expect(wrapper().findPageLabel()!.getText()).toBe('Page 3 of 12');
+    rerender(
+      <Pagination
+        currentPageIndex={3}
+        pagesCount={12}
+        showPageLabel={true}
+        ariaLabels={{ pageLabel: page => `Sheet ${page} of 12` }}
+      />
+    );
+    expect(wrapper().findPageLabel()!.getText()).toBe('Sheet 3 of 12');
+  });
+
+  test('the arrows are icon buttons', () => {
+    render(<Pagination currentPageIndex={2} pagesCount={3} />);
+    expect(
+      createWrapper()
+        .findAllButtons()
+        .map(button => button.getElement())
+    ).toEqual(
+      expect.arrayContaining([
+        wrapper().findPreviousPageButton().getElement(),
+        wrapper().findNextPageButton().getElement(),
+      ])
+    );
+  });
+
   test('passes id and data attributes to the root', () => {
     render(<Pagination currentPageIndex={1} pagesCount={2} id="pages" data-testid="pages" />);
     expect(wrapper().getElement()).toHaveAttribute('id', 'pages');
@@ -195,7 +234,7 @@ describe('Pagination test utilities and accessibility', () => {
   test('the wrapper finds page numbers by index', () => {
     render(<Controlled currentPageIndex={1} pagesCount={5} />);
     wrapper().findPageNumberByIndex(4)!.click();
-    expect(wrapper().findCurrentPage().getText()).toBe('4');
+    expect(wrapper().findCurrentPage().getText()).toBe('04');
     expect(wrapper().findPageNumberByIndex(9)).toBeNull();
   });
 
@@ -204,6 +243,7 @@ describe('Pagination test utilities and accessibility', () => {
       <>
         <Pagination currentPageIndex={10} pagesCount={20} />
         <Pagination currentPageIndex={2} pagesCount={4} openEnd={true} ariaLabels={{ paginationLabel: 'Log pages' }} />
+        <Pagination currentPageIndex={3} pagesCount={12} showPageLabel={true} />
       </>
     );
     await expectNoAxeViolations(container);

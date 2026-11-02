@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 
-import Box from '~components/box';
 import Link from '~components/link';
 import StatusIndicator, { StatusIndicatorProps } from '~components/status-indicator';
 import { TableProps } from '~components/table';
@@ -63,22 +62,29 @@ export const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
     sortingField: 'name',
     isRowHeader: true,
   },
-  { id: 'id', header: 'Instance ID', cell: item => <Box variant="code">{item.id}</Box>, sortingField: 'id' },
+  { id: 'id', header: 'Instance ID', cell: item => item.id, sortingField: 'id', contentType: 'identifier' },
   {
     id: 'state',
     header: 'State',
     cell: item => <StatusIndicator state={stateIndicator[item.state]}>{item.state}</StatusIndicator>,
     sortingField: 'state',
   },
-  { id: 'type', header: 'Type', cell: item => item.type, sortingField: 'type' },
+  { id: 'type', header: 'Type', cell: item => item.type, sortingField: 'type', contentType: 'identifier' },
   { id: 'zone', header: 'Availability zone', cell: item => item.zone },
   {
     id: 'cpu',
     header: 'CPU (%)',
-    cell: item => <Box variant="code">{item.cpu.toFixed(1)}</Box>,
+    cell: item => item.cpu.toFixed(1),
     sortingComparator: (a, b) => a.cpu - b.cpu,
+    contentType: 'number',
   },
-  { id: 'launched', header: 'Launched', cell: item => item.launched, sortingField: 'launched' },
+  {
+    id: 'launched',
+    header: 'Launched',
+    cell: item => item.launched,
+    sortingField: 'launched',
+    contentType: 'number',
+  },
 ];
 
 export const notesColumn: TableProps.ColumnDefinition<Instance> = {

@@ -78,9 +78,17 @@
   overflow-wrap: break-word;
 }
 
+.screenreader-only {
+  @include styles.screenreader-only;
+}
+
+// The count lies on the construction line that opens the section.
 .counter {
-  font-weight: ord.$font-weight-body;
-  color: ord.$color-text-secondary;
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  transform: translateY(-50%);
+  color: ord.$color-kind-neutral;
 }
 
 .info {

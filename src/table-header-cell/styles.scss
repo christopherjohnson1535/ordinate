@@ -7,40 +7,43 @@
 @use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// The header row of a schedule: column labels in small mono capitals over a heavy ink rule, the
-// strongest line in the table, with thin upright rules between the columns.
+// The header row of a schedule: column labels in small mono capitals in a secondary ink, over the head
+// rule, the strongest line in the table. Columns are not ruled; space keeps them apart.
 .root {
   @include drawing.mono-caption;
   position: relative;
   box-sizing: border-box;
   padding-block: ord.$space-scaled-s ord.$space-scaled-xs;
   padding-inline: ord.$space-scaled-m;
-  border-block-end-width: ord.$border-width-section;
+  border-block-end-width: ord.$border-width-head-rule;
   border-block-end-style: solid;
   border-block-end-color: ord.$color-border-strong;
-  border-inline-end-width: ord.$border-width-default;
-  border-inline-end-style: solid;
-  border-inline-end-color: ord.$color-border-divider;
   background-color: ord.$color-background-container;
-  color: ord.$color-text-body;
+  color: ord.$color-text-secondary;
   text-align: start;
   vertical-align: bottom;
-
-  &:last-child {
-    border-inline-end-width: 0;
-  }
 }
 
-// A table set inside another sheet keeps its rules thin.
+// A table set inside another sheet keeps its head rule thin.
 .rules-light {
   border-block-end-width: ord.$border-width-default;
-  border-inline-end-color: ord.$color-border-divider-secondary;
+}
+
+.content-number {
+  text-align: end;
+
+  .heading,
+  .sorting-button {
+    justify-content: flex-end;
+  }
 }
 
 // The tag column is ruled off from the data in ink, like the reference column of a schedule.
 .row-tag-column {
   inline-size: calc(#{ord.$size-control-height-small} + 2 * #{ord.$space-scaled-s});
   padding-inline: ord.$space-scaled-s;
+  border-inline-end-width: ord.$border-width-default;
+  border-inline-end-style: solid;
   border-inline-end-color: ord.$color-border-strong;
   white-space: nowrap;
 
@@ -96,17 +99,29 @@
   text-transform: inherit;
   cursor: pointer;
 
+  @include styles.with-motion {
+    transition-property: color;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
   &:focus-visible {
     @include styles.focus-ring;
   }
 
-  &:hover:enabled .label {
-    text-decoration-line: underline;
-    text-underline-offset: ord.$border-focus-ring-offset;
-  }
-
   &:disabled {
     cursor: default;
+  }
+}
+
+// The sorted column's caption turns ink, and so does a sortable caption under the pointer.
+.sorted {
+  color: ord.$color-text-body;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sorting-button:hover:enabled {
+    color: ord.$color-text-body;
   }
 }
 
@@ -115,11 +130,22 @@
   flex: 0 0 auto;
   // Keeps the icon on the last line of a wrapped heading, centered on its text.
   padding-block-end: ord.$space-xxxs;
-  color: ord.$color-text-secondary;
+  color: currentColor;
 }
 
-.sorted .sorting-icon {
-  color: ord.$color-text-body;
+// An unsorted column shows its mark only while it is hovered or focused, so the sorted one stands out.
+.sorting-button:not(.sorted) .sorting-icon {
+  visibility: hidden;
+}
+
+.sorting-button:not(.sorted):focus-visible .sorting-icon {
+  visibility: visible;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sorting-button:not(.sorted):hover:enabled .sorting-icon {
+    visibility: visible;
+  }
 }
 
 .sorting-button:disabled .sorting-icon {
@@ -148,20 +174,12 @@
     inset-inline-end: 0;
     border-inline-end-width: ord.$border-width-default;
     border-inline-end-style: solid;
-    border-inline-end-color: transparent;
-  }
-
-  // Between columns the column rule already marks the handle; the last column has no rule of its own.
-  .root:last-child > &::after {
     border-inline-end-color: ord.$color-border-divider;
   }
 
   &:hover::after,
   &:focus-visible::after,
-  &.resizer-active::after,
-  .root:last-child > &:hover::after,
-  .root:last-child > &:focus-visible::after,
-  .root:last-child > &.resizer-active::after {
+  &.resizer-active::after {
     inset-block: 0;
     border-inline-end-width: ord.$border-width-section;
     border-inline-end-color: ord.$color-border-strong;

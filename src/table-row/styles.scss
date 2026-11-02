@@ -4,7 +4,6 @@
 */
 
 @use '../internal/styles' as styles;
-@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 .root {
@@ -23,14 +22,22 @@
   background-color: ord.$color-background-row-striped;
 }
 
-.item:hover {
-  background-color: ord.$color-background-item-hover;
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    background-color: ord.$color-background-item-hover;
+  }
 }
 
-// The selected row is drawn in solid ink, as a schedule marks the item a detail refers to.
+// A row picked for an action is raised, with its checked key and a rule on its leading edge. The rule is
+// drawn on the first cell, since a row cannot hold a mark of its own.
 .selected,
+.selected:nth-child(even),
 .selected:hover {
-  @include drawing.on-ink;
+  background-color: ord.$color-background-item-selected;
+}
+
+.selected > :first-child {
+  @include styles.leading-mark(ord.$color-border-strong);
 }
 
 .message {

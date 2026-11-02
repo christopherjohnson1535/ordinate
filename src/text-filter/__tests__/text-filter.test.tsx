@@ -99,6 +99,13 @@ describe('TextFilter', () => {
     expect(wrapper.findResultsCount()!.getText()).toBe('3 matches');
   });
 
+  test('sets the count inside the field, before the clear button', () => {
+    render(<TextFilter filteringText="web" countText="3 matches" />);
+    const wrapper = createWrapper().findTextFilter()!;
+    const field = wrapper.findNativeInput().getElement().parentElement!.parentElement!;
+    expect(field.parentElement).toContainElement(wrapper.findResultsCount()!.getElement());
+  });
+
   test('announces count changes', () => {
     const { rerender, container } = render(<TextFilter filteringText="web" countText="3 matches" />);
     rerender(<TextFilter filteringText="we" countText="7 matches" />);

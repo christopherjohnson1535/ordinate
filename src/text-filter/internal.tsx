@@ -1,11 +1,12 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useImperativeHandle, useRef } from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 
 import { InputProps } from '../input/interfaces';
 import { InternalInput } from '../input/internal';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useDebounceCallback } from '../internal/hooks/use-debounce-callback';
+import { useResizeObserver } from '../internal/hooks/use-resize-observer';
 import { useInternalI18n } from '../internal/i18n/context';
 import { InternalLiveRegion } from '../live-region/internal';
 import { TextFilterProps } from './interfaces';
@@ -48,10 +49,16 @@ export const InternalTextFilter = React.forwardRef(
 
     const showCount = Boolean(countText) && filteringText !== '' && !disabled;
 
+    // The count is lettered inside the field, before the clear button, so the typed text stops short of it.
+    const countRef = useRef<HTMLSpanElement>(null);
+    const [countSize, setCountSize] = useState(0);
+    useResizeObserver(countRef, () => setCountSize(countRef.current?.offsetWidth ?? 0));
+
     return (
       <div {...rest} className={styles.root}>
         <div className={styles.input}>
           <InternalInput
+            nativeInputAttributes={showCount && countSize > 0 ? { style: { paddingInlineEnd: countSize } } : undefined}
             ref={inputRef}
             type="search"
             value={filteringText}
@@ -63,10 +70,12 @@ export const InternalTextFilter = React.forwardRef(
             autoComplete={false}
             disableBrowserAutocorrect={true}
           />
+          <InternalLiveRegion tagName="span" hidden={!showCount}>
+            <span ref={countRef} className={styles.count}>
+              {showCount ? countText : ''}
+            </span>
+          </InternalLiveRegion>
         </div>
-        <InternalLiveRegion tagName="span" hidden={!showCount}>
-          <span className={styles.count}>{showCount ? countText : ''}</span>
-        </InternalLiveRegion>
       </div>
     );
   }
