@@ -4,7 +4,6 @@ import React, { useId, useRef } from 'react';
 import clsx from 'clsx';
 
 import { Annotation } from '../annotation-context/annotation';
-import { InternalIcon } from '../icon/internal';
 import { AnnotationContextValue, TutorialStep, useAnnotationContext } from '../internal/context/annotation-context';
 import { useInternalI18n } from '../internal/i18n/context';
 import { HotspotProps } from './interfaces';
@@ -52,6 +51,8 @@ export function InternalHotspot({ hotspotId, children, side = 'right', direction
     markerRef.current?.focus();
   };
 
+  // The marker is a circled number, as a drawing numbers the places a note refers to. The number is the
+  // step's place in its task; the label reads it in words.
   const marker = ownStep && context && (
     <span className={styles['marker-slot']}>
       <button
@@ -72,12 +73,7 @@ export function InternalHotspot({ hotspotId, children, side = 'right', direction
         aria-controls={open ? annotationId : undefined}
         onClick={onMarkerClick}
       >
-        {isCurrent && (
-          <span className={styles.pulse}>
-            <InternalIcon name="queued" />
-          </span>
-        )}
-        <InternalIcon name={isCurrent ? 'hotspot' : 'queued'} />
+        {ownStep.indexInTask + 1}
       </button>
       {open && (
         <Annotation

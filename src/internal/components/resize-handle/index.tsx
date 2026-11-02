@@ -3,7 +3,6 @@
 import React, { useRef } from 'react';
 import clsx from 'clsx';
 
-import { InternalIcon } from '../../../icon/internal';
 import { getIsRtl, getLogicalArrowStep } from '../../direction';
 
 import styles from './styles.css.js';
@@ -60,7 +59,8 @@ function getKeyboardDelta(event: React.KeyboardEvent<HTMLElement>, edge: ResizeE
 
 /**
  * A separator on the edge of a panel that resizes it with a pointer drag or the arrow keys.
- * Home and End jump to the smallest and largest size.
+ * Home and End jump to the smallest and largest size. It is drawn as a grip of three short ticks
+ * across the panel's edge.
  */
 export function ResizeHandle({
   edge,
@@ -145,7 +145,11 @@ export function ResizeHandle({
       onPointerCancel={endDrag}
       onKeyDown={handleKeyDown}
     >
-      <InternalIcon className={styles.grip} name="drag-handle" size="small" />
+      <span className={styles.grip} aria-hidden="true">
+        <span className={styles.tick} />
+        <span className={styles.tick} />
+        <span className={styles.tick} />
+      </span>
     </div>
   );
 }

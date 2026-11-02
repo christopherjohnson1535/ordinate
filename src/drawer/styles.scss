@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 // Fills the drawer's scroll area, so the footer can stick to the bottom of a short drawer too.
@@ -16,24 +17,56 @@
   color: ord.$color-text-body;
 }
 
+// A sheet pulled in from the edge of the page. Its title carries a reference in the kind's color.
 // The end padding leaves room for the close button that the app layout places in the corner.
+.header-block {
+  display: flex;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+  padding-block: ord.$space-scaled-m ord.$space-xs;
+  padding-inline: ord.$space-scaled-l ord.$space-xxl;
+}
+
+.reference {
+  @include drawing.font-caption;
+  font-size: ord.$font-size-small;
+}
+
+.kind-configuration .reference {
+  color: ord.$color-kind-configuration;
+}
+
+.kind-resource .reference {
+  color: ord.$color-kind-resource;
+}
+
+.kind-policy .reference {
+  color: ord.$color-kind-policy;
+}
+
+.kind-neutral .reference {
+  color: ord.$color-kind-neutral;
+}
+
 .header {
   @include styles.font-heading;
   margin-block: 0;
   margin-inline: 0;
-  padding-block: ord.$space-scaled-m;
-  padding-inline: ord.$space-scaled-l ord.$space-xxl;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
   font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-label;
   overflow-wrap: break-word;
 }
 
 .content {
   flex-grow: 1;
-  padding-block: ord.$space-scaled-m;
+  padding-block: ord.$space-xs ord.$space-scaled-m;
   padding-inline: ord.$space-scaled-l;
+}
+
+// Without a header, the content keeps the full top padding.
+.content:first-child:not(.no-paddings),
+.loading:first-child {
+  padding-block-start: ord.$space-scaled-m;
 }
 
 .no-paddings {
@@ -44,7 +77,7 @@
 .loading {
   flex-grow: 1;
   align-items: flex-start;
-  padding-block: ord.$space-scaled-m;
+  padding-block: ord.$space-xs ord.$space-scaled-m;
   padding-inline: ord.$space-scaled-l;
 }
 

@@ -10,6 +10,8 @@ import { DrawerProps } from './interfaces';
 import styles from './styles.css.js';
 
 export function InternalDrawer({
+  kind = 'neutral',
+  reference,
   header,
   children,
   footer,
@@ -21,8 +23,13 @@ export function InternalDrawer({
   const i18n = useInternalI18n('drawer');
 
   return (
-    <div {...rest} className={styles.root} aria-busy={loading ? 'true' : undefined}>
-      {header && <h2 className={styles.header}>{header}</h2>}
+    <div {...rest} className={clsx(styles.root, styles[`kind-${kind}`])} aria-busy={loading ? 'true' : undefined}>
+      {(header || reference) && (
+        <div className={styles['header-block']}>
+          {reference && <span className={styles.reference}>{reference}</span>}
+          {header && <h2 className={styles.header}>{header}</h2>}
+        </div>
+      )}
       {loading ? (
         <LoadingStatus className={styles.loading} text={i18n('loadingText', loadingText)} />
       ) : (

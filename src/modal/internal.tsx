@@ -4,6 +4,7 @@ import React, { useEffect, useId, useRef } from 'react';
 import clsx from 'clsx';
 
 import { InternalButton } from '../button/internal';
+import { RuleEndMarks } from '../internal/components/construction';
 import { fireNonCancelableEvent } from '../internal/events';
 import { useInternalI18n } from '../internal/i18n/context';
 import { ModalProps } from './interfaces';
@@ -13,6 +14,8 @@ import styles from './styles.css.js';
 const bodyOpenClassName = 'ord-modal-open';
 
 export function InternalModal({
+  kind = 'neutral',
+  reference,
   visible,
   onDismiss,
   header,
@@ -56,7 +59,7 @@ export function InternalModal({
     <dialog
       {...rest}
       ref={dialogRef}
-      className={clsx(styles.dialog, styles[`size-${size}`], styles[`position-${position}`])}
+      className={clsx(styles.dialog, styles[`kind-${kind}`], styles[`size-${size}`], styles[`position-${position}`])}
       aria-labelledby={header ? headingId : undefined}
       onCancel={event => {
         event.preventDefault();
@@ -69,13 +72,16 @@ export function InternalModal({
       }}
     >
       <div className={styles.container}>
-        {(header || !hideDismissButton) && (
+        {(header || reference || !hideDismissButton) && (
           <div className={clsx(styles.header, hideDismissButton && styles['header-without-dismiss'])}>
-            {header && (
-              <h2 id={headingId} className={styles.heading}>
-                {header}
-              </h2>
-            )}
+            <div className={styles.title}>
+              {reference && <span className={styles.reference}>{reference}</span>}
+              {header && (
+                <h2 id={headingId} className={styles.heading}>
+                  {header}
+                </h2>
+              )}
+            </div>
             {!hideDismissButton && (
               <InternalButton
                 className={styles['close-button']}
@@ -89,7 +95,12 @@ export function InternalModal({
           </div>
         )}
         <div className={clsx(styles.content, disableContentPaddings && styles['no-paddings'])}>{children}</div>
-        {footer && <div className={styles.footer}>{footer}</div>}
+        {footer && (
+          <div className={styles.footer}>
+            <RuleEndMarks kind={kind} />
+            {footer}
+          </div>
+        )}
       </div>
     </dialog>
   );

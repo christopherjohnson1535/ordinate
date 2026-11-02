@@ -118,6 +118,16 @@ describe('Tooltip', () => {
     expect(getTrigger()).toHaveAccessibleDescription('Shortcut C Copy the node ID');
   });
 
+  test('stands on a stem without a dot, hidden from screen readers', () => {
+    renderTooltip();
+    act(() => getTrigger().focus());
+    const tooltip = createWrapper().findTooltip()!;
+    expect(tooltip.findContent().getText()).toBe('Copy the node ID');
+    const stem = tooltip.findStem()!.getElement();
+    expect(stem).toHaveAttribute('aria-hidden', 'true');
+    expect(stem).toBeEmptyDOMElement();
+  });
+
   test('passes id and data attributes to the root', () => {
     render(
       <Tooltip content="Copy" id="copy-tip" {...{ 'data-testid': 'tip' }}>

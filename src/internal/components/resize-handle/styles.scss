@@ -6,7 +6,8 @@
 @use '../../styles' as styles;
 @use '../../styles/tokens' as ord;
 
-// The handle straddles the panel edge, so the hit area is wider than the rule it draws.
+// The handle straddles the panel edge, so the hit area is wider than the rule it draws. While it is under
+// the pointer or has focus, the edge thickens to show what will move.
 .handle {
   position: absolute;
   z-index: 1;
@@ -58,8 +59,14 @@
     block-size: ord.$border-width-section;
   }
 
+  // Across a horizontal edge the ticks stand upright, side by side.
   .grip {
-    transform: rotate(90deg);
+    flex-direction: row;
+  }
+
+  .tick {
+    inline-size: ord.$border-width-default;
+    block-size: ord.$size-hash-mark;
   }
 }
 
@@ -82,11 +89,27 @@
     inset-inline-start: calc(50% - #{ord.$border-width-section} / 2);
     inline-size: ord.$border-width-section;
   }
+
+  .tick {
+    inline-size: ord.$size-hash-mark;
+    block-size: ord.$border-width-default;
+  }
 }
 
+// Three short ticks laid across the edge.
 .grip {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ord.$space-xxxs;
   padding-block: ord.$space-xxxs;
   padding-inline: ord.$space-xxxs;
-  background-color: ord.$color-background-container;
+}
+
+.tick {
+  display: block;
+  flex-shrink: 0;
+  background-color: currentColor;
 }

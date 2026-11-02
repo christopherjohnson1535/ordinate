@@ -4,124 +4,140 @@
 */
 
 @use '../../styles' as styles;
+@use '../../styles/drawing';
 @use '../../styles/layers';
 @use '../../styles/tokens' as ord;
 
-// The arrow is a triangle cut from a box. Its inner copy is inset by the border width
-// measured across a 45 degree edge, so the outline keeps the panel's line weight.
-$arrow-depth: ord.$space-xs;
-$arrow-breadth: calc(2 * #{ord.$space-xs});
-$inset: calc(#{ord.$border-width-default} * 1.414);
+// The dot a leader starts from, at the trigger's edge.
+$dot: calc(#{ord.$space-xxs} + #{ord.$border-width-default});
 
 .panel {
-  @include styles.border-radius(ord.$border-radius-dropdown);
   position: fixed;
   z-index: layers.$overlay;
   display: block;
   box-sizing: border-box;
-  border-width: ord.$border-width-default;
-  border-style: solid;
   white-space: normal;
   text-align: start;
 
   &[hidden] {
     display: none;
   }
+}
+
+// A plate lifted off the sheet, which rises onto its offset as it opens.
+.variant-sheet {
+  @include drawing.plate;
+  // The leader's length sets how far the plate stands off the trigger.
+  --leader-length: #{ord.$space-l};
+  --leader-breadth: #{$dot};
+  color: ord.$color-text-body;
 
   @include styles.with-motion {
-    animation-name: panel-enter;
+    animation-name: plate-enter;
+    animation-duration: ord.$motion-duration-expressive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
+
+  > .leader {
+    color: ord.$color-border-strong;
+  }
+}
+
+// An ink chip on a short stem.
+.variant-inverse {
+  @include drawing.on-ink;
+  @include styles.border-radius(ord.$border-radius-badge);
+  --leader-length: #{ord.$space-xs};
+  --leader-breadth: #{ord.$border-width-default};
+
+  @include styles.with-motion {
+    animation-name: chip-enter;
     animation-duration: ord.$motion-duration-responsive;
     animation-timing-function: ord.$motion-easing-standard;
   }
-}
 
-.variant-sheet {
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
-  color: ord.$color-text-body;
-
-  > .arrow {
-    background-color: ord.$color-border-strong;
-
-    &::after {
-      background-color: ord.$color-background-container;
-    }
+  > .leader {
+    color: ord.$color-background-ink;
   }
 }
 
-.variant-inverse {
-  border-color: ord.$color-background-tooltip;
-  background-color: ord.$color-background-tooltip;
-  color: ord.$color-text-tooltip;
-
-  > .arrow,
-  > .arrow::after {
-    background-color: ord.$color-background-tooltip;
-  }
-}
-
-// Top and left come from the positioning hook in screen coordinates, so only sizes and
-// shapes are set here. Clip paths are in screen coordinates too, so they need no mirroring.
-.arrow {
+// Top and left come from the positioning hook in screen coordinates, so the leader is laid out
+// left to right whatever the reading direction, and its sides here are physical too. It is drawing
+// only and never holds text.
+.leader {
   position: absolute;
   display: block;
+  direction: ltr;
   pointer-events: none;
 
-  &::after {
+  &::before {
     content: '';
     position: absolute;
+    background-color: currentColor;
+  }
+}
+
+.leader-top,
+.leader-bottom {
+  inline-size: var(--leader-breadth);
+  block-size: var(--leader-length);
+
+  &::before {
     inset-block: 0;
+    inset-inline-start: calc(50% - #{ord.$border-width-default} / 2);
+    inline-size: ord.$border-width-default;
+  }
+}
+
+.leader-left,
+.leader-right {
+  inline-size: var(--leader-length);
+  block-size: var(--leader-breadth);
+
+  &::before {
     inset-inline: 0;
+    inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+    block-size: ord.$border-width-default;
   }
 }
 
-.arrow-top,
-.arrow-bottom {
-  inline-size: $arrow-breadth;
-  block-size: $arrow-depth;
+.dot {
+  @include styles.border-radius(ord.$border-radius-radio);
+  position: absolute;
+  inline-size: $dot;
+  block-size: $dot;
+  background-color: currentColor;
 }
 
-.arrow-left,
-.arrow-right {
-  inline-size: $arrow-depth;
-  block-size: $arrow-breadth;
+// The dot sits at the end nearest the trigger: below a plate placed above it, and so on.
+.leader-top > .dot {
+  inset-block-end: 0;
+  inset-inline-start: 0;
 }
 
-// The panel is above the trigger, so the arrow hangs from its bottom edge and points down.
-.arrow-top {
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+.leader-bottom > .dot {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
 
-  &::after {
-    clip-path: polygon(#{$inset} 0, calc(100% - #{$inset}) 0, 50% calc(100% - #{$inset}));
+.leader-left > .dot {
+  inset-block-start: 0;
+  inset-inline-end: 0;
+}
+
+.leader-right > .dot {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+@keyframes plate-enter {
+  from {
+    opacity: 0;
+    transform: translateY(ord.$size-offset-plate);
   }
 }
 
-.arrow-bottom {
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-
-  &::after {
-    clip-path: polygon(50% #{$inset}, calc(100% - #{$inset}) 100%, #{$inset} 100%);
-  }
-}
-
-// The panel is on the trigger's right in screen terms, so the arrow points left.
-.arrow-right {
-  clip-path: polygon(0 50%, 100% 0, 100% 100%);
-
-  &::after {
-    clip-path: polygon(#{$inset} 50%, 100% #{$inset}, 100% calc(100% - #{$inset}));
-  }
-}
-
-.arrow-left {
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-
-  &::after {
-    clip-path: polygon(0 #{$inset}, calc(100% - #{$inset}) 50%, 0 calc(100% - #{$inset}));
-  }
-}
-
-@keyframes panel-enter {
+@keyframes chip-enter {
   from {
     opacity: 0;
   }

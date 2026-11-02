@@ -4,20 +4,17 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
-// Drawn like the modal's plate, but placed in the page flow instead of over it.
+// The modal's plate, placed in the page flow instead of over it. It fades in and rises onto its offset.
 .dialog {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-modal);
+  @include drawing.plate;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   min-inline-size: 0;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
   color: ord.$color-text-body;
   outline-style: none;
 
@@ -27,30 +24,29 @@
 
   @include styles.with-motion {
     animation-name: dialog-enter;
-    animation-duration: ord.$motion-duration-responsive;
+    animation-duration: ord.$motion-duration-expressive;
     animation-timing-function: ord.$motion-easing-standard;
   }
 }
 
 .header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: ord.$space-m;
   min-block-size: ord.$size-control-height;
-  padding-block: ord.$space-scaled-xs;
+  padding-block: ord.$space-scaled-s 0;
   padding-inline: ord.$space-scaled-l ord.$space-scaled-xs;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
 }
 
 .heading {
   @include styles.font-heading;
   flex: 1 1 auto;
+  align-self: center;
   min-inline-size: 0;
   margin-block: 0;
   margin-inline: 0;
   font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-label;
   overflow-wrap: anywhere;
 }
 
@@ -79,13 +75,15 @@
   }
 }
 
+// The actions stand on a rule closed by hash marks, inset from the plate's edges so the marks show.
 .footer {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: ord.$space-xs;
+  margin-inline: ord.$space-scaled-l;
   padding-block: ord.$space-scaled-s;
-  padding-inline: ord.$space-scaled-l;
   border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-divider;
@@ -94,5 +92,6 @@
 @keyframes dialog-enter {
   from {
     opacity: 0;
+    transform: translateY(ord.$size-offset-plate);
   }
 }

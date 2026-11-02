@@ -4,41 +4,67 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
+// A plate laid over a light paper veil. It fades in and rises onto its offset, and leaves faster than it
+// came. The closed state is styled too, so the dialog can fade out before the browser hides it.
 .dialog {
   @include styles.font-body;
-  @include styles.border-radius(ord.$border-radius-modal);
+  @include drawing.plate;
   box-sizing: border-box;
   inline-size: ord.$size-modal-medium;
   max-inline-size: calc(100vw - 2 * #{ord.$space-l});
   max-block-size: calc(100vh - 2 * #{ord.$space-xl});
   padding-block: 0;
   padding-inline: 0;
-  border-width: ord.$border-width-default;
-  border-style: solid;
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
   color: ord.$color-text-body;
 
   &::backdrop {
     background-color: ord.$color-background-overlay;
   }
 
-  &[open] {
-    @include styles.with-motion {
-      animation-name: modal-enter;
-      animation-duration: ord.$motion-duration-expressive;
-      animation-timing-function: ord.$motion-easing-standard;
+  @include styles.with-motion {
+    opacity: 0;
+    transform: translateY(ord.$size-offset-plate);
+    transition-property: opacity, transform, overlay, display;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+    transition-behavior: allow-discrete;
+
+    &::backdrop {
+      opacity: 0;
+      transition-property: opacity, overlay, display;
+      transition-duration: ord.$motion-duration-responsive;
+      transition-timing-function: ord.$motion-easing-standard;
+      transition-behavior: allow-discrete;
+    }
+
+    &[open] {
+      opacity: 1;
+      transform: none;
+      transition-duration: ord.$motion-duration-expressive;
+    }
+
+    &[open]::backdrop {
+      opacity: 1;
+      transition-duration: ord.$motion-duration-expressive;
+    }
+
+    @starting-style {
+      &[open] {
+        opacity: 0;
+        transform: translateY(ord.$size-offset-plate);
+      }
+
+      &[open]::backdrop {
+        opacity: 0;
+      }
     }
   }
 
-  &[open]::backdrop {
-    @include styles.with-motion {
-      animation-name: backdrop-enter;
-      animation-duration: ord.$motion-duration-expressive;
-      animation-timing-function: ord.$motion-easing-standard;
-    }
+  :global(.ord-motion-disabled) &::backdrop {
+    transition: none;
   }
 }
 
@@ -66,20 +92,46 @@
   max-block-size: inherit;
 }
 
+.kind-configuration .reference {
+  color: ord.$color-kind-configuration;
+}
+
+.kind-resource .reference {
+  color: ord.$color-kind-resource;
+}
+
+.kind-policy .reference {
+  color: ord.$color-kind-policy;
+}
+
+.kind-neutral .reference {
+  color: ord.$color-kind-neutral;
+}
+
 .header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: ord.$space-m;
   min-block-size: ord.$size-control-height;
-  padding-block: ord.$space-s;
+  padding-block: ord.$space-m ord.$space-xs;
   padding-inline: ord.$space-l ord.$space-s;
-  border-block-end-width: ord.$border-width-default;
-  border-block-end-style: solid;
-  border-block-end-color: ord.$color-border-divider;
 }
 
 .header-without-dismiss {
   padding-inline-end: ord.$space-l;
+}
+
+.title {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: ord.$space-xxxs;
+  min-inline-size: 0;
+}
+
+.reference {
+  @include drawing.font-caption;
+  font-size: ord.$font-size-small;
 }
 
 .heading {
@@ -87,16 +139,24 @@
   margin-block: 0;
   margin-inline: 0;
   font-size: ord.$font-size-heading-m;
+  font-weight: ord.$font-weight-label;
+  overflow-wrap: anywhere;
 }
 
 .close-button {
+  flex-shrink: 0;
   margin-inline-start: auto;
 }
 
 .content {
-  padding-block: ord.$space-l;
+  padding-block: ord.$space-xs ord.$space-l;
   padding-inline: ord.$space-l;
   overflow: auto;
+}
+
+// Without a header row, the content keeps the plate's full top padding.
+.content:first-child {
+  padding-block-start: ord.$space-l;
 }
 
 .no-paddings {
@@ -104,12 +164,15 @@
   padding-inline: 0;
 }
 
+// The actions stand on a rule closed by hash marks, inset from the plate's edges so the marks show.
 .footer {
+  position: relative;
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: ord.$space-xs;
+  margin-inline: ord.$space-l;
   padding-block: ord.$space-m;
-  padding-inline: ord.$space-l;
   border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-divider;
@@ -117,17 +180,4 @@
 
 :global(.ord-modal-open) {
   overflow: hidden;
-}
-
-@keyframes modal-enter {
-  from {
-    opacity: 0;
-    transform: translateY(ord.$space-xxs);
-  }
-}
-
-@keyframes backdrop-enter {
-  from {
-    opacity: 0;
-  }
 }

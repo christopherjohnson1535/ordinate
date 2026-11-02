@@ -3,6 +3,7 @@
 import ButtonWrapper from '../button';
 import { ComponentWrapper, ElementWrapper } from '../core';
 
+import floatingPanelStyles from '../../../internal/components/floating-panel/styles.css.js';
 import styles from '../../../popover/styles.css.js';
 
 export default class PopoverWrapper extends ComponentWrapper {
@@ -42,6 +43,14 @@ export default class PopoverWrapper extends ComponentWrapper {
    */
   findDismissButton(): ButtonWrapper | null {
     return this.findBody()?.findByClassName(styles.dismiss)?.findComponent(ButtonWrapper) ?? null;
+  }
+
+  /**
+   * The leader that ties the open popover to its trigger: a dot at the trigger and a line to the plate.
+   * It is drawing only and hidden from screen readers.
+   */
+  findLeader(): ElementWrapper | null {
+    return this.findBody()?.findByClassName(floatingPanelStyles.leader) ?? null;
   }
 
   isOpen(): boolean {

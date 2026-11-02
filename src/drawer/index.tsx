@@ -10,6 +10,8 @@ import { InternalDrawer } from './internal';
 export type { DrawerProps };
 
 export default function Drawer({
+  kind = 'neutral',
+  reference,
   header,
   children,
   footer,
@@ -21,6 +23,8 @@ export default function Drawer({
   return (
     <InternalDrawer
       {...getBaseProps(props)}
+      kind={kind}
+      reference={reference}
       header={header}
       footer={footer}
       loading={loading}

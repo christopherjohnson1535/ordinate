@@ -9,6 +9,13 @@ import { HelpPanelProps } from './interfaces';
 
 import styles from './styles.css.js';
 
+// Used until the built-in English messages carry `help-panel.captionText`.
+const defaultCaption = 'Help';
+
+/**
+ * Help drawn as a margin note: a faint construction line down the start edge, a mono caption above the
+ * title, and the help text beside the line.
+ */
 export function InternalHelpPanel({ header, children, footer, loading = false, loadingText, ...rest }: HelpPanelProps) {
   const i18n = useInternalI18n('help-panel');
 
@@ -22,7 +29,12 @@ export function InternalHelpPanel({ header, children, footer, loading = false, l
 
   return (
     <div {...rest} className={styles.root}>
-      {header && <h2 className={styles.header}>{header}</h2>}
+      {header && (
+        <div className={styles['header-block']}>
+          <span className={styles.caption}>{i18n('captionText') ?? defaultCaption}</span>
+          <h2 className={styles.header}>{header}</h2>
+        </div>
+      )}
       {children !== undefined && children !== null && (
         <InternalTextContent className={styles.content}>{children}</InternalTextContent>
       )}

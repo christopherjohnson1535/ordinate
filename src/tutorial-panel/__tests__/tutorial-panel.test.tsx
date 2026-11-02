@@ -128,9 +128,12 @@ describe('TutorialPanel', () => {
     expect(first.findCurrentStep()!.getElement()).toHaveAttribute('aria-current', 'step');
     expect(second.findStatus().getText()).toBe('Not started');
     expect(second.findTotalSteps().getText()).toBe('1 step');
+    expect(first.findStepReferences().map(reference => reference.getText())).toEqual(['S1', 'S2']);
+    expect(panel().findProgress()!.getText()).toBe('0 / 3');
 
     annotation()!.findNextButton()!.click();
     expect(panel().findTasks()[0].findCurrentStep()!.getText()).toContain('Pick a region');
+    expect(panel().findProgress()!.getText()).toBe('1 / 3');
     annotation()!.findNextButton()!.click();
     expect(panel().findTasks()[0].findStatus().getText()).toBe('Done');
     expect(panel().findTasks()[1].findStatus().getText()).toBe('In progress');
@@ -145,6 +148,7 @@ describe('TutorialPanel', () => {
         .findTasks()
         .map(task => task.findStatus().getText())
     ).toEqual(['Done', 'Done']);
+    expect(panel().findProgress()!.getText()).toBe('3 / 3');
 
     panel().findExitButton()!.click();
     expect(onExit).toHaveBeenCalledTimes(1);

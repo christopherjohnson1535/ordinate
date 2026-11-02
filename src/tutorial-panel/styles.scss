@@ -4,6 +4,7 @@
 */
 
 @use '../internal/styles' as styles;
+@use '../internal/styles/drawing';
 @use '../internal/styles/tokens' as ord;
 
 $line-height: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
@@ -128,6 +129,15 @@ $line-height: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
   background-color: ord.$color-background-container;
 }
 
+// The step's S reference, as Steps and Wizard letter theirs.
+.step-reference {
+  @include drawing.font-caption;
+  flex-shrink: 0;
+  min-inline-size: ord.$space-l;
+  color: ord.$color-kind-neutral;
+  font-size: ord.$font-size-small;
+}
+
 .step-title {
   min-inline-size: 0;
   overflow-wrap: anywhere;
@@ -145,6 +155,10 @@ $line-height: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
 
 .step-in-progress > .step-title {
   font-weight: ord.$font-weight-bold;
+}
+
+.step-in-progress > .step-reference {
+  color: ord.$color-text-body;
 }
 
 .step-pending > .step-marker {
@@ -178,6 +192,61 @@ $line-height: calc(#{ord.$font-size-body} * #{ord.$line-height-body});
   border-block-start-width: ord.$border-width-default;
   border-block-start-style: solid;
   border-block-start-color: ord.$color-border-divider;
+}
+
+// Progress through the tutorial, drawn as a dimension line: a faint base between two end ticks, inked
+// up to the current step, with the count beside it in mono.
+.progress {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+}
+
+.progress-scale {
+  position: relative;
+  flex: 1 1 auto;
+  block-size: ord.$space-s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+    block-size: ord.$border-width-default;
+    background-color: ord.$color-text-secondary;
+    opacity: ord.$opacity-construction;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+    border-inline-width: ord.$border-width-default;
+    border-inline-style: solid;
+    border-inline-color: ord.$color-text-secondary;
+  }
+}
+
+.progress-done {
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$border-width-section} / 2);
+  inset-inline-start: 0;
+  block-size: ord.$border-width-section;
+  background-color: ord.$color-border-strong;
+
+  @include styles.with-motion {
+    transition-property: inline-size;
+    transition-duration: ord.$motion-duration-expressive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.progress-measure {
+  @include drawing.font-caption;
+  flex-shrink: 0;
+  color: ord.$color-text-body;
+  font-variant-numeric: tabular-nums;
 }
 
 // Marks the heading that takes focus when its view replaces the one that had it.

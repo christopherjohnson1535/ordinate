@@ -31,6 +31,8 @@ export default function DrawerSimple() {
           <h2>Header, content and footer</h2>
           <div className={`${styles.frame} ${styles.tall}`}>
             <Drawer
+              kind="resource"
+              reference="R4"
               header="Activity"
               footer={
                 <SpaceBetween direction="horizontal" size="xs">

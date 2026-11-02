@@ -6,6 +6,20 @@ import { BaseComponentProps } from '../internal/base-component';
 
 export interface DrawerProps extends BaseComponentProps {
   /**
+   * What the drawer holds. The kind colors its reference, as for a container. The reference letter
+   * carries the same meaning for anyone who cannot rely on color.
+   * - `configuration` for settings people change, drawn in drafting blue.
+   * - `resource` for things that exist or run, drawn in teal.
+   * - `policy` for rules the system follows, drawn in plum.
+   * - `neutral` for anything else, drawn in graphite.
+   */
+  kind?: DrawerProps.Kind;
+  /**
+   * A short reference set above the title, as on a drawing set, such as `P1`. Other parts of the page can
+   * point back to the drawer with it.
+   */
+  reference?: string;
+  /**
    * The title of the drawer, rendered as a level 2 heading. Pass text rather than a
    * heading element.
    */
@@ -32,4 +46,8 @@ export interface DrawerProps extends BaseComponentProps {
    * full-bleed list.
    */
   disableContentPaddings?: boolean;
+}
+
+export namespace DrawerProps {
+  export type Kind = 'configuration' | 'resource' | 'policy' | 'neutral';
 }
