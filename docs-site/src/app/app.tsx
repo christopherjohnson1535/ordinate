@@ -88,7 +88,6 @@ export default function App() {
               type: 'button',
               text: `v${__ORDINATE_VERSION__}`,
               href: '#/start/running-locally',
-              disableUtilityCollapse: true,
             },
             {
               type: 'button',
