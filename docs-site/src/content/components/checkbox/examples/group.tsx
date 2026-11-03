@@ -26,9 +26,7 @@ export default function Group() {
             checked={selected.includes(item.id)}
             description={item.description}
             onChange={event =>
-              setSelected(
-                event.detail.checked ? [...selected, item.id] : selected.filter(value => value !== item.id)
-              )
+              setSelected(event.detail.checked ? [...selected, item.id] : selected.filter(value => value !== item.id))
             }
           >
             {item.label}

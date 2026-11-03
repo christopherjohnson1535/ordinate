@@ -54,8 +54,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           Set <code>visibleSeries</code> with <code>onFilterChange</code>, and <code>highlightedSeries</code> with{' '}
-          <code>onHighlightChange</code>, to keep the filter and the emphasized series in your own state. A series
-          keeps its color and dash when others are hidden.
+          <code>onHighlightChange</code>, to keep the filter and the emphasized series in your own state. A series keeps
+          its color and dash when others are hidden.
         </p>
       ),
     },
@@ -89,8 +89,7 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        To show how parts add up to a total over time. Use an{' '}
-        <a href="#/components/area-chart">AreaChart</a>.
+        To show how parts add up to a total over time. Use an <a href="#/components/area-chart">AreaChart</a>.
       </>,
       <>
         To compare values between named categories. Use a <a href="#/components/bar-chart">BarChart</a>.
@@ -107,10 +106,9 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The plot is one tab stop with <code>role=&quot;application&quot;</code>. Left and Right move between x
-      positions (mirrored in right-to-left layout), Up and Down move between series at that position, Home and End jump
-      to the ends, Enter or Space pins the detail popover and moves focus to its dismiss button, and Escape dismisses
-      it.
+      The plot is one tab stop with <code>role=&quot;application&quot;</code>. Left and Right move between x positions
+      (mirrored in right-to-left layout), Up and Down move between series at that position, Home and End jump to the
+      ends, Enter or Space pins the detail popover and moves focus to its dismiss button, and Escape dismisses it.
     </>,
     'Each move with the keyboard is announced in a polite live region as the x value followed by every series and its value.',
     <>

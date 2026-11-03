@@ -21,8 +21,8 @@ const doc: ComponentDoc = {
       <p>
         The table is controlled. It does not sort, filter or page its items: pass the items of the current page in the
         current order, and keep sorting and selection in state. <code>useCollection</code> from{' '}
-        <code>@ordinate/collection-hooks</code> holds that state for you and returns props to spread onto the table,
-        the filter and the pagination.
+        <code>@ordinate/collection-hooks</code> holds that state for you and returns props to spread onto the table, the
+        filter and the pagination.
       </p>
     </>
   ),
@@ -121,8 +121,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           <code>rowTag</code> draws a circled reference such as S1 in a narrow first column, so a split panel or a note
-          can point at the row. Derive the tag from the item so it survives sorting and paging.{' '}
-          <code>onRowClick</code> reports clicks anywhere in a row.
+          can point at the row. Derive the tag from the item so it survives sorting and paging. <code>onRowClick</code>{' '}
+          reports clicks anywhere in a row.
         </p>
       ),
     },

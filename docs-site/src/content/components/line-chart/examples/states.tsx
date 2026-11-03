@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 import React, { useEffect, useState } from 'react';
 
+import LineChart, { LineChartProps } from '@ordinate/charts/line-chart';
 import Box from '@ordinate/components/box';
 import SegmentedControl from '@ordinate/components/segmented-control';
 import SpaceBetween from '@ordinate/components/space-between';
-import LineChart, { LineChartProps } from '@ordinate/charts/line-chart';
 
 const start = new Date(2026, 10, 2, 8, 0).getTime();
 const queueDepth: LineChartProps.SeriesSpec<Date>[] = [

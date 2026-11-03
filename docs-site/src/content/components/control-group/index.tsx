@@ -13,8 +13,8 @@ const doc: ComponentDoc = {
     <>
       <p>
         A control group sets its controls in one row and removes the borders between them, so they read as a single
-        field. Text fields and selects share the free width; buttons keep their natural width. An error or warning
-        draws its leading mark once, on the edge of the whole group.
+        field. Text fields and selects share the free width; buttons keep their natural width. An error or warning draws
+        its leading mark once, on the edge of the whole group.
       </p>
       <p>
         Inside a <a href="#/components/form-field">FormField</a>, the first control takes the field's label as its own,

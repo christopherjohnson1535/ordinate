@@ -41,8 +41,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           Put suggestions in groups to show them under a label. <code>onSelect</code> fires when a row is chosen, with
-          the suggestion in <code>event.detail.selectedOption</code>; use it to act on the choice, here to run a
-          command and clear the input.
+          the suggestion in <code>event.detail.selectedOption</code>; use it to act on the choice, here to run a command
+          and clear the input.
         </p>
       ),
     },
@@ -92,8 +92,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The input has <code>role="combobox"</code> with <code>aria-autocomplete="list"</code>. Focus stays in the
-      input; the highlighted suggestion is set with <code>aria-activedescendant</code>.
+      The input has <code>role="combobox"</code> with <code>aria-autocomplete="list"</code>. Focus stays in the input;
+      the highlighted suggestion is set with <code>aria-activedescendant</code>.
     </>,
     'Arrow Down and Arrow Up open the list and move through it, Page Up and Page Down move by a page, Enter chooses the highlighted suggestion, and Tab closes the list.',
     'Escape closes the list; pressed again with the list closed, it clears the input.',

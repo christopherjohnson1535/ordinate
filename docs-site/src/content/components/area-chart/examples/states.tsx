@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import React, { useState } from 'react';
 
+import AreaChart, { AreaChartProps } from '@ordinate/charts/area-chart';
 import Box from '@ordinate/components/box';
 import ColumnLayout from '@ordinate/components/column-layout';
-import AreaChart, { AreaChartProps } from '@ordinate/charts/area-chart';
 
 const series: AreaChartProps.SeriesSpec<string>[] = [
   { title: 'Reads', type: 'area', data: [{ x: 'Mon', y: 120 }] },

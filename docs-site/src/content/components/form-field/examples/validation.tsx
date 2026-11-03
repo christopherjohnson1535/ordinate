@@ -19,7 +19,7 @@ export default function Validation() {
     <SpaceBetween size="l">
       <FormField
         label="Contact email"
-        description="Where alerts for us-mountain-1 are sent."
+        description="Where alerts are sent."
         constraintText="One address. Use a shared inbox for a team."
         errorText={emailValid ? undefined : 'Enter an email address like name@example.com.'}
       >

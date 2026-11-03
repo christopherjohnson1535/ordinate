@@ -43,7 +43,9 @@ export default function Complete() {
           </Header>
         }
         errorText={
-          submitted && (nameError || regionError) ? 'The project was not created. Fix the fields marked below.' : undefined
+          submitted && (nameError || regionError)
+            ? 'The project was not created. Fix the fields marked below.'
+            : undefined
         }
         errorIconAriaLabel="Error"
         secondaryActions={<Button formAction="none">Save draft</Button>}

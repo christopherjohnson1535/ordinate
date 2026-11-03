@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import React, { useState } from 'react';
 
+import LineChart, { LineChartProps } from '@ordinate/charts/line-chart';
 import Box from '@ordinate/components/box';
 import SpaceBetween from '@ordinate/components/space-between';
-import LineChart, { LineChartProps } from '@ordinate/charts/line-chart';
 
 const days = Array.from({ length: 14 }, (_, index) => new Date(2026, 9, 19 + index));
 

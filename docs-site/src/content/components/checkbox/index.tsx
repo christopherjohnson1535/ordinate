@@ -45,8 +45,8 @@ const doc: ComponentDoc = {
       title: 'Partly checked',
       description: (
         <p>
-          <code>indeterminate</code> draws the half-filled square for a parent whose children are only partly
-          checked. Clicking it reports <code>checked: true</code>, so the parent checks every child.
+          <code>indeterminate</code> draws the half-filled square for a parent whose children are only partly checked.
+          Clicking it reports <code>checked: true</code>, so the parent checks every child.
         </p>
       ),
     },
@@ -87,8 +87,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The control is a native <code>&lt;input type="checkbox"&gt;</code> under the drawn square, so it is reached
-      with Tab and toggled with Space. Clicking the label toggles it too.
+      The control is a native <code>&lt;input type="checkbox"&gt;</code> under the drawn square, so it is reached with
+      Tab and toggled with Space. Clicking the label toggles it too.
     </>,
     <>
       The label names the checkbox and the description describes it. Inside a form field, the field's label is read

@@ -13,8 +13,8 @@ const doc: ComponentDoc = {
     <>
       <p>
         A button group is a toolbar of icon buttons that lie on the sheet with no offset, so a row of actions stays
-        light. A pressed toggle is filled with ink. Groups of related actions are set apart by a short tick, and a
-        menu action opens a plate like a <a href="#/components/button-dropdown">ButtonDropdown</a>.
+        light. A pressed toggle is filled with ink. Groups of related actions are set apart by a short tick, and a menu
+        action opens a plate like a <a href="#/components/button-dropdown">ButtonDropdown</a>.
       </p>
       <p>
         Every action shows its <code>text</code> in a tooltip on hover and focus, and the same text is its accessible

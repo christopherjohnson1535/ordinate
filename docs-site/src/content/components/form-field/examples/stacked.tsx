@@ -12,7 +12,7 @@ export default function Stacked() {
   const [height, setHeight] = useState('3.10');
 
   return (
-    <ColumnLayout columns={3}>
+    <ColumnLayout columns={3} minColumnWidth={160}>
       <FormField label="Width" layout="stacked" constraintText="Meters">
         <Input type="number" inputMode="decimal" value={width} onChange={event => setWidth(event.detail.value)} />
       </FormField>

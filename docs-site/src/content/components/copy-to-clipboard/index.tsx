@@ -12,10 +12,10 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A copy button with the copy icon, as a full button, an icon button, or a small icon after the value itself.
-        When the copy succeeds, a short mono stamp, &ldquo;Copied&rdquo; keyed by a square in the complete color, shows
-        in an ink chip next to the button for two seconds. When the browser refuses, the chip shows the fault icon and
-        the error text.
+        A copy button with the copy icon, as a full button, an icon button, or a small icon after the value itself. When
+        the copy succeeds, a short mono stamp, &ldquo;Copied&rdquo; keyed by a square in the complete color, shows in an
+        ink chip next to the button for two seconds. When the browser refuses, the chip shows the fault icon and the
+        error text.
       </p>
       <p>
         The component writes <code>textToCopy</code> with the browser&apos;s clipboard API. It needs a secure context

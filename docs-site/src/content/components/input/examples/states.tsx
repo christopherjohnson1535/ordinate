@@ -23,7 +23,9 @@ export default function States() {
       </FormField>
       <FormField
         label="Host"
-        warningText={host.endsWith('.internal') ? 'Hosts ending in .internal are not reachable from outside.' : undefined}
+        warningText={
+          host.endsWith('.internal') ? 'Hosts ending in .internal are not reachable from outside.' : undefined
+        }
       >
         <Input value={host} onChange={event => setHost(event.detail.value)} />
       </FormField>

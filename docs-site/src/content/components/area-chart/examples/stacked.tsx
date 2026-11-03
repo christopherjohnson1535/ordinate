@@ -36,7 +36,7 @@ export default function Stacked() {
       yTickFormatter={value => new Intl.NumberFormat('en').format(value)}
       legendTitle="Building"
       ariaLabel="Power drawn by building, stacked, 30 October 2026"
-      ariaDescription="The site draws about 530 kW overnight and peaks near 1,400 kW at 13:00, above the supply limit from about 10:00 to 16:00. The north annex draws the most."
+      ariaDescription="The site draws about 530 kW overnight and peaks near 1,400 kW at 13:00, above the supply limit from about 09:00 to 17:00. The north annex draws the most."
     />
   );
 }

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import Box from '@ordinate/components/box';
 import Header from '@ordinate/components/header';
+import Link from '@ordinate/components/link';
 import SpaceBetween from '@ordinate/components/space-between';
 import Table, { TableProps } from '@ordinate/components/table';
 
@@ -23,14 +24,30 @@ const services: Service[] = [
 // Tags come from the item's place in the full list, so sorting or paging never changes them.
 const tagOf = (service: Service) => `S${services.indexOf(service) + 1}`;
 
-const columnDefinitions: TableProps.ColumnDefinition<Service>[] = [
-  { id: 'name', header: 'Name', cell: item => item.name, isRowHeader: true },
-  { id: 'image', header: 'Image', cell: item => item.image, contentType: 'identifier' },
-  { id: 'nodes', header: 'Nodes', cell: item => item.nodes, contentType: 'number' },
-];
-
 export default function RowTags() {
   const [opened, setOpened] = useState<Service | null>(null);
+
+  const columnDefinitions: TableProps.ColumnDefinition<Service>[] = [
+    {
+      id: 'name',
+      header: 'Name',
+      // The link gives keyboard users the same way in as the row click.
+      cell: item => (
+        <Link
+          href="#/components/table"
+          onFollow={event => {
+            event.preventDefault();
+            setOpened(item);
+          }}
+        >
+          {item.name}
+        </Link>
+      ),
+      isRowHeader: true,
+    },
+    { id: 'image', header: 'Image', cell: item => item.image, contentType: 'identifier' },
+    { id: 'nodes', header: 'Nodes', cell: item => item.nodes, contentType: 'number' },
+  ];
 
   return (
     <SpaceBetween size="s">

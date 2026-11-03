@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 
-import Button from '@ordinate/components/button';
 import LineChart, { LineChartProps } from '@ordinate/charts/line-chart';
+import Button from '@ordinate/components/button';
 
 // p95 latency every five minutes from 09:00 to 15:00. The deploy at 10:10 raises it for a while.
 const start = new Date(2026, 9, 30, 9, 0).getTime();

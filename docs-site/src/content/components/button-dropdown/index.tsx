@@ -120,9 +120,9 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The button has <code>aria-haspopup="menu"</code> and <code>aria-expanded</code>. The menu is a{' '}
-      <code>menu</code> labelled by the button, and items are <code>menuitem</code> or <code>menuitemcheckbox</code>{' '}
-      with <code>aria-checked</code>.
+      The button has <code>aria-haspopup="menu"</code> and <code>aria-expanded</code>. The menu is a <code>menu</code>{' '}
+      labelled by the button, and items are <code>menuitem</code> or <code>menuitemcheckbox</code> with{' '}
+      <code>aria-checked</code>.
     </>,
     'Enter, Space or the down arrow on the button opens the menu with focus on the first item; the up arrow opens it on the last. A mouse click opens it without highlighting an item.',
     'In the menu, the up and down arrows, Home and End move between items, and typing letters jumps to the next item that starts with them. Enter or Space chooses the item and returns focus to the button.',

@@ -19,8 +19,8 @@ const doc: ComponentDoc = {
       </p>
       <p>
         The field measures its own width: below about 560 px the label stacks above the control. Controls inside the
-        field pick up its label, description and validation state on their own, so you set{' '}
-        <code>errorText</code> on the field and not on the control.
+        field pick up its label, description and validation state on their own, so you set <code>errorText</code> on the
+        field and not on the control.
       </p>
     </>
   ),
@@ -63,8 +63,8 @@ const doc: ComponentDoc = {
       title: 'Secondary control',
       description: (
         <p>
-          A <code>secondaryControl</code> shares the row with the control, three to one. With <code>stretch</code>{' '}
-          the control takes the full width and the secondary control goes below it.
+          A <code>secondaryControl</code> shares the row with the control, three to one. With <code>stretch</code> the
+          control takes the full width and the secondary control goes below it.
         </p>
       ),
     },
@@ -108,12 +108,12 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The label is a native <code>&lt;label&gt;</code> tied to the control by <code>controlId</code>, which is
-      generated when you do not set it. Clicking the label focuses the control.
+      The label is a native <code>&lt;label&gt;</code> tied to the control by <code>controlId</code>, which is generated
+      when you do not set it. Clicking the label focuses the control.
     </>,
     <>
-      The control is described by the error or warning, the description, the constraint text and the character count,
-      in that order, through <code>aria-describedby</code>.
+      The control is described by the error or warning, the description, the constraint text and the character count, in
+      that order, through <code>aria-describedby</code>.
     </>,
     <>
       <code>errorText</code> sets <code>aria-invalid</code> on the control. The error and warning icons are named by{' '}

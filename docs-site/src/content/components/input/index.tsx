@@ -114,8 +114,8 @@ const doc: ComponentDoc = {
       input does not show a required mark on its own.
     </>,
     <>
-      The clear button of a search input is a real button named by <code>clearAriaLabel</code>, "Clear" by default.
-      It moves focus back to the input.
+      The clear button of a search input is a real button named by <code>clearAriaLabel</code>, "Clear" by default. It
+      moves focus back to the input.
     </>,
     'A disabled input cannot be focused, so screen reader users may miss it. Prefer readOnly, or say why the value is unavailable in the constraint text.',
     <>

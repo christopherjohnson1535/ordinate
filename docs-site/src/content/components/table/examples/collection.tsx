@@ -43,11 +43,10 @@ const columnOptions = columnDefinitions.map(({ id, header }) => ({
   alwaysVisible: id === 'name',
 }));
 
-function Message({ title, action }: { title: string; action?: React.ReactNode }) {
+function Message({ title }: { title: string }) {
   return (
-    <Box textAlign="center">
-      <Box variant="strong">{title}</Box>
-      {action && <Box padding={{ top: 'xs' }}>{action}</Box>}
+    <Box textAlign="center" variant="strong">
+      {title}
     </Box>
   );
 }
@@ -58,24 +57,17 @@ export default function Collection() {
     stripedRows: false,
     contentDisplay: columnOptions.map(({ id }) => ({ id, visible: true })),
   });
-  const { items, filteredItemsCount, actions, collectionProps, filterProps, paginationProps } = useCollection(
-    allItems,
-    {
-      filtering: {
-        fields: ['name', 'id', 'type', 'zone'],
-        empty: <Message title="No instances" />,
-        noMatch: (
-          <Message
-            title="No instances match the filter"
-            action={<Button onClick={() => actions.setFiltering('')}>Clear filter</Button>}
-          />
-        ),
-      },
-      sorting: { defaultState: { sortingColumn: columnDefinitions[0] } },
-      pagination: { pageSize: preferences.pageSize },
-      selection: { trackBy: 'id' },
-    }
-  );
+  const { items, filteredItemsCount, collectionProps, filterProps, paginationProps } = useCollection(allItems, {
+    filtering: {
+      fields: ['name', 'id', 'type', 'zone'],
+      empty: <Message title="No instances" />,
+      // The text filter has its own clear button, so the message only says what happened.
+      noMatch: <Message title="No instances match the filter" />,
+    },
+    sorting: { defaultState: { sortingColumn: columnDefinitions[0] } },
+    pagination: { pageSize: preferences.pageSize },
+    selection: { trackBy: 'id' },
+  });
   const picked = collectionProps.selectedItems?.length ?? 0;
 
   return (
