@@ -20,8 +20,8 @@ const doc: ComponentDoc = {
       </p>
       <p>
         A row with an <code>href</code> makes its name a link, and a click anywhere on the row follows it.{' '}
-        <code>size="large"</code> sets the names in the style's headline type, for a list that is the main thing on
-        the page.
+        <code>size="large"</code> sets the names in the style's headline type, for a list that is the main thing on the
+        page.
       </p>
     </>
   ),
@@ -62,8 +62,8 @@ const doc: ComponentDoc = {
       title: 'Your own numbers',
       description: (
         <p>
-          A row's <code>number</code> replaces the automatic one, here drawing numbers. Without <code>ordered</code>{' '}
-          the list stays unordered and the numbers are read as part of each row.
+          A row's <code>number</code> replaces the automatic one, here drawing numbers. Without <code>ordered</code> the
+          list stays unordered and the numbers are read as part of each row.
         </p>
       ),
     },
@@ -102,8 +102,8 @@ const doc: ComponentDoc = {
       number of rows and each row's position.
     </>,
     <>
-      Give the list an <code>ariaLabel</code>, such as "Contents", unless a visible heading right above it already
-      names it.
+      Give the list an <code>ariaLabel</code>, such as "Contents", unless a visible heading right above it already names
+      it.
     </>,
     'Automatic numbers are hidden from screen readers, because the ordered list already announces each position. Numbers you set on a row are read.',
     'The dotted leaders are hidden from screen readers.',

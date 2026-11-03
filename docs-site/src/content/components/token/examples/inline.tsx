@@ -20,8 +20,8 @@ export default function Inline() {
         <Token
           variant="inline"
           icon={<Icon name="file" />}
-          label="north-annex-ground-floor-plan-revision-c.pdf"
-          tooltipContent="drawings/north-annex/A-02/north-annex-ground-floor-plan-revision-c.pdf"
+          label="north-annex-ground-floor-plan-revision-c-issued-for-construction.pdf"
+          tooltipContent="drawings/north-annex/A-02/north-annex-ground-floor-plan-revision-c-issued-for-construction.pdf"
         />
       </ColumnLayout>
     </SpaceBetween>

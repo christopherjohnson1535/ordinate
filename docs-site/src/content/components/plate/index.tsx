@@ -12,14 +12,14 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A plate is an entry in a catalogue of work: the picture, then a caption that opens with a hairline. On the
-        first line of the caption the reference ("Plate I", "No. 14") and the facts ("Lisbon, 2025") sit at either end
-        in small mono capitals. Below them come the title in the style's headline type and a sentence about the work.
+        A plate is an entry in a catalogue of work: the picture, then a caption that opens with a hairline. On the first
+        line of the caption the reference ("Plate I", "No. 14") and the facts ("Lisbon, 2025") sit at either end in
+        small mono capitals. Below them come the title in the style's headline type and a sentence about the work.
       </p>
       <p>
         With an <code>href</code> the title becomes a link and a click anywhere on the plate follows it; the picture
-        fades a little on hover. The plate has no box and no offset, so a grid of plates reads as pictures on a page.
-        It is not the lifted plate of a modal or menu.
+        fades a little on hover. The plate has no box and no offset, so a grid of plates reads as pictures on a page. It
+        is not the lifted plate of a modal or menu.
       </p>
     </>
   ),

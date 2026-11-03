@@ -8,7 +8,6 @@ import SegmentedControl from '@ordinate/components/segmented-control';
 import SpaceBetween from '@ordinate/components/space-between';
 import StyleScope, { StyleScopeProps } from '@ordinate/components/style-scope';
 
-
 export default function Tones() {
   const [styleName, setStyleName] = useState<StyleScopeProps.StyleName>('shopfront');
 

@@ -16,8 +16,8 @@ export default function TwoColumns() {
         measure="narrow"
       >
         <p>
-          Water will be off from the first of December, as every year. The standpipes on the north side are to be
-          lagged this time, after last winter's burst, and Plot 9 has offered the straw.
+          Water will be off from the first of December, as every year. The standpipes on the north side are to be lagged
+          this time, after last winter's burst, and Plot 9 has offered the straw.
         </p>
         <p>
           The waiting list is now forty-one names long. The committee agreed to split three of the largest plots when

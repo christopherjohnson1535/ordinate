@@ -3,8 +3,8 @@
 import React from 'react';
 
 import ColumnLayout from '@ordinate/components/column-layout';
-import Testimonial from '@ordinate/components/testimonial';
 import StyleScope from '@ordinate/components/style-scope';
+import Testimonial from '@ordinate/components/testimonial';
 
 // Sample words for this page. On a real site, use real customers' words, with their permission.
 export default function Customers() {

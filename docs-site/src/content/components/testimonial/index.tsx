@@ -17,8 +17,8 @@ const doc: ComponentDoc = {
         square picture can sit beside the name. <code>tone="accent"</code> lays the card on the style's accent tint.
       </p>
       <p>
-        Use only real words from a real customer, with their permission to show them and their name. Shorten a quote
-        if you must, but never change what it says. The examples on this page use sample words.
+        Use only real words from a real customer, with their permission to show them and their name. Shorten a quote if
+        you must, but never change what it says. The examples on this page use sample words.
       </p>
     </>
   ),

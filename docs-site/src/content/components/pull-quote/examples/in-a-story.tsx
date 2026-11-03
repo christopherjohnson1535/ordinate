@@ -21,9 +21,7 @@ export default function InAStory() {
           We stopped fighting the water. The water was always going to win.
         </PullQuote>
         <TextContent>
-          <p>
-            They chose the marsh. Three years on, the samphire is back, and so are the people who come to pick it.
-          </p>
+          <p>They chose the marsh. Three years on, the samphire is back, and so are the people who come to pick it.</p>
         </TextContent>
       </SpaceBetween>
     </StyleScope>

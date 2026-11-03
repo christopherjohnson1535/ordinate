@@ -12,15 +12,15 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A menu tile is one card of a price list: a title, an optional sentence about the group, and the items, each
-        with a dotted leader running from its name to its price. An item can carry a short note under it, and the tile
-        can end in a footer with a button or a note about opening hours.
+        A menu tile is one card of a price list: a title, an optional sentence about the group, and the items, each with
+        a dotted leader running from its name to its price. An item can carry a short note under it, and the tile can
+        end in a footer with a button or a note about opening hours.
       </p>
       <p>
         <code>tone</code> sets one tile apart: <code>accent</code> lays it on the style's accent tint and{' '}
         <code>emphasis</code> fills it with the emphasis color, with every part switching to the matching text color.
-        Both colors come from the page style. In <code>shopfront</code> accent is sunflower and emphasis is cobalt,
-        with rounded corners; in the console style emphasis is ink.
+        Both colors come from the page style. In <code>shopfront</code> accent is sunflower and emphasis is cobalt, with
+        rounded corners; in the console style emphasis is ink.
       </p>
     </>
   ),

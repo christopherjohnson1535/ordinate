@@ -17,9 +17,9 @@ export default function Story() {
           like a cart on cobbles, and it means the furrows in the stone have worn smooth.
         </p>
         <p>
-          On Thursdays Ruth lifts the runner stone with a chain hoist and recuts the grooves with a mill bill, a wedge of
-          steel set in a wooden handle. <a href="https://example.com/mill/film">We filmed a morning of it</a>, and the
-          rhythm never changes.
+          On Thursdays Ruth lifts the runner stone with a chain hoist and recuts the grooves with a mill bill, a wedge
+          of steel set in a wooden handle. <a href="https://example.com/mill/film">We filmed a morning of it</a>, and
+          the rhythm never changes.
         </p>
         <h2>Why grind slowly</h2>
         <p>

@@ -12,14 +12,14 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        Media is a frame with a set aspect ratio. The image is cropped or fitted into it, so pictures of different
-        sizes line up in a row or a grid. Instead of an image you can put your own content in the frame, such as a{' '}
+        Media is a frame with a set aspect ratio. The image is cropped or fitted into it, so pictures of different sizes
+        line up in a row or a grid. Instead of an image you can put your own content in the frame, such as a{' '}
         <code>video</code>, an <code>iframe</code> with a map or an SVG drawing; it is sized to fill the frame.
       </p>
       <p>
-        An empty frame is drawn the way a drawing marks where a picture will be pasted in: hatched, with a dashed
-        edge and an optional note. The frame's corners follow the page style, so they are square in the console and
-        editorial styles and rounded in <code>shopfront</code>.
+        An empty frame is drawn the way a drawing marks where a picture will be pasted in: hatched, with a dashed edge
+        and an optional note. The frame's corners follow the page style, so they are square in the console and editorial
+        styles and rounded in <code>shopfront</code>.
       </p>
     </>
   ),
@@ -94,8 +94,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      An image is a plain <code>img</code> with your <code>alt</code>. Setting <code>src</code> without{' '}
-      <code>alt</code> logs a warning in development and renders an empty alt.
+      An image is a plain <code>img</code> with your <code>alt</code>. Setting <code>src</code> without <code>alt</code>{' '}
+      logs a warning in development and renders an empty alt.
     </>,
     'Content you pass as children is not labeled by Media. Give an SVG role="img" and an aria-label, a video a label or captions, and an iframe a title.',
     'The placeholder text is hidden from screen readers, so an empty frame is not announced.',

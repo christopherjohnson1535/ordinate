@@ -34,7 +34,9 @@ export default function PriceList() {
               { label: 'Full service', value: '£75', description: 'Gears, brakes, wheels and bearings.' },
               { label: 'With new cables', value: '£95' },
             ]}
-            footer={<Button onClick={() => setBooking('Opening the booking form for a full service.')}>Book a service</Button>}
+            footer={
+              <Button onClick={() => setBooking('Opening the booking form for a full service.')}>Book a service</Button>
+            }
           />
           <MenuTile
             tone="accent"

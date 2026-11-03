@@ -50,8 +50,8 @@ const doc: ComponentDoc = {
       title: 'Also in this issue',
       description: (
         <p>
-          <code>ruled</code> cards with a <code>number</code>, for a column of further reading. The number is
-          decoration and hidden from screen readers; when the order matters, put the cards in an ordered list.
+          <code>ruled</code> cards with a <code>number</code>, for a column of further reading. The number is decoration
+          and hidden from screen readers; when the order matters, put the cards in an ordered list.
         </p>
       ),
     },

@@ -12,14 +12,14 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A figure is a picture with the words that go with it. It renders a <code>figure</code> element with the
-        picture on top and a <code>figcaption</code> below: an optional label such as "Fig. 1" set in small mono
-        capitals, the caption, and the credit in small type after it.
+        A figure is a picture with the words that go with it. It renders a <code>figure</code> element with the picture
+        on top and a <code>figcaption</code> below: an optional label such as "Fig. 1" set in small mono capitals, the
+        caption, and the credit in small type after it.
       </p>
       <p>
         The picture is anything you pass as <code>media</code>: usually a <a href="#/components/media">Media</a>, but a
-        chart or a drawing works the same way. The caption keeps to a comfortable line length even when the picture
-        runs wider.
+        chart or a drawing works the same way. The caption keeps to a comfortable line length even when the picture runs
+        wider.
       </p>
     </>
   ),
@@ -29,8 +29,8 @@ const doc: ComponentDoc = {
       title: 'A photograph with a caption',
       description: (
         <p>
-          The label, caption and credit together. Each part is optional; the caption line is left out when all three
-          are missing.
+          The label, caption and credit together. Each part is optional; the caption line is left out when all three are
+          missing.
         </p>
       ),
     },
@@ -80,8 +80,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The figure is a <code>figure</code> element with a <code>figcaption</code>, so screen readers announce the
-      caption with the picture.
+      The figure is a <code>figure</code> element with a <code>figcaption</code>, so screen readers announce the caption
+      with the picture.
     </>,
     'The caption does not replace the picture’s own text alternative: give an image its alt and a chart its aria-label.',
   ],
