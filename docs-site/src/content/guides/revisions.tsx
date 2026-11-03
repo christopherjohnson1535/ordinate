@@ -78,8 +78,8 @@ function Page() {
       <DocSection id="pin" number={2} title="Pin a revision">
         <Prose>
           <p>
-            Call <code>applyRevision</code> once, before the first render, in the entry file of the application. With
-            no element it pins the whole page, <code>document.body</code>.
+            Call <code>applyRevision</code> once, before the first render, in the entry file of the application. With no
+            element it pins the whole page, <code>document.body</code>.
           </p>
         </Prose>
         <CodeBlock
@@ -140,8 +140,8 @@ export function BillingPage({ children }: { children: React.ReactNode }) {
           <p>
             Each revision is a full block of tokens scoped to a class on the element, so revisions nest: a section
             pinned to 2026.2 inside a page pinned to 2026.1 is drawn wholly in 2026.2, and a section inside that can go
-            back to 2026.1. In markup, or on a page rendered on the server, <a href="#/components/style-scope">StyleScope</a>{' '}
-            does the same with its <code>revision</code> prop.
+            back to 2026.1. In markup, or on a page rendered on the server,{' '}
+            <a href="#/components/style-scope">StyleScope</a> does the same with its <code>revision</code> prop.
           </p>
         </Prose>
         <CodeBlock
@@ -188,8 +188,8 @@ import StyleScope from '@ordinate/components/style-scope';
           <ol>
             <li>Update the package. Nothing changes on screen, because the pin holds.</li>
             <li>
-              Pin one page or section to the new revision with <code>applyRevision(revision, element)</code> and look
-              it over in light and dark mode, in compact density and right to left.
+              Pin one page or section to the new revision with <code>applyRevision(revision, element)</code> and look it
+              over in light and dark mode, in compact density and right to left.
             </li>
             <li>
               Change the call in the entry file, and remove the section pins. If you set a brand theme, check the tokens

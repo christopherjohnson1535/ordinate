@@ -10,7 +10,7 @@ import { LoadedExample } from '../../registry/types';
 const finished: LoadedExample = {
   meta: {
     id: 'services-page',
-    title: 'The finished page',
+    title: 'Services of the North Annex',
     description:
       'Pick a service and press Restart: its status changes to Restarting. The links in the navigation move the position rule without leaving the page.',
     layout: 'flush',
@@ -26,8 +26,8 @@ function Page() {
       <Prose>
         <p>
           This tutorial builds the services page of a small console, one component at a time: a layout with a
-          navigation, a section with the project&apos;s settings, and a table of services with an action. It assumes
-          you have followed <a href="#/start/installation">Installation</a>, so the global styles are imported and a
+          navigation, a section with the project&apos;s settings, and a table of services with an action. It assumes you
+          have followed <a href="#/start/installation">Installation</a>, so the global styles are imported and a
           revision is pinned.
         </p>
       </Prose>
@@ -73,13 +73,13 @@ export default function ServicesPage() {
         <Prose>
           <p>
             SideNavigation lists the pages of the application. <code>activeHref</code> marks the current page with the
-            position rule. When you route on the client, call <code>preventDefault()</code> in <code>onFollow</code>{' '}
-            and navigate yourself; the event carries the link&apos;s <code>href</code>.
+            position rule. When you route on the client, call <code>preventDefault()</code> in <code>onFollow</code> and
+            navigate yourself; the event carries the link&apos;s <code>href</code>.
           </p>
         </Prose>
         <CodeBlock
           label="services-page.tsx"
-          highlightedLines={[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]}
+          highlightedLines={[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]}
           code={`
 const [activeHref, setActiveHref] = useState('#services');
 
@@ -182,8 +182,8 @@ const columnDefinitions: TableProps.ColumnDefinition<Service>[] = [
       <DocSection id="action" number={5} title="Add an action">
         <Prose>
           <p>
-            Let people pick a service and restart it. With <code>selectionType=&quot;single&quot;</code> each row gets
-            a radio button; the table is controlled, so keep the picked items in state and update them in{' '}
+            Let people pick a service and restart it. With <code>selectionType=&quot;single&quot;</code> each row gets a
+            radio button; the table is controlled, so keep the picked items in state and update them in{' '}
             <code>onSelectionChange</code>. The Restart button goes in the Header&apos;s <code>actions</code>, and stays
             disabled until a row is picked.
           </p>
@@ -232,8 +232,8 @@ const restart = () => {
               &quot;Select atrium-api&quot; rather than a row number.
             </>,
             <>
-              The disabled button is hatched. The footer of the finished table says why in words, as the design
-              language asks.
+              The disabled button is hatched. The footer of the finished table says why in words, as the design language
+              asks.
             </>,
           ]}
         />
@@ -245,8 +245,8 @@ const restart = () => {
           <p>
             Switch the example to dark mode, to the other revision or to right to left with its toolbar: the page
             follows without a change to its code. From here, <a href="#/components/table">Table</a> shows sorting,
-            filtering and pagination with the collection hooks, and <a href="#/components/app-layout">AppLayout</a>{' '}
-            adds breadcrumbs, a help panel and a title block.
+            filtering and pagination with the collection hooks, and <a href="#/components/app-layout">AppLayout</a> adds
+            breadcrumbs, a help panel and a title block.
           </p>
         </Prose>
       </DocSection>

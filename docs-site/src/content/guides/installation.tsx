@@ -77,10 +77,10 @@ function Page() {
       <DocSection id="peer-dependencies" number={2} title="Peer dependencies">
         <Prose>
           <p>
-            The components and the collection hooks expect your application to provide React. Install{' '}
-            <code>react</code> and <code>react-dom</code> 18 or later if the project does not have them yet. The charts
-            also list <code>@ordinate/components</code> as a peer dependency, so the charts and the components on a
-            page share one copy of the library and one set of tokens.
+            The components and the collection hooks expect your application to provide React. Install <code>react</code>{' '}
+            and <code>react-dom</code> 18 or later if the project does not have them yet. The charts also list{' '}
+            <code>@ordinate/components</code> as a peer dependency, so the charts and the components on a page share one
+            copy of the library and one set of tokens.
           </p>
         </Prose>
         <Command>npm install react react-dom</Command>
@@ -168,9 +168,9 @@ export function SaveBar({ variant = 'primary' }: { variant?: ButtonProps.Variant
       <DocSection id="css" number={5} title="How the CSS arrives">
         <Prose>
           <p>
-            Each component imports its own style sheet. When your code imports{' '}
-            <code>@ordinate/components/button</code>, the button&apos;s module imports its CSS, and your bundler adds it
-            to the page next to the JavaScript. Pages that never import a component never download its styles.
+            Each component imports its own style sheet. When your code imports <code>@ordinate/components/button</code>,
+            the button&apos;s module imports its CSS, and your bundler adds it to the page next to the JavaScript. Pages
+            that never import a component never download its styles.
           </p>
         </Prose>
         <Notes
@@ -182,8 +182,9 @@ export function SaveBar({ variant = 'primary' }: { variant?: ButtonProps.Variant
             </>,
             <>
               The design tokens of every revision, style and density load once, with the first component, through a
-              shared module. Pages that only use <code>@ordinate/design-tokens</code> in their own components must render
-              at least one Ordinate component, or import <code>@ordinate/components/internal/base-component</code>.
+              shared module. Pages that only use <code>@ordinate/design-tokens</code> in their own components must
+              render at least one Ordinate component, or import{' '}
+              <code>@ordinate/components/internal/base-component</code>.
             </>,
             <>
               The package&apos;s <code>sideEffects</code> field lists its CSS files, so bundlers that remove unused code
@@ -209,8 +210,8 @@ export function SaveBar({ variant = 'primary' }: { variant?: ButtonProps.Variant
           <p>
             Component modules start with <code>&apos;use client&apos;</code>, so frameworks with React Server Components
             treat them as client components. StyleScope does not, so it can set a style or revision from a server
-            component. For server rendering with Vite or Astro, see <a href="#/start/server-rendering">Server
-            rendering</a>.
+            component. For server rendering with Vite or Astro, see{' '}
+            <a href="#/start/server-rendering">Server rendering</a>.
           </p>
         </Prose>
       </DocSection>

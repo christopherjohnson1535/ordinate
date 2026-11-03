@@ -119,16 +119,17 @@ $margin-layout-min-width: 560px;
 
 // The margin layout, as KeyValuePairs draws a pair: the label set right-aligned in a margin column against a
 // faint construction line, with its description under it, and the control and its messages to the right. The
-// column is the same width in both, so a details page and its edit form line up.
+// column is the same width in both, so a details page and its edit form line up. The rules name the field's own
+// root, so a stacked field inside a wide container, or inside another field, keeps stacking.
 @container (min-inline-size: #{$margin-layout-min-width}) {
-  .frame {
+  .layout-margin > .frame {
     display: grid;
     grid-template-columns: minmax(0, ord.$size-margin-column) minmax(0, 1fr);
   }
 
   // Kept when empty, so the control lines up with the fields around it.
-  .margin,
-  .margin:empty {
+  .layout-margin > .frame > .margin,
+  .layout-margin > .frame > .margin:empty {
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -146,15 +147,15 @@ $margin-layout-min-width: 560px;
     }
   }
 
-  .label-row {
+  .layout-margin > .frame > .margin > .label-row {
     justify-content: flex-end;
   }
 
-  .label {
+  .layout-margin > .frame > .margin .label {
     overflow-wrap: break-word;
   }
 
-  .body {
+  .layout-margin > .frame > .body {
     padding-inline-start: ord.$space-s;
   }
 }
