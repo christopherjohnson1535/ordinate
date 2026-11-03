@@ -35,10 +35,13 @@ export default function Notifications() {
           <Header
             variant="h1"
             actions={
-              <Button variant="primary" onClick={() => {
+              <Button
+                variant="primary"
+                onClick={() => {
                   setDeploys(current => [...current, next]);
                   setNext(next + 1);
-                }}>
+                }}
+              >
                 Deploy
               </Button>
             }

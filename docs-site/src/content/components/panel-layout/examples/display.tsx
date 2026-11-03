@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import Box from '@ordinate/components/box';
 import Button from '@ordinate/components/button';
+import Link from '@ordinate/components/link';
 import PanelLayout from '@ordinate/components/panel-layout';
 import SpaceBetween from '@ordinate/components/space-between';
 
@@ -20,9 +21,16 @@ export default function Display() {
           <SpaceBetween size="xs">
             <Box variant="h3">Repair queue</Box>
             {tickets.map(ticket => (
-              <Button key={ticket} variant="link" onClick={() => setSelected(ticket)}>
+              <Link
+                key={ticket}
+                href={`https://example.com/fixit-bikes/queue/${ticket.slice(0, 4)}`}
+                onFollow={event => {
+                  event.preventDefault();
+                  setSelected(ticket);
+                }}
+              >
                 {ticket}
-              </Button>
+              </Link>
             ))}
           </SpaceBetween>
         </Box>

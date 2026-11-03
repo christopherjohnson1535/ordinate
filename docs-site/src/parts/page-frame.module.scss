@@ -13,7 +13,7 @@
 }
 
 .with-anchors {
-  @media (min-width: 1200px) {
+  @media (min-width: 1560px) {
     grid-template-columns: minmax(0, 1fr) 220px;
   }
 }
@@ -47,7 +47,7 @@
 .anchors {
   display: none;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1560px) {
     display: grid;
     align-content: start;
     gap: ord.$space-s;
