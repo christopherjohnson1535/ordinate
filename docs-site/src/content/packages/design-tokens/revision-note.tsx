@@ -67,7 +67,11 @@ function RevisionSchedule({ notes }: { notes: ReadonlyArray<Note> }) {
   );
 }
 
-const later: Note = { reference: '△3', date: '2 Nov 2026', text: 'Raised the node limit to 32 for the winter exhibition.' };
+const later: Note = {
+  reference: '△3',
+  date: '2 Nov 2026',
+  text: 'Raised the node limit to 32 for the winter exhibition.',
+};
 
 export default function RevisionNote() {
   const [notes, setNotes] = useState<Note[]>([

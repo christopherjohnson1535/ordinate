@@ -64,8 +64,8 @@ const functionRows: ReadonlyArray<Row> = [
     type: 'ord-revision-2026-1, ord-revision-2026-2',
     description: (
       <>
-        Pins every component inside <code>target</code> to one design revision, replacing any revision class already
-        on it. <code>null</code> returns to the default, the oldest supported revision.
+        Pins every component inside <code>target</code> to one design revision, replacing any revision class already on
+        it. <code>null</code> returns to the default, the oldest supported revision.
       </>
     ),
   },
@@ -185,9 +185,9 @@ function Page() {
       <DocSection id="overview" number={1} title="Overview">
         <Prose>
           <p>
-            <code>@ordinate/global-styles</code> holds what belongs to the page rather than to one component: the
-            fonts, the body styles, and the functions that set mode, revision, style, density and motion. Import the
-            style sheet once at the entry of your application, then set the display before the first render.
+            <code>@ordinate/global-styles</code> holds what belongs to the page rather than to one component: the fonts,
+            the body styles, and the functions that set mode, revision, style, density and motion. Import the style
+            sheet once at the entry of your application, then set the display before the first render.
           </p>
         </Prose>
         <Command>npm install @ordinate/global-styles</Command>
@@ -216,8 +216,8 @@ function Page() {
       <DocSection id="drawing-fonts" number={3} title="drawing-fonts.css">
         <Prose>
           <p>
-            <code>@ordinate/global-styles/drawing-fonts.css</code> adds two faces used only by drawings: Virgil, the hand
-            lettering of the <code>sketch</code> variant of <a href="#/components/schematic">Schematic</a>, and CMU
+            <code>@ordinate/global-styles/drawing-fonts.css</code> adds two faces used only by drawings: Virgil, the
+            hand lettering of the <code>sketch</code> variant of <a href="#/components/schematic">Schematic</a>, and CMU
             Serif, regular and bold, for the <code>chalkboard</code> variant. Import it only on pages that use those
             variants. Without it they fall back to the next faces in <code>font-family-hand</code> and{' '}
             <code>font-family-chalkboard</code>.
@@ -232,8 +232,8 @@ function Page() {
       <DocSection id="functions" number={4} title="Functions">
         <Prose>
           <p>
-            Each function toggles a class on <code>target</code>, which defaults to <code>document.body</code>. The class
-            changes the tokens for everything inside the target, so the setting applies to a whole page or to one
+            Each function toggles a class on <code>target</code>, which defaults to <code>document.body</code>. The
+            class changes the tokens for everything inside the target, so the setting applies to a whole page or to one
             subtree. A value the enum does not hold is ignored with a console warning.
           </p>
         </Prose>

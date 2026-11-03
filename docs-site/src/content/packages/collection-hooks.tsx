@@ -30,8 +30,8 @@ const examples: Record<'schedule' | 'propertyFilter' | 'cards', LoadedExample> =
       title: 'Property filtering',
       description: (
         <p>
-          The filter starts on <code>Status = Running</code>. Try <code>Nodes &gt; 3</code>, <code>Image ^ web</code>{' '}
-          or <code>Owner = Archives</code>, which matches inside a list.
+          The filter starts on <code>Status = Running</code>. Try <code>Nodes &gt; 3</code>, <code>Image ^ web</code> or{' '}
+          <code>Owner = Archives</code>, which matches inside a list.
         </p>
       ),
     },
@@ -364,9 +364,9 @@ function Page() {
         <Prose>
           <p>
             Table, Cards and the filters are controlled: they show the items, page and filter text you give them and
-            report what the user did. <code>useCollection</code> keeps that state for a list held in memory. Give it every
-            item and the steps you want, and it returns the items for the current page with props to spread onto the
-            collection, the filter and the pagination.
+            report what the user did. <code>useCollection</code> keeps that state for a list held in memory. Give it
+            every item and the steps you want, and it returns the items for the current page with props to spread onto
+            the collection, the filter and the pagination.
           </p>
           <p>
             The steps always run in the same order: text filter, property filter, sort, then the current page. Changing
@@ -411,8 +411,8 @@ function Page() {
       <DocSection id="property-filter-matching" number={5} title="Property filter matching">
         <Prose>
           <p>
-            A property accepts its <code>defaultOperator</code> and every operator in its <code>operators</code>. A token
-            with another operator, or for a property that is not listed, matches nothing. Tokens combine with the
+            A property accepts its <code>defaultOperator</code> and every operator in its <code>operators</code>. A
+            token with another operator, or for a property that is not listed, matches nothing. Tokens combine with the
             query&apos;s <code>operation</code>: all of them for <code>and</code>, any of them for <code>or</code>.
           </p>
         </Prose>
@@ -479,8 +479,8 @@ function Page() {
             and <code>DetailEventHandler</code>.
           </p>
           <p>
-            For data that lives on a server, where filtering and paging happen in a request, keep the state yourself
-            and pass the components the page the server returns. See <a href="#/components/table">Table</a>,{' '}
+            For data that lives on a server, where filtering and paging happen in a request, keep the state yourself and
+            pass the components the page the server returns. See <a href="#/components/table">Table</a>,{' '}
             <a href="#/components/cards">Cards</a>, <a href="#/components/text-filter">TextFilter</a>,{' '}
             <a href="#/components/property-filter">PropertyFilter</a> and{' '}
             <a href="#/components/pagination">Pagination</a>.

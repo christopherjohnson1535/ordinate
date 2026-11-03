@@ -7,6 +7,7 @@ import { DocSection, Notes, Prose } from '../../parts/prose';
 import { GuideDoc } from '../../registry/guides';
 import { LoadedExample } from '../../registry/types';
 import { Composition, Part } from './shared/composition';
+import { onSheet } from './shared/on-sheet';
 
 const page: LoadedExample = {
   meta: {
@@ -14,14 +15,14 @@ const page: LoadedExample = {
     title: 'Launch checklist',
     description: (
       <p>
-        The whole page, running. Open the items in any order, choose Next on the first one with an empty name to see
-        its error, or start the tutorial from the panel to have notes pinned to the fields.
+        The whole page, running. Open the items in any order, choose Next on the first one with an empty name to see its
+        error, or start the tutorial from the panel to have notes pinned to the fields.
       </p>
     ),
     layout: 'flush',
     height: 'tall',
   },
-  load: () => import('../../../../pages/examples/launch-wizard.page'),
+  load: onSheet(() => import('../../../../pages/examples/launch-wizard.page')),
   loadSource: () => import('../../../../pages/examples/launch-wizard.page.tsx?raw').then(module => module.default),
 };
 
@@ -91,8 +92,8 @@ function Page() {
             depend on each other and people often come back to change one of them before they launch.
           </p>
           <p>
-            Beside the sheet, a summary and a title block show what has been chosen so far. A tutorial in the help
-            panel walks a first-time user through the three items that matter.
+            Beside the sheet, a summary and a title block show what has been chosen so far. A tutorial in the help panel
+            walks a first-time user through the three items that matter.
           </p>
         </Prose>
       </DocSection>
@@ -111,13 +112,13 @@ function Page() {
             </>,
             <>
               <strong>Next validates; the item list does not.</strong> In <code>onNavigate</code>, a <code>next</code>{' '}
-              from an invalid item stays put, but opening another item from the list always works. People can look
-              ahead without being stopped.
+              from an invalid item stays put, but opening another item from the list always works. People can look ahead
+              without being stopped.
             </>,
             <>
               <strong>Errors are counted as revisions.</strong> The checklist draws a revision cloud around each item
-              with an <code>errorText</code> and counts them in its footer, and submitting waits until none is left.
-              The title block beside the sheet repeats the count as open revisions.
+              with an <code>errorText</code> and counts them in its footer, and submitting waits until none is left. The
+              title block beside the sheet repeats the count as open revisions.
             </>,
             <>
               <strong>Checked items fold to a summary.</strong> Each step sets <code>summary</code> from the draft, such

@@ -7,6 +7,7 @@ import { DocSection, Notes, Prose } from '../../parts/prose';
 import { GuideDoc } from '../../registry/guides';
 import { LoadedExample } from '../../registry/types';
 import { Composition, Part } from './shared/composition';
+import { onSheet } from './shared/on-sheet';
 
 const page: LoadedExample = {
   meta: {
@@ -21,7 +22,7 @@ const page: LoadedExample = {
     layout: 'flush',
     height: 'tall',
   },
-  load: () => import('../../../../pages/examples/app-shell.page'),
+  load: onSheet(() => import('../../../../pages/examples/app-shell.page')),
   loadSource: () => import('../../../../pages/examples/app-shell.page.tsx?raw').then(module => module.default),
 };
 

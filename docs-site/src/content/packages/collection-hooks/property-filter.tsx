@@ -45,18 +45,15 @@ const columns: TableProps.ColumnDefinition<Service>[] = [
 ];
 
 export default function PropertyFiltering() {
-  const { items, filteredItemsCount, collectionProps, propertyFilterProps, paginationProps } = useCollection(
-    services,
-    {
-      propertyFiltering: {
-        filteringProperties,
-        defaultQuery: { operation: 'and', tokens: [{ propertyKey: 'status', operator: '=', value: 'Running' }] },
-        noMatch: <Box color="text-body-secondary">No service matches the filters.</Box>,
-      },
-      sorting: { defaultState: { sortingColumn: columns[0] } },
-      pagination: { pageSize: 5 },
-    }
-  );
+  const { items, filteredItemsCount, collectionProps, propertyFilterProps, paginationProps } = useCollection(services, {
+    propertyFiltering: {
+      filteringProperties,
+      defaultQuery: { operation: 'and', tokens: [{ propertyKey: 'status', operator: '=', value: 'Running' }] },
+      noMatch: <Box color="text-body-secondary">No service matches the filters.</Box>,
+    },
+    sorting: { defaultState: { sortingColumn: columns[0] } },
+    pagination: { pageSize: 5 },
+  });
 
   return (
     <Table

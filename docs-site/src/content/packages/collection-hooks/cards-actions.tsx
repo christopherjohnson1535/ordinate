@@ -30,15 +30,7 @@ const rooms: Room[] = [
 
 export default function CardsWithActions() {
   const { items, actions, filteredItemsCount, collectionProps, filterProps, paginationProps } = useCollection(rooms, {
-    filtering: {
-      fields: ['name', 'floor'],
-      noMatch: (
-        <SpaceBetween size="xs">
-          <Box color="text-body-secondary">No room matches the filter.</Box>
-          <Button onClick={() => actions.setFiltering('')}>Clear filter</Button>
-        </SpaceBetween>
-      ),
-    },
+    filtering: { fields: ['name', 'floor'] },
     pagination: { pageSize: 3 },
     selection: { trackBy: 'id', keepSelection: true },
   });
@@ -48,6 +40,13 @@ export default function CardsWithActions() {
   return (
     <Cards
       {...collectionProps}
+      // The empty state needs `actions`, so it is set here, after the hook, rather than in `noMatch`.
+      empty={
+        <SpaceBetween size="xs">
+          <Box color="text-body-secondary">No room matches the filter.</Box>
+          <Button onClick={() => actions.setFiltering('')}>Clear filter</Button>
+        </SpaceBetween>
+      }
       items={items}
       selectionType="multi"
       cardsPerRow={[{ cards: 1 }, { minWidth: 520, cards: 3 }]}

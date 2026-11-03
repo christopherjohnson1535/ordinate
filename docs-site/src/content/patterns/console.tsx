@@ -7,6 +7,7 @@ import { DocSection, Notes, Prose } from '../../parts/prose';
 import { GuideDoc } from '../../registry/guides';
 import { LoadedExample } from '../../registry/types';
 import { Composition, Part } from './shared/composition';
+import { onSheet } from './shared/on-sheet';
 
 const page: LoadedExample = {
   meta: {
@@ -21,7 +22,7 @@ const page: LoadedExample = {
     layout: 'flush',
     height: 'tall',
   },
-  load: () => import('../../../../pages/examples/console.page'),
+  load: onSheet(() => import('../../../../pages/examples/console.page')),
   loadSource: () => import('../../../../pages/examples/console.page.tsx?raw').then(module => module.default),
 };
 
@@ -77,9 +78,7 @@ const parts: ReadonlyArray<Part> = [
     name: 'Container',
     folder: 'container',
     role: (
-      <>
-        Two sections, each with a kind and a reference: C1 for the environment&apos;s settings, R1 for its health.
-      </>
+      <>Two sections, each with a kind and a reference: C1 for the environment&apos;s settings, R1 for its health.</>
     ),
   },
   { name: 'KeyValuePairs', folder: 'key-value-pairs', role: 'The environment settings in a margin layout.' },
@@ -93,7 +92,11 @@ const parts: ReadonlyArray<Part> = [
     folder: 'measure',
     role: 'One reading each: a value of a maximum on a ruler, a plain rate, a value against a target limit.',
   },
-  { name: 'Tabs', folder: 'tabs', role: 'Services, Deployments and Logs on one sheet, with the Logs tab opened from the note.' },
+  {
+    name: 'Tabs',
+    folder: 'tabs',
+    role: 'Services, Deployments and Logs on one sheet, with the Logs tab opened from the note.',
+  },
   {
     name: 'Table',
     folder: 'table',
@@ -115,13 +118,21 @@ const parts: ReadonlyArray<Part> = [
     folder: 'collection-preferences',
     role: 'Page size, striped rows and which columns show, confirmed together.',
   },
-  { name: 'StatusIndicator', folder: 'status-indicator', role: 'The state of each service, in the table and the panel.' },
+  {
+    name: 'StatusIndicator',
+    folder: 'status-indicator',
+    role: 'The state of each service, in the table and the panel.',
+  },
   {
     name: 'SplitPanel',
     folder: 'split-panel',
     role: 'The detail of the picked service beside the schedule, tagged with the same reference as its row.',
   },
-  { name: 'ProgressBar', folder: 'progress-bar', role: 'A rollout in progress, shown in the panel for services on web:v2.' },
+  {
+    name: 'ProgressBar',
+    folder: 'progress-bar',
+    role: 'A rollout in progress, shown in the panel for services on web:v2.',
+  },
   { name: 'HelpPanel', folder: 'help-panel', role: 'A margin note about services, closed until the user opens it.' },
 ];
 
@@ -132,8 +143,8 @@ function Page() {
         <Prose>
           <p>
             The console is the page most applications are built around: one environment, the things running in it, and
-            the detail of one of them. A person comes here to check that everything is healthy, find the service that
-            is not, and act on it without leaving the page.
+            the detail of one of them. A person comes here to check that everything is healthy, find the service that is
+            not, and act on it without leaving the page.
           </p>
           <p>
             It is the reference for an application page in Ordinate. Every region of{' '}
@@ -163,13 +174,13 @@ function Page() {
             <>
               <strong>Selection lives in the page.</strong> The table spreads <code>collectionProps</code>, then sets{' '}
               <code>selectedItems</code> and <code>onSelectionChange</code> itself, because the split panel and the
-              Restart button read the picked service too. Props after the spread win, so the picked service stays
-              picked while the user filters.
+              Restart button read the picked service too. Props after the spread win, so the picked service stays picked
+              while the user filters.
             </>,
             <>
               <strong>The schedule is the main content.</strong> <code>contentType=&quot;table&quot;</code> gives it the
-              full width, the header counter is drawn on the dimension line, and the property filter reports{' '}
-              &quot;4 of 7&quot; rather than a bare count, so the user knows how much is hidden.
+              full width, the header counter is drawn on the dimension line, and the property filter reports &quot;4 of
+              7&quot; rather than a bare count, so the user knows how much is hidden.
             </>,
             <>
               <strong>One fault, one note, one action.</strong> The failed health check is a fault in the margin with

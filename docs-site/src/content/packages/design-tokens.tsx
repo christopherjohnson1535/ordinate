@@ -65,7 +65,9 @@ function TokenSchedule() {
   const [filter, setFilter] = useState('');
   const text = filter.trim().toLowerCase();
   const items = tokens.filter(token =>
-    text ? [token.name, token.sass, token.property].some(name => name.toLowerCase().includes(text)) : token.family === family
+    text
+      ? [token.name, token.sass, token.property].some(name => name.toLowerCase().includes(text))
+      : token.family === family
   );
 
   return (
@@ -168,9 +170,9 @@ function Page() {
           </p>
           <p>
             Each token is a reference to a CSS custom property, such as <code>var(--ord-color-text-body)</code>, never a
-            raw value. The value comes from the page at the moment it is drawn, so the token follows the pinned revision,
-            light or dark mode, compact density, the website style and any <code>applyTheme</code> theme, as the
-            built-in components do.
+            raw value. The value comes from the page at the moment it is drawn, so the token follows the pinned
+            revision, light or dark mode, compact density, the website style and any <code>applyTheme</code> theme, as
+            the built-in components do.
           </p>
         </Prose>
         <Command>npm install @ordinate/design-tokens</Command>
@@ -180,8 +182,8 @@ function Page() {
         <Example example={example} index={1} />
         <Prose>
           <p>
-            The example uses a <code>style</code> prop because it styles its own elements. Never set{' '}
-            <code>style</code> or <code>className</code> on an Ordinate component; arrange components with{' '}
+            The example uses a <code>style</code> prop because it styles its own elements. Never set <code>style</code>{' '}
+            or <code>className</code> on an Ordinate component; arrange components with{' '}
             <a href="#/components/space-between">SpaceBetween</a>, <a href="#/components/box">Box</a> and{' '}
             <a href="#/components/grid">Grid</a>.
           </p>
@@ -202,8 +204,8 @@ function Page() {
       <DocSection id="javascript" number={4} title="In JavaScript">
         <Prose>
           <p>
-            Each token is also a camelCase constant, typed as its exact string, for inline styles, CSS-in-JS and
-            canvas or SVG drawing that reads a color.
+            Each token is also a camelCase constant, typed as its exact string, for inline styles, CSS-in-JS and canvas
+            or SVG drawing that reads a color.
           </p>
         </Prose>
         <CodeBlock label="revision-schedule.tsx" code={jsUsage} />

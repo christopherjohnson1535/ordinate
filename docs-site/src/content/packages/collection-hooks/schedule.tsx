@@ -50,7 +50,13 @@ const columns: TableProps.ColumnDefinition<Instance>[] = [
     cell: item => <StatusIndicator state={indicator[item.state]}>{item.state}</StatusIndicator>,
     sortingField: 'state',
   },
-  { id: 'cpu', header: 'CPU %', cell: item => item.cpu, sortingComparator: (a, b) => a.cpu - b.cpu, contentType: 'number' },
+  {
+    id: 'cpu',
+    header: 'CPU %',
+    cell: item => item.cpu,
+    sortingComparator: (a, b) => a.cpu - b.cpu,
+    contentType: 'number',
+  },
 ];
 
 export default function Schedule() {
