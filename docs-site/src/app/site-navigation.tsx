@@ -23,7 +23,7 @@ function buildItems(activePath: string): SideNavigationProps.Item[] {
     items.length ? [{ type: 'section' as const, text, items, defaultExpanded }] : [];
 
   return [
-    ...section(sections[0].title, start, true),
+    ...section(sections[0].title, start, activePath === '/' || activePath.startsWith('/start')),
     ...section(sections[1].title, foundations, activePath.startsWith('/foundations')),
     { type: 'divider' },
     { type: 'link', text: 'All components', href: href('/components') },

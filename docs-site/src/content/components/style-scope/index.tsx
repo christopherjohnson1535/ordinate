@@ -41,7 +41,9 @@ const doc: ComponentDoc = {
       title: 'Mode and density',
       description: (
         <p>
-          <code>mode</code> sets light or dark for a part of the page and paints its background.{' '}
+          <code>mode</code> sets light or dark for a part of the page and paints its background. Give the scope a{' '}
+          <code>revision</code> too: the colors of a mode are worked out where a revision&apos;s tokens are declared,
+          and in Chrome a scope with a mode but no revision of its own keeps the page&apos;s colors.{' '}
           <code>density="compact"</code> tightens padding and control heights inside the scope.
         </p>
       ),

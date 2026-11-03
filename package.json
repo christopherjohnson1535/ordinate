@@ -30,7 +30,7 @@
     "size": "node build-tools/size.js",
     "lint": "npm-run-all --parallel lint:*",
     "lint:eslint": "eslint .",
-    "lint:stylelint": "stylelint --ignore-path .gitignore \"{src,pages,charts/src}/**/*.scss\"",
+    "lint:stylelint": "stylelint --ignore-path .gitignore \"{src,pages,charts/src,docs-site/src}/**/*.scss\"",
     "format": "prettier --write ."
   },
   "dependencies": {

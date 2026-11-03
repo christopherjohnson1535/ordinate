@@ -64,9 +64,12 @@ applyMode(Mode.System);
             </>,
             <>
               <code>applyMode(Mode.Dark, element)</code> draws the components inside <code>element</code> in dark mode.
-              It does not paint the element&apos;s own background; components that have a surface, such as Container,
-              paint theirs. To paint a whole region for its mode, use <a href="#/components/style-scope">StyleScope</a>{' '}
-              with <code>mode=&quot;dark&quot;</code>.
+              Pin a revision on the same element with <code>applyRevision</code>, because each color is worked out where
+              the revision&apos;s tokens are declared: in Chrome, a mode set on an element with no revision of its own
+              keeps the page&apos;s colors. It does not paint the element&apos;s own background; components that have a
+              surface, such as Container, paint theirs. To paint a whole region for its mode, use{' '}
+              <a href="#/components/style-scope">StyleScope</a> with both <code>mode=&quot;dark&quot;</code> and a{' '}
+              <code>revision</code>.
             </>,
           ]}
         />

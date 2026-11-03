@@ -25,7 +25,7 @@ export default function ModeAndDensity() {
           Compact density
         </Toggle>
       </SpaceBetween>
-      <StyleScope mode={dark ? 'dark' : 'light'} density={compact ? 'compact' : 'comfortable'}>
+      <StyleScope mode={dark ? 'dark' : 'light'} density={compact ? 'compact' : 'comfortable'} revision="2026.2">
         <Box padding="l">
           <SpaceBetween size="m">
             <FormField label="Service name" description="Lowercase letters, numbers and hyphens.">
