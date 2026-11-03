@@ -1,0 +1,349 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// The key of marks at the top of the sheet: each mark's code, a small drawing of it and its meaning,
+// set like the legend in the corner of a drawing.
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  border-block-start: ord.$border-width-section solid ord.$color-border-strong;
+}
+
+.legend-item {
+  border-block-end: ord.$border-width-default solid ord.$color-border-divider-secondary;
+}
+
+.legend-link {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: ord.$space-xxs ord.$space-s;
+  align-items: center;
+  padding-block: ord.$space-s;
+  padding-inline: ord.$space-xs;
+  color: ord.$color-text-body;
+  text-decoration: none;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: ord.$color-background-item-hover;
+    }
+  }
+
+  &:focus-visible {
+    outline: ord.$border-width-focus-ring solid ord.$color-border-focus-ring;
+    outline-offset: calc(-1 * #{ord.$border-width-focus-ring});
+  }
+}
+
+.legend-glyph {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  block-size: 40px;
+  color: ord.$color-text-body;
+}
+
+.legend-code {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-kind-configuration;
+}
+
+.legend-name {
+  font-weight: ord.$font-weight-heading;
+}
+
+.legend-meaning {
+  grid-column: 2;
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+}
+
+.legend-head {
+  display: flex;
+  align-items: baseline;
+  gap: ord.$space-xs;
+}
+
+// The glyphs in the legend: each mark drawn small with the same tokens the components use.
+.glyph {
+  position: relative;
+  inline-size: 40px;
+  block-size: 28px;
+}
+
+.glyph-line {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  block-size: ord.$border-width-default;
+  background-color: ord.$color-kind-configuration;
+  opacity: ord.$opacity-construction;
+}
+
+.glyph-tick {
+  position: absolute;
+  inline-size: ord.$size-hash-mark;
+  block-size: ord.$border-width-default;
+  background-color: currentColor;
+  transform: rotate(-45deg);
+}
+
+.glyph-crop {
+  position: absolute;
+  inset: 2px 6px;
+}
+
+.glyph-key {
+  display: inline-flex;
+  gap: ord.$space-xxs;
+  align-items: center;
+
+  > span {
+    box-sizing: border-box;
+    inline-size: ord.$size-key-square;
+    block-size: ord.$size-key-square;
+    border: ord.$border-width-default solid ord.$color-text-body;
+  }
+}
+
+.key-all {
+  background-color: ord.$color-text-body;
+}
+
+.key-some {
+  background-image: linear-gradient(to right, ord.$color-text-body 50%, transparent 50%);
+
+  &:dir(rtl) {
+    background-image: linear-gradient(to left, ord.$color-text-body 50%, transparent 50%);
+  }
+}
+
+.glyph-ref {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  color: ord.$color-kind-resource;
+}
+
+.glyph-plate {
+  inline-size: 26px;
+  block-size: 18px;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-plate ord.$size-offset-plate 0 0 ord.$color-border-strong;
+}
+
+.glyph-ink {
+  inline-size: 30px;
+  block-size: 16px;
+  border-radius: ord.$border-radius-toggle;
+  background-color: ord.$color-background-ink;
+}
+
+.glyph-rule {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+
+  &::before {
+    content: '';
+    inline-size: ord.$border-width-section;
+    block-size: 18px;
+    background-color: ord.$color-border-strong;
+  }
+
+  &::after {
+    content: '';
+    inline-size: 20px;
+    block-size: ord.$border-width-default;
+    background-color: ord.$color-border-divider;
+  }
+}
+
+.glyph-hatch {
+  inline-size: 30px;
+  block-size: 18px;
+  border: ord.$border-width-default solid ord.$color-border-disabled;
+  background-image: repeating-linear-gradient(135deg, ord.$color-hatch 0 1px, transparent 1px 6px);
+}
+
+.glyph-offset {
+  inline-size: 26px;
+  block-size: 16px;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-control ord.$size-offset-control 0 0 ord.$color-border-strong;
+}
+
+.glyph-margin {
+  display: grid;
+  grid-template-columns: 14px 1px 14px;
+  gap: 4px;
+  align-items: center;
+  block-size: 24px;
+
+  > :nth-child(1) {
+    block-size: 3px;
+    background-color: ord.$color-text-body-secondary;
+  }
+
+  > :nth-child(2) {
+    block-size: 100%;
+    background-color: ord.$color-kind-neutral;
+    opacity: ord.$opacity-construction;
+  }
+
+  > :nth-child(3) {
+    block-size: 3px;
+    background-color: ord.$color-text-body;
+  }
+}
+
+// A mark's entry: the live figure, then what it means and where it appears.
+.entry {
+  display: grid;
+  gap: ord.$space-m;
+}
+
+.entry + .entry {
+  margin-block-start: ord.$space-l;
+}
+
+.used-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xxs ord.$space-s;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+// Drawings on a figure that are made of plain elements and the site's tokens, for marks that live in
+// a mixin rather than a component: the hash mark, the hatch and the bare offset.
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xl;
+  align-items: flex-end;
+}
+
+.demo-cell {
+  display: grid;
+  gap: ord.$space-xs;
+  justify-items: start;
+}
+
+.demo-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+// A frame drawn the way Container draws its sections, at a size that shows the hash marks clearly.
+.hash-demo {
+  position: relative;
+  inline-size: 220px;
+  block-size: 72px;
+  color: ord.$color-kind-resource;
+}
+
+.hash-line {
+  position: absolute;
+  background-color: currentColor;
+  opacity: ord.$opacity-construction;
+}
+
+.hash-line-top {
+  inset-block-start: 0;
+  inset-inline: calc(-1 * #{ord.$space-s});
+  block-size: ord.$border-width-default;
+}
+
+.hash-line-side {
+  inset-block: calc(-1 * #{ord.$space-s});
+  inset-inline-start: 72px;
+  inline-size: ord.$border-width-default;
+}
+
+.hash-tick {
+  position: absolute;
+  inline-size: ord.$size-hash-mark;
+  block-size: ord.$border-width-default;
+  background-color: currentColor;
+  transform: rotate(-45deg);
+}
+
+.hash-start {
+  inset-block-start: 0;
+  inset-inline-start: calc(-1 * #{ord.$space-s} - #{ord.$size-hash-mark} / 2);
+}
+
+.hash-end {
+  inset-block-start: 0;
+  inset-inline-end: calc(-1 * #{ord.$space-s} - #{ord.$size-hash-mark} / 2);
+}
+
+.hash-meet {
+  inset-block-start: 0;
+  inset-inline-start: calc(72px - #{ord.$size-hash-mark} / 2);
+}
+
+.hash-foot {
+  inset-block-end: calc(-1 * #{ord.$space-s});
+  inset-inline-start: calc(72px - #{ord.$size-hash-mark} / 2);
+}
+
+.hash-callout {
+  position: absolute;
+  inset-block-start: ord.$space-s;
+  inset-inline-start: calc(72px + #{ord.$space-s});
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-text-body-secondary;
+  text-transform: uppercase;
+}
+
+.hatch-sample {
+  display: grid;
+  place-items: center;
+  inline-size: 160px;
+  block-size: 56px;
+  border: ord.$border-width-default solid ord.$color-border-disabled;
+  background-image: repeating-linear-gradient(135deg, ord.$color-hatch 0 1px, transparent 1px 6px);
+  color: ord.$color-text-disabled;
+  font-size: ord.$font-size-description;
+}
+
+.plate-sample {
+  display: grid;
+  gap: ord.$space-xxs;
+  inline-size: 220px;
+  padding-block: ord.$space-s;
+  padding-inline: ord.$space-m;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-modal;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-plate ord.$size-offset-plate 0 0 ord.$color-border-strong;
+}
+
+.plate-veil {
+  display: grid;
+  place-items: center;
+  padding-block: ord.$space-xl;
+  padding-inline: ord.$space-xl;
+  background-color: ord.$color-background-overlay;
+}
+
+.plate-title {
+  font-weight: ord.$font-weight-heading;
+}

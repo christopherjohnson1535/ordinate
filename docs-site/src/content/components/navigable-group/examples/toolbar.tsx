@@ -8,11 +8,11 @@ import NavigableGroup from '@ordinate/components/navigable-group';
 import SpaceBetween from '@ordinate/components/space-between';
 
 const tools = [
-  { id: 'select', label: 'Select', icon: 'go-to' },
-  { id: 'line', label: 'Line', icon: 'slash' },
-  { id: 'dimension', label: 'Dimension', icon: 'expand' },
-  { id: 'note', label: 'Note', icon: 'edit' },
-] as const;
+  { id: 'select', label: 'Select' },
+  { id: 'line', label: 'Line' },
+  { id: 'dimension', label: 'Dimension' },
+  { id: 'note', label: 'Note' },
+];
 
 export default function Toolbar() {
   const [tool, setTool] = useState('Select');
@@ -27,8 +27,8 @@ export default function Toolbar() {
         getItemKey={element => element.dataset.toolId ?? ''}
       >
         <SpaceBetween direction="horizontal" size="xs">
-          {tools.map(({ id, label, icon }) => (
-            <Button key={id} data-tool-id={id} iconName={icon} onClick={() => setTool(label)}>
+          {tools.map(({ id, label }) => (
+            <Button key={id} data-tool-id={id} onClick={() => setTool(label)}>
               {label}
             </Button>
           ))}

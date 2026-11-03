@@ -51,9 +51,7 @@ export default function Sections() {
           event.preventDefault();
           setActiveHref(event.detail.href);
         }}
-        onChange={event =>
-          setChange(`${event.detail.item.text} ${event.detail.expanded ? 'expanded' : 'collapsed'}.`)
-        }
+        onChange={event => setChange(`${event.detail.item.text} ${event.detail.expanded ? 'expanded' : 'collapsed'}.`)}
       />
       <Box color="text-body-secondary" fontSize="body-s">
         {change}

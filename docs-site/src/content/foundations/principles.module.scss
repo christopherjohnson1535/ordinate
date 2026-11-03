@@ -1,0 +1,106 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// The six principles as a scale: one tick each along a faint construction line, read from the start.
+// Earlier principles win, so the scale is drawn heavier at its start.
+.scale {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: ord.$space-l 0;
+  margin-block: 0;
+  padding-block-start: ord.$space-m;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  gap: ord.$space-xxs;
+  padding-block-start: ord.$space-s;
+  padding-inline-end: ord.$space-m;
+  border-block-start: ord.$border-width-default solid ord.$color-border-divider;
+
+  // The tick that stands each principle on the scale.
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(-1 * #{ord.$space-xs});
+    inset-inline-start: 0;
+    inline-size: ord.$border-width-default;
+    block-size: ord.$space-xs;
+    background-color: ord.$color-border-strong;
+  }
+
+  &:first-child {
+    border-block-start-width: ord.$border-width-section;
+    border-block-start-color: ord.$color-border-strong;
+  }
+}
+
+.step-link {
+  display: grid;
+  gap: ord.$space-xxs;
+  color: ord.$color-text-body;
+  text-decoration: none;
+
+  &:hover .step-name {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: ord.$border-width-focus-ring solid ord.$color-border-focus-ring;
+    outline-offset: ord.$border-focus-ring-offset;
+  }
+}
+
+.step-code {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-kind-policy;
+}
+
+.step-name {
+  font-weight: ord.$font-weight-heading;
+}
+
+.step-rule {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+}
+
+.order {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+// The "before and after" pairs of a principle: two small drawings with a caption each.
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: ord.$space-l;
+}
+
+.compare-cell {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-s;
+}
+
+.compare-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+.muted {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  margin-block: 0;
+}

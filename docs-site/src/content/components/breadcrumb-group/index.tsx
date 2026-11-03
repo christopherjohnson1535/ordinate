@@ -16,9 +16,9 @@ const doc: ComponentDoc = {
         except the last, which is the current page, set in ink and not linked.
       </p>
       <p>
-        When the path does not fit, the middle items fold behind an ellipsis button, starting with the second. The
-        first item and the current page always stay, and the current page is the one that truncates when even that is
-        too wide.
+        When the path does not fit, the middle items fold behind an ellipsis button, starting with the second. The first
+        item and the current page always stay, and the current page is the one that truncates when even that is too
+        wide.
       </p>
     </>
   ),

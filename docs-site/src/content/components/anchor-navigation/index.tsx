@@ -18,8 +18,8 @@ const doc: ComponentDoc = {
       </p>
       <p>
         Without <code>activeHref</code> the component follows the window&rsquo;s scroll position and marks the last
-        section whose top has passed <code>scrollSpyOffset</code>. When the sections scroll inside a box of their own, or
-        the application routes on the URL hash, set <code>activeHref</code> yourself and scroll in{' '}
+        section whose top has passed <code>scrollSpyOffset</code>. When the sections scroll inside a box of their own,
+        or the application routes on the URL hash, set <code>activeHref</code> yourself and scroll in{' '}
         <code>onFollow</code>.
       </p>
     </>

@@ -1,0 +1,189 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../../styles/tokens' as ord;
+@use '../../../styles/mixins';
+
+// A figure on a foundation sheet: the live drawing on paper over a faint drafting grid, and a caption
+// strip below it lettered like the label under a detail.
+.figure {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-block: 0;
+  margin-inline: 0;
+  min-inline-size: 0;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-container;
+  background-color: ord.$color-background-container;
+}
+
+// The stage takes the figure's top corners, so the grid and the panes do not square them off. It is not
+// clipped, so a popover or menu opened inside it can spill over the edge.
+.stage {
+  position: relative;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+.grid {
+  background-image:
+    linear-gradient(to right, ord.$color-border-divider-secondary 1px, transparent 1px),
+    linear-gradient(to bottom, ord.$color-border-divider-secondary 1px, transparent 1px);
+  background-size: ord.$space-l ord.$space-l;
+  background-position: -1px -1px;
+}
+
+.layout-padded {
+  padding-block: ord.$space-xl;
+  padding-inline: ord.$space-xl;
+}
+
+.layout-centered {
+  display: grid;
+  place-items: center;
+  padding-block: ord.$space-xxl;
+  padding-inline: ord.$space-xl;
+}
+
+.layout-flush {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xxs ord.$space-s;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-m;
+  border-block-start: ord.$border-width-default solid ord.$color-border-divider-secondary;
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+}
+
+.caption-code {
+  @include mixins.caption;
+  color: ord.$color-kind-configuration;
+}
+
+// Two panes, the same drawing in light and in dark mode. Each pane paints its own paper.
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+  overflow: clip;
+}
+
+.pane {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-m;
+  padding-block: ord.$space-l;
+  padding-inline: ord.$space-l;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  min-inline-size: 0;
+
+  & + & {
+    border-inline-start: ord.$border-width-default solid ord.$color-border-divider;
+  }
+}
+
+.pane-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+// A two-column row: the words in a margin on the left, the drawing on the right, as a drawing sheet
+// sets a note beside its detail. Below the width of two comfortable columns it stacks.
+.split {
+  container-type: inline-size;
+  min-inline-size: 0;
+}
+
+.split-inner {
+  display: grid;
+  gap: ord.$space-l;
+
+  @container (min-inline-size: 760px) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: ord.$space-xl;
+    align-items: start;
+  }
+}
+
+.split-text {
+  display: grid;
+  gap: ord.$space-s;
+  align-content: start;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+  line-height: ord.$line-height-body;
+
+  p {
+    margin-block: 0;
+  }
+
+  code {
+    font-family: ord.$font-family-mono;
+    font-size: ord.$font-size-code;
+    background: ord.$color-background-inline-code;
+    border-radius: ord.$border-radius-inline-code;
+    padding-inline: ord.$space-xxs;
+  }
+}
+
+.facts {
+  display: grid;
+  gap: ord.$space-xxs;
+  margin-block: 0;
+  padding-block-start: ord.$space-xs;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: ord.$space-s;
+
+  dt {
+    @include mixins.caption;
+    padding-block-start: 2px;
+  }
+
+  dd {
+    margin-inline-start: 0;
+    color: ord.$color-text-body;
+  }
+}
+
+// A reference such as M5 or P3, lettered in mono in the kind's color.
+.reference {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-kind-configuration;
+}
+
+.reference-policy {
+  color: ord.$color-kind-policy;
+}
+
+.reference-resource {
+  color: ord.$color-kind-resource;
+}
+
+.probe {
+  display: none;
+}
+
+.value {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+}
