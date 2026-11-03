@@ -15,7 +15,7 @@ export default function PriceList() {
   return (
     <StyleScope styleName="shopfront">
       <SpaceBetween size="m">
-        <ColumnLayout columns={3}>
+        <ColumnLayout columns={3} minColumnWidth={200}>
           <MenuTile
             title="Quick fixes"
             description="While you wait, most days."

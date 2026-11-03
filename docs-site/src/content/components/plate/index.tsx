@@ -91,7 +91,7 @@ const doc: ComponentDoc = {
     'With an href, the title is the only link in the plate. The whole plate is clickable, but keyboard and screen reader users meet one link, named by the title.',
     'Links inside meta stay clickable on their own, above the plate’s link.',
     'Give the picture an empty alt when the title already names the work, so it is not read twice.',
-    'The hover fade on the picture is turned off under reduced motion.',
+    'Under reduced motion the picture dims at once on hover, without the fade.',
   ],
   related: ['figure', 'media', 'story-card', 'index-list'],
 };

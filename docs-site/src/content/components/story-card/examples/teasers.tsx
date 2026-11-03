@@ -52,7 +52,7 @@ const stories = [
 export default function Teasers() {
   return (
     <StyleScope styleName="editorial">
-      <ColumnLayout columns={3}>
+      <ColumnLayout columns={3} minColumnWidth={180}>
         {stories.map(story => (
           <StoryCard
             key={story.slug}

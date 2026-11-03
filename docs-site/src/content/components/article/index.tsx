@@ -43,9 +43,11 @@ const doc: ComponentDoc = {
       description: (
         <p>
           <code>columns={'{2}'}</code> with <code>measure="narrow"</code> and <code>dropCap</code>, like a page of a
-          newsletter. Narrow the window and the text falls back to one column.
+          newsletter. The columns appear once the article is 44 rem wide; narrow the window and the text falls back to
+          one column.
         </p>
       ),
+      layout: 'flush',
     },
     {
       id: 'measure',

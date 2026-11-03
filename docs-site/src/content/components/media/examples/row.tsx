@@ -32,7 +32,7 @@ const workshop = picture(
 
 export default function Row() {
   return (
-    <ColumnLayout columns={3}>
+    <ColumnLayout columns={3} minColumnWidth={180}>
       <Media src={harbour} alt="Four narrow houses facing the harbour at low tide" aspectRatio="4:5" />
       <Media src={loaves} alt="Two sourdough loaves cooling on the counter" aspectRatio="4:5" />
       <Media src={workshop} alt="A red town bicycle on the workshop floor" aspectRatio="4:5" />

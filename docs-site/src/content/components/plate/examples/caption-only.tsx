@@ -9,7 +9,7 @@ import StyleScope from '@ordinate/components/style-scope';
 export default function CaptionOnly() {
   return (
     <StyleScope styleName="studio">
-      <ColumnLayout columns={3}>
+      <ColumnLayout columns={3} minColumnWidth={180}>
         <Plate
           label="No. 9"
           title="Kiln shed"

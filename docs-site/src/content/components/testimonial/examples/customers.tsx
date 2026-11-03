@@ -10,7 +10,7 @@ import Testimonial from '@ordinate/components/testimonial';
 export default function Customers() {
   return (
     <StyleScope styleName="shopfront">
-      <ColumnLayout columns={3}>
+      <ColumnLayout columns={3} minColumnWidth={180}>
         <Testimonial
           quote="They had my bike back the same afternoon, and explained exactly what they had done."
           name="Priya S."

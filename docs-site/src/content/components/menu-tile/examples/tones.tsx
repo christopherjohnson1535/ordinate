@@ -25,7 +25,7 @@ export default function Tones() {
         onChange={event => setStyleName(event.detail.selectedId as StyleScopeProps.StyleName)}
       />
       <StyleScope styleName={styleName}>
-        <ColumnLayout columns={3}>
+        <ColumnLayout columns={3} minColumnWidth={200}>
           <MenuTile
             title="Cuts"
             items={[

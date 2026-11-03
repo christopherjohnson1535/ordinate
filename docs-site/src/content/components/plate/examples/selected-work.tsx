@@ -53,7 +53,7 @@ const work = [
 export default function SelectedWork() {
   return (
     <StyleScope styleName="studio">
-      <ColumnLayout columns={3}>
+      <ColumnLayout columns={3} minColumnWidth={180}>
         {work.map(item => (
           <Plate
             key={item.label}

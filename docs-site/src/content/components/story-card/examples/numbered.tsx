@@ -33,7 +33,7 @@ const alsoInThisIssue = [
 export default function Numbered() {
   return (
     <StyleScope styleName="editorial">
-      <ColumnLayout columns={3}>
+      <ColumnLayout columns={3} minColumnWidth={180}>
         {alsoInThisIssue.map((story, index) => (
           <StoryCard
             key={story.slug}

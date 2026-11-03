@@ -18,8 +18,8 @@ const doc: ComponentDoc = {
       </p>
       <p>
         An empty frame is drawn the way a drawing marks where a picture will be pasted in: hatched, with a dashed edge
-        and an optional note. The frame's corners follow the page style, so they are square in the console and editorial
-        styles and rounded in <code>shopfront</code>.
+        and an optional note. The frame's corners follow the revision and the page style: square in revision 2026.1,
+        softly rounded in 2026.2 and fully rounded in <code>shopfront</code>.
       </p>
     </>
   ),

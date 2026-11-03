@@ -91,7 +91,7 @@ const doc: ComponentDoc = {
     'With an href, the headline is the card’s only link. The whole card is clickable, but keyboard and screen reader users meet one link, named by the headline.',
     'Links in the kicker and byline stay clickable on their own, above the card’s link.',
     'The number is hidden from screen readers.',
-    'The hover fade on the picture is turned off under reduced motion.',
+    'Under reduced motion the picture dims at once on hover, without the fade.',
   ],
   related: ['plate', 'index-list', 'article', 'media'],
 };
