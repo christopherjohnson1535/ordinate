@@ -21,7 +21,12 @@ export default function WithDate() {
     <SpaceBetween size="m">
       <ColumnLayout columns={2}>
         <FormField label="Maintenance date" constraintText="YYYY/MM/DD." layout="stacked">
-          <DatePicker value={date} onChange={event => setDate(event.detail.value)} placeholder="YYYY/MM/DD" />
+          <DatePicker
+            value={date}
+            onChange={event => setDate(event.detail.value)}
+            placeholder="YYYY/MM/DD"
+            expandToViewport={true}
+          />
         </FormField>
         <FormField label="Start time" constraintText="24-hour clock, UTC." layout="stacked">
           <TimeInput value={time} onChange={event => setTime(event.detail.value)} format="hh:mm" placeholder="hh:mm" />

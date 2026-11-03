@@ -31,7 +31,12 @@ export default function Replace() {
       <SpaceBetween direction="horizontal" size="m" alignItems="center">
         <Icon name="adjust" ariaLabel="Workshop settings" />
         <Button iconName="adjust">Workshop settings</Button>
-        <DatePicker value={date} onChange={event => setDate(event.detail.value)} ariaLabel="Diary date" />
+        <DatePicker
+          value={date}
+          onChange={event => setDate(event.detail.value)}
+          ariaLabel="Diary date"
+          expandToViewport={true}
+        />
       </SpaceBetween>
     </IconProvider>
   );

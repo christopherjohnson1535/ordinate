@@ -33,6 +33,7 @@ export default function DisabledDates() {
         placeholder="YYYY/MM/DD"
         isDateEnabled={date => !isMonday(date)}
         dateDisabledReason={() => 'The workshop is closed on Mondays.'}
+        expandToViewport={true}
       />
     </FormField>
   );

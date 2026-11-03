@@ -18,6 +18,7 @@ export default function Month() {
           value={value}
           onChange={event => setValue(event.detail.value)}
           placeholder="YYYY/MM"
+          expandToViewport={true}
         />
       </FormField>
       <Box color="text-body-secondary" fontSize="body-s">

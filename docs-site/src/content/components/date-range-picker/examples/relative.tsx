@@ -30,6 +30,7 @@ export default function Relative() {
           onChange={event => setValue(event.detail.value)}
           relativeOptions={relativeOptions}
           placeholder="Filter by a date and time range"
+          expandToViewport={true}
         />
       </FormField>
       <Box variant="code">{JSON.stringify(value)}</Box>

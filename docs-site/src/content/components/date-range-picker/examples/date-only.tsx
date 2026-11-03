@@ -27,6 +27,7 @@ export default function DateOnly() {
           isDateEnabled={isWeekday}
           dateDisabledReason={() => 'The crane is not hired out at weekends.'}
           placeholder="Choose a date range"
+          expandToViewport={true}
         />
       </FormField>
       <Box variant="code">{JSON.stringify(value)}</Box>

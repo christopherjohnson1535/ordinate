@@ -13,7 +13,12 @@ export default function Basic() {
   return (
     <SpaceBetween size="s">
       <FormField label="Inspection date" constraintText="Use YYYY/MM/DD.">
-        <DatePicker value={value} onChange={event => setValue(event.detail.value)} placeholder="YYYY/MM/DD" />
+        <DatePicker
+          value={value}
+          onChange={event => setValue(event.detail.value)}
+          placeholder="YYYY/MM/DD"
+          expandToViewport={true}
+        />
       </FormField>
       <Box color="text-body-secondary" fontSize="body-s">
         Value: “{value}”

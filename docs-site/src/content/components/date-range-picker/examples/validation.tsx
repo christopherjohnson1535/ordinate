@@ -46,6 +46,7 @@ export default function Validation() {
         dateOnly={true}
         showClearButton={false}
         placeholder="Choose a report period"
+        expandToViewport={true}
       />
     </FormField>
   );

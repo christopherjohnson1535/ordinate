@@ -23,6 +23,7 @@ export default function Absolute() {
           rangeSelectorMode="absolute-only"
           timeInputFormat="hh:mm"
           placeholder="Choose the start and end"
+          expandToViewport={true}
         />
       </FormField>
       <Box variant="code">{JSON.stringify(value)}</Box>

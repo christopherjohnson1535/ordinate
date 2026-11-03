@@ -30,6 +30,7 @@ export default function RelativeOnly() {
           relativeOptions={relativeOptions}
           rangeSelectorMode="relative-only"
           showClearButton={false}
+          expandToViewport={true}
         />
       </FormField>
       <Box color="text-body-secondary" fontSize="body-s">
