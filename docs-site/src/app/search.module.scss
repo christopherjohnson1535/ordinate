@@ -1,0 +1,85 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.search {
+  display: grid;
+  gap: ord.$space-s;
+}
+
+.status {
+  margin-block: 0;
+  @include mixins.caption;
+  text-transform: none;
+}
+
+.results {
+  display: grid;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  max-block-size: min(56vh, 520px);
+  overflow-y: auto;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  column-gap: ord.$space-m;
+  row-gap: ord.$space-xxxs;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-s;
+  border-inline-start: ord.$border-width-section solid transparent;
+  color: ord.$color-text-body;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: ord.$border-width-focus-ring solid ord.$color-border-focus-ring;
+    outline-offset: calc(-1 * #{ord.$border-width-focus-ring});
+  }
+}
+
+// The current result carries the position rule, as the current page does in the sheet index.
+.active {
+  border-inline-start-color: ord.$color-border-strong;
+  background: ord.$color-background-item-hover;
+}
+
+.kind {
+  grid-row: span 2;
+  padding-block-start: ord.$space-xxxs;
+  @include mixins.caption;
+}
+
+.title {
+  font-weight: ord.$font-weight-label;
+}
+
+.summary {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.key {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  padding-inline: ord.$space-xxs;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-inline-code;
+}
+
+@media (max-width: 640px) {
+  .result {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kind {
+    grid-row: auto;
+  }
+}

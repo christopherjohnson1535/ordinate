@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["vite/client"],
+    "paths": {
+      "@ordinate/components/*": ["../lib/components/*"],
+      "@ordinate/charts/*": ["../lib/charts/*"],
+      "@ordinate/design-tokens": ["../lib/design-tokens"],
+      "@ordinate/global-styles": ["../global-styles/src"],
+      "@ordinate/global-styles/*": ["../global-styles/src/*"],
+      "@ordinate/collection-hooks": ["../collection-hooks/src"]
+    }
+  },
+  "include": ["src", "../types"]
+}

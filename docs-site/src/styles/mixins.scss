@@ -1,0 +1,20 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use 'tokens' as ord;
+
+/// Small mono capitals, the caption face of a drawing set.
+@mixin caption {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  text-transform: uppercase;
+  color: ord.$color-text-body-secondary;
+}
+
+/// A faint line in a kind's color that runs past both of its ends.
+@mixin construction-line($color: ord.$color-kind-neutral) {
+  border-color: $color;
+  opacity: ord.$opacity-construction;
+}

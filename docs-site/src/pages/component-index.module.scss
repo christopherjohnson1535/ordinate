@@ -1,0 +1,27 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.filter {
+  inline-size: min(100%, 420px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: ord.$space-l;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+
+  > li {
+    display: grid;
+  }
+}
+
+.sheet {
+  @include mixins.caption;
+}

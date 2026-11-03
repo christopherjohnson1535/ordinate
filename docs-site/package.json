@@ -1,0 +1,21 @@
+{
+  "name": "@ordinate/docs",
+  "version": "0.1.0",
+  "description": "The Ordinate documentation, served from your own machine.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christopherjohnson1535/ordinate.git",
+    "directory": "docs-site"
+  },
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ordinate-docs": "./bin/ordinate-docs.mjs"
+  },
+  "scripts": {
+    "start": "vite --config vite.config.mjs",
+    "build": "vite build --config vite.config.mjs",
+    "serve": "node bin/ordinate-docs.mjs --site dist"
+  }
+}

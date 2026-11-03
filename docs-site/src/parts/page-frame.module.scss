@@ -1,0 +1,65 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-xxl;
+  padding-block: ord.$space-l ord.$space-xxxl;
+}
+
+.with-anchors {
+  @media (min-width: 1200px) {
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+}
+
+.main {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-xxl;
+  min-inline-size: 0;
+}
+
+.head {
+  display: grid;
+  gap: ord.$space-l;
+  max-inline-size: ord.$size-measure-wide;
+}
+
+.lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-s ord.$space-m;
+}
+
+.body {
+  display: grid;
+  gap: ord.$space-xxxl;
+  min-inline-size: 0;
+}
+
+.anchors {
+  display: none;
+
+  @media (min-width: 1200px) {
+    display: grid;
+    align-content: start;
+    gap: ord.$space-s;
+    position: sticky;
+    inset-block-start: 96px;
+    max-block-size: calc(100vh - 128px);
+    overflow-y: auto;
+  }
+}
+
+.anchors-title {
+  margin-block: 0;
+  @include mixins.caption;
+  font-weight: ord.$font-weight-body;
+}

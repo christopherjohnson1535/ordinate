@@ -1,0 +1,158 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.section {
+  display: grid;
+  gap: ord.$space-l;
+  scroll-margin-block-start: 72px;
+}
+
+// The number, heading and an ink rule, like a group on the specimen sheet.
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: ord.$space-s;
+  padding-block-end: ord.$space-s;
+  border-block-end: ord.$border-width-section solid ord.$color-border-strong;
+}
+
+.section-number {
+  @include mixins.caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.section-title,
+.subheading {
+  margin-block: 0;
+  font-family: ord.$font-family-base;
+  font-weight: ord.$font-weight-heading;
+  line-height: ord.$line-height-heading;
+  color: ord.$color-text-body;
+  scroll-margin-block-start: 72px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.section-title {
+  font-size: ord.$font-size-heading-l;
+}
+
+.subheading {
+  font-size: ord.$font-size-heading-m;
+  margin-block-start: ord.$space-l;
+}
+
+.section-description {
+  max-inline-size: ord.$size-measure-default;
+  color: ord.$color-text-body-secondary;
+  line-height: ord.$line-height-body;
+}
+
+.section-body {
+  display: grid;
+  gap: ord.$space-xxl;
+  min-inline-size: 0;
+}
+
+.prose {
+  max-inline-size: ord.$size-measure-default;
+}
+
+.code {
+  margin-block: 0;
+  margin-inline: 0;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-container;
+  background: ord.$color-background-container;
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+.code-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ord.$space-s;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-s;
+  border-block-end: ord.$border-width-default solid ord.$color-border-divider-secondary;
+  @include mixins.caption;
+  text-transform: none;
+}
+
+.command {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-m ord.$space-xs;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-input;
+  background: ord.$color-background-container;
+  max-inline-size: ord.$size-measure-default;
+}
+
+.command-prompt {
+  font-family: ord.$font-family-mono;
+  color: ord.$color-text-body-secondary;
+}
+
+.command-text {
+  flex: 1;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.use-avoid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: ord.$space-xl;
+}
+
+.column {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-s;
+  padding-block-start: ord.$space-s;
+  border-block-start: ord.$border-width-default solid ord.$color-border-divider;
+}
+
+.column-title {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  margin-block: 0;
+  font-size: ord.$font-size-heading-xs;
+  font-weight: ord.$font-weight-heading;
+  color: ord.$color-text-body;
+}
+
+.list {
+  display: grid;
+  gap: ord.$space-s;
+  margin-block: 0;
+  padding-inline-start: ord.$space-l;
+  line-height: ord.$line-height-body;
+  color: ord.$color-text-body;
+
+  code {
+    font-family: ord.$font-family-mono;
+    font-size: ord.$font-size-code;
+    background: ord.$color-background-inline-code;
+    border-radius: ord.$border-radius-inline-code;
+    padding-inline: ord.$space-xxs;
+  }
+}
+
+.notes {
+  max-inline-size: ord.$size-measure-default;
+}

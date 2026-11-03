@@ -4,14 +4,18 @@ const path = require('node:path');
 const ts = require('typescript');
 const { rootDir, toPascalCase } = require('./index');
 
-const srcDir = path.join(rootDir, 'src');
+// Where a package's component folders live, and the tsconfig that compiles them.
+const componentsSource = { srcDir: path.join(rootDir, 'src'), tsconfig: path.join(rootDir, 'tsconfig.json') };
+const chartsSource = { srcDir: path.join(rootDir, 'charts/src'), tsconfig: path.join(rootDir, 'charts/tsconfig.json') };
 
 /**
  * One program for every component, so inherited props such as `id` resolve across files.
  */
-function createProgram(folders) {
-  const { options } = ts.getParsedCommandLineOfConfigFile(path.join(rootDir, 'tsconfig.json'), {}, ts.sys);
-  const files = folders.flatMap(folder => ['interfaces.ts', 'index.tsx'].map(file => path.join(srcDir, folder, file)));
+function createProgram(folders, source = componentsSource) {
+  const { options } = ts.getParsedCommandLineOfConfigFile(source.tsconfig, {}, ts.sys);
+  const files = folders.flatMap(folder =>
+    ['interfaces.ts', 'index.tsx'].map(file => path.join(source.srcDir, folder, file))
+  );
   return ts.createProgram(files, options);
 }
 
@@ -79,7 +83,7 @@ function initializerText(initializer) {
  * Default values written in the destructuring of the component's props, such as
  * `variant = 'normal'`, from the public component and then its internal one.
  */
-function collectDestructuringDefaults(program, folder) {
+function collectDestructuringDefaults(program, folder, srcDir) {
   const pascal = toPascalCase(folder);
   const propsType = new RegExp(`^(Internal)?${pascal}Props$`);
   const defaults = new Map();
@@ -173,7 +177,8 @@ const byName = (a, b) => a.name.localeCompare(b.name);
  * The definition of one component: its props split into properties, regions and events, and the
  * functions of its `Ref`. Returns `null` when the folder declares no `<Name>Props` interface.
  */
-function documentComponent(program, folder) {
+function documentComponent(program, folder, source = componentsSource) {
+  const { srcDir } = source;
   const checker = program.getTypeChecker();
   const name = toPascalCase(folder);
   const sourceFile = program.getSourceFile(path.join(srcDir, folder, 'interfaces.ts'));
@@ -182,7 +187,7 @@ function documentComponent(program, folder) {
     return null;
   }
 
-  const defaults = collectDestructuringDefaults(program, folder);
+  const defaults = collectDestructuringDefaults(program, folder, srcDir);
   const propsType = checker.getTypeAtLocation(propsInterface.name);
   const definition = { name, folder, properties: [], regions: [], events: [], functions: [] };
   for (const symbol of checker.getPropertiesOfType(propsType)) {
@@ -199,4 +204,4 @@ function documentComponent(program, folder) {
   return definition;
 }
 
-module.exports = { createProgram, documentComponent };
+module.exports = { chartsSource, componentsSource, createProgram, documentComponent };

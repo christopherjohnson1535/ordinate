@@ -1,0 +1,145 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.example {
+  display: grid;
+  gap: ord.$space-m;
+  scroll-margin-block-start: 72px;
+}
+
+.caption {
+  display: grid;
+  gap: ord.$space-xs;
+  max-inline-size: ord.$size-measure-default;
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: ord.$space-s;
+  margin-block: 0;
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-heading;
+  line-height: ord.$line-height-heading;
+  color: ord.$color-text-body;
+  scroll-margin-block-start: 72px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.reference {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-kind-configuration;
+}
+
+.description {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-body;
+  line-height: ord.$line-height-body;
+
+  p {
+    margin-block: 0;
+  }
+
+  code {
+    font-family: ord.$font-family-mono;
+    font-size: ord.$font-size-code;
+    background: ord.$color-background-inline-code;
+    border-radius: ord.$border-radius-inline-code;
+    padding-inline: ord.$space-xxs;
+  }
+}
+
+// The frame is drawn like a detail on a sheet: a hairline edge, a toolbar strip along the top and
+// the running example on paper inside.
+.frame {
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-container;
+  background: ord.$color-background-container;
+  min-inline-size: 0;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-s ord.$space-m;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-s;
+  border-block-end: ord.$border-width-default solid ord.$color-border-divider-secondary;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.preview {
+  // The preview follows its own mode and revision, so it paints its own sheet and ink.
+  background: ord.$color-background-container;
+  color: ord.$color-text-body;
+  color-scheme: inherit;
+  min-inline-size: 0;
+  overflow: auto;
+  position: relative;
+  // A faint drafting grid under the example, so the space a component takes is easy to see.
+  background-image:
+    linear-gradient(to right, ord.$color-border-divider-secondary 1px, transparent 1px),
+    linear-gradient(to bottom, ord.$color-border-divider-secondary 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+.preview > * {
+  position: relative;
+}
+
+.layout-padded {
+  padding-block: ord.$space-xl;
+  padding-inline: ord.$space-xl;
+}
+
+.layout-centered {
+  display: grid;
+  place-items: center;
+  padding-block: ord.$space-xxl;
+  padding-inline: ord.$space-xl;
+}
+
+.layout-flush {
+  padding: 0;
+  background-image: none;
+}
+
+.height-short {
+  block-size: 280px;
+}
+
+.height-medium {
+  block-size: 440px;
+}
+
+.height-tall {
+  block-size: 640px;
+}
+
+.code {
+  border-block-start: ord.$border-width-default solid ord.$color-border-divider;
+  max-block-size: 560px;
+  overflow: auto;
+}
+
+@media (max-width: 640px) {
+  .layout-padded,
+  .layout-centered {
+    padding-inline: ord.$space-m;
+  }
+}

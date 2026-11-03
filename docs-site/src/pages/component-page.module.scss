@@ -1,0 +1,52 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.import {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+  padding-block: ord.$space-xxs;
+  padding-inline: ord.$space-s;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-inline-code;
+  background: ord.$color-background-container;
+}
+
+.keyword {
+  color: ord.$color-text-code-keyword;
+}
+
+.string {
+  color: ord.$color-text-code-string;
+}
+
+.marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xs ord.$space-m;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.mark-id {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-kind-configuration;
+}
+
+.writing {
+  display: grid;
+  gap: ord.$space-s;
+}
+
+.writing-title {
+  margin-block: 0;
+  font-size: ord.$font-size-heading-xs;
+  font-weight: ord.$font-weight-heading;
+  color: ord.$color-text-body;
+}

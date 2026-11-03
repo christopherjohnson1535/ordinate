@@ -1,0 +1,94 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+@use '../styles/mixins';
+
+.cover {
+  display: grid;
+  gap: ord.$space-xxxl;
+  padding-block: ord.$space-xl ord.$space-xxxl;
+}
+
+.title {
+  display: grid;
+  gap: ord.$space-l;
+  justify-items: start;
+  max-inline-size: ord.$size-measure-wide;
+}
+
+.kicker {
+  margin-block: 0;
+  @include mixins.caption;
+}
+
+.name {
+  margin-block: 0;
+  font-family: ord.$font-family-display;
+  font-size: clamp(56px, 9vw, 112px);
+  font-weight: ord.$font-weight-light;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: ord.$color-text-body;
+}
+
+.lede {
+  margin-block: 0;
+  max-inline-size: ord.$size-measure-default;
+  font-size: ord.$font-size-lead;
+  line-height: ord.$line-height-body;
+  color: ord.$color-text-body-secondary;
+}
+
+.install {
+  inline-size: min(100%, 560px);
+}
+
+.specimen {
+  min-inline-size: 0;
+}
+
+.index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: ord.$space-l;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+
+  > li {
+    display: grid;
+  }
+}
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: ord.$space-l ord.$space-xl;
+  margin-block: 0;
+}
+
+.principle {
+  display: grid;
+  gap: ord.$space-xxs;
+  padding-block-start: ord.$space-s;
+  border-block-start: ord.$border-width-default solid ord.$color-border-divider;
+
+  dt {
+    font-weight: ord.$font-weight-heading;
+    color: ord.$color-text-body;
+  }
+
+  dd {
+    margin-inline-start: 0;
+    color: ord.$color-text-body-secondary;
+    line-height: ord.$line-height-body;
+  }
+}
+
+.code {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-kind-policy;
+}

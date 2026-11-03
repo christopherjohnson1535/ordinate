@@ -1,0 +1,99 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../styles/tokens' as ord;
+
+@mixin code-face {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+}
+
+.name {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ord.$space-xs;
+
+  > code {
+    @include code-face;
+    font-weight: ord.$font-weight-bold;
+    color: ord.$color-text-body;
+    overflow-wrap: anywhere;
+  }
+}
+
+.signature {
+  display: grid;
+  gap: ord.$space-xs;
+  justify-items: start;
+  min-inline-size: 0;
+}
+
+.type-name {
+  @include code-face;
+  color: ord.$color-text-code-keyword;
+  overflow-wrap: anywhere;
+}
+
+.default {
+  font-size: ord.$font-size-small;
+  color: ord.$color-text-body-secondary;
+
+  code {
+    @include code-face;
+    color: ord.$color-text-code-string;
+    overflow-wrap: anywhere;
+  }
+}
+
+.default-label {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  text-transform: uppercase;
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xxs;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  align-items: center;
+
+  code {
+    @include code-face;
+    color: ord.$color-text-code-string;
+    padding-inline: ord.$space-xxs;
+    border: ord.$border-width-default solid ord.$color-border-divider;
+    border-radius: ord.$border-radius-inline-code;
+  }
+}
+
+.description {
+  max-inline-size: ord.$size-measure-wide;
+  color: ord.$color-text-body;
+  line-height: ord.$line-height-body;
+
+  p,
+  ul {
+    margin-block: 0 ord.$space-xs;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+
+  ul {
+    padding-inline-start: ord.$space-l;
+  }
+
+  code {
+    @include code-face;
+    background: ord.$color-background-inline-code;
+    border-radius: ord.$border-radius-inline-code;
+    padding-inline: ord.$space-xxs;
+  }
+}

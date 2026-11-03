@@ -13,6 +13,7 @@ export default defineConfig(
   globalIgnores([
     'lib',
     'pages/dist',
+    'docs-site/dist',
     'global-styles/lib',
     'collection-hooks/lib',
     'src/internal/generated',
@@ -82,6 +83,31 @@ export default defineConfig(
       'collection-hooks/src/**/__tests__/**',
       'charts/src/**/__tests__/**',
     ],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
+  {
+    // The docs site shows its examples as code, so @ordinate imports stand in a group of their own,
+    // as they would in an application.
+    files: ['docs-site/**/*.{ts,tsx}'],
+    rules: {
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^\\u0000'],
+            ['^react$', '^react', '^node:', '^(?!@ordinate/)@?\\w'],
+            ['^@ordinate/'],
+            ['^\\.'],
+            ['^.+\\.css\\.js$', '^.+\\.s?css$'],
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['docs-site/**/*.mjs'],
     languageOptions: {
       globals: { ...globals.node },
     },
