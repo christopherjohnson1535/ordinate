@@ -39,7 +39,6 @@ export default function Basic() {
         reference: node => node.id,
         sections: [
           { id: 'type', header: 'Type', content: node => node.type, width: 50 },
-          { id: 'zone', header: 'Zone', content: node => node.zone, width: 50 },
           {
             id: 'status',
             header: 'Status',
@@ -48,7 +47,9 @@ export default function Basic() {
                 {node.running ? 'Running' : 'Stopped'}
               </StatusIndicator>
             ),
+            width: 50,
           },
+          { id: 'zone', header: 'Zone', content: node => node.zone },
         ],
       }}
     />

@@ -56,6 +56,7 @@ const doc: ComponentDoc = {
           separate toggles; the application keeps only one pressed.
         </p>
       ),
+      height: 'short',
     },
   ],
   guidelines: {

@@ -30,8 +30,8 @@ const doc: ComponentDoc = {
       title: 'An item with actions',
       description: (
         <p>
-          The header names the item, usually as a link to its page. The description says what it is, the body holds
-          its properties and the footer says when it last changed. Actions go at the end of the header row.
+          The header names the item, usually as a link to its page. The description says what it is, the body holds its
+          properties and the footer says when it last changed. Actions go at the end of the header row.
         </p>
       ),
     },
@@ -40,8 +40,8 @@ const doc: ComponentDoc = {
       title: 'Kinds and references',
       description: (
         <p>
-          <code>kind</code> colors the crop marks and the reference. Pair it with a reference whose letter says the
-          same thing: C for configuration, R for resource, P for policy.
+          <code>kind</code> colors the crop marks and the reference. Pair it with a reference whose letter says the same
+          thing: C for configuration, R for resource, P for policy.
         </p>
       ),
     },
@@ -73,9 +73,8 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        For a list of items that the user filters, pages or selects from. Use{' '}
-        <a href="#/components/cards">Cards</a>, which draws these cards for you, or a{' '}
-        <a href="#/components/table">Table</a>.
+        For a list of items that the user filters, pages or selects from. Use <a href="#/components/cards">Cards</a>,
+        which draws these cards for you, or a <a href="#/components/table">Table</a>.
       </>,
       <>
         For a card whose whole surface starts an action. Use an <a href="#/components/action-card">ActionCard</a>.

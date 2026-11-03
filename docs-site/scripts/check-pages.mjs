@@ -61,8 +61,12 @@ let failures = 0;
 for (const route of routes) {
   errors = [];
   await page.goto(`${base}/#${route}`, { waitUntil: 'networkidle' });
-  // Examples and API definitions load after the page; give them a moment to settle.
-  await page.waitForTimeout(700);
+  // Examples load after the page. Wait until none is still loading, then a moment more for what
+  // the examples themselves load, such as CodeMirror or a chart's first draw.
+  await page
+    .waitForFunction(() => !document.querySelector('[data-example-loading]'), null, { timeout: 15000 })
+    .catch(() => errors.push('examples were still loading after 15 seconds'));
+  await page.waitForTimeout(500);
   const problems = await page.evaluate(() => {
     const found = [];
     if (document.title.startsWith('No such sheet')) found.push('route did not resolve');

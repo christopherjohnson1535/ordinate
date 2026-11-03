@@ -41,8 +41,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           Spread <code>filterProps</code> from <code>useCollection</code> onto the filter and put it in the table’s{' '}
-          <code>filter</code> slot. The hook returns <code>filteredItemsCount</code> for the count and a no-match message
-          for the table.
+          <code>filter</code> slot. The hook returns <code>filteredItemsCount</code> for the count and a no-match
+          message for the table.
         </p>
       ),
     },

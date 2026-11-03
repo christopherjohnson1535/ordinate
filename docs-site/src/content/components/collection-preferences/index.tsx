@@ -66,8 +66,8 @@ const doc: ComponentDoc = {
       'Settings that change what data is shown, such as which items match. Those are filters: use a TextFilter or a PropertyFilter.',
       'Preferences the collection does not apply. Offer only what the Table or Cards you show will honor.',
       <>
-        Offering sticky columns with <a href="#/components/table">Table</a>: it has no sticky column support yet, so
-        the setting would have no effect.
+        Offering sticky columns with <a href="#/components/table">Table</a>: it has no sticky column support yet, so the
+        setting would have no effect.
       </>,
     ],
     writing: [

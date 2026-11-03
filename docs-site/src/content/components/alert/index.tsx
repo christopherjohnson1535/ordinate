@@ -30,8 +30,8 @@ const doc: ComponentDoc = {
       title: 'Types',
       description: (
         <p>
-          <code>note</code> for information, <code>complete</code> for something that finished, <code>caution</code>{' '}
-          for something that needs attention soon and <code>fault</code> for something that failed.
+          <code>note</code> for information, <code>complete</code> for something that finished, <code>caution</code> for
+          something that needs attention soon and <code>fault</code> for something that failed.
         </p>
       ),
     },
@@ -78,8 +78,7 @@ const doc: ComponentDoc = {
         <a href="#/components/flashbar">Flashbar</a> at the top of the page.
       </>,
       <>
-        For the state of one item in a list or table. Use a{' '}
-        <a href="#/components/status-indicator">StatusIndicator</a>.
+        For the state of one item in a list or table. Use a <a href="#/components/status-indicator">StatusIndicator</a>.
       </>,
       <>
         For an error in one form field. Use the <code>errorText</code> of a{' '}
@@ -92,8 +91,8 @@ const doc: ComponentDoc = {
       'In the message, say why and what the user can do next.',
       'Name the action with a verb: "Update agents", "Renew certificate".',
       <>
-        The margin says the kind (Note, Complete, Caution, Fault). Change those words with <code>i18nStrings</code>{' '}
-        only to translate them.
+        The margin says the kind (Note, Complete, Caution, Fault). Change those words with <code>i18nStrings</code> only
+        to translate them.
       </>,
     ],
   },

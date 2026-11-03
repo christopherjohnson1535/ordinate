@@ -27,7 +27,7 @@ export default function Masthead() {
             <span>Autumn 2026</span>
           </>
         }
-        title="The Allotment"
+        title="The Plot"
         description="A quarterly journal of small gardens, the people who keep them and what they cook at the end of the day."
         links={links}
         navigationAriaLabel="Journal sections"

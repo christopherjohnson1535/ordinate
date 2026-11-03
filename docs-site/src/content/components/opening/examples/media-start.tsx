@@ -39,9 +39,7 @@ export default function MediaStart() {
             </Button>
           </SpaceBetween>
         }
-        media={
-          <Media src={harbourPhoto} alt="Four narrow houses facing the harbour, in grey, sand, rust and white" />
-        }
+        media={<Media src={harbourPhoto} alt="Four narrow houses facing the harbour, in grey, sand, rust and white" />}
         mediaCaption="Shore Road, Leith · 2025"
       />
     </StyleScope>

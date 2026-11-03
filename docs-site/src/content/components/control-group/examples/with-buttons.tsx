@@ -23,7 +23,7 @@ export default function WithButtons() {
 
   return (
     <SpaceBetween size="l">
-      <FormField label="Health check URL">
+      <FormField label="Health check URL" stretch={true}>
         <ControlGroup>
           <Select
             options={protocols}

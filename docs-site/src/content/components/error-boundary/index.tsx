@@ -14,8 +14,8 @@ const doc: ComponentDoc = {
       <p>
         Wrap a part of the page that could throw while rendering, such as a chart fed by an outside service. While the
         content renders, the boundary adds nothing to the page. When it throws, the boundary shows a fault{' '}
-        <a href="#/components/alert">Alert</a> in its place with a button that reloads the page, and the rest of the page
-        keeps working.
+        <a href="#/components/alert">Alert</a> in its place with a button that reloads the page, and the rest of the
+        page keeps working.
       </p>
       <p>
         The boundary keeps showing the fallback until it is mounted again. To let the user try again without reloading,
@@ -53,9 +53,8 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        For errors from requests, form submits and other events. A boundary only catches errors thrown while
-        rendering; show those in an <a href="#/components/alert">Alert</a> or a{' '}
-        <a href="#/components/flashbar">Flashbar</a>.
+        For errors from requests, form submits and other events. A boundary only catches errors thrown while rendering;
+        show those in an <a href="#/components/alert">Alert</a> or a <a href="#/components/flashbar">Flashbar</a>.
       </>,
       'Around every small component. A page full of fallbacks is harder to use than one fallback for a whole section.',
     ],

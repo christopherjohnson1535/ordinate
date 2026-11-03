@@ -14,15 +14,14 @@ const doc: ComponentDoc = {
       <p>
         A tag editor is an AttributeEditor set up for tags. On a wide sheet it is drawn as a schedule: the Key and Value
         column labels in mono capitals on an ink rule, and a hairline between rows. On a narrow one each row stacks.
-        Under the rows, beside the add button, a mono caption counts how many more tags fit under{' '}
-        <code>tagLimit</code>.
+        Under the rows, beside the add button, a mono caption counts how many more tags fit under <code>tagLimit</code>.
       </p>
       <p>
         The editor checks keys and values as the user types: an empty or repeated key, characters outside{' '}
         <code>allowedCharacterPattern</code>, and keys over 128 or values over 256 characters. Each{' '}
-        <code>onChange</code> reports the new tags and whether they are <code>valid</code>, so you can hold back the save.
-        Tags already saved on the resource are marked <code>existing</code>: their keys cannot be changed, and removing
-        one only marks it, with an Undo button, until the changes are saved.
+        <code>onChange</code> reports the new tags and whether they are <code>valid</code>, so you can hold back the
+        save. Tags already saved on the resource are marked <code>existing</code>: their keys cannot be changed, and
+        removing one only marks it, with an Undo button, until the changes are saved.
       </p>
     </>
   ),
@@ -80,8 +79,7 @@ const doc: ComponentDoc = {
         <a href="#/components/attribute-editor">AttributeEditor</a>.
       </>,
       <>
-        For showing tags that cannot be edited. Use <a href="#/components/key-value-pairs">KeyValuePairs</a> or a
-        table.
+        For showing tags that cannot be edited. Use <a href="#/components/key-value-pairs">KeyValuePairs</a> or a table.
       </>,
       'Saving changes while event.detail.valid is false.',
     ],

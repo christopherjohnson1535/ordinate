@@ -4,15 +4,15 @@ import React from 'react';
 
 import LineChart, { LineChartProps } from '@ordinate/charts/line-chart';
 
-// Upload time by file size, from 1 KB to 1 GB, measured from two regions.
-const sizes = [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576];
+// Upload time by file size, from 1 KB to 1 GB (1 MB = 1,000 KB), measured from two regions.
+const sizes = [1, 3, 10, 30, 100, 300, 1000, 3000, 10000, 30000, 100000, 300000, 1000000];
 
 function uploadTime(perMegabyte: number, overhead: number) {
-  return sizes.map(kb => ({ x: kb, y: Math.round(overhead + (kb / 1024) * perMegabyte) }));
+  return sizes.map(kb => ({ x: kb, y: Math.round(overhead + (kb / 1000) * perMegabyte) }));
 }
 
 const ms = (value: number) => new Intl.NumberFormat('en', { notation: 'compact' }).format(value) + ' ms';
-const size = (kb: number) => (kb >= 1048576 ? `${kb / 1048576} GB` : kb >= 1024 ? `${kb / 1024} MB` : `${kb} KB`);
+const size = (kb: number) => (kb >= 1e6 ? `${kb / 1e6} GB` : kb >= 1000 ? `${kb / 1000} MB` : `${kb} KB`);
 
 const series: LineChartProps.SeriesSpec<number>[] = [
   { title: 'us-mountain-1', type: 'line', data: uploadTime(9, 40), valueFormatter: value => `${value} ms` },

@@ -12,8 +12,8 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A radio button keeps its familiar circle. Once selected, its ring turns ink and a little heavier, with an ink dot
-        inside. A disabled radio button is hatched.
+        A radio button keeps its familiar circle. Once selected, its ring turns ink and a little heavier, with an ink
+        dot inside. A disabled radio button is hatched.
       </p>
       <p>
         Most forms want a <a href="#/components/radio-group">RadioGroup</a>, which lays out the buttons, shares their
@@ -82,8 +82,9 @@ const doc: ComponentDoc = {
   accessibility: [
     'Each radio button is a native <input type="radio">, so the arrow keys move between the buttons that share a name and Space selects.',
     <>
-      The buttons do not form a group on their own. Wrap them in an element with <code>role=&quot;radiogroup&quot;</code>{' '}
-      and an accessible name, such as <code>aria-labelledby</code> pointing at a heading.
+      The buttons do not form a group on their own. Wrap them in an element with{' '}
+      <code>role=&quot;radiogroup&quot;</code> and an accessible name, such as <code>aria-labelledby</code> pointing at
+      a heading.
     </>,
     'Clicking the label selects the radio button. The description is tied to it with aria-describedby.',
     <>

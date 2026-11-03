@@ -12,17 +12,17 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A section is a full-width band of a website page. Its background runs edge to edge while the content keeps to
-        a centered column, so sections stacked on one page line up with each other and with the site header and
-        footer. It renders a <code>section</code> element with an optional heading, description and actions at the
-        top, and anything you put inside below them.
+        A section is a full-width band of a website page. Its background runs edge to edge while the content keeps to a
+        centered column, so sections stacked on one page line up with each other and with the site header and footer. It
+        renders a <code>section</code> element with an optional heading, description and actions at the top, and
+        anything you put inside below them.
       </p>
       <p>
-        Bands are told apart with tone and printed rules rather than boxes. <code>tone</code> sets the background:
-        the page, a soft accent tint, or inverted dark ink with light text, which switches the text, links and
-        buttons inside with it. <code>rule</code> draws an ink rule above or below, or a thick and a thin rule above
-        as on a printed page. How each looks follows the page style: the accent is sunflower in shopfront, and bands
-        get rounded corners there too.
+        Bands are told apart with tone and printed rules rather than boxes. <code>tone</code> sets the background: the
+        page, a soft accent tint, or inverted dark ink with light text, which switches the text, links and buttons
+        inside with it. <code>rule</code> draws an ink rule above or below, or a thick and a thin rule above as on a
+        printed page. How each looks follows the page style: the accent is sunflower in shopfront, and bands get rounded
+        corners there too.
       </p>
     </>
   ),
@@ -32,8 +32,8 @@ const doc: ComponentDoc = {
       title: 'A section with a heading',
       description: (
         <p>
-          A heading, a line about it, a link to more at the end of the heading row, and the content below. Shown in
-          the <code>shopfront</code> style for a bicycle workshop.
+          A heading, a line about it, a link to more at the end of the heading row, and the content below. Shown in the{' '}
+          <code>shopfront</code> style for a bicycle workshop.
         </p>
       ),
       layout: 'flush',
@@ -43,9 +43,9 @@ const doc: ComponentDoc = {
       title: 'Tones',
       description: (
         <p>
-          <code>default</code>, <code>accent</code> and <code>inverted</code> in a row, in the{' '}
-          <code>shopfront</code> style. Two tinted bands in a row keep a small gap so they read as two. Text, links and
-          buttons inside the inverted band switch to light colors on their own.
+          <code>default</code>, <code>accent</code> and <code>inverted</code> in a row, in the <code>shopfront</code>{' '}
+          style. Two tinted bands in a row keep a small gap so they read as two. Text, links and buttons inside the
+          inverted band switch to light colors on their own.
         </p>
       ),
       layout: 'flush',
@@ -55,8 +55,8 @@ const doc: ComponentDoc = {
       title: 'Rules and a reading width',
       description: (
         <p>
-          <code>rule="double"</code> opens a section like a new part of a journal, and <code>width="narrow"</code>{' '}
-          keeps lines short enough to read. Shown in the <code>editorial</code> style, with the text in{' '}
+          <code>rule="double"</code> opens a section like a new part of a journal, and <code>width="narrow"</code> keeps
+          lines short enough to read. Shown in the <code>editorial</code> style, with the text in{' '}
           <a href="#/components/text-content">TextContent</a>.
         </p>
       ),

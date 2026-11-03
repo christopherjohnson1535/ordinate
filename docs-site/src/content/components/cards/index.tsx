@@ -20,7 +20,8 @@ const doc: ComponentDoc = {
       </p>
       <p>
         Cards holds no state. You pass the items to show, the selection and the filter, and update them in the event
-        handlers. <code>useCollection</code> from <code>@ordinate/collection-hooks</code> does the filtering, paging and selection for you.
+        handlers. <code>useCollection</code> from <code>@ordinate/collection-hooks</code> does the filtering, paging and
+        selection for you.
       </p>
     </>
   ),
@@ -31,9 +32,9 @@ const doc: ComponentDoc = {
       title: 'A collection of resources',
       description: (
         <p>
-          <code>cardDefinition</code> says how a card shows an item: a <code>header</code>, a <code>reference</code>{' '}
-          and <code>sections</code>. Sections whose <code>width</code> adds up to 100 or less share a row, like cells
-          of a title block.
+          <code>cardDefinition</code> says how a card shows an item: a <code>header</code>, a <code>reference</code> and{' '}
+          <code>sections</code>. Sections whose <code>width</code> adds up to 100 or less share a row, like cells of a
+          title block.
         </p>
       ),
     },

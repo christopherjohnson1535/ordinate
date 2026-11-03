@@ -41,7 +41,8 @@ export default function Tones() {
         actions={<Button href="#/components/section">Our story</Button>}
       >
         <Box variant="p">
-          We still fix the bikes of the couriers who taught us. <Link href="#/components/section">Read how it started</Link>.
+          We still fix the bikes of the couriers who taught us.{' '}
+          <Link href="#/components/section">Read how it started</Link>.
         </Box>
       </Section>
     </StyleScope>

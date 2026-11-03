@@ -8,7 +8,8 @@ const doc: ComponentDoc = {
   name: 'List',
   folder: 'list',
   group: 'collections',
-  summary: 'Shows a short run of items, one row each, with an icon, a second line and actions, and lets the user reorder them.',
+  summary:
+    'Shows a short run of items, one row each, with an icon, a second line and actions, and lets the user reorder them.',
   description: (
     <>
       <p>
@@ -79,8 +80,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The list is a native <code>ul</code>, or <code>ol</code> when it is sortable or <code>tagOverride="ol"</code>,
-      so screen readers announce how many items it has. Name it with <code>ariaLabel</code>.
+      The list is a native <code>ul</code>, or <code>ol</code> when it is sortable or <code>tagOverride="ol"</code>, so
+      screen readers announce how many items it has. Name it with <code>ariaLabel</code>.
     </>,
     'In a sortable list each row’s move buttons are a group named by the row’s main text, so they read as, for example, "Measured survey, Move up".',
     'The move up button of the first row and the move down button of the last row are disabled.',

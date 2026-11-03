@@ -131,7 +131,7 @@ function Page() {
             global styles once, as for the components, and pin a revision.
           </p>
         </Prose>
-        <Command>npm install @ordinate/charts @ordinate/components @ordinate/global-styles</Command>
+        <Command>npm install @ordinate/charts @ordinate/components</Command>
         <Prose>
           <p>
             Import each chart from its own path. The line, area, bar and mixed charts share their props:{' '}

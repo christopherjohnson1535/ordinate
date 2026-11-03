@@ -94,8 +94,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The group has <code>role=&quot;radiogroup&quot;</code>. Inside a FormField it is named by the field&apos;s label and
-      described by its description and messages. Outside one, give it an <code>ariaLabel</code>.
+      The group has <code>role=&quot;radiogroup&quot;</code>. Inside a FormField it is named by the field&apos;s label
+      and described by its description and messages. Outside one, give it an <code>ariaLabel</code>.
     </>,
     'Each option is a native radio input sharing one name, so Tab moves into the group and the arrow keys move between options and select them.',
     <>

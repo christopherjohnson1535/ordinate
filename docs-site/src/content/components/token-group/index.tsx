@@ -12,9 +12,9 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A token group is a list of <a href="#/components/token">Token</a>s: hairline boxes on the sheet, wrapped in
-        rows or stacked one per line. Each token has a dismiss mark when you pass <code>onDismiss</code>; the event
-        gives you the token’s position, and you remove the item from <code>items</code>.
+        A token group is a list of <a href="#/components/token">Token</a>s: hairline boxes on the sheet, wrapped in rows
+        or stacked one per line. Each token has a dismiss mark when you pass <code>onDismiss</code>; the event gives you
+        the token’s position, and you remove the item from <code>items</code>.
       </p>
       <p>
         With <code>limit</code>, only the first tokens show and a link button reveals the rest. When a focused token is
@@ -65,12 +65,12 @@ const doc: ComponentDoc = {
         For a single value. Use a <a href="#/components/token">Token</a>.
       </>,
       <>
-        For files the user has attached. Use a <a href="#/components/file-token-group">FileTokenGroup</a>, which
-        shows size and upload state.
+        For files the user has attached. Use a <a href="#/components/file-token-group">FileTokenGroup</a>, which shows
+        size and upload state.
       </>,
       <>
-        For filters on a collection. Use a <a href="#/components/property-filter">PropertyFilter</a>, which writes
-        them as one query.
+        For filters on a collection. Use a <a href="#/components/property-filter">PropertyFilter</a>, which writes them
+        as one query.
       </>,
     ],
     writing: [

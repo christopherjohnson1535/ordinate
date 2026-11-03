@@ -10,7 +10,7 @@ const accessKey = 'ORD7Q2M4X9KD81VZ3PLN';
 export default function KeyValue() {
   return (
     <KeyValuePairs
-      columns={3}
+      columns={1}
       items={[
         {
           label: 'Project ID',

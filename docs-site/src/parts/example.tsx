@@ -62,7 +62,11 @@ function ExampleRunner({ example }: { example: LoadedExample }) {
     throw failure;
   }
   if (!loaded || loaded.example !== example) {
-    return <Skeleton variant="block" height="medium" loadingText={`Loading ${example.meta.title}`} />;
+    return (
+      <div data-example-loading="">
+        <Skeleton variant="block" height="medium" loadingText={`Loading ${example.meta.title}`} />
+      </div>
+    );
   }
   return <loaded.Component />;
 }

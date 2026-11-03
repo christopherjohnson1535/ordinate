@@ -17,9 +17,9 @@ const doc: ComponentDoc = {
         color. By default the user can drag it taller; it always fills the width of its container.
       </p>
       <p>
-        A limit on the length is a measure, so it is drawn as a dimension line under the control: set the
-        surrounding FormField&apos;s <code>characterCountText</code> on every change, and the field draws and announces
-        it. The textarea itself does not count or cut text.
+        A limit on the length is a measure, so it is drawn as a dimension line under the control: set the surrounding
+        FormField&apos;s <code>characterCountText</code> on every change, and the field draws and announces it. The
+        textarea itself does not count or cut text.
       </p>
     </>
   ),
@@ -60,8 +60,9 @@ const doc: ComponentDoc = {
       title: 'Warning, read-only and disabled',
       description: (
         <p>
-          Read-only text can still be selected and copied. Disabled hatches the field and takes it out of the tab
-          order; say why next to it.
+          Set <code>warning</code> together with the FormField&apos;s <code>warningText</code> for a value that is
+          allowed but worth a second look. Read-only text can still be selected and copied. Disabled hatches the field
+          and takes it out of the tab order; say why next to it.
         </p>
       ),
     },
@@ -76,8 +77,8 @@ const doc: ComponentDoc = {
         For a short value on one line, such as a name. Use an <a href="#/components/input">Input</a>.
       </>,
       <>
-        For a message that is sent with Enter, such as a chat. Use a{' '}
-        <a href="#/components/prompt-input">PromptInput</a>.
+        For a message that is sent with Enter, such as a chat. Use a <a href="#/components/prompt-input">PromptInput</a>
+        .
       </>,
       <>
         For code that needs line numbers and highlighting. Use a <a href="#/components/code-editor">CodeEditor</a>.
@@ -96,12 +97,14 @@ const doc: ComponentDoc = {
       an <code>ariaLabel</code>.
     </>,
     <>
-      The FormField announces <code>characterCountText</code> after typing pauses for a second, so the count is not
-      read on every key.
+      The FormField announces <code>characterCountText</code> after typing pauses for a second, so the count is not read
+      on every key.
     </>,
     <>
-      <code>warning</code> only changes how the field looks. Say what the warning is about in text and point to it with{' '}
-      <code>ariaDescribedby</code>, or use the FormField&apos;s <code>warningText</code>, which does both.
+      <code>warning</code> only changes how the field looks. Say what the warning is about in the FormField&apos;s{' '}
+      <code>warningText</code>, which the textarea is described by, or in text you point to with{' '}
+      <code>ariaDescribedby</code>. Unlike an error, a FormField warning does not reach the textarea on its own: set{' '}
+      <code>warning</code> as well.
     </>,
     'Read-only keeps the text focusable and selectable. Disabled removes it from the tab order.',
     'Use autoFocus only when the textarea is the obvious next step, such as the only field in a modal.',

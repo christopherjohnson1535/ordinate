@@ -22,8 +22,6 @@ const doc: ComponentDoc = {
       </p>
     </>
   ),
-  marks: [],
-  testing: true,
   examples: [
     {
       id: 'filter-count',
@@ -42,7 +40,7 @@ const doc: ComponentDoc = {
         <p>
           With <code>tagName=&quot;span&quot;</code> the region sits inside a line of text. The second region is{' '}
           <code>hidden</code> and <code>assertive</code>: nothing shows, and the failure interrupts the screen reader.
-          Images such as the status icon are read by their label, and parts marked <code>aria-hidden</code> are left out.
+          The status icon is <code>aria-hidden</code>, so only the words are read.
         </p>
       ),
     },
@@ -59,8 +57,8 @@ const doc: ComponentDoc = {
     avoid: [
       'For content that changes all the time, such as a clock or a live log. The reader would hear nothing else.',
       <>
-        Wrapping a <a href="#/components/flashbar">Flashbar</a> or a <a href="#/components/progress-bar">ProgressBar</a>.
-        They announce their own changes, so the text would be read twice.
+        Wrapping a <a href="#/components/flashbar">Flashbar</a> or a <a href="#/components/progress-bar">ProgressBar</a>
+        . They announce their own changes, so the text would be read twice.
       </>,
       <>
         <code>assertive</code> for anything that can wait. It cuts off whatever the user is listening to.

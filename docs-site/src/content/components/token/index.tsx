@@ -19,8 +19,7 @@ const doc: ComponentDoc = {
       </p>
       <p>
         A token has a dismiss button only when you pass <code>onDismiss</code>, and removing the token is up to you. To
-        show several tokens with focus handled between them, use a{' '}
-        <a href="#/components/token-group">TokenGroup</a>.
+        show several tokens with focus handled between them, use a <a href="#/components/token-group">TokenGroup</a>.
       </p>
     </>
   ),

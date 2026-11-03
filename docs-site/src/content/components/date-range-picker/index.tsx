@@ -20,9 +20,9 @@ const doc: ComponentDoc = {
       </p>
       <p>
         Nothing changes until the user presses Apply. The picker then checks that the range is complete and in order,
-        runs your <code>isValidRange</code>, and either calls <code>onChange</code> and closes or shows the error in
-        the popup. An absolute value holds ISO strings, <code>YYYY-MM-DDTHH:mm:ss</code>, or <code>YYYY-MM-DD</code>{' '}
-        with <code>dateOnly</code>. A relative value holds an amount and a unit counted back from now.
+        runs your <code>isValidRange</code>, and either calls <code>onChange</code> and closes or shows the error in the
+        popup. An absolute value holds ISO strings, <code>YYYY-MM-DDTHH:mm:ss</code>, or <code>YYYY-MM-DD</code> with{' '}
+        <code>dateOnly</code>. A relative value holds an amount and a unit counted back from now.
       </p>
     </>
   ),

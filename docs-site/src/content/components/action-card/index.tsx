@@ -51,8 +51,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           With <code>href</code> the card is a link. <code>onFollow</code> fires on a plain left click or Enter; call{' '}
-          <code>preventDefault()</code> on it to route on the client. With <code>target="_blank"</code> the link opens
-          a new tab.
+          <code>preventDefault()</code> on it to route on the client. With <code>target="_blank"</code> the link opens a
+          new tab.
         </p>
       ),
     },
@@ -81,7 +81,8 @@ const doc: ComponentDoc = {
         <a href="#/components/item-card">ItemCard</a>.
       </>,
       <>
-        For choosing one option of several. Use <a href="#/components/tiles">Tiles</a> or a <a href="#/components/radio-group">RadioGroup</a>.
+        For choosing one option of several. Use <a href="#/components/tiles">Tiles</a> or a{' '}
+        <a href="#/components/radio-group">RadioGroup</a>.
       </>,
       'Putting links, buttons or other controls inside the card: the card is already one control.',
     ],

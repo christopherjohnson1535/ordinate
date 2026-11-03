@@ -37,7 +37,7 @@ const doc: ComponentDoc = {
       description: (
         <p>
           Several bodies split the rows into groups. Each opens with a row whose single cell spans every column with{' '}
-          <code>colSpan</code> and names the group. Stripes count from the start of each body.
+          <code>colSpan</code> and names the group. Leave stripes off here: the title row counts in the pattern.
         </p>
       ),
     },

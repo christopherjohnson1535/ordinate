@@ -17,8 +17,8 @@ const doc: ComponentDoc = {
         chosen are hatched. With <code>granularity="month"</code> the grid shows the twelve months of a year instead.
       </p>
       <p>
-        The value is an ISO string, <code>YYYY-MM-DD</code> or <code>YYYY-MM</code>, and the calendar is controlled:
-        set <code>value</code> again in <code>onChange</code>. Most forms want a{' '}
+        The value is an ISO string, <code>YYYY-MM-DD</code> or <code>YYYY-MM</code>, and the calendar is controlled: set{' '}
+        <code>value</code> again in <code>onChange</code>. Most forms want a{' '}
         <a href="#/components/date-picker">DatePicker</a>, which opens this calendar from a date input.
       </p>
     </>
@@ -99,8 +99,8 @@ const doc: ComponentDoc = {
     'Left and right arrows follow the reading direction, so they are mirrored in right-to-left pages.',
     'The month title is a polite live region, so paging to another month is announced.',
     <>
-      Today is marked <code>aria-current="date"</code> and its name starts with “Today”. Weekday headings carry the
-      full weekday name for screen readers.
+      Today is marked <code>aria-current="date"</code> and its name starts with “Today”. Weekday headings carry the full
+      weekday name for screen readers.
     </>,
     <>
       Disabled days stay focusable and are marked <code>aria-disabled</code>, with the disabled reason read as their

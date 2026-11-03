@@ -32,8 +32,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           A local business says what it does in one line and offers one main action. The example is in the{' '}
-          <code>shopfront</code> style, which this layout was drawn for: the badge is a sunflower marker and the
-          drawing sits on a tinted panel.
+          <code>shopfront</code> style, which this layout was drawn for: the badge is a sunflower marker and the drawing
+          sits on a tinted panel.
         </p>
       ),
       layout: 'flush',
@@ -55,8 +55,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           The name of the publication between rules, with the issue in <code>meta</code> and the sections in{' '}
-          <code>links</code>. Shown in the <code>editorial</code> style. Following a link calls{' '}
-          <code>onFollow</code>, which here moves the current section instead of loading a page.
+          <code>links</code>. Shown in the <code>editorial</code> style. Following a link calls <code>onFollow</code>,
+          which here moves the current section instead of loading a page.
         </p>
       ),
       layout: 'flush',
@@ -78,8 +78,8 @@ const doc: ComponentDoc = {
       'At the top of a website page, directly under the site header, to say what the page or the business is.',
       'Once per page. The opening holds the page title, so a second one would give the page two titles.',
       <>
-        <code>masthead</code> for a journal or newsletter front page, <code>split</code> for a shop or service with
-        one main action, <code>statement</code> for a studio or portfolio that leads with its work.
+        <code>masthead</code> for a journal or newsletter front page, <code>split</code> for a shop or service with one
+        main action, <code>statement</code> for a studio or portfolio that leads with its work.
       </>,
     ],
     avoid: [
@@ -110,13 +110,12 @@ const doc: ComponentDoc = {
       <code>navigationAriaLabel</code>. The current link carries <code>aria-current="page"</code>.
     </>,
     <>
-      <code>onFollow</code> fires only for a plain left click, so opening a link in a new tab still works as the
-      browser expects.
+      <code>onFollow</code> fires only for a plain left click, so opening a link in a new tab still works as the browser
+      expects.
     </>,
     <>
-      With a <code>mediaCaption</code>, the media and caption form a <code>figure</code> and{' '}
-      <code>figcaption</code>. Give pictures alt text, and hide drawings that only decorate with{' '}
-      <code>aria-hidden</code>.
+      With a <code>mediaCaption</code>, the media and caption form a <code>figure</code> and <code>figcaption</code>.
+      Give pictures alt text, and hide drawings that only decorate with <code>aria-hidden</code>.
     </>,
     'The kicker sits above the title on screen but is a paragraph of its own, so a screen reader reads it before the heading.',
   ],

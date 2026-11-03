@@ -37,11 +37,11 @@ export default function GrowingContent() {
       >
         <SpaceBetween size="xs">
           {steps.slice(0, done).map(step => (
-            <StatusIndicator key={step} type="success">
+            <StatusIndicator key={step} state="complete">
               {step}
             </StatusIndicator>
           ))}
-          {done < steps.length && <StatusIndicator type="pending">{steps[done]}</StatusIndicator>}
+          {done < steps.length && <StatusIndicator state="underway">{steps[done]}</StatusIndicator>}
         </SpaceBetween>
       </Modal>
     </>

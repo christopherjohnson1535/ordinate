@@ -34,7 +34,7 @@ const doc: ComponentDoc = {
           menu, and its <code>disabledReason</code> shows when the item is highlighted.
         </p>
       ),
-      layout: 'centered',
+      height: 'short',
     },
     {
       id: 'groups',
@@ -45,7 +45,7 @@ const doc: ComponentDoc = {
           <code>event.detail.checked</code> is the state to set, so update <code>items</code> with it.
         </p>
       ),
-      layout: 'centered',
+      height: 'short',
     },
     {
       id: 'split-button',
@@ -57,7 +57,7 @@ const doc: ComponentDoc = {
           variants support it.
         </p>
       ),
-      layout: 'centered',
+      height: 'short',
     },
     {
       id: 'icon-variants',
@@ -68,6 +68,7 @@ const doc: ComponentDoc = {
           is smaller and has no frame, for a row of a table or list.
         </p>
       ),
+      height: 'medium',
     },
     {
       id: 'links',
@@ -79,7 +80,7 @@ const doc: ComponentDoc = {
           a small leader and opens a new tab.
         </p>
       ),
-      layout: 'centered',
+      height: 'short',
     },
     {
       id: 'expandable-groups',
@@ -90,7 +91,7 @@ const doc: ComponentDoc = {
           sub-menu. Use it for a long menu with natural categories. A disabled group disables its items.
         </p>
       ),
-      layout: 'centered',
+      height: 'medium',
     },
   ],
   guidelines: {

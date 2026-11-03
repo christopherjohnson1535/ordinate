@@ -17,7 +17,12 @@ export default function Formats() {
         <TimeInput value={hour} onChange={event => setHour(event.detail.value)} format="hh" placeholder="hh" />
       </FormField>
       <FormField label="Backup starts" constraintText="hh:mm" layout="stacked">
-        <TimeInput value={minute} onChange={event => setMinute(event.detail.value)} format="hh:mm" placeholder="hh:mm" />
+        <TimeInput
+          value={minute}
+          onChange={event => setMinute(event.detail.value)}
+          format="hh:mm"
+          placeholder="hh:mm"
+        />
       </FormField>
       <FormField label="Last entry" constraintText="hh:mm:ss" layout="stacked">
         <TimeInput value={second} onChange={event => setSecond(event.detail.value)} placeholder="hh:mm:ss" />

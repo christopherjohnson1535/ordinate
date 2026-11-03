@@ -18,7 +18,9 @@ export default function States() {
       <FormField
         label="Command"
         errorText={tooLong ? `Shorten the command to ${limit} characters or fewer.` : undefined}
-        warningText={touchesProduction ? 'This restarts every node at once. Traffic drops while they start.' : undefined}
+        warningText={
+          touchesProduction ? 'This restarts every node at once. Traffic drops while they start.' : undefined
+        }
       >
         <PromptInput
           value={command}

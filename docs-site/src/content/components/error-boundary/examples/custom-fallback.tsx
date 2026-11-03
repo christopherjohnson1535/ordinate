@@ -35,7 +35,11 @@ export default function CustomFallback() {
         key={attempt}
         errorBoundaryId="node-list"
         renderFallback={({ error }) => (
-          <Alert type="fault" header="The node list could not be shown" action={<Button onClick={retry}>Try again</Button>}>
+          <Alert
+            type="fault"
+            header="The node list could not be shown"
+            action={<Button onClick={retry}>Try again</Button>}
+          >
             {error.message} The rest of the page still works.
           </Alert>
         )}

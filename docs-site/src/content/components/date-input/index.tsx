@@ -12,14 +12,14 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A date input is a text field on an ink baseline with the date lettered in mono, so the figures keep their
-        place as the user types. It shows the date as <code>YYYY/MM/DD</code> and stores it as{' '}
-        <code>YYYY-MM-DD</code>. The slashes appear on their own, a digit that cannot start a month or day is padded (4
-        becomes 04), and impossible values such as a 13th month or 31 February are refused as they are typed.
+        A date input is a text field on an ink baseline with the date lettered in mono, so the figures keep their place
+        as the user types. It shows the date as <code>YYYY/MM/DD</code> and stores it as <code>YYYY-MM-DD</code>. The
+        slashes appear on their own, a digit that cannot start a month or day is padded (4 becomes 04), and impossible
+        values such as a 13th month or 31 February are refused as they are typed.
       </p>
       <p>
-        The input is controlled, and its value can be partial while the user types, such as <code>2026-03</code>.
-        Check that it is complete before you use it.
+        The input is controlled, and its value can be partial while the user types, such as <code>2026-03</code>. Check
+        that it is complete before you use it.
       </p>
     </>
   ),
@@ -85,8 +85,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The input has <code>inputmode="numeric"</code>, so touch devices show a number pad, and browser autocomplete
-      and spell checking are off.
+      The input has <code>inputmode="numeric"</code>, so touch devices show a number pad, and browser autocomplete and
+      spell checking are off.
     </>,
     'Inside a FormField the label, description, constraint and error are tied to the input. Without one, give it an ariaLabel.',
     'Typed and pasted text both go through the mask, and autofilled values are brought back into it.',

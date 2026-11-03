@@ -15,13 +15,13 @@ const doc: ComponentDoc = {
         FileUpload puts the parts of this group together: a <a href="#/components/file-input">FileInput</a> button, the
         constraint text and messages under it, and the chosen files as a{' '}
         <a href="#/components/file-token-group">FileTokenGroup</a> stacked one per line. While files are dragged over
-        the page, the button gives way to a <a href="#/components/file-dropzone">FileDropzone</a>, a dashed
-        construction line inside crop marks, and dropped files are added the same way as chosen ones.
+        the page, the button gives way to a <a href="#/components/file-dropzone">FileDropzone</a>, a dashed construction
+        line inside crop marks, and dropped files are added the same way as chosen ones.
       </p>
       <p>
-        FileUpload only collects files: sending them is up to you. The value is controlled, and the{' '}
-        <code>accept</code> hint does not apply to dropped files, so check each file and report problems with{' '}
-        <code>fileErrors</code> and <code>fileWarnings</code>, in the same order as <code>value</code>.
+        FileUpload only collects files: sending them is up to you. The value is controlled, and the <code>accept</code>{' '}
+        hint does not apply to dropped files, so check each file and report problems with <code>fileErrors</code> and{' '}
+        <code>fileWarnings</code>, in the same order as <code>value</code>.
       </p>
     </>
   ),
@@ -62,8 +62,8 @@ const doc: ComponentDoc = {
       title: 'Thumbnails',
       description: (
         <p>
-          <code>showFileThumbnail</code> previews each image so the user can tell photos apart, and shows a file icon for
-          everything else.
+          <code>showFileThumbnail</code> previews each image so the user can tell photos apart, and shows a file icon
+          for everything else.
         </p>
       ),
     },
@@ -94,9 +94,7 @@ const doc: ComponentDoc = {
     'The button is a native file input underneath, so it is reached with Tab, opens the file chooser with Enter or Space, and is named by the button text and the field label.',
     'The constraint text and the overall error or warning are tied to the input as its description.',
     'Removing a file moves focus to the next remove button, and removing the last file moves focus back to the button.',
-    <>
-      Dropping files needs a pointer. The button stays the way to add files from the keyboard, so do not hide it.
-    </>,
+    <>Dropping files needs a pointer. The button stays the way to add files from the keyboard, so do not hide it.</>,
     'Error and warning icons are named “Error” and “Warning”; replace them with i18nStrings when you translate the control.',
   ],
   related: ['file-input', 'file-token-group', 'file-dropzone', 'form-field'],

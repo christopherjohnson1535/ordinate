@@ -30,8 +30,8 @@ const doc: ComponentDoc = {
       title: 'Choose a file',
       description: (
         <p>
-          The button text defaults to “Choose file”, or “Choose files” with <code>multiple</code>. Name the file
-          instead when that is clearer.
+          The button text defaults to “Choose file”, or “Choose files” with <code>multiple</code>. Name the file instead
+          when that is clearer.
         </p>
       ),
     },

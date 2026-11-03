@@ -19,9 +19,9 @@ export default function CustomTrigger() {
         header="Health checks"
         content={
           <SpaceBetween size="xxs">
-            <StatusIndicator type="success">Disk</StatusIndicator>
-            <StatusIndicator type="success">Network</StatusIndicator>
-            <StatusIndicator type="warning">Memory at 91%</StatusIndicator>
+            <StatusIndicator state="complete">Disk</StatusIndicator>
+            <StatusIndicator state="complete">Network</StatusIndicator>
+            <StatusIndicator state="caution">Memory at 91%</StatusIndicator>
           </SpaceBetween>
         }
       >

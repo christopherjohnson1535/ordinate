@@ -61,9 +61,8 @@ const doc: ComponentDoc = {
       title: 'Loading options',
       description: (
         <p>
-          Load options in <code>onLoadItems</code> when the list opens, and report progress with{' '}
-          <code>statusType</code>. On an error the list shows a retry button, which calls <code>onLoadItems</code>{' '}
-          again.
+          Load options in <code>onLoadItems</code> when the list opens, and report progress with <code>statusType</code>
+          . On an error the list shows a retry button, which calls <code>onLoadItems</code> again.
         </p>
       ),
     },
@@ -107,15 +106,15 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The trigger is a native button with <code>aria-haspopup=&quot;listbox&quot;</code> and{' '}
-      <code>aria-expanded</code>. Inside a FormField it is named by the field&apos;s label followed by the chosen option.
-      Outside one, give it an <code>ariaLabel</code>.
+      The trigger is a native button with <code>aria-haspopup=&quot;listbox&quot;</code> and <code>aria-expanded</code>.
+      Inside a FormField it is named by the field&apos;s label followed by the chosen option. Outside one, give it an{' '}
+      <code>ariaLabel</code>.
     </>,
     'Enter, Space, Up or Down opens the list. Typing letters on the closed trigger opens the list at the first option that starts with them.',
     'In the list, Up and Down move the highlight, Home, End, Page Up and Page Down jump, and typing moves to a matching option. Enter or Space chooses it, Escape closes the list and focus goes back to the trigger.',
     <>
-      The list is a <code>listbox</code> of <code>option</code>s with <code>aria-selected</code> on the chosen one.
-      With filtering, the filter input is a combobox that keeps focus while the arrow keys move the highlight.
+      The list is a <code>listbox</code> of <code>option</code>s with <code>aria-selected</code> on the chosen one. With
+      filtering, the filter input is a combobox that keeps focus while the arrow keys move the highlight.
     </>,
     'Loading, finished and error texts sit in a polite live region, so they are announced as they change.',
     'A read-only select stays focusable and is marked aria-disabled; it does not open.',

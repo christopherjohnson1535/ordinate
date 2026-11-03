@@ -11,8 +11,8 @@ export interface TableRowProps extends BaseComponentProps {
    */
   children?: React.ReactNode;
   /**
-   * Shows the row as selected, drawn as an inverted ink row with light text. Pair it with a selection cell
-   * so the state is also announced.
+   * Shows the row as picked for an action: raised on the selected background, with an ink rule on its
+   * leading edge. Pair it with a selection cell so the state is also announced.
    */
   selected?: boolean;
   /**

@@ -13,9 +13,9 @@ const doc: ComponentDoc = {
     <>
       <p>
         A time input is a text field on an ink baseline with the time lettered in mono. It takes hours, minutes and
-        seconds by default, or fewer parts with <code>format</code>. The colons appear as each part is complete, a
-        digit that cannot start an hour or minute is padded, and impossible values such as 25 hours or 61 minutes are
-        refused as they are typed.
+        seconds by default, or fewer parts with <code>format</code>. The colons appear as each part is complete, a digit
+        that cannot start an hour or minute is padded, and impossible values such as 25 hours or 61 minutes are refused
+        as they are typed.
       </p>
       <p>
         The input is controlled, and its value can be partial while the user types, such as <code>14:3</code>. Check
@@ -89,8 +89,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The input has <code>inputmode="numeric"</code>, so touch devices show a number pad, and browser autocomplete
-      and spell checking are off.
+      The input has <code>inputmode="numeric"</code>, so touch devices show a number pad, and browser autocomplete and
+      spell checking are off.
     </>,
     'Inside a FormField the label, description, constraint and error are tied to the input. Without one, give it an ariaLabel.',
     'The format is not announced on its own: say it in the constraint text as well as the placeholder.',

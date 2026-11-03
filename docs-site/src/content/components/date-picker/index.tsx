@@ -30,9 +30,7 @@ const doc: ComponentDoc = {
       id: 'basic',
       title: 'In a form field',
       description: (
-        <p>
-          The most common use. The calendar opens with focus on the chosen day, or on today when there is none.
-        </p>
+        <p>The most common use. The calendar opens with focus on the chosen day, or on today when there is none.</p>
       ),
     },
     {
@@ -40,8 +38,8 @@ const doc: ComponentDoc = {
       title: 'Limiting the dates',
       description: (
         <p>
-          Disable the days that cannot be chosen and say why. Check a typed date against the same rule and show an
-          error in the form field.
+          Disable the days that cannot be chosen and say why. Check a typed date against the same rule and show an error
+          in the form field.
         </p>
       ),
     },
@@ -59,9 +57,7 @@ const doc: ComponentDoc = {
       id: 'states',
       title: 'Read-only and disabled',
       description: (
-        <p>
-          Both keep the calendar closed. A read-only picker still lets the user focus and copy the date.
-        </p>
+        <p>Both keep the calendar closed. A read-only picker still lets the user focus and copy the date.</p>
       ),
     },
   ],

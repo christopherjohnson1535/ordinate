@@ -13,7 +13,8 @@ const deployedAt = new Date(start + 14 * fiveMinutes);
 const latency = Array.from({ length: 73 }, (_, index) => {
   const sinceDeploy = index - 14;
   const bump = sinceDeploy >= 0 ? 140 * Math.exp(-sinceDeploy / 9) : 0;
-  const noise = Math.sin(index * 7.31) * 18;
+  // A repeatable scatter of about ±20 ms.
+  const noise = ((Math.sin(index * 12.9898) * 43758.5453) % 1) * 20;
   return { x: new Date(start + index * fiveMinutes), y: Math.round(165 + bump + noise) };
 });
 

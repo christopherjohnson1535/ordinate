@@ -30,7 +30,7 @@ const floors = [
 
 export default function GroupedRows() {
   return (
-    <TableRoot caption="Room schedule" stripedRows={true}>
+    <TableRoot caption="Room schedule">
       <TableHead>
         <TableRow>
           <TableHeaderCell>Room</TableHeaderCell>

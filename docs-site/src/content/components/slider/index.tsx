@@ -30,9 +30,7 @@ const doc: ComponentDoc = {
       id: 'basic',
       title: 'Set a value',
       description: (
-        <p>
-          A slider in a FormField, with a formatter for the unit. With 40 steps or fewer, every step gets a tick.
-        </p>
+        <p>A slider in a FormField, with a formatter for the unit. With 40 steps or fewer, every step gets a tick.</p>
       ),
     },
     {
