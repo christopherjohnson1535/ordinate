@@ -4,19 +4,18 @@ import React, { useState } from 'react';
 
 import AppLayout from '@ordinate/components/app-layout';
 import Box from '@ordinate/components/box';
+import Divider from '@ordinate/components/divider';
 import Drawer from '@ordinate/components/drawer';
 import Header from '@ordinate/components/header';
-import Table from '@ordinate/components/table';
 
-const nodes = [
-  { name: 'na-01', zone: '1a', uptime: '30 days' },
-  { name: 'na-02', zone: '1b', uptime: '30 days' },
-  { name: 'na-11', zone: '1c', uptime: '6 hours' },
-  { name: 'na-12', zone: '1a', uptime: '5 hours' },
+const zones = [
+  { zone: 'us-mountain-1a', nodes: 8, note: 'na-12 joined at 08:40.' },
+  { zone: 'us-mountain-1b', nodes: 6, note: 'No changes today.' },
+  { zone: 'us-mountain-1c', nodes: 6, note: 'na-11 joined at 07:55.' },
 ];
 
 export default function FullBleed() {
-  const [activeDrawerId, setActiveDrawerId] = useState<string | null>('nodes');
+  const [activeDrawerId, setActiveDrawerId] = useState<string | null>('zones');
 
   return (
     <AppLayout
@@ -26,20 +25,22 @@ export default function FullBleed() {
       onDrawerChange={event => setActiveDrawerId(event.detail.activeDrawerId)}
       drawers={[
         {
-          id: 'nodes',
+          id: 'zones',
           trigger: { iconName: 'list-view' },
-          ariaLabels: { drawerName: 'Recent nodes' },
+          ariaLabels: { drawerName: 'Zones' },
           content: (
-            <Drawer header="Recent nodes" disableContentPaddings={true}>
-              <Table
-                variant="embedded"
-                items={nodes}
-                columnDefinitions={[
-                  { id: 'name', header: 'Node', cell: item => item.name },
-                  { id: 'zone', header: 'Zone', cell: item => item.zone },
-                  { id: 'uptime', header: 'Uptime', cell: item => item.uptime },
-                ]}
-              />
+            <Drawer header="Zones" disableContentPaddings={true}>
+              {zones.map(item => (
+                <React.Fragment key={item.zone}>
+                  <Divider />
+                  <Box padding={{ horizontal: 'l', vertical: 's' }}>
+                    <Box variant="strong">{item.zone}</Box>
+                    <Box color="text-body-secondary">
+                      {item.nodes} nodes. {item.note}
+                    </Box>
+                  </Box>
+                </React.Fragment>
+              ))}
             </Drawer>
           ),
         },

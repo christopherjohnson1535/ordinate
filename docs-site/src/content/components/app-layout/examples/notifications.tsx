@@ -10,7 +10,8 @@ import Header from '@ordinate/components/header';
 import SpaceBetween from '@ordinate/components/space-between';
 
 export default function Notifications() {
-  const [deploys, setDeploys] = useState<number[]>([]);
+  const [deploys, setDeploys] = useState<number[]>([1]);
+  const [next, setNext] = useState(2);
 
   const items: FlashbarProps.MessageDefinition[] = deploys.map(number => ({
     id: String(number),
@@ -34,7 +35,10 @@ export default function Notifications() {
           <Header
             variant="h1"
             actions={
-              <Button variant="primary" onClick={() => setDeploys(current => [...current, current.length + 1])}>
+              <Button variant="primary" onClick={() => {
+                  setDeploys(current => [...current, next]);
+                  setNext(next + 1);
+                }}>
                 Deploy
               </Button>
             }

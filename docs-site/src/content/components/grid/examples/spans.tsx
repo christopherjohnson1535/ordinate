@@ -2,16 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 
-import Box from '@ordinate/components/box';
+import Container from '@ordinate/components/container';
 import Grid from '@ordinate/components/grid';
-
-function Cell({ children }: { children: React.ReactNode }) {
-  return (
-    <Box padding="s" variant="code" textAlign="center">
-      {children}
-    </Box>
-  );
-}
 
 export default function Spans() {
   return (
@@ -24,17 +16,15 @@ export default function Spans() {
         { colspan: 4 },
         { colspan: 6, offset: 3 },
         { colspan: 3 },
-        { colspan: 9 },
       ]}
     >
-      <Cell>Plan, 8</Cell>
-      <Cell>Key, 4</Cell>
-      <Cell>Section A, 4</Cell>
-      <Cell>Section B, 4</Cell>
-      <Cell>Section C, 4</Cell>
-      <Cell>Elevation, 6 after 3</Cell>
-      <Cell>Notes, 3</Cell>
-      <Cell>Schedule, 9</Cell>
+      <Container>Plan, 8</Container>
+      <Container>Key, 4</Container>
+      <Container>Section A, 4</Container>
+      <Container>Section B, 4</Container>
+      <Container>Section C, 4</Container>
+      <Container>Elevation, 6 after 3</Container>
+      <Container>Notes, 3</Container>
     </Grid>
   );
 }

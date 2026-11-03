@@ -56,7 +56,7 @@ const doc: ComponentDoc = {
       description: (
         <p>
           <code>disableContentPaddings</code> removes the padding around the content, for content that brings its own
-          edges, such as an embedded table.
+          edges, such as rows ruled off across the full width of the drawer.
         </p>
       ),
       layout: 'flush',
