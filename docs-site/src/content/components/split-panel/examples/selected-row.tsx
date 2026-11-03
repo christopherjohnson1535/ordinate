@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 
 import AppLayout from '@ordinate/components/app-layout';
+import Header from '@ordinate/components/header';
 import KeyValuePairs from '@ordinate/components/key-value-pairs';
 import SplitPanel from '@ordinate/components/split-panel';
 import StatusIndicator, { StatusIndicatorProps } from '@ordinate/components/status-indicator';
@@ -58,7 +59,7 @@ export default function SelectedRow() {
       content={
         <Table
           variant="full-page"
-          header="Services"
+          header={<Header counter={`(${services.length})`}>Services</Header>}
           items={services}
           trackBy="name"
           rowTag={item => item.tag}
