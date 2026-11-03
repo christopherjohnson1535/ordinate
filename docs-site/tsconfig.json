@@ -15,7 +15,12 @@
       "@ordinate/design-tokens": ["../lib/design-tokens"],
       "@ordinate/global-styles": ["../global-styles/src"],
       "@ordinate/global-styles/*": ["../global-styles/src/*"],
-      "@ordinate/collection-hooks": ["../collection-hooks/src"]
+      "@ordinate/collection-hooks": ["../collection-hooks/src"],
+      "~components/*": ["../lib/components/*"],
+      "~charts/*": ["../lib/charts/*"],
+      "~global-styles": ["../global-styles/src"],
+      "~global-styles/*": ["../global-styles/src/*"],
+      "~collection-hooks": ["../collection-hooks/src"]
     }
   },
   "include": ["src", "../types"]

@@ -86,7 +86,7 @@ function useScopedDisplay(target: React.RefObject<HTMLDivElement | null>, shade:
 
 export interface ExampleProps {
   example: LoadedExample;
-  /** The position of the example on its page, from 1, drawn as its reference. */
+  /** The position of the example on its page, from 1, drawn as its reference. 0 draws none. */
   index: number;
   /** The heading level of the example's title. */
   headingLevel?: 3 | 4;
@@ -120,9 +120,11 @@ export function Example({ example, index, headingLevel = 3 }: ExampleProps) {
     <section className={styles.example} aria-labelledby={`${id}-title`}>
       <header className={styles.caption}>
         <Heading id={id} className={styles.title} data-anchor={meta.title} data-anchor-level={2}>
-          <span className={styles.reference} aria-hidden="true">
-            {reference}
-          </span>
+          {index > 0 && (
+            <span className={styles.reference} aria-hidden="true">
+              {reference}
+            </span>
+          )}
           <span id={`${id}-title`}>{meta.title}</span>
         </Heading>
         {meta.description && <div className={styles.description}>{meta.description}</div>}

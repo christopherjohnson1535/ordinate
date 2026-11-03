@@ -44,13 +44,24 @@ function buildItems(activePath: string): SideNavigationProps.Item[] {
   ];
 }
 
+/** The part of the index a path belongs to: a component group, or a section of guides. */
+function areaOf(path: string): string {
+  if (path.startsWith('/components/')) {
+    return findComponentDoc(path.split('/')[2])?.group ?? 'components';
+  }
+  return path.split('/')[1] ?? '';
+}
+
 /** The sheet index: every page of the site, grouped as the README groups the library. */
 export function SiteNavigation({ activePath, onFollow }: { activePath: string; onFollow: (target: string) => void }) {
-  // Sections open for the page the reader starts on; after that the reader opens and closes them.
+  const area = areaOf(activePath);
+  // The section of the current page opens when the reader moves into it. Within a section the
+  // reader's own opening and closing is kept.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const items = useMemo(() => buildItems(activePath), []);
+  const items = useMemo(() => buildItems(activePath), [area]);
   return (
     <SideNavigation
+      key={area}
       ariaLabel="Sheet index"
       header={{ text: 'Ordinate reference', href: href('/') }}
       activeHref={href(activePath)}

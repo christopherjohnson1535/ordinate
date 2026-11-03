@@ -3,6 +3,7 @@ coverage
 # build output
 lib
 pages/dist
+docs-site/dist
 global-styles/lib
 collection-hooks/lib
 # test output

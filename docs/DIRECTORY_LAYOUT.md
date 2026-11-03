@@ -13,6 +13,7 @@ ordinate/
 │       └── test-utils/dom/  Test wrappers, one folder per chart, and the finders they add
 ├── collection-hooks/     The @ordinate/collection-hooks package: useCollection and its pure helpers
 ├── docs/                 Conventions for contributors
+├── docs-site/            The documentation site and the `ordinate-docs` command (see DOCS_SITE.md)
 ├── global-styles/        The @ordinate/global-styles package
 │   └── src/              applyMode, applyRevision, disableMotion, fonts and base CSS
 ├── pages/                Dev pages served by Vite (npm start)
@@ -56,6 +57,8 @@ Build output goes to `lib/`, which is git-ignored:
 - `lib/design-tokens` is the publishable `@ordinate/design-tokens` package (see [Styling](STYLING.md)).
 - `lib/components-definitions` holds one API definition per component (see [API definitions](API_DOCS.md)).
 - `lib/charts` is the publishable `@ordinate/charts` package, with its own `package.json`.
+- `lib/charts-definitions` holds the API definitions of the charts.
+- `lib/docs` is the publishable `@ordinate/docs` package, written by `npm run docs:package`.
 
 ## The charts package
 

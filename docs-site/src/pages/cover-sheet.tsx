@@ -17,6 +17,8 @@ import styles from './cover-sheet.module.scss';
 
 declare const __ORDINATE_VERSION__: string;
 
+const sheets = (count: number) => `${count} ${count === 1 ? 'sheet' : 'sheets'}`;
+
 const specimen: LoadedExample = {
   meta: {
     id: 'specimen',
@@ -89,7 +91,7 @@ export default function CoverSheet() {
               <ActionCard
                 href={href(start[0].path)}
                 header="Get started"
-                description={`Install, pin a revision, and build a first page. ${counts.start} sheets.`}
+                description={`Install, pin a revision, and build a first page. ${sheets(counts.start)}.`}
                 kind="configuration"
               />
             </li>
@@ -98,7 +100,7 @@ export default function CoverSheet() {
             <ActionCard
               href={href(guidesIn('foundations')[0]?.path ?? '/')}
               header="Foundations"
-              description={`Principles, marks, color, type, space and motion. ${counts.foundations} sheets.`}
+              description={`Principles, marks, color, type, space and motion. ${sheets(counts.foundations)}.`}
               kind="policy"
             />
           </li>
@@ -106,7 +108,7 @@ export default function CoverSheet() {
             <ActionCard
               href={href('/components')}
               header="Components"
-              description={`Every component with live examples, guidelines and its API. ${componentDocs.length} sheets.`}
+              description={`Every component with live examples, guidelines and its API. ${sheets(componentDocs.length)}.`}
               kind="resource"
             />
           </li>
@@ -115,7 +117,7 @@ export default function CoverSheet() {
               <ActionCard
                 href={href(guidesIn('packages')[0].path)}
                 header="Packages"
-                description={`Charts, collection hooks, design tokens and global styles. ${counts.packages} sheets.`}
+                description={`Charts, collection hooks, design tokens and global styles. ${sheets(counts.packages)}.`}
                 kind="neutral"
               />
             </li>
@@ -125,7 +127,7 @@ export default function CoverSheet() {
               <ActionCard
                 href={href(guidesIn('patterns')[0].path)}
                 header="Patterns"
-                description={`Whole pages built from the library: consoles, wizards and websites. ${counts.patterns} sheets.`}
+                description={`Whole pages built from the library: consoles, wizards and websites. ${sheets(counts.patterns)}.`}
                 kind="neutral"
               />
             </li>

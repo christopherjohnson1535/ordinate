@@ -1,6 +1,6 @@
 # API definitions
 
-The build reads every component's `interfaces.ts` with the TypeScript compiler and writes one JSON file per component to `lib/components-definitions/<component-name>.json`. Documentation sites, editor tooling and the dev pages read these files instead of parsing the source themselves.
+The build reads every component's `interfaces.ts` with the TypeScript compiler and writes one JSON file per component to `lib/components-definitions/<component-name>.json`, and one per chart to `lib/charts-definitions/<chart-name>.json`. Documentation sites, editor tooling and the dev pages read these files instead of parsing the source themselves.
 
 The task is `build-tools/tasks/docs.js`, and the extraction lives in `build-tools/utils/documenter.js`. It runs at the end of `npm run build`, or on its own with `npx gulp docs`. It picks up every folder in `src/` that has an `index.tsx`, the same folders that end up in `src/index.ts`.
 
@@ -54,4 +54,4 @@ A property's `defaultValue` comes from the first of these that exists:
 
 ## Browsing the definitions
 
-The dev page `docs/props` (`pages/docs/props.page.tsx`) renders every definition as a table of contents and prop lists. Run `npm run build` before `npm start` so the definitions exist.
+The documentation site draws each definition as the API section of its component page (see [The documentation site](DOCS_SITE.md)), and the dev page `docs/props` (`pages/docs/props.page.tsx`) lists them all on one page. Run `npm run build` before `npm start` or `npm run docs:dev` so the definitions exist.

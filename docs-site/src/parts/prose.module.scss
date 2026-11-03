@@ -56,7 +56,7 @@
 
 .section-body {
   display: grid;
-  gap: ord.$space-xxl;
+  gap: ord.$space-l;
   min-inline-size: 0;
 }
 
@@ -92,7 +92,7 @@
   gap: ord.$space-s;
   padding-block: ord.$space-xs;
   padding-inline: ord.$space-m ord.$space-xs;
-  border: ord.$border-width-default solid ord.$color-border-strong;
+  border: ord.$border-width-default solid ord.$color-border-control;
   border-radius: ord.$border-radius-input;
   background: ord.$color-background-container;
   max-inline-size: ord.$size-measure-default;

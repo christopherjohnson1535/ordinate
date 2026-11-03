@@ -120,6 +120,17 @@ export default { vite: { plugins: [bundleOrdinate] } };
 
 Charts (area, bar, line, mixed line and bar, pie) are in the separate `@ordinate/charts` package.
 
+## Documentation
+
+The reference covers every component with runnable examples, guidelines and its full API, along with the guides and the design language. It ships as `@ordinate/docs`, at the same version as the library, and runs on your own machine with no network, the way `rustup doc` does:
+
+```sh
+npm install --save-dev @ordinate/docs
+npx ordinate-docs --open          # or name a page: npx ordinate-docs Table --open
+```
+
+In a checkout, `npm run docs` builds the library and the site and opens it. See [docs/DOCS_SITE.md](docs/DOCS_SITE.md).
+
 ## Development
 
 ```sh
@@ -128,6 +139,8 @@ npm run build      # build lib/components
 npm start          # rebuild on change and serve the dev pages
 npm test           # unit, accessibility, server-rendering and token contract tests
 npm run lint       # ESLint and Stylelint
+npm run docs       # build and open the documentation site
+npm run docs:dev   # the documentation site with hot reload
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) to get started and [docs/](docs) for the conventions.

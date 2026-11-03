@@ -8,6 +8,10 @@
 .example {
   display: grid;
   gap: ord.$space-m;
+
+  & + & {
+    margin-block-start: ord.$space-xl;
+  }
   scroll-margin-block-start: 72px;
 }
 
