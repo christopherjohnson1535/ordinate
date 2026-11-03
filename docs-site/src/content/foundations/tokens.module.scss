@@ -1,0 +1,99 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// The probes are where the values are read: one element per revision, each carrying the site's mode,
+// density and style from the page around it. They hold nothing visible.
+.probes {
+  position: absolute;
+  inline-size: 0;
+  block-size: 0;
+  overflow: hidden;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-s ord.$space-m;
+  align-items: end;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(240px, 1fr) 200px auto;
+  }
+}
+
+.name {
+  display: grid;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+.js {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+  overflow-wrap: anywhere;
+}
+
+.sass {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+  overflow-wrap: anywhere;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+  overflow-wrap: anywhere;
+}
+
+.differs {
+  font-weight: ord.$font-weight-label;
+}
+
+// A sample of the value: a swatch for a color, a bar for a length, the radius on a corner.
+.chip {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  inline-size: 20px;
+  block-size: 20px;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-badge;
+}
+
+.bar {
+  flex: 0 0 auto;
+  block-size: ord.$size-key-square;
+  max-inline-size: 96px;
+  background-color: ord.$color-kind-configuration;
+  opacity: 0.6;
+}
+
+.corner {
+  flex: 0 0 auto;
+  inline-size: 20px;
+  block-size: 20px;
+  border-block-start: ord.$border-width-section solid ord.$color-text-body;
+  border-inline-start: ord.$border-width-section solid ord.$color-text-body;
+}
+
+.copy {
+  display: inline-flex;
+}
+
+.summary {
+  margin-block: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-text-body-secondary;
+}

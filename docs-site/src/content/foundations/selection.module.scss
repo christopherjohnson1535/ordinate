@@ -1,0 +1,89 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// The four kinds of selection side by side: two by two on most sheets, one column on a phone, four
+// across only on a very wide sheet. Each opens with its mark's code and question, on an ink rule.
+.quad-frame {
+  container-type: inline-size;
+}
+
+.quad {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-xl ord.$space-l;
+
+  @container (min-inline-size: 560px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @container (min-inline-size: 1180px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.kind {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: ord.$space-s;
+  min-inline-size: 0;
+}
+
+.kind-head {
+  display: grid;
+  gap: ord.$space-xxs;
+  padding-block-start: ord.$space-s;
+  border-block-start: ord.$border-width-section solid ord.$color-border-strong;
+}
+
+.kind-code {
+  @include mixins.caption;
+  color: ord.$color-kind-configuration;
+}
+
+.kind-title {
+  margin-block: 0;
+  font-size: ord.$font-size-heading-s;
+  font-weight: ord.$font-weight-heading;
+  line-height: ord.$line-height-heading;
+  color: ord.$color-text-body;
+}
+
+.kind-question {
+  margin-block: 0;
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+}
+
+.kind-stage {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-l;
+  min-inline-size: 0;
+  padding-block: ord.$space-l;
+  padding-inline: ord.$space-m;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-container;
+  background-color: ord.$color-background-container;
+  background-image:
+    linear-gradient(to right, ord.$color-border-divider-secondary 1px, transparent 1px),
+    linear-gradient(to bottom, ord.$color-border-divider-secondary 1px, transparent 1px);
+  background-size: ord.$space-l ord.$space-l;
+  background-position: -1px -1px;
+}
+
+.readout {
+  margin-block: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.readout-value {
+  color: ord.$color-text-body;
+}

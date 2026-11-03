@@ -1,0 +1,212 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// The two faces, set large like a type specimen sheet.
+.faces {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: ord.$space-xl;
+}
+
+.face {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-s;
+  padding-block-start: ord.$space-s;
+  border-block-start: ord.$border-width-section solid ord.$color-border-strong;
+}
+
+.face-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+.face-sample {
+  margin-block: 0;
+  font-size: 64px;
+  font-weight: ord.$font-weight-light;
+  line-height: 1;
+  color: ord.$color-text-body;
+}
+
+.face-alphabet {
+  margin-block: 0;
+  font-size: ord.$font-size-heading-s;
+  line-height: ord.$line-height-body;
+  color: ord.$color-text-body;
+  overflow-wrap: anywhere;
+}
+
+.face-weights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xxs ord.$space-m;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  font-size: ord.$font-size-heading-s;
+  color: ord.$color-text-body;
+}
+
+.face-note {
+  margin-block: 0;
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+}
+
+.sans {
+  font-family: ord.$font-family-base;
+}
+
+.mono {
+  font-family: ord.$font-family-mono;
+}
+
+// The type scale, drawn as a schedule: the sample on the left, the token and its measured size in a
+// margin on the right. A faint construction line runs under each row's baseline.
+.scale {
+  display: grid;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-xxs ord.$space-l;
+  align-items: baseline;
+  padding-block: ord.$space-s;
+  border-block-end: ord.$border-width-default solid ord.$color-border-divider-secondary;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 1fr) 240px;
+  }
+}
+
+.sample {
+  margin-block: 0;
+  min-inline-size: 0;
+  color: ord.$color-text-body;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spec {
+  display: grid;
+  gap: 2px;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.spec-token {
+  color: ord.$color-text-body;
+}
+
+.spec-use {
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-description;
+}
+
+// The caption face shown at work: labels from a title block.
+.captions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  border-block-start: ord.$border-width-section solid ord.$color-border-strong;
+  border-block-end: ord.$border-width-default solid ord.$color-border-strong;
+}
+
+.cell {
+  display: grid;
+  gap: ord.$space-xxs;
+  padding-block: ord.$space-xs;
+  padding-inline: ord.$space-s;
+
+  & + & {
+    border-inline-start: ord.$border-width-default solid ord.$color-border-divider;
+  }
+}
+
+.cell-label {
+  @include mixins.caption;
+}
+
+.cell-value {
+  color: ord.$color-text-body;
+}
+
+.cell-mono {
+  font-family: ord.$font-family-mono;
+  color: ord.$color-text-body;
+}
+
+// Website styles: each style's headline over its reading text, inside a StyleScope.
+.styles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: ord.$space-l;
+}
+
+.style-card {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-s;
+  min-inline-size: 0;
+  padding-block: ord.$space-l;
+  padding-inline: ord.$space-l;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+  border-radius: ord.$border-radius-container;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+}
+
+.style-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+.headline {
+  margin-block: 0;
+  font-family: ord.$font-family-headline;
+  font-weight: ord.$font-weight-headline;
+  font-size: ord.$font-size-headline-m;
+  line-height: ord.$line-height-headline;
+  letter-spacing: ord.$letter-spacing-headline;
+  color: ord.$color-text-body;
+  overflow-wrap: break-word;
+}
+
+.lead {
+  margin-block: 0;
+  font-family: ord.$font-family-reading;
+  font-size: ord.$font-size-lead;
+  line-height: ord.$line-height-heading;
+  color: ord.$color-text-body-secondary;
+}
+
+.reading {
+  margin-block: 0;
+  font-family: ord.$font-family-reading;
+  font-size: ord.$font-size-reading;
+  line-height: ord.$line-height-reading;
+  color: ord.$color-text-body;
+}
+
+.style-spec {
+  margin-block: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.stack {
+  display: grid;
+  gap: ord.$space-xl;
+}

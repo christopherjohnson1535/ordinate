@@ -1,0 +1,202 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: ord.$space-m;
+  align-items: end;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(240px, 1fr) auto auto;
+  }
+}
+
+.readout {
+  margin-block: 0;
+  min-block-size: 1.5em;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.readout-name {
+  color: ord.$color-text-body;
+}
+
+// The gallery is a grid of cells split by hairlines, like the cells of a drawing's index. Each cell is a
+// button that copies the icon's name.
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  border-block-start: ord.$border-width-default solid ord.$color-border-divider;
+  border-inline-start: ord.$border-width-default solid ord.$color-border-divider;
+}
+
+.cell {
+  display: grid;
+  border-block-end: ord.$border-width-default solid ord.$color-border-divider;
+  border-inline-end: ord.$border-width-default solid ord.$color-border-divider;
+}
+
+.button {
+  position: relative;
+  display: grid;
+  grid-template-rows: 64px auto auto;
+  justify-items: center;
+  align-items: center;
+  gap: ord.$space-xxs;
+  padding-block: ord.$space-s;
+  padding-inline: ord.$space-xs;
+  border: 0;
+  background-color: ord.$color-background-container;
+  color: ord.$color-text-body;
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: ord.$color-background-item-hover;
+    }
+
+    &:hover .hint {
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: ord.$border-width-focus-ring solid ord.$color-border-focus-ring;
+    outline-offset: calc(-1 * #{ord.$border-width-focus-ring});
+
+    .hint {
+      opacity: 1;
+    }
+  }
+}
+
+.copied {
+  background-color: ord.$color-background-item-selected;
+}
+
+.name {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body;
+  overflow-wrap: anywhere;
+}
+
+.old {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.hint {
+  position: absolute;
+  inset-block-start: ord.$space-xxs;
+  inset-inline-end: ord.$space-xxs;
+  color: ord.$color-text-secondary;
+  opacity: 0;
+}
+
+.stamp {
+  position: absolute;
+  inset-block-start: ord.$space-xxs;
+  inset-inline-start: ord.$space-xxs;
+  display: inline-flex;
+  align-items: center;
+  gap: ord.$space-xxs;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caps;
+  text-transform: uppercase;
+  color: ord.$color-text-body;
+
+  &::before {
+    content: '';
+    inline-size: ord.$size-key-square;
+    block-size: ord.$size-key-square;
+    background-color: ord.$color-text-status-success;
+  }
+}
+
+.empty {
+  margin-block: 0;
+  padding-block: ord.$space-xl;
+  color: ord.$color-text-body-secondary;
+  text-align: center;
+}
+
+// Sizes: each icon size measured against a 16 px grid square.
+.sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xl;
+  align-items: flex-end;
+}
+
+.size {
+  display: grid;
+  gap: ord.$space-xs;
+  justify-items: center;
+}
+
+.size-label {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+  text-align: center;
+}
+
+.size-label strong {
+  display: block;
+  color: ord.$color-text-body;
+  font-weight: ord.$font-weight-body;
+}
+
+// The 16 by 16 grid an icon is drawn on, enlarged, with the icon over it.
+.grid16 {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 192px;
+  block-size: 192px;
+  // The icon is set at 1em, so the font size draws it twelve times its 16 px.
+  font-size: 192px;
+  color: ord.$color-text-body;
+  background-image:
+    linear-gradient(to right, ord.$color-border-divider-secondary 1px, transparent 1px),
+    linear-gradient(to bottom, ord.$color-border-divider-secondary 1px, transparent 1px);
+  background-size: 12px 12px;
+  border: ord.$border-width-default solid ord.$color-border-divider;
+}
+
+.grid16-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-l;
+}
+
+.variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: ord.$space-m;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.variant {
+  display: grid;
+  gap: ord.$space-xxs;
+  justify-items: start;
+}

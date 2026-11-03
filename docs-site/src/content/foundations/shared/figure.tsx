@@ -1,9 +1,11 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { applyMode, Mode } from '@ordinate/global-styles';
+
+import { useSettings } from '../../../app/settings';
 
 import styles from './figure.module.scss';
 
@@ -114,9 +116,7 @@ export function Reference({
   kind?: 'configuration' | 'resource' | 'policy';
 }) {
   return (
-    <span className={clsx(styles.reference, kind !== 'configuration' && styles[`reference-${kind}`])}>
-      {children}
-    </span>
+    <span className={clsx(styles.reference, kind !== 'configuration' && styles[`reference-${kind}`])}>{children}</span>
   );
 }
 
@@ -133,4 +133,34 @@ export function sassNameOf(jsName: string): string {
 /** Reads a token's computed value on an element, so it follows the mode, revision and density there. */
 export function readToken(element: Element, jsName: string): string {
   return getComputedStyle(element).getPropertyValue(cssVariableOf(jsName)).trim();
+}
+
+/** Turns a computed color, such as `rgb(29, 79, 145)`, into hex, such as `#1D4F91`. */
+export function toHex(color: string): string {
+  const match = color.match(/rgba?\(([^)]+)\)/);
+  if (!match) {
+    return color;
+  }
+  const [r, g, b, a] = match[1]
+    .split(/[\s,/]+/)
+    .filter(Boolean)
+    .map(Number);
+  const hex = `#${[r, g, b].map(part => Math.round(part).toString(16).padStart(2, '0')).join('')}`.toUpperCase();
+  return a !== undefined && a < 1 ? `${hex} at ${Math.round(a * 100)}%` : hex;
+}
+
+/**
+ * Reads a value from the page after it has painted, and again whenever the site's mode, revision,
+ * density or style changes, so readouts of tokens stay true to what is drawn.
+ */
+export function useLiveValue<T>(read: () => T, initial: T, deps: React.DependencyList = []): T {
+  const { settings } = useSettings();
+  const [value, setValue] = useState<T>(initial);
+  useEffect(() => {
+    // A frame later, so modes applied by parent effects are in place before the value is read.
+    const frame = requestAnimationFrame(() => setValue(read()));
+    return () => cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings, ...deps]);
+  return value;
 }

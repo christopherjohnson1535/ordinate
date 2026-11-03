@@ -233,14 +233,23 @@
 .demo-row {
   display: flex;
   flex-wrap: wrap;
-  gap: ord.$space-xl;
+  gap: ord.$space-xxl ord.$space-xl;
   align-items: flex-end;
+  padding-block-start: ord.$space-s;
+  padding-inline: ord.$space-s;
 }
 
 .demo-cell {
   display: grid;
   gap: ord.$space-xs;
   justify-items: start;
+}
+
+.demo-wide {
+  display: grid;
+  gap: ord.$space-xs;
+  flex: 1 1 260px;
+  min-inline-size: 0;
 }
 
 .demo-label {
@@ -251,6 +260,7 @@
 // A frame drawn the way Container draws its sections, at a size that shows the hash marks clearly.
 .hash-demo {
   position: relative;
+  margin-block: ord.$space-s ord.$space-l;
   inline-size: 220px;
   block-size: 72px;
   color: ord.$color-kind-resource;

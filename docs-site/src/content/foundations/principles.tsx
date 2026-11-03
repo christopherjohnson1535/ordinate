@@ -221,8 +221,8 @@ const illustrations: Record<string, { body: React.ReactNode; caption: string; te
           People should never have to learn a control to use it.
         </p>
         <p>
-          The drawing goes around the controls instead: the label column against a construction line, the ink
-          baseline under a field, crop marks around a chosen segment.
+          The drawing goes around the controls instead: the label column against a construction line, the ink baseline
+          under a field, crop marks around a chosen segment.
         </p>
       </>
     ),
@@ -233,8 +233,8 @@ const illustrations: Record<string, { body: React.ReactNode; caption: string; te
     text: (
       <>
         <p>
-          The sheet is white, or chalk on dark paper in dark mode. Everything a person reads for its meaning or acts
-          on is in ink: values, headings, links, buttons.
+          The sheet is white, or chalk on dark paper in dark mode. Everything a person reads for its meaning or acts on
+          is in ink: values, headings, links, buttons.
         </p>
         <p>
           Gray is kept for help text, labels that sit beside a value and things that cannot be used now. A disabled
@@ -249,12 +249,12 @@ const illustrations: Record<string, { body: React.ReactNode; caption: string; te
     text: (
       <>
         <p>
-          Sections are grouped by a construction line along the top and a margin for the heading, never by a box
-          drawn around them. Cards are held by crop marks at their corners.
+          Sections are grouped by a construction line along the top and a margin for the heading, never by a box drawn
+          around them. Cards are held by crop marks at their corners.
         </p>
         <p>
-          A box means the thing is lifted off the drawing for a while: a modal, a popover, a menu. That box is a
-          plate, with its own offset.
+          A box means the thing is lifted off the drawing for a while: a modal, a popover, a menu. That box is a plate,
+          with its own offset.
         </p>
       </>
     ),
@@ -265,8 +265,8 @@ const illustrations: Record<string, { body: React.ReactNode; caption: string; te
     text: (
       <>
         <p>
-          Every mark in the drawing has one meaning, and keeps it in every component. Crop marks always mean "one of
-          a set". A leader always goes somewhere else. An ink fill always means "on".
+          Every mark in the drawing has one meaning, and keeps it in every component. Crop marks always mean "one of a
+          set". A leader always goes somewhere else. An ink fill always means "on".
         </p>
         <p>
           So once someone has read a mark in one place, they can read it everywhere. See{' '}
@@ -285,8 +285,8 @@ const illustrations: Record<string, { body: React.ReactNode; caption: string; te
           Status colors say how something is. Nothing is colored for decoration.
         </p>
         <p>
-          Color goes on marks and keys, never on whole surfaces, and never alone: a reference letter, an icon shape or
-          a word always says the same thing. See <a href={href('/foundations/color')}>Color</a>.
+          Color goes on marks and keys, never on whole surfaces, and never alone: a reference letter, an icon shape or a
+          word always says the same thing. See <a href={href('/foundations/color')}>Color</a>.
         </p>
       </>
     ),
@@ -314,9 +314,8 @@ function Page() {
     <>
       <Prose>
         <p>
-          Six principles decide how every part of Ordinate is drawn. They are in order: when two of them pull apart,
-          the earlier one wins. A control stays familiar (P1) even if a purer drawing would make it look like a
-          diagram.
+          Six principles decide how every part of Ordinate is drawn. They are in order: when two of them pull apart, the
+          earlier one wins. A control stays familiar (P1) even if a purer drawing would make it look like a diagram.
         </p>
       </Prose>
 

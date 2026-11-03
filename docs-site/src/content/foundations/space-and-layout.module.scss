@@ -1,0 +1,316 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// The spacing scale drawn as a schedule of dimension lines: each token's length measured out between
+// two extension ticks with a hash mark on each, its name in a margin and its value after the line.
+.schedule {
+  display: grid;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: ord.$space-m;
+  align-items: center;
+  min-block-size: 40px;
+  border-block-end: ord.$border-width-default solid ord.$color-border-divider-secondary;
+
+  @media (min-width: 900px) {
+    grid-template-columns: 160px minmax(0, 1fr) 200px;
+  }
+}
+
+.name {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+  text-align: end;
+}
+
+.uses {
+  display: none;
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+
+  @media (min-width: 900px) {
+    display: block;
+  }
+}
+
+.measure {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  min-inline-size: 0;
+}
+
+// A horizontal dimension line whose length is the token. `--length` is set inline from the token's
+// custom property, so the drawing is the token.
+.dimension {
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: var(--length);
+  block-size: ord.$size-hash-mark;
+  color: ord.$color-kind-configuration;
+  border-inline-width: ord.$border-width-default;
+  border-inline-style: solid;
+  border-inline-color: currentColor;
+  box-sizing: content-box;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    block-size: ord.$border-width-default;
+    background-color: currentColor;
+  }
+}
+
+.hash {
+  position: absolute;
+  inset-block-start: calc(50% - #{ord.$border-width-default} / 2);
+  inline-size: ord.$size-hash-mark;
+  block-size: ord.$border-width-default;
+  background-color: currentColor;
+  transform: rotate(-45deg);
+}
+
+.hash-start {
+  inset-inline-start: calc(-1 * #{ord.$size-hash-mark} / 2 - #{ord.$border-width-default} / 2);
+}
+
+.hash-end {
+  inset-inline-end: calc(-1 * #{ord.$size-hash-mark} / 2 - #{ord.$border-width-default} / 2);
+}
+
+.value {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  letter-spacing: ord.$letter-spacing-caption;
+  color: ord.$color-text-body-secondary;
+  white-space: nowrap;
+}
+
+.value-strong {
+  color: ord.$color-text-body;
+}
+
+.pair {
+  display: grid;
+  gap: ord.$space-xxs;
+  padding-block: ord.$space-xs;
+}
+
+.pair-row {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+}
+
+.pair-label {
+  @include mixins.caption;
+  inline-size: 96px;
+  flex: 0 0 auto;
+}
+
+// The margin column: a ruler over the column, then the components that use it, all aligned to the
+// same start edge.
+.margin-figure {
+  display: grid;
+  gap: ord.$space-l;
+}
+
+.ruler {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  margin-block-end: ord.$space-l;
+}
+
+// Measures: lines of running text at each width, with the width measured above.
+.measures {
+  display: grid;
+  gap: ord.$space-xl;
+}
+
+.measure-block {
+  display: grid;
+  gap: ord.$space-xs;
+  min-inline-size: 0;
+}
+
+.measure-text {
+  max-inline-size: var(--length);
+  margin-block: 0;
+  color: ord.$color-text-body;
+  line-height: ord.$line-height-body;
+}
+
+.measure-ruler {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-s;
+  max-inline-size: 100%;
+  overflow: hidden;
+
+  .dimension {
+    max-inline-size: calc(100% - 140px);
+  }
+}
+
+// Density: the same panel drawn comfortable and compact.
+.density {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: ord.$space-l;
+}
+
+.density-pane {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-s;
+  min-inline-size: 0;
+}
+
+.density-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+.readout {
+  margin-block: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+// Sizes that carry meaning: offsets, crop marks, hash marks and key squares, each drawn at size.
+.sizes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: ord.$space-l;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.size {
+  display: grid;
+  gap: ord.$space-xs;
+  justify-items: start;
+}
+
+.size-stage {
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+  block-size: 64px;
+}
+
+.offset-control {
+  inline-size: 72px;
+  block-size: 28px;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-button;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-control ord.$size-offset-control 0 0 ord.$color-border-strong;
+}
+
+.offset-plate {
+  inline-size: 88px;
+  block-size: 44px;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-modal;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-plate ord.$size-offset-plate 0 0 ord.$color-border-strong;
+}
+
+.crop {
+  position: relative;
+  inline-size: 88px;
+  block-size: 48px;
+}
+
+.crop-corner {
+  position: absolute;
+  inline-size: ord.$size-crop-mark;
+  block-size: ord.$size-crop-mark;
+  border-color: ord.$color-kind-neutral;
+  border-style: solid;
+  border-width: 0;
+}
+
+.crop-ss {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  border-block-start-width: ord.$border-width-default;
+  border-inline-start-width: ord.$border-width-default;
+}
+
+.crop-se {
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  border-block-start-width: ord.$border-width-default;
+  border-inline-end-width: ord.$border-width-default;
+}
+
+.crop-es {
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-inline-start-width: ord.$border-width-default;
+}
+
+.crop-ee {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  border-block-end-width: ord.$border-width-default;
+  border-inline-end-width: ord.$border-width-default;
+}
+
+.key {
+  inline-size: ord.$size-key-square;
+  block-size: ord.$size-key-square;
+  background-color: ord.$color-text-status-success;
+}
+
+.hash-sample {
+  position: relative;
+  inline-size: 64px;
+  block-size: ord.$border-width-default;
+  background-color: ord.$color-kind-resource;
+
+  .hash {
+    background-color: ord.$color-kind-resource;
+  }
+}
+
+.control-sample {
+  box-sizing: border-box;
+  inline-size: 120px;
+  block-size: ord.$size-control-height;
+  border: ord.$border-width-default solid ord.$color-border-control;
+  border-block-end: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-input;
+  background-color: ord.$color-background-control;
+}
+
+.size-name {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body;
+}
+
+.size-use {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+}

@@ -1,0 +1,298 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// Motion on these drawings follows the same rule as the components: it runs only when the reader has
+// not asked for reduced motion and when `disableMotion` is off, on the page or on a figure.
+@mixin with-motion {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+
+  :global(.ord-motion-disabled) & {
+    animation: none;
+    transition: none;
+  }
+}
+
+// The durations as a timing chart: one track per token, a dot that crosses it in that time.
+.tracks {
+  display: grid;
+  gap: ord.$space-s;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 72px;
+  gap: ord.$space-m;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    grid-template-columns: minmax(0, 1fr) 64px;
+
+    .track-name {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.track-name {
+  display: grid;
+  gap: 2px;
+}
+
+.token {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body;
+}
+
+.use {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+}
+
+.track {
+  position: relative;
+  block-size: ord.$space-l;
+  border-inline-width: ord.$border-width-default;
+  border-inline-style: solid;
+  border-inline-color: ord.$color-border-strong;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    block-size: ord.$border-width-default;
+    background-color: ord.$color-border-divider;
+  }
+}
+
+.dot {
+  position: absolute;
+  inset-block-start: calc(50% - 5px);
+  inset-inline-start: 0;
+  inline-size: 10px;
+  block-size: 10px;
+  margin-inline-start: -5px;
+  border-radius: 50%;
+  background-color: ord.$color-text-body;
+
+  @include with-motion {
+    transition-property: inset-inline-start;
+    transition-duration: var(--duration);
+    transition-timing-function: var(--easing);
+  }
+}
+
+.played .dot {
+  inset-inline-start: 100%;
+}
+
+.ms {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+  text-align: end;
+}
+
+// The easing curve, drawn on a square graph like a chart on a drawing.
+.curve-figure {
+  display: grid;
+  grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+  gap: ord.$space-xl;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.curve {
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+
+.curve-grid {
+  stroke: ord.$color-border-divider-secondary;
+  stroke-width: 1;
+  fill: none;
+}
+
+.curve-axis {
+  stroke: ord.$color-border-strong;
+  stroke-width: 1;
+  fill: none;
+}
+
+.curve-handle {
+  stroke: ord.$color-kind-configuration;
+  stroke-width: 1;
+  opacity: ord.$opacity-construction;
+}
+
+.curve-handle-dot {
+  fill: ord.$color-kind-configuration;
+}
+
+.curve-line {
+  stroke: ord.$color-text-body;
+  stroke-width: 2;
+  fill: none;
+}
+
+.curve-linear {
+  stroke: ord.$color-border-control;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  fill: none;
+}
+
+.curve-label {
+  font-family: ord.$font-family-mono;
+  font-size: 10px;
+  fill: ord.$color-text-body-secondary;
+  letter-spacing: 0.08em;
+}
+
+// Press and lift: a block drawn like a button, enlarged, to show it moving onto its offset.
+.press-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-xxl;
+  align-items: center;
+  justify-content: center;
+}
+
+.press-cell {
+  display: grid;
+  gap: ord.$space-s;
+  justify-items: center;
+}
+
+.press-label {
+  @include mixins.caption;
+  margin-block: 0;
+}
+
+.block {
+  display: grid;
+  place-items: center;
+  inline-size: 120px;
+  block-size: 44px;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-button;
+  background-color: ord.$color-background-button-normal;
+  color: ord.$color-text-body;
+  font-family: ord.$font-family-base;
+  font-size: ord.$font-size-body;
+  font-weight: ord.$font-weight-heading;
+  box-shadow: ord.$size-offset-control ord.$size-offset-control 0 0 ord.$color-border-strong;
+  cursor: pointer;
+
+  @include with-motion {
+    transition-property: translate, box-shadow;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+
+  &:active,
+  &.held {
+    translate: ord.$size-offset-control ord.$size-offset-control;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: ord.$border-width-focus-ring solid ord.$color-border-focus-ring;
+    outline-offset: ord.$border-focus-ring-offset;
+  }
+}
+
+.plate-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-block-size: 160px;
+}
+
+.plate {
+  display: grid;
+  gap: ord.$space-xxs;
+  inline-size: min(100%, 260px);
+  padding-block: ord.$space-s;
+  padding-inline: ord.$space-m;
+  border: ord.$border-width-default solid ord.$color-border-strong;
+  border-radius: ord.$border-radius-modal;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-plate ord.$size-offset-plate 0 0 ord.$color-border-strong;
+  opacity: 0;
+  transform: translateY(ord.$size-offset-plate);
+
+  @include with-motion {
+    transition-property: opacity, transform;
+    transition-duration: ord.$motion-duration-responsive;
+    transition-timing-function: ord.$motion-easing-standard;
+  }
+}
+
+.plate-open {
+  opacity: 1;
+  transform: none;
+
+  @include with-motion {
+    transition-duration: ord.$motion-duration-expressive;
+  }
+}
+
+.plate-title {
+  font-weight: ord.$font-weight-heading;
+  color: ord.$color-text-body;
+}
+
+.plate-text {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: ord.$space-s;
+  align-items: center;
+}
+
+.readout {
+  margin-block: 0;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: ord.$space-l;
+}
+
+.compare-pane {
+  display: grid;
+  align-content: start;
+  gap: ord.$space-m;
+  padding-block: ord.$space-m;
+  padding-inline: ord.$space-m;
+  border: ord.$border-width-default solid ord.$color-border-divider-secondary;
+  border-radius: ord.$border-radius-container;
+}
+
+.compare-label {
+  @include mixins.caption;
+  margin-block: 0;
+}

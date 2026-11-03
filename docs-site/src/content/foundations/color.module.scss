@@ -1,0 +1,197 @@
+/*
+ Copyright Christopher Johnson. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+@use '../../styles/tokens' as ord;
+@use '../../styles/mixins';
+
+// A swatch is drawn as a kind is used: a construction line and hash marks in the color, a reference
+// lettered in it, and the key square. The chip of solid color is small, as a legend key would be.
+.swatches {
+  display: grid;
+  gap: ord.$space-l;
+}
+
+.swatch {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: ord.$space-xs ord.$space-m;
+  align-items: start;
+}
+
+.chip {
+  position: relative;
+  inline-size: 56px;
+  block-size: 56px;
+  border-radius: ord.$border-radius-badge;
+  background-color: var(--swatch);
+}
+
+.swatch-body {
+  display: grid;
+  gap: ord.$space-xxs;
+  min-inline-size: 0;
+}
+
+.swatch-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ord.$space-xs;
+}
+
+.swatch-ref {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-small;
+  font-weight: ord.$font-weight-label;
+  color: var(--swatch);
+}
+
+.swatch-name {
+  font-weight: ord.$font-weight-heading;
+  color: ord.$color-text-body;
+}
+
+.swatch-value {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-code;
+  color: ord.$color-text-body-secondary;
+}
+
+.swatch-token {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+  overflow-wrap: anywhere;
+}
+
+// The construction line of a section in the swatch's color, held back like the real one, with its
+// hash marks.
+.swatch-line {
+  position: relative;
+  block-size: ord.$space-s;
+  margin-inline: calc(#{ord.$size-hash-mark} / 2);
+  color: var(--swatch);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    block-size: ord.$border-width-default;
+    background-color: currentColor;
+    opacity: ord.$opacity-construction;
+  }
+}
+
+.tick {
+  position: absolute;
+  inset-block-start: 50%;
+  inline-size: ord.$size-hash-mark;
+  block-size: ord.$border-width-default;
+  background-color: currentColor;
+  transform: rotate(-45deg);
+}
+
+.tick-start {
+  inset-inline-start: calc(-1 * #{ord.$size-hash-mark} / 2);
+}
+
+.tick-end {
+  inset-inline-end: calc(-1 * #{ord.$size-hash-mark} / 2);
+}
+
+.swatch-for {
+  color: ord.$color-text-body-secondary;
+  font-size: ord.$font-size-description;
+  line-height: ord.$line-height-body;
+  margin-block: 0;
+}
+
+// Status swatches show the icon in the color and its word in ink, as StatusIndicator draws them.
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: ord.$space-xs;
+}
+
+// The rule "never alone": the same three sections drawn in grayscale show the references still tell
+// them apart.
+.grayscale {
+  filter: grayscale(1);
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: ord.$space-m;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.palette-item {
+  display: grid;
+  gap: ord.$space-xxs;
+}
+
+.palette-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  block-size: 40px;
+  border-radius: ord.$border-radius-badge;
+  overflow: hidden;
+}
+
+.palette-light,
+.palette-dark {
+  display: grid;
+  place-items: center;
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+}
+
+.palette-light {
+  background-color: ord.$color-white;
+  border: ord.$border-width-default solid ord.$color-grey250;
+  border-inline-end-width: 0;
+  border-start-start-radius: ord.$border-radius-badge;
+  border-end-start-radius: ord.$border-radius-badge;
+}
+
+.palette-dark {
+  background-color: ord.$color-chalk800;
+}
+
+.palette-mark {
+  inline-size: 20px;
+  block-size: 20px;
+  background-color: var(--swatch);
+}
+
+.palette-name {
+  font-family: ord.$font-family-mono;
+  font-size: ord.$font-size-caption;
+  color: ord.$color-text-body-secondary;
+}
+
+.neutrals {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: ord.$space-xs;
+  margin-block: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.neutral {
+  display: grid;
+  gap: ord.$space-xxs;
+}
+
+.neutral-chip {
+  block-size: 32px;
+  border: ord.$border-width-default solid ord.$color-border-divider-secondary;
+  border-radius: ord.$border-radius-badge;
+  background-color: var(--swatch);
+}
