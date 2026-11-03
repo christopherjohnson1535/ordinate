@@ -16,7 +16,7 @@ export default function Inline() {
         <Token variant="inline" label="web:v2" />.
       </Box>
       {/* In a narrow column the file name is cut; focus or hover it to read the whole path. */}
-      <ColumnLayout columns={3}>
+      <ColumnLayout columns={4}>
         <Token
           variant="inline"
           icon={<Icon name="file" />}

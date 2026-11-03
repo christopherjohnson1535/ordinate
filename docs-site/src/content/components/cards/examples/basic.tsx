@@ -28,7 +28,7 @@ export default function Basic() {
       items={nodes}
       trackBy="id"
       kind="resource"
-      cardsPerRow={[{ cards: 1 }, { minWidth: 600, cards: 3 }]}
+      cardsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 2 }, { minWidth: 900, cards: 3 }]}
       header={
         <Header counter={`(${nodes.length})`} actions={<Button>Add node</Button>}>
           Nodes

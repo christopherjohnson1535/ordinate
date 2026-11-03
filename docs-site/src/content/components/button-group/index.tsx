@@ -85,7 +85,7 @@ const doc: ComponentDoc = {
       The group is a <code>toolbar</code> named by the required <code>ariaLabel</code>, and each group inside it is a{' '}
       <code>group</code> named by its <code>text</code>.
     </>,
-    'The toolbar is one tab stop. The left and right arrows move between actions, following the reading direction, and Home and End go to the first and last. Disabled actions are skipped. Tabbing back in returns to the last action used.',
+    'The toolbar is one tab stop. The left and right arrows move between actions, following the reading direction, and Home and End go to the first and last. Disabled actions are skipped. Tabbing back in returns to the last action that had focus.',
     <>
       Each action&apos;s <code>text</code> is its accessible name, so the tooltip is not linked a second time as its
       description.
