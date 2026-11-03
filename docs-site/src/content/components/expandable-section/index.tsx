@@ -16,11 +16,11 @@ const doc: ComponentDoc = {
         state, starting from <code>defaultExpanded</code>, or follows <code>expanded</code> when you control it.
       </p>
       <p>
-        The <code>container</code> and <code>stacked</code> variants open with a construction line, like a
-        container, and draw <code>headerCounter</code> as a dimension line under the heading. They are also the only
-        variants that show <code>headerInfo</code> and <code>headerActions</code>. The <code>footer</code>,{' '}
-        <code>navigation</code> and <code>inline</code> variants are lighter disclosures for a container footer, side
-        navigation and running content.
+        The <code>container</code> and <code>stacked</code> variants open with a construction line, like a container,
+        and draw <code>headerCounter</code> as a dimension line under the heading. They are also the only variants that
+        show <code>headerInfo</code> and <code>headerActions</code>. The <code>footer</code>, <code>navigation</code>{' '}
+        and <code>inline</code> variants are lighter disclosures for a container footer, side navigation and running
+        content.
       </p>
     </>
   ),
@@ -31,8 +31,8 @@ const doc: ComponentDoc = {
       title: 'Default',
       description: (
         <p>
-          A plain disclosure inside other content. <code>headerDescription</code> adds a line under the header that
-          says what is inside.
+          A plain disclosure inside other content. <code>headerDescription</code> adds a line under the header that says
+          what is inside.
         </p>
       ),
     },
@@ -50,9 +50,7 @@ const doc: ComponentDoc = {
       id: 'stacked',
       title: 'Stacked',
       description: (
-        <p>
-          Stacked sections share their borders, for a page of settings that people open one group at a time.
-        </p>
+        <p>Stacked sections share their borders, for a page of settings that people open one group at a time.</p>
       ),
     },
     {
@@ -98,16 +96,16 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The header is a native <code>&lt;button&gt;</code> with <code>aria-expanded</code> and{' '}
-      <code>aria-controls</code>, so it opens and closes with Enter and Space and screen readers announce its state.
+      The header is a native <code>&lt;button&gt;</code> with <code>aria-expanded</code> and <code>aria-controls</code>,
+      so it opens and closes with Enter and Space and screen readers announce its state.
     </>,
     <>
-      The content is a <code>group</code> named by the header. It is hidden with the <code>hidden</code> attribute
-      while the section is closed, so nothing inside it can be focused.
+      The content is a <code>group</code> named by the header. It is hidden with the <code>hidden</code> attribute while
+      the section is closed, so nothing inside it can be focused.
     </>,
     <>
-      <code>headerDescription</code> is the button’s accessible description. <code>headerCounter</code> is read as
-      part of the button’s name; the dimension line is drawing only.
+      <code>headerDescription</code> is the button’s accessible description. <code>headerCounter</code> is read as part
+      of the button’s name; the dimension line is drawing only.
     </>,
     <>
       The <code>container</code> and <code>stacked</code> variants put the button in an <code>h2</code>. Use{' '}

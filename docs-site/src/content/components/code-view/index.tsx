@@ -19,8 +19,8 @@ const doc: ComponentDoc = {
       </p>
       <p>
         <code>highlightedLines</code> sets lines on the highlight color with an accent mark on the leading edge.{' '}
-        <code>lineNotes</code> adds a short note at the end of a line, in the body face, which is left out when the
-        code is copied.
+        <code>lineNotes</code> adds a short note at the end of a line, in the body face, which is left out when the code
+        is copied.
       </p>
     </>
   ),
@@ -39,8 +39,7 @@ const doc: ComponentDoc = {
       title: 'Highlighted lines and notes',
       description: (
         <p>
-          Highlight the lines that changed and say what they were with a note, as in a review of a configuration
-          change.
+          Highlight the lines that changed and say what they were with a note, as in a review of a configuration change.
         </p>
       ),
     },

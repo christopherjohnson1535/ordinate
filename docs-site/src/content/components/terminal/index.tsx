@@ -18,8 +18,8 @@ const doc: ComponentDoc = {
         italics.
       </p>
       <p>
-        Long lines wrap with a hanging indent. Lines laid out in columns, with three or more spaces between words,
-        never wrap, so the tables that command-line tools print stay aligned.
+        Long lines wrap with a hanging indent. Lines laid out in columns, with three or more spaces between words, never
+        wrap, so the tables that command-line tools print stay aligned.
       </p>
     </>
   ),
@@ -29,8 +29,8 @@ const doc: ComponentDoc = {
       title: 'A command and its output',
       description: (
         <p>
-          Write each command with its prompt; the terminal shows the text as given. A <code>header</code> line sets
-          the column names of a table in bold.
+          Write each command with its prompt; the terminal shows the text as given. A <code>header</code> line sets the
+          column names of a table in bold.
         </p>
       ),
     },
@@ -39,8 +39,8 @@ const doc: ComponentDoc = {
       title: 'Results',
       description: (
         <p>
-          <code>success</code> and <code>error</code> lines color a result. Start them with a word that says the
-          same, such as PASS and FAIL, because color is never the only difference.
+          <code>success</code> and <code>error</code> lines color a result. Start them with a word that says the same,
+          such as PASS and FAIL, because color is never the only difference.
         </p>
       ),
     },

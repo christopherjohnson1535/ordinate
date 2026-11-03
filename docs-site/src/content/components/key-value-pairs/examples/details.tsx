@@ -13,7 +13,7 @@ export default function Details() {
   return (
     <Container heading="Node details" kind="resource">
       <KeyValuePairs
-        columns={3}
+        columns={2}
         ariaLabel="Node details"
         items={[
           {

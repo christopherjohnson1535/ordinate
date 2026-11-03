@@ -33,13 +33,23 @@ const wires: SchematicProps.Wire[] = [
   },
   ...nodeX.map(x => ({
     id: `gateway-node-${x}`,
-    points: [[320, 158], [320, 184], [x + 70, 184], [x + 70, 210]] as SchematicProps.Point[],
+    points: [
+      [320, 158],
+      [320, 184],
+      [x + 70, 184],
+      [x + 70, 210],
+    ] as SchematicProps.Point[],
     junctions: [[320, 184]] as SchematicProps.Point[],
     flow: true,
   })),
   ...nodeX.map(x => ({
     id: `node-${x}-database`,
-    points: [[x + 70, 262], [x + 70, 290], [320, 290], [320, 316]] as SchematicProps.Point[],
+    points: [
+      [x + 70, 262],
+      [x + 70, 290],
+      [320, 290],
+      [320, 316],
+    ] as SchematicProps.Point[],
     junctions: [[320, 290]] as SchematicProps.Point[],
   })),
 ];

@@ -28,8 +28,8 @@ const doc: ComponentDoc = {
       title: 'Text styles',
       description: (
         <p>
-          Each <code>variant</code> renders its own element. <code>inline-code</code> and <code>strong</code> sit
-          inside running text; <code>small</code> is for notes such as a time stamp.
+          Each <code>variant</code> renders its own element. <code>inline-code</code> and <code>strong</code> sit inside
+          running text; <code>small</code> is for notes such as a time stamp.
         </p>
       ),
     },
@@ -38,8 +38,8 @@ const doc: ComponentDoc = {
       title: 'Headline figures',
       description: (
         <p>
-          <code>key-label</code> over <code>value-large</code> sets a figure under its name, as on a summary sheet.
-          Add a line in a status color when the figure needs a word of context.
+          <code>key-label</code> over <code>value-large</code> sets a figure under its name, as on a summary sheet. Add
+          a line in a status color when the figure needs a word of context.
         </p>
       ),
     },
@@ -58,8 +58,8 @@ const doc: ComponentDoc = {
       title: 'Status colors',
       description: (
         <p>
-          The <code>text-status-*</code> colors say how something is. The words must say it too, because color is
-          never the only signal.
+          The <code>text-status-*</code> colors say how something is. The words must say it too, because color is never
+          the only signal.
         </p>
       ),
     },
@@ -68,8 +68,8 @@ const doc: ComponentDoc = {
       title: 'Float',
       description: (
         <p>
-          <code>float="right"</code> moves an element to the end of the line, and the text after it flows around it.
-          In right-to-left pages it moves to the left.
+          <code>float="right"</code> moves an element to the end of the line, and the text after it flows around it. In
+          right-to-left pages it moves to the left.
         </p>
       ),
     },

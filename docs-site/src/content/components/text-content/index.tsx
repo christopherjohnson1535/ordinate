@@ -17,8 +17,8 @@ const doc: ComponentDoc = {
         hairline box, quotes against an ink rule on their leading edge, and <code>hr</code> as a divider.
       </p>
       <p>
-        Only elements written directly inside TextContent are styled. Other components placed in it, such as an Alert
-        or a Button, keep their own look.
+        Only elements written directly inside TextContent are styled. Other components placed in it, such as an Alert or
+        a Button, keep their own look.
       </p>
     </>
   ),
@@ -27,9 +27,7 @@ const doc: ComponentDoc = {
       id: 'article',
       title: 'An article',
       description: (
-        <p>
-          A help article with headings, a list of steps, inline and preformatted code, a rule and a closing note.
-        </p>
+        <p>A help article with headings, a list of steps, inline and preformatted code, a rule and a closing note.</p>
       ),
     },
     {
@@ -37,8 +35,8 @@ const doc: ComponentDoc = {
       title: 'Quotes and small print',
       description: (
         <p>
-          <code>blockquote</code> sets a quote against an ink rule. <code>small</code> inside a paragraph is for a
-          note that matters less than the text around it.
+          <code>blockquote</code> sets a quote against an ink rule. <code>small</code> inside a paragraph is for a note
+          that matters less than the text around it.
         </p>
       ),
     },
@@ -61,8 +59,8 @@ const doc: ComponentDoc = {
         For the title of a page with actions. Use a <a href="#/components/header">Header</a> above the content.
       </>,
       <>
-        For code that people read line by line. Use a <a href="#/components/code-view">CodeView</a>, which numbers
-        and colors it.
+        For code that people read line by line. Use a <a href="#/components/code-view">CodeView</a>, which numbers and
+        colors it.
       </>,
     ],
     writing: [

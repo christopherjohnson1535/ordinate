@@ -16,8 +16,8 @@ const doc: ComponentDoc = {
         vertical, it stands the full height of a flex row between items placed side by side.
       </p>
       <p>
-        A horizontal divider can carry a short label in its middle, such as “or” between two ways to sign in. The
-        line breaks around the label and keeps a minimum length on each side as the label wraps.
+        A horizontal divider can carry a short label in its middle, such as “or” between two ways to sign in. The line
+        breaks around the label and keeps a minimum length on each side as the label wraps.
       </p>
     </>
   ),
@@ -32,8 +32,8 @@ const doc: ComponentDoc = {
       title: 'With a label',
       description: (
         <p>
-          The children become a label in the middle of the line. Keep it to a word or two, such as a choice between
-          two paths.
+          The children become a label in the middle of the line. Keep it to a word or two, such as a choice between two
+          paths.
         </p>
       ),
     },
@@ -67,8 +67,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      An unlabelled divider is an <code>&lt;hr&gt;</code>, which screen readers announce as a separator. A vertical
-      one also has <code>aria-orientation="vertical"</code>.
+      An unlabelled divider is an <code>&lt;hr&gt;</code>, which screen readers announce as a separator. A vertical one
+      also has <code>aria-orientation="vertical"</code>.
     </>,
     <>
       A labelled divider has <code>role="separator"</code> and is named by its label through{' '}

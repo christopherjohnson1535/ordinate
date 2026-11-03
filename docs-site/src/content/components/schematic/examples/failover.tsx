@@ -10,9 +10,29 @@ import SpaceBetween from '@ordinate/components/space-between';
 import '@ordinate/global-styles/drawing-fonts.css';
 
 const wires: SchematicProps.Wire[] = [
-  { id: 'app-primary', points: [[200, 100], [200, 180]], flow: true },
-  { id: 'app-replica', points: [[420, 100], [420, 180]], flow: true },
-  { id: 'replication', points: [[270, 212], [350, 212]] },
+  {
+    id: 'app-primary',
+    points: [
+      [200, 100],
+      [200, 180],
+    ],
+    flow: true,
+  },
+  {
+    id: 'app-replica',
+    points: [
+      [420, 100],
+      [420, 180],
+    ],
+    flow: true,
+  },
+  {
+    id: 'replication',
+    points: [
+      [270, 212],
+      [350, 212],
+    ],
+  },
 ];
 
 const steps = [

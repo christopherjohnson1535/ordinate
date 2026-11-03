@@ -16,7 +16,7 @@ const lines: RouteMapProps.Line[] = modules.map(module => ({
   id: module.id,
   title: module.title,
   description: `${module.done} of ${module.total} done`,
-  href: `#/components/route-map?module=${module.id}`,
+  href: '#/components/route-map',
   stops: Array.from({ length: module.total }, (_, i) => ({
     id: `${module.id}-${i + 1}`,
     status: i < module.done ? 'done' : i === module.done ? 'open' : 'planned',
@@ -32,7 +32,7 @@ export default function Links() {
     <SpaceBetween size="m">
       <RouteMap
         lines={lines}
-        terminus={{ title: 'Capstone', href: '#/components/route-map?module=capstone' }}
+        terminus={{ title: 'Capstone', href: '#/components/route-map' }}
         selectedLineId={selected}
         currentStopId="storage-3"
         currentStopLabel="Next up"

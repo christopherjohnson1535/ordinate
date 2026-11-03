@@ -13,8 +13,8 @@ const doc: ComponentDoc = {
     <>
       <p>
         Key-value pairs borrow Container’s margin at a small scale. Each label is set right-aligned in a margin column
-        against a faint construction line, with its value to the right in ink. Rows meet edge to edge, so the line
-        runs unbroken down each column.
+        against a faint construction line, with its value to the right in ink. Rows meet edge to edge, so the line runs
+        unbroken down each column.
       </p>
       <p>
         <code>columns</code> is the most columns the list may take. Columns drop away as the space narrows, so every
@@ -29,8 +29,8 @@ const doc: ComponentDoc = {
       title: 'Details of a resource',
       description: (
         <p>
-          The usual place for pairs is the details section of a page. Values can be more than text: a status, a
-          link, a copyable ID or a progress bar with its <code>key-value</code> variant.
+          The usual place for pairs is the details section of a page. Values can be more than text: a status, a link, a
+          copyable ID or a progress bar with its <code>key-value</code> variant.
         </p>
       ),
     },
@@ -48,8 +48,8 @@ const doc: ComponentDoc = {
       title: 'Columns',
       description: (
         <p>
-          Pairs fill the columns in reading order, row by row. Narrow the window and the list drops columns before
-          any of them gets too narrow.
+          Pairs fill the columns in reading order, row by row. Narrow the window and the list drops columns before any
+          of them gets too narrow.
         </p>
       ),
     },
@@ -78,12 +78,11 @@ const doc: ComponentDoc = {
   accessibility: [
     <>
       The list is a <code>&lt;dl&gt;</code>: each label is a <code>&lt;dt&gt;</code> and each value a{' '}
-      <code>&lt;dd&gt;</code>. A group is a term whose description is a nested list, so the markup stays valid at
-      every level.
+      <code>&lt;dd&gt;</code>. A group is a term whose description is a nested list, so the markup stays valid at every
+      level.
     </>,
     <>
-      Name the list with <code>ariaLabel</code>, or with <code>ariaLabelledby</code> pointing at a heading on the
-      page.
+      Name the list with <code>ariaLabel</code>, or with <code>ariaLabelledby</code> pointing at a heading on the page.
     </>,
     <>
       Give a pair an <code>id</code> when another element, such as a progress bar in its value, needs to refer to its

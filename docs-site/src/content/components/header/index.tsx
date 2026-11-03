@@ -13,8 +13,8 @@ const doc: ComponentDoc = {
     <>
       <p>
         A header is a heading row: the heading text and an optional <code>counter</code>, an <code>info</code> link
-        after it, and <code>actions</code> at the end of the row. A <code>description</code> sits under it in
-        secondary ink.
+        after it, and <code>actions</code> at the end of the row. A <code>description</code> sits under it in secondary
+        ink.
       </p>
       <p>
         The <code>h1</code> variant is a sheet heading, large and light. A <code>code</code> sets a short reference
@@ -29,8 +29,8 @@ const doc: ComponentDoc = {
       title: 'Counter, info and actions',
       description: (
         <p>
-          The most common header: a section name with a count of what it holds, an info link and the section’s
-          actions at the end of the row.
+          The most common header: a section name with a count of what it holds, an info link and the section’s actions
+          at the end of the row.
         </p>
       ),
     },
@@ -39,8 +39,8 @@ const doc: ComponentDoc = {
       title: 'Variants',
       description: (
         <p>
-          <code>h1</code> is for the page title, <code>h2</code> for containers and modals, <code>h3</code> for
-          sections inside a container.
+          <code>h1</code> is for the page title, <code>h2</code> for containers and modals, <code>h3</code> for sections
+          inside a container.
         </p>
       ),
     },
@@ -94,8 +94,8 @@ const doc: ComponentDoc = {
     </>,
     'The counter is inside the heading element, so screen readers read it with the heading text. The info link and the actions are outside it.',
     <>
-      The <code>code</code> sits before the heading, outside it, so it is read before the heading and not as part of
-      its name.
+      The <code>code</code> sits before the heading, outside it, so it is read before the heading and not as part of its
+      name.
     </>,
   ],
   related: ['container', 'box', 'button', 'link'],

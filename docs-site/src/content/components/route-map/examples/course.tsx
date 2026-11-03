@@ -30,7 +30,7 @@ export default function Course() {
   return (
     <RouteMap
       lines={lines}
-      terminus={{ title: 'Capstone', description: 'Run the north annex for a week' }}
+      terminus={{ title: 'Capstone', description: 'A week on call' }}
       currentStopId="storage-3"
       ariaLabel="Platform course route"
     />

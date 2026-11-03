@@ -28,8 +28,8 @@ const doc: ComponentDoc = {
       title: 'One line',
       description: (
         <p>
-          A long identifier in a narrow value column. Hover over the path, or tab to it, to read the whole of it.
-          Text that fits is left alone.
+          A long identifier in a narrow value column. Hover over the path, or tab to it, to read the whole of it. Text
+          that fits is left alone.
         </p>
       ),
     },
@@ -63,7 +63,9 @@ const doc: ComponentDoc = {
         For a whole article. Use an <a href="#/components/expandable-section">ExpandableSection</a> to hide the rest.
       </>,
     ],
-    writing: ['Put what tells items apart at the start, where it stays visible: "node-04 backup", not "Backup of node-04".'],
+    writing: [
+      'Put what tells items apart at the start, where it stays visible: "node-04 backup", not "Backup of node-04".',
+    ],
   },
   accessibility: [
     'The whole text stays in the page, so screen readers read all of it whether or not it is cut.',

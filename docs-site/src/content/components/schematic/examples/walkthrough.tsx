@@ -24,7 +24,12 @@ const parts: SchematicProps.Part[] = [
 
 const wires: SchematicProps.Wire[] = nodeX.map((x, i) => ({
   id: `to-node${i + 1}`,
-  points: [[320, 72], [320, 116], [x + 67, 116], [x + 67, 160]] as SchematicProps.Point[],
+  points: [
+    [320, 72],
+    [320, 116],
+    [x + 67, 116],
+    [x + 67, 160],
+  ] as SchematicProps.Point[],
   junctions: [[320, 116]] as SchematicProps.Point[],
   flow: true,
 }));

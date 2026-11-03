@@ -9,9 +9,9 @@ export default function Article() {
     <TextContent>
       <h2>Rotating access keys</h2>
       <p>
-        Access keys sign every request your build agents make. Rotate them every <strong>90 days</strong>, or at once
-        if a key may have leaked. Read the <a href="#/components/text-content">key policy</a> for the rules that apply
-        to production projects.
+        Access keys sign every request your build agents make. Rotate them every <strong>90 days</strong>, or at once if
+        a key may have leaked. Read the <a href="#/components/text-content">key policy</a> for the rules that apply to
+        production projects.
       </p>
       <h3>Before you start</h3>
       <ul>

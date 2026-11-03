@@ -17,10 +17,36 @@ const parts: SchematicProps.Part[] = [
 ];
 
 const wires: SchematicProps.Wire[] = [
-  { id: 'client-gateway', points: [[136, 68], [176, 68]], flow: true },
-  { id: 'gateway-service', points: [[296, 68], [336, 68]], flow: true },
-  { id: 'service-database', points: [[456, 68], [496, 68]] },
-  { id: 'service-cache', points: [[396, 96], [396, 150]] },
+  {
+    id: 'client-gateway',
+    points: [
+      [136, 68],
+      [176, 68],
+    ],
+    flow: true,
+  },
+  {
+    id: 'gateway-service',
+    points: [
+      [296, 68],
+      [336, 68],
+    ],
+    flow: true,
+  },
+  {
+    id: 'service-database',
+    points: [
+      [456, 68],
+      [496, 68],
+    ],
+  },
+  {
+    id: 'service-cache',
+    points: [
+      [396, 96],
+      [396, 150],
+    ],
+  },
 ];
 
 const scene: Record<string, SchematicProps.State> = {

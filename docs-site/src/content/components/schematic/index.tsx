@@ -12,18 +12,17 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        You describe the drawing once: <code>parts</code> are labelled boxes and <code>wires</code> are runs of
-        points between them, all in drawing units inside a <code>width</code> by <code>height</code> frame. The
-        drawing scales to the width of its container and keeps its proportions. Wires are drawn under the parts and
-        end in an arrowhead; <code>junctions</code> put a dot where a wire branches off a shared run, and a{' '}
-        <code>flow</code> wire sends dots along itself in the accent color.
+        You describe the drawing once: <code>parts</code> are labelled boxes and <code>wires</code> are runs of points
+        between them, all in drawing units inside a <code>width</code> by <code>height</code> frame. The drawing scales
+        to the width of its container and keeps its proportions. Wires are drawn under the parts and end in an
+        arrowhead; <code>junctions</code> put a dot where a wire branches off a shared run, and a <code>flow</code> wire
+        sends dots along itself in the accent color.
       </p>
       <p>
         <code>scene</code> says which parts and wires are shown now, and how. Change it and the drawing moves: a part
-        that appears draws its outline on and then fills in, one that goes away takes its outline off, and the rest
-        keep their place. A part can be accented as new, dimmed, pending or crossed out as removed. The same
-        description draws as a <code>schematic</code> on a dot grid, a hand-drawn <code>sketch</code>, or a{' '}
-        <code>chalkboard</code>.
+        that appears draws its outline on and then fills in, one that goes away takes its outline off, and the rest keep
+        their place. A part can be accented as new, dimmed, pending or crossed out as removed. The same description
+        draws as a <code>schematic</code> on a dot grid, a hand-drawn <code>sketch</code>, or a <code>chalkboard</code>.
       </p>
       <p>
         The <code>sketch</code> and <code>chalkboard</code> faces are not part of the main style sheet. Import{' '}
@@ -57,9 +56,9 @@ const doc: ComponentDoc = {
       title: 'Variants',
       description: (
         <p>
-          The parts, wires and scene are the same in every variant. In <code>schematic</code> and{' '}
-          <code>sketch</code> an accent is hatched; on a <code>chalkboard</code> it is drawn in the accent color.
-          This example imports the drawing fonts.
+          The parts, wires and scene are the same in every variant. In <code>schematic</code> and <code>sketch</code> an
+          accent is hatched; on a <code>chalkboard</code> it is drawn in the accent color. This example imports the
+          drawing fonts.
         </p>
       ),
     },
@@ -69,8 +68,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           <code>accent</code> marks what is new or in focus, <code>dimmed</code> pushes a part back,{' '}
-          <code>pending</code> draws a part that is starting more faintly and <code>removed</code> crosses it out.
-          The parts here use <code>size: 'small'</code> lettering.
+          <code>pending</code> draws a part that is starting more faintly and <code>removed</code> crosses it out. The
+          parts here use <code>size: 'small'</code> lettering.
         </p>
       ),
     },
@@ -79,8 +78,8 @@ const doc: ComponentDoc = {
       title: 'A failover on a chalkboard',
       description: (
         <p>
-          A part’s label can change between scenes too. Here the replica is promoted and takes the primary’s name
-          while the old primary is crossed out and dimmed.
+          A part’s label can change between scenes too. Here the replica is promoted and takes the primary’s name while
+          the old primary is crossed out and dimmed.
         </p>
       ),
     },
@@ -107,8 +106,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The drawing is one image (<code>role="img"</code>) named by <code>ariaLabel</code>, which is required.
-      Screen readers do not read the parts one by one, so the label has to describe what the drawing shows.
+      The drawing is one image (<code>role="img"</code>) named by <code>ariaLabel</code>, which is required. Screen
+      readers do not read the parts one by one, so the label has to describe what the drawing shows.
     </>,
     <>
       <code>ariaDescribedby</code> points at a longer description, such as the text of the current step. Update both
