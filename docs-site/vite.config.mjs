@@ -31,6 +31,9 @@ const devPageAliases = [
   { find: '~collection-hooks', replacement: path.join(repo, 'collection-hooks/src') },
 ];
 
+const rootManifest = JSON.parse(fs.readFileSync(path.join(repo, 'package.json'), 'utf8'));
+const codeEditorPackages = Object.keys(rootManifest.dependencies).filter(name => /^@(codemirror|lezer)\//.test(name));
+
 function readVersion(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8')).version;
 }
@@ -78,6 +81,9 @@ export default defineConfig({
     __ORDINATE_VERSION__: JSON.stringify(version),
     __ORDINATE_BUILT__: JSON.stringify(new Date().toISOString().slice(0, 10)),
   },
+  // The code editor loads CodeMirror and its languages on first use. Listing them here bundles them
+  // when the dev server starts, so the first page with an editor does not reload the server.
+  optimizeDeps: { include: codeEditorPackages },
   server: {
     port: 4180,
     fs: { allow: [repo, fs.realpathSync(path.join(repo, 'node_modules'))] },

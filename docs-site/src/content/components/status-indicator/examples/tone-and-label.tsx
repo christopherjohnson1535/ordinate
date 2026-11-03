@@ -9,7 +9,7 @@ import StatusIndicator from '@ordinate/components/status-indicator';
 export default function ToneAndLabel() {
   return (
     <KeyValuePairs
-      columns={3}
+      columns={2}
       items={[
         {
           label: 'Last backups',

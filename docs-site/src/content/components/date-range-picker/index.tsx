@@ -24,6 +24,10 @@ const doc: ComponentDoc = {
         popup. An absolute value holds ISO strings, <code>YYYY-MM-DDTHH:mm:ss</code>, or <code>YYYY-MM-DD</code> with{' '}
         <code>dateOnly</code>. A relative value holds an amount and a unit counted back from now.
       </p>
+      <p>
+        The popup is large. Inside a container that clips its overflow, such as a table, a modal or the frames on this
+        page, set <code>expandToViewport</code> so it is not cut off.
+      </p>
     </>
   ),
   marks: ['M9', 'M5', 'M3', 'M12'],

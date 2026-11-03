@@ -20,7 +20,8 @@ const doc: ComponentDoc = {
       <p>
         The value is <code>YYYY-MM-DD</code>, or <code>YYYY-MM</code> with month granularity, and it can be partial
         while the user types. <code>isDateEnabled</code> only governs the calendar: typed dates are not checked, so
-        validate them too.
+        validate them too. Inside a container that clips its overflow, such as a table, a modal or the frames on this
+        page, set <code>expandToViewport</code> so the calendar is not cut off.
       </p>
     </>
   ),

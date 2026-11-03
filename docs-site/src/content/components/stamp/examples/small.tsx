@@ -47,7 +47,7 @@ export default function Small() {
       items={drawings}
       columnDefinitions={columnDefinitions}
       trackBy="number"
-      caption="Drawing register"
+      caption="Schedule of drawings"
       header={<Header counter={`(${drawings.length})`}>Drawing register</Header>}
     />
   );

@@ -68,7 +68,7 @@ export default function InATable() {
       columnDefinitions={columnDefinitions}
       trackBy="name"
       kind="resource"
-      caption="Services"
+      caption="Schedule of services"
       header={<Header counter={`(${services.length})`}>Services</Header>}
     />
   );

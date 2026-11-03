@@ -43,7 +43,7 @@ export default function InATable() {
       columnDefinitions={columnDefinitions}
       trackBy="id"
       kind="policy"
-      caption="Security findings"
+      caption="Schedule of open findings"
       header={<Header counter={`(${findings.length})`}>Security findings</Header>}
     />
   );
