@@ -56,6 +56,7 @@ export default function Async() {
       filteringLoadingText="Loading suggestions"
       filteringErrorText="Suggestions could not be loaded."
       filteringRecoveryText="Retry"
+      expandToViewport={true}
     />
   );
 }

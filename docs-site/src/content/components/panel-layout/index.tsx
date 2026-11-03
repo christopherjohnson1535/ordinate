@@ -13,8 +13,8 @@ const doc: ComponentDoc = {
     <>
       <p>
         A panel layout puts a panel of fixed width beside a main pane that takes the rest of the width. Each pane
-        scrolls on its own. Between them is a hairline rule, or, when <code>resizable</code>, a handle drawn as the
-        same rule with a small hinge plate at its middle, which fills with ink while it is dragged.
+        scrolls on its own. Between them is a hairline rule, or, when <code>resizable</code>, a handle drawn as the same
+        rule with a small hinge plate at its middle, which fills with ink while it is dragged.
       </p>
       <p>
         The layout fills the height of its parent, so give the parent a height. The panel never gets wider than the
@@ -81,8 +81,8 @@ const doc: ComponentDoc = {
       “Resize panel”.
     </>,
     <>
-      Panes that scroll must be reachable by keyboard. <code>panelFocusable</code> and <code>mainFocusable</code> make
-      a pane focusable and a named region; give each an <code>ariaLabel</code> or <code>ariaLabelledby</code>.
+      Panes that scroll must be reachable by keyboard. <code>panelFocusable</code> and <code>mainFocusable</code> make a
+      pane focusable and a named region; give each an <code>ariaLabel</code> or <code>ariaLabelledby</code>.
     </>,
     'The panes keep their source order for screen readers: with the panel at the end, it is read after the main pane.',
     'The ref has focusResizeHandle(), to move focus to the handle from a control of your own.',

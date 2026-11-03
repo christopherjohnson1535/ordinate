@@ -43,6 +43,7 @@ export default function OperationAndLimit() {
         filteringAriaLabel="Find incidents"
         filteringPlaceholder="Find incidents"
         tokenLimit={3}
+        expandToViewport={true}
       />
       <Box color="text-body-secondary" fontSize="body-s">
         Query: {query.tokens.length} filters joined with “{query.operation}”.

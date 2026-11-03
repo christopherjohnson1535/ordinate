@@ -19,9 +19,10 @@ const doc: ComponentDoc = {
         beside the sheet. The help panel and drawers come in from the end of the line with an ink edge.
       </p>
       <p>
-        On wide screens a closed navigation or panel collapses to a slim rail of icon toggles. Below 688 pixels, measured
-        on the layout itself rather than the window, a toolbar holds the breadcrumbs and every toggle, and panels open
-        over the content. Each open state can be left to the layout or controlled with its prop and change event.
+        On wide screens a closed navigation or panel collapses to a slim rail of icon toggles. Below 688 pixels,
+        measured on the layout itself rather than the window, a toolbar holds the breadcrumbs and every toggle, and
+        panels open over the content. Each open state can be left to the layout or controlled with its prop and change
+        event.
       </p>
     </>
   ),
@@ -33,8 +34,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           Navigation, breadcrumbs, a help panel and a title block around a content layout. The Info link calls the
-          layout’s <code>openTools()</code>, which opens the help panel and moves focus to its close button. The
-          example sets <code>disableBodyScroll</code> so the layout scrolls inside its frame.
+          layout’s <code>openTools()</code>, which opens the help panel and moves focus to its close button. The example
+          sets <code>disableBodyScroll</code> so the layout scrolls inside its frame.
         </p>
       ),
       layout: 'flush',
@@ -69,8 +70,8 @@ const doc: ComponentDoc = {
       title: 'Notifications',
       description: (
         <p>
-          Notifications go in a column beside the sheet, like notes in the margin, when the layout has room for it:
-          the sheet must keep 640 pixels beside a 320 pixel column. Otherwise, as in this frame, or with{' '}
+          Notifications go in a column beside the sheet, like notes in the margin, when the layout has room for it: the
+          sheet must keep 640 pixels beside a 320 pixel column. Otherwise, as in this frame, or with{' '}
           <code>notificationsPosition="top"</code>, they sit above the breadcrumbs. <code>stickyNotifications</code>{' '}
           keeps them in view while the content scrolls, and an empty <code>Flashbar</code> takes no space.
         </p>
@@ -84,12 +85,12 @@ const doc: ComponentDoc = {
       'Once per application page, as its outermost frame.',
       <>
         With a <code>contentType</code> that fits the page: <code>table</code>, <code>cards</code> or{' '}
-        <code>dashboard</code> for full-width collections, <code>form</code> and <code>wizard</code> for narrower
-        pages that start with the help panel open.
+        <code>dashboard</code> for full-width collections, <code>form</code> and <code>wizard</code> for narrower pages
+        that start with the help panel open.
       </>,
       <>
-        With <code>disableBodyScroll</code> when the layout sits in a region of fixed height, such as an embedded
-        view, so it scrolls inside that region instead of the page.
+        With <code>disableBodyScroll</code> when the layout sits in a region of fixed height, such as an embedded view,
+        so it scrolls inside that region instead of the page.
       </>,
     ],
     avoid: [

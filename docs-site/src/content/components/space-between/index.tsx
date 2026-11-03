@@ -13,13 +13,13 @@ const doc: ComponentDoc = {
     <>
       <p>
         Space between stacks its children in a column, or lays them in a row that wraps, with one of eight sizes of
-        space between them, from <code>xxxs</code> to <code>xxl</code>. The sizes are spacing tokens, so they follow
-        the revision. It draws nothing.
+        space between them, from <code>xxxs</code> to <code>xxl</code>. The sizes are spacing tokens, so they follow the
+        revision. It draws nothing.
       </p>
       <p>
         Each child takes its own slot, including each child of a fragment. <code>null</code>, <code>false</code> and{' '}
-        <code>undefined</code> children are left out, and a child that renders nothing takes no space, so you can
-        write conditions inline.
+        <code>undefined</code> children are left out, and a child that renders nothing takes no space, so you can write
+        conditions inline.
       </p>
     </>
   ),
@@ -39,8 +39,7 @@ const doc: ComponentDoc = {
       description: (
         <p>
           <code>direction="horizontal"</code> lays the items in a row that wraps when it runs out of room. Use{' '}
-          <code>xs</code> between buttons, and <code>alignItems="center"</code> to line up items of different
-          heights.
+          <code>xs</code> between buttons, and <code>alignItems="center"</code> to line up items of different heights.
         </p>
       ),
     },
@@ -54,8 +53,8 @@ const doc: ComponentDoc = {
     use: [
       'For the space between the parts of a page, a form or a group of buttons.',
       <>
-        <code>xs</code> between buttons, <code>s</code> or <code>m</code> between related items, <code>l</code>{' '}
-        between sections.
+        <code>xs</code> between buttons, <code>s</code> or <code>m</code> between related items, <code>l</code> between
+        sections.
       </>,
     ],
     avoid: [

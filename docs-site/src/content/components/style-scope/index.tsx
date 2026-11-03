@@ -12,16 +12,15 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A style scope is an element that sets the same classes as the functions in <code>@ordinate/global-styles</code>
-        : <code>applyStyle</code>, <code>applyMode</code>, <code>applyDensity</code> and <code>applyRevision</code>.
-        Everything inside it takes those settings; anything left unset is inherited from around it. Because it is
-        markup, it also renders on the server, so a server-rendered page can set a website style without running
-        script.
+        A style scope is an element that sets the same classes as <code>applyStyle</code>, <code>applyMode</code>,{' '}
+        <code>applyDensity</code> and <code>applyRevision</code> from <code>@ordinate/global-styles</code>. Everything
+        inside it takes those settings; anything left unset is inherited from around it. Because it is markup, it also
+        renders on the server, so a server-rendered page can set a website style without running script.
       </p>
       <p>
-        A scope with a <code>mode</code> also paints its own background and text color, so dark text does not end up
-        on a light page. Read <a href="#/start/styles">Styles, modes and revisions</a> in Get started for how the
-        settings work across a whole page.
+        A scope with a <code>mode</code> also paints its own background and text color, so dark text does not end up on
+        a light page. Read <a href="#/start/styles">Styles, modes and revisions</a> in Get started for how the settings
+        work across a whole page.
       </p>
     </>
   ),
@@ -66,8 +65,8 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        For the whole page in a browser application. Call <code>applyStyle</code>, <code>applyMode</code> and the
-        other functions of <code>@ordinate/global-styles</code> once on the body.
+        For the whole page in a browser application. Call <code>applyStyle</code>, <code>applyMode</code> and the other
+        functions of <code>@ordinate/global-styles</code> once on the body.
       </>,
       'Scopes nested deeply inside each other. Each one overrides the settings around it, which gets hard to follow.',
     ],
@@ -80,7 +79,6 @@ const doc: ComponentDoc = {
     'Every style, mode and revision is designed to keep text contrast. If you combine a scoped mode with your own colors, check the contrast yourself.',
   ],
   related: ['app-layout', 'box'],
-  testing: true,
 };
 
 export default doc;

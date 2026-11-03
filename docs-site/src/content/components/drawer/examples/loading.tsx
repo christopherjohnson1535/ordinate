@@ -13,7 +13,6 @@ export default function Loading() {
 
   useEffect(() => {
     if (activeDrawerId !== 'assistant') {
-      setLoaded(false);
       return;
     }
     const timer = window.setTimeout(() => setLoaded(true), 1500);
@@ -25,7 +24,10 @@ export default function Loading() {
       disableBodyScroll={true}
       navigationHide={true}
       activeDrawerId={activeDrawerId}
-      onDrawerChange={event => setActiveDrawerId(event.detail.activeDrawerId)}
+      onDrawerChange={event => {
+        setActiveDrawerId(event.detail.activeDrawerId);
+        setLoaded(false);
+      }}
       drawers={[
         {
           id: 'assistant',

@@ -27,11 +27,21 @@ export default function Kinds() {
       >
         <Box variant="p">Two data volumes of 200 GB and two root volumes of 50 GB, all in zone 1a.</Box>
       </Container>
-      <Container kind="policy" reference="P1" heading="Rollout policy" description="Rules for every deploy." measure="3 rules">
-        <Box variant="p">Deploy one zone at a time, wait ten minutes between zones, and stop on the first failed check.</Box>
+      <Container
+        kind="policy"
+        reference="P1"
+        heading="Rollout policy"
+        description="Rules for every deploy."
+        measure="3 rules"
+      >
+        <Box variant="p">
+          Deploy one zone at a time, wait ten minutes between zones, and stop on the first failed check.
+        </Box>
       </Container>
       <Container kind="neutral" reference="N1" heading="Notes" measure="2 notes">
-        <Box variant="p">The annex moves to the new load balancer in December. Ask Dana Ruiz before changing the DNS.</Box>
+        <Box variant="p">
+          The annex moves to the new load balancer in December. Ask Dana Ruiz before changing the DNS.
+        </Box>
       </Container>
     </SpaceBetween>
   );

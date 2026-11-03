@@ -18,9 +18,9 @@ const doc: ComponentDoc = {
         tag as the table row it describes, from the table’s <code>rowTag</code>.
       </p>
       <p>
-        The panel lives in the <code>splitPanel</code> slot of an <code>AppLayout</code>, which holds its position,
-        size and open state. The user can move it between the bottom and the side from its preferences; the layout
-        keeps it at the bottom while it is too narrow for the side.
+        The panel lives in the <code>splitPanel</code> slot of an <code>AppLayout</code>, which holds its position, size
+        and open state. The user can move it between the bottom and the side from its preferences; the layout keeps it
+        at the bottom while it is too narrow for the side.
       </p>
     </>
   ),
@@ -55,8 +55,8 @@ const doc: ComponentDoc = {
       title: 'Hidden when closed',
       description: (
         <p>
-          With <code>closeBehavior="hide"</code>, closing the panel removes it from the page. Use it when the panel
-          only makes sense while something is selected, and open it from your own controls.{' '}
+          With <code>closeBehavior="hide"</code>, closing the panel removes it from the page. Use it when the panel only
+          makes sense while something is selected, and open it from your own controls.{' '}
           <code>hidePreferencesButton</code> removes the position preferences.
         </p>
       ),
@@ -71,8 +71,8 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        Outside an <a href="#/components/app-layout">AppLayout</a>. The panel gets its position and size from the
-        layout and warns without one. Use a <a href="#/components/panel-layout">PanelLayout</a> inside a page.
+        Outside an <a href="#/components/app-layout">AppLayout</a>. The panel gets its position and size from the layout
+        and warns without one. Use a <a href="#/components/panel-layout">PanelLayout</a> inside a page.
       </>,
       <>
         For help or tools unrelated to the selection. Use a <a href="#/components/help-panel">HelpPanel</a> or a{' '}
@@ -91,8 +91,8 @@ const doc: ComponentDoc = {
       only; the tag is read once, in the “Detail S3” label above the title.
     </>,
     <>
-      The open and close buttons have <code>aria-expanded</code>, and focus moves to the other one when the panel
-      opens or closes.
+      The open and close buttons have <code>aria-expanded</code>, and focus moves to the other one when the panel opens
+      or closes.
     </>,
     'The resize handle is a separator that can be focused. The arrow keys resize the panel, and Home and End set its smallest and largest size.',
     'The preferences open in a modal dialog with a radio group of positions. Focus returns to the preferences button when it closes.',

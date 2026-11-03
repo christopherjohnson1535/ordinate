@@ -51,8 +51,8 @@ const doc: ComponentDoc = {
       title: 'Loading',
       description: (
         <p>
-          For help fetched on demand, <code>loading</code> shows a spinner with <code>loadingText</code> in place of
-          the content.
+          For help fetched on demand, <code>loading</code> shows a spinner with <code>loadingText</code> in place of the
+          content.
         </p>
       ),
     },
@@ -80,8 +80,8 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The title is an <code>h2</code>; use <code>h3</code> for headings inside the content. Pass the title as text,
-      not as a heading element.
+      The title is an <code>h2</code>; use <code>h3</code> for headings inside the content. Pass the title as text, not
+      as a heading element.
     </>,
     'The "Help" caption and the construction line are not part of the title, so screen readers read the title alone.',
     <>

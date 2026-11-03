@@ -19,9 +19,9 @@ export default function MaxWidth() {
       }
     >
       <Box variant="p">
-        Spin the wheel and watch the gap at the brake pad. Where the rim swings toward the pad, loosen the spokes on that
-        side and tighten the ones opposite, a quarter turn at a time. Check again after every pair of turns, and stop
-        when the gap stays the same all the way round.
+        Spin the wheel and watch the gap at the brake pad. Where the rim swings toward the pad, loosen the spokes on
+        that side and tighten the ones opposite, a quarter turn at a time. Check again after every pair of turns, and
+        stop when the gap stays the same all the way round.
       </Box>
     </ContentLayout>
   );

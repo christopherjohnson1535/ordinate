@@ -8,14 +8,15 @@ const doc: ComponentDoc = {
   name: 'Container',
   folder: 'container',
   group: 'layout',
-  summary: 'Groups the content of one section of a page under a heading, with its actions and a measure of what it holds.',
+  summary:
+    'Groups the content of one section of a page under a heading, with its actions and a measure of what it holds.',
   description: (
     <>
       <p>
         A container is drawn like a detail on a drawing, not as a box. A construction line runs along its top and down
         the side of the content, past the corners, with a hash mark wherever a line ends. The heading, reference and
-        description sit in a margin column to the start of that line, and the content to the end of it. Below 688
-        pixels the margin stacks above the content and the side line is left out.
+        description sit in a margin column to the start of that line, and the content to the end of it. Below 688 pixels
+        the margin stacks above the content and the side line is left out.
       </p>
       <p>
         <code>kind</code> says what the section holds and colors its lines, hash marks, reference and dimension line:
@@ -86,8 +87,8 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        Containers inside containers. Use a <a href="#/components/header">Header</a> with the <code>h3</code> variant
-        or a <a href="#/components/column-layout">ColumnLayout</a> to divide one section.
+        Containers inside containers. Use a <a href="#/components/header">Header</a> with the <code>h3</code> variant or
+        a <a href="#/components/column-layout">ColumnLayout</a> to divide one section.
       </>,
       <>
         For a list of similar items the user picks from. Use <a href="#/components/cards">Cards</a> or a{' '}
@@ -95,8 +96,8 @@ const doc: ComponentDoc = {
       </>,
       'Kind colors as decoration. Leave a section neutral when it holds a mix, or nothing in particular.',
       <>
-        For content that can be shown and hidden. Use an{' '}
-        <a href="#/components/expandable-section">ExpandableSection</a>.
+        For content the reader shows and hides. Use an <a href="#/components/expandable-section">ExpandableSection</a>,
+        which takes the same place in a page.
       </>,
     ],
     writing: [

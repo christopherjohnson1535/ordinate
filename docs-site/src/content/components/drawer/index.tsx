@@ -8,7 +8,8 @@ const doc: ComponentDoc = {
   name: 'Drawer',
   folder: 'drawer',
   group: 'layout',
-  summary: 'The content of a panel the app layout opens at the end of the line: a title, scrolling content and a footer.',
+  summary:
+    'The content of a panel the app layout opens at the end of the line: a title, scrolling content and a footer.',
   description: (
     <>
       <p>
@@ -18,8 +19,8 @@ const doc: ComponentDoc = {
         stays at the bottom.
       </p>
       <p>
-        Pass a drawer as the <code>content</code> of an entry in the app layout’s <code>drawers</code>. On its own it
-        is only the content, with no edge or close button.
+        Pass a drawer as the <code>content</code> of an entry in the app layout’s <code>drawers</code>. On its own it is
+        only the content, with no edge or close button.
       </p>
     </>
   ),
@@ -31,8 +32,7 @@ const doc: ComponentDoc = {
       description: (
         <p>
           A drawer with a reference, content and footer actions. The footer stays pinned to the bottom of the panel
-          while the content scrolls. Done closes the drawer by setting <code>activeDrawerId</code> to{' '}
-          <code>null</code>.
+          while the content scrolls. Done closes the drawer by setting <code>activeDrawerId</code> to <code>null</code>.
         </p>
       ),
       layout: 'flush',

@@ -13,8 +13,8 @@ const doc: ComponentDoc = {
     <>
       <p>
         A grid gives each child an entry in <code>gridDefinition</code>: how many of the 12 columns it spans, how many
-        to leave empty before it, and whether to push or pull it along the row. A child that does not fit in the rest
-        of a row starts a new one. The grid draws nothing of its own.
+        to leave empty before it, and whether to push or pull it along the row. A child that does not fit in the rest of
+        a row starts a new one. The grid draws nothing of its own.
       </p>
       <p>
         Every value can be a number or an object with a value per breakpoint: <code>default</code>, <code>xxs</code>{' '}
@@ -30,8 +30,8 @@ const doc: ComponentDoc = {
       title: 'Main and side',
       description: (
         <p>
-          The most common grid: a wide section and a narrow one side by side, stacked when the grid is narrower than
-          688 pixels.
+          The most common grid: a wide section and a narrow one side by side, stacked when the grid is narrower than 688
+          pixels.
         </p>
       ),
     },
@@ -40,8 +40,8 @@ const doc: ComponentDoc = {
       title: 'Spans and offsets',
       description: (
         <p>
-          <code>colspan</code> sets how many columns a child takes, and <code>offset</code> leaves columns empty
-          before it. Rows wrap when the next child does not fit.
+          <code>colspan</code> sets how many columns a child takes, and <code>offset</code> leaves columns empty before
+          it. Rows wrap when the next child does not fit.
         </p>
       ),
     },
@@ -63,12 +63,11 @@ const doc: ComponentDoc = {
     ],
     avoid: [
       <>
-        For equal columns. Use a <a href="#/components/column-layout">ColumnLayout</a>, which also draws rules
-        between them.
+        For equal columns. Use a <a href="#/components/column-layout">ColumnLayout</a>, which also draws rules between
+        them.
       </>,
       <>
-        For a single row or column of items with even gaps. Use{' '}
-        <a href="#/components/space-between">SpaceBetween</a>.
+        For a single row or column of items with even gaps. Use <a href="#/components/space-between">SpaceBetween</a>.
       </>,
       'Push and pull to change the meaning of the order. Screen readers and keyboards follow the source order.',
     ],

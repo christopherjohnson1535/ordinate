@@ -12,13 +12,13 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A column layout puts each child in its own cell, filling the rows in reading order. Columns are equal and
-        drop away as the layout narrows: below 465 pixels everything stacks, and below 688 pixels at most two remain.
-        The width is measured on the layout itself, so it adapts inside a narrow panel as it would on a narrow screen.
+        A column layout puts each child in its own cell, filling the rows in reading order. Columns are equal and drop
+        away as the layout narrows: below 465 pixels everything stacks, and below 688 pixels at most two remain. The
+        width is measured on the layout itself, so it adapts inside a narrow panel as it would on a narrow screen.
       </p>
       <p>
-        Hairline rules can run between columns, between rows or both. They sit in the middle of the gutters and stop
-        at the outer edges, so every column keeps the same width for its content.
+        Hairline rules can run between columns, between rows or both. They sit in the middle of the gutters and stop at
+        the outer edges, so every column keeps the same width for its content.
       </p>
     </>
   ),
@@ -39,8 +39,8 @@ const doc: ComponentDoc = {
       title: 'Borders',
       description: (
         <p>
-          <code>borders</code> draws lines between columns, between rows, or both. Rows that wrap keep their rules
-          lined up.
+          <code>borders</code> draws lines between columns, between rows, or both. Rows that wrap keep their rules lined
+          up.
         </p>
       ),
     },

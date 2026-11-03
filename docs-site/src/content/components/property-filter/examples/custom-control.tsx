@@ -47,6 +47,7 @@ export default function CustomControl() {
       filteringOptions={filteringOptions}
       filteringAriaLabel="Find change requests"
       filteringPlaceholder="Find change requests"
+      expandToViewport={true}
       customControl={
         <Select
           ariaLabel="Saved filter sets"
@@ -61,6 +62,7 @@ export default function CustomControl() {
       }
       customFilterActions={
         <ButtonDropdown
+          expandToViewport={true}
           items={[
             { id: 'clear', text: 'Clear filters' },
             { id: 'save', text: 'Save as a new set' },

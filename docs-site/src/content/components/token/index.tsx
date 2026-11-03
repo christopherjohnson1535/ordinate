@@ -31,7 +31,7 @@ const doc: ComponentDoc = {
       description: (
         <p>
           The normal variant shows the label, a <code>labelTag</code> such as an ID, a <code>description</code> and{' '}
-          <code>tags</code>. Name the token in <code>dismissLabel</code>, so the button reads as "Remove eu-north-1".
+          <code>tags</code>. Name the token in <code>dismissLabel</code>, so the button reads as "Remove EU North".
         </p>
       ),
       layout: 'centered',

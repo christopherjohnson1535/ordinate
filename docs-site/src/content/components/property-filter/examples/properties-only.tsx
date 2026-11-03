@@ -34,6 +34,7 @@ export default function PropertiesOnly() {
       filteringPlaceholder="Filter accounts by property"
       disableFreeTextFiltering={true}
       hideOperations={true}
+      expandToViewport={true}
     />
   );
 }

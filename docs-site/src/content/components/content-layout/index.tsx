@@ -12,10 +12,10 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        A content layout stacks the notifications, the breadcrumbs and the page heading in that order, then the
-        content. The heading always sits on the sheet with the content, never on a colored band.{' '}
-        <code>headerVariant</code> sets how the head is set apart: <code>high-contrast</code> stands it on a heavy ink
-        rule, like the head of a title block, and <code>divider</code> rules it off from the content with a hairline.
+        A content layout stacks the notifications, the breadcrumbs and the page heading in that order, then the content.
+        The heading always sits on the sheet with the content, never on a colored band. <code>headerVariant</code> sets
+        how the head is set apart: <code>high-contrast</code> stands it on a heavy ink rule, like the head of a title
+        block, and <code>divider</code> rules it off from the content with a hairline.
       </p>
       <p>
         Inside an <code>AppLayout</code> the sheet already has padding, so leave <code>defaultPadding</code> off. Turn
@@ -63,8 +63,8 @@ const doc: ComponentDoc = {
     use: [
       'Once per page, to hold the page heading and everything under it.',
       <>
-        In the <code>content</code> of an <a href="#/components/app-layout">AppLayout</a>, or on its own for a page
-        with no navigation or side panels.
+        In the <code>content</code> of an <a href="#/components/app-layout">AppLayout</a>, or on its own for a page with
+        no navigation or side panels.
       </>,
     ],
     avoid: [
@@ -79,13 +79,12 @@ const doc: ComponentDoc = {
   },
   accessibility: [
     <>
-      The layout adds no landmarks or headings of its own. Give the page its <code>h1</code> through{' '}
-      <code>header</code>, usually a <code>Header</code> with the <code>h1</code> variant.
+      The layout adds no landmarks or headings of its own. Give the page its <code>h1</code> in the <code>header</code>{' '}
+      slot, usually a <code>Header</code> with the <code>h1</code> variant.
     </>,
     'The head comes before the content in reading order: notifications, then breadcrumbs, then the heading.',
     <>
-      Notifications placed here are not a live region by themselves; a <code>Flashbar</code> announces its own
-      messages.
+      Notifications placed here are not a live region by themselves; a <code>Flashbar</code> announces its own messages.
     </>,
   ],
   related: ['app-layout', 'header', 'breadcrumb-group', 'flashbar', 'container'],

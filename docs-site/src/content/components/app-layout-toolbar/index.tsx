@@ -12,8 +12,8 @@ const doc: ComponentDoc = {
   description: (
     <>
       <p>
-        The toolbar is the strip the app layout shows above its content on narrow screens and in its toolbar variant:
-        a navigation toggle at the start, breadcrumbs in the middle and a group of drawer triggers at the end, over a
+        The toolbar is the strip the app layout shows above its content on narrow screens and in its toolbar variant: a
+        navigation toggle at the start, breadcrumbs in the middle and a group of drawer triggers at the end, over a
         hairline rule. An open drawer’s trigger is filled with ink, and a <code>badge</code> adds a dot to a trigger.
       </p>
       <p>
@@ -41,8 +41,8 @@ const doc: ComponentDoc = {
       title: 'Breadcrumbs only',
       description: (
         <p>
-          For a page with no navigation, <code>navigationHide</code> removes the toggle. Leave out{' '}
-          <code>drawers</code> and no trigger group is drawn.
+          For a page with no navigation, <code>navigationHide</code> removes the toggle. Leave out <code>drawers</code>{' '}
+          and no trigger group is drawn.
         </p>
       ),
       layout: 'flush',
@@ -65,8 +65,7 @@ const doc: ComponentDoc = {
   accessibility: [
     <>
       The navigation toggle and the drawer triggers are icon buttons with <code>aria-expanded</code>. The toggle is
-      named “Open navigation” or “Close navigation” to match its state; change the names with{' '}
-      <code>ariaLabels</code>.
+      named “Open navigation” or “Close navigation” to match its state; change the names with <code>ariaLabels</code>.
     </>,
     <>
       The drawer triggers form a group named “Drawers”. Each trigger’s name is its <code>ariaLabel</code>, which you

@@ -33,7 +33,8 @@ const doc: ComponentDoc = {
         <p>
           Give <code>useCollection</code> the filtering properties and spread its <code>propertyFilterProps</code> onto
           the filter: they carry the query, the change handler and value suggestions taken from the items. Type
-          “Status”, pick an operator and a value, or type “vCPUs &gt; 8” and press Enter.
+          “Status”, pick an operator and a value, or type “vCPUs &gt; 8” and press Enter. Inside a table, set{' '}
+          <code>expandToViewport</code> so the suggestions are not clipped.
         </p>
       ),
     },
