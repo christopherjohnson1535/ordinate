@@ -226,8 +226,8 @@ const optionRows: ReadonlyArray<Row> = [
     type: 'string | (item) => string',
     description: (
       <>
-        Passed on to the collection as <code>trackBy</code>, so selected items are recognized after the data reloads.
-        The hook itself compares selected items by reference.
+        Passed on to the collection as <code>trackBy</code>, so the Table or Cards recognizes selected items after the
+        data reloads. The hook stores the selection as it is given and does not compare items itself.
       </>
     ),
   },
