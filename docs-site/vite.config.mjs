@@ -91,7 +91,10 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    cssTarget: ['chrome120', 'firefox120', 'safari17'],
+    // Browsers with light-dark(). An older target makes the minifier lower light-dark() into variables
+    // resolved once on the page, and a mode set on part of the page (applyMode with an element,
+    // StyleScope's mode) stops changing its colors.
+    cssTarget: ['chrome123', 'firefox120', 'safari17.5'],
     chunkSizeWarningLimit: 4096,
   },
 });

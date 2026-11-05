@@ -208,6 +208,14 @@ export function SaveBar({ variant = 'primary' }: { variant?: ButtonProps.Variant
             chunks of their own. CodeView loads each grammar the same way.
           </p>
           <p>
+            Colors are written with <code>light-dark()</code>, so the bundler must keep it. Target browsers that support
+            it: Chrome and Edge 123, Firefox 120 and Safari 17.5 or later. An older CSS target, such as Vite&apos;s{' '}
+            <code>build.cssTarget</code> set to <code>chrome120</code>, makes the minifier replace{' '}
+            <code>light-dark()</code> with variables that are worked out once for the whole page. Dark mode on the whole
+            page still works, but a mode set on one part of it, with <code>applyMode</code> and an element or with
+            StyleScope&apos;s <code>mode</code>, no longer changes that part&apos;s colors.
+          </p>
+          <p>
             Component modules start with <code>&apos;use client&apos;</code>, so frameworks with React Server Components
             treat them as client components. StyleScope does not, so it can set a style or revision from a server
             component. For server rendering with Vite or Astro, see{' '}
@@ -233,6 +241,8 @@ const guide: GuideDoc = {
     'index.css',
     'drawing-fonts.css',
     'bundler',
+    'cssTarget',
+    'light-dark',
     'webpack',
     'vite',
     'use client',
