@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { applyMode, applyRevision, Mode } from '@ordinate/global-styles';
+import { applyMode, Mode } from '@ordinate/global-styles';
 
 import { useSettings } from '../../../app/settings';
 
@@ -54,15 +54,11 @@ export function ModePane({
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { revision } = useSettings().settings;
-  // The colors of a mode are worked out where a revision's tokens are declared, so the pane takes the
-  // page's revision as well as its own mode.
   useEffect(() => {
     if (ref.current) {
       applyMode(mode === 'dark' ? Mode.Dark : Mode.Light, ref.current);
-      applyRevision(revision, ref.current);
     }
-  }, [mode, revision]);
+  }, [mode]);
   return (
     <div ref={ref} className={clsx(styles.pane, className)}>
       {label && <p className={styles['pane-label']}>{label}</p>}
