@@ -16,13 +16,7 @@ export default function States() {
         label="Review comment"
         warningText={hasTodo ? 'The comment has a TODO. Resolve it or open a ticket.' : undefined}
       >
-        <Textarea
-          value={comment}
-          onChange={event => setComment(event.detail.value)}
-          warning={hasTodo}
-          rows={2}
-          resize="none"
-        />
+        <Textarea value={comment} onChange={event => setComment(event.detail.value)} rows={2} resize="none" />
       </FormField>
       <FormField label="Audit entry" description="Written by the system.">
         <Textarea

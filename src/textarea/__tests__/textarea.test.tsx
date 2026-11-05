@@ -9,6 +9,8 @@ import createWrapper from '../../../lib/components/test-utils/dom';
 import Textarea, { TextareaProps } from '../../../lib/components/textarea';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
+import textareaStyles from '../../../lib/components/textarea/styles.css.js';
+
 describe('Textarea', () => {
   test('renders a native textarea with three rows by default', () => {
     render(<Textarea ariaLabel="Notes" value="" />);
@@ -117,6 +119,27 @@ describe('Textarea', () => {
     const textarea = screen.getByRole('textbox', { name: 'Notes' });
     expect(textarea).toHaveAttribute('aria-invalid', 'true');
     expect(textarea).toHaveAccessibleDescription('Keep notes under 500 characters. Shown to your team.');
+  });
+
+  test('takes its warning from a form field', () => {
+    render(
+      <FormField label="Notes" warningText="Notes over 200 characters are cut in the summary.">
+        <Textarea value="" />
+      </FormField>
+    );
+    const textarea = screen.getByRole('textbox', { name: 'Notes' });
+    expect(textarea).toHaveClass(textareaStyles.warning);
+    expect(textarea).not.toHaveAttribute('aria-invalid');
+    expect(textarea).toHaveAccessibleDescription('Notes over 200 characters are cut in the summary.');
+  });
+
+  test('a warning on the control wins over the field', () => {
+    render(
+      <FormField label="Notes" warningText="Notes over 200 characters are cut in the summary.">
+        <Textarea value="" warning={false} />
+      </FormField>
+    );
+    expect(screen.getByRole('textbox')).not.toHaveClass(textareaStyles.warning);
   });
 
   test('props on the control win over the field', () => {

@@ -36,9 +36,10 @@ export interface TextareaProps extends BaseComponentProps, FormFieldControlProps
    */
   readOnly?: boolean;
   /**
-   * Marks the value as acceptable but worth a second look. An error from `invalid` or the
-   * surrounding `FormField` takes precedence. Say what the warning is about in text next to the
-   * textarea and point to it with `ariaDescribedby`.
+   * Marks the value as acceptable but worth a second look. Usually set by the `warningText` of the
+   * surrounding `FormField`. An error from `invalid` or the field takes precedence. When you set it
+   * yourself, say what the warning is about in text next to the textarea and point to it with
+   * `ariaDescribedby`.
    */
   warning?: boolean;
   /**
