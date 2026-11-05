@@ -60,9 +60,9 @@ const doc: ComponentDoc = {
       title: 'Warning, read-only and disabled',
       description: (
         <p>
-          Set <code>warning</code> together with the FormField&apos;s <code>warningText</code> for a value that is
-          allowed but worth a second look. Read-only text can still be selected and copied. Disabled hatches the field
-          and takes it out of the tab order; say why next to it.
+          Set the FormField&apos;s <code>warningText</code> for a value that is allowed but worth a second look. The
+          textarea takes the warning&apos;s color from the field. Read-only text can still be selected and copied.
+          Disabled hatches the field and takes it out of the tab order; say why next to it.
         </p>
       ),
     },
@@ -101,10 +101,9 @@ const doc: ComponentDoc = {
       on every key.
     </>,
     <>
-      <code>warning</code> only changes how the field looks. Say what the warning is about in the FormField&apos;s{' '}
-      <code>warningText</code>, which the textarea is described by, or in text you point to with{' '}
-      <code>ariaDescribedby</code>. Unlike an error, a FormField warning does not reach the textarea on its own: set{' '}
-      <code>warning</code> as well.
+      A FormField&apos;s <code>warningText</code> puts the textarea in its warning state and describes it. The{' '}
+      <code>warning</code> prop only changes how the field looks, so when you set it yourself, say what the warning is
+      about in text you point to with <code>ariaDescribedby</code>.
     </>,
     'Read-only keeps the text focusable and selectable. Disabled removes it from the tab order.',
     'Use autoFocus only when the textarea is the obvious next step, such as the only field in a modal.',

@@ -4,6 +4,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, test } from 'vitest';
 
+import Checkbox from '../../../lib/components/checkbox';
 import FormField from '../../../lib/components/form-field';
 import Input from '../../../lib/components/input';
 
@@ -32,4 +33,16 @@ test('renders every slot on the server', () => {
   ]) {
     expect(html).toContain(text);
   }
+});
+
+test('gives several checkboxes their own IDs on the server', () => {
+  const html = renderToString(
+    <FormField label="Send alerts for">
+      <Checkbox checked={false}>Deploy finished</Checkbox>
+      <Checkbox checked={false}>Health check failed</Checkbox>
+    </FormField>
+  );
+  const ids = Array.from(html.matchAll(/ id="([^"]+)"/g), match => match[1]);
+  expect(ids.length).toBeGreaterThan(2);
+  expect(new Set(ids).size).toBe(ids.length);
 });

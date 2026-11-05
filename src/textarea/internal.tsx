@@ -35,7 +35,7 @@ export const InternalTextarea = React.forwardRef(
       placeholder,
       disabled = false,
       readOnly = false,
-      warning = false,
+      warning,
       autoFocus = false,
       spellcheck,
       disableBrowserAutocorrect = false,
@@ -61,7 +61,7 @@ export const InternalTextarea = React.forwardRef(
       select: () => textareaRef.current?.select(),
     }));
 
-    const field = useFormFieldContext({ controlId, ariaLabelledby, ariaDescribedby, invalid });
+    const field = useFormFieldContext({ controlId, ariaLabelledby, ariaDescribedby, invalid, warning });
 
     return (
       <div {...rest} className={styles.root}>
@@ -72,7 +72,7 @@ export const InternalTextarea = React.forwardRef(
             styles.textarea,
             styles[`resize-${resize}`],
             field.invalid && styles.invalid,
-            warning && !field.invalid && styles.warning
+            field.warning && !field.invalid && styles.warning
           )}
           value={value}
           rows={rows}

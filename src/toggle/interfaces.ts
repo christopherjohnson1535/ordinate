@@ -6,7 +6,12 @@ import { BaseComponentProps } from '../internal/base-component';
 import { FormFieldControlProps } from '../internal/context/form-field-context';
 import { NonCancelableEventHandler } from '../internal/events';
 
-export interface ToggleProps extends BaseComponentProps, Omit<FormFieldControlProps, 'invalid'> {
+export interface ToggleProps extends BaseComponentProps, Omit<FormFieldControlProps, 'controlId' | 'invalid'> {
+  /**
+   * ID of the native control. Generated when not set, also inside a `FormField`, so that a field can hold
+   * several of these controls.
+   */
+  controlId?: string;
   /**
    * Whether the toggle is on. The toggle is controlled: update this in `onChange`.
    */

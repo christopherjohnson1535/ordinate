@@ -18,8 +18,8 @@ const doc: ComponentDoc = {
       <p>
         Most forms want a <a href="#/components/radio-group">RadioGroup</a>, which lays out the buttons, shares their
         name and takes its label from a FormField. Reach for RadioButton when each option needs something of its own
-        next to it, such as a field that applies only to that option. You then wrap the buttons in an element with{' '}
-        <code>role=&quot;radiogroup&quot;</code> and give them the same <code>name</code>.
+        next to it, such as a field that applies only to that option. You then give the buttons the same{' '}
+        <code>name</code> and put them in a FormField, which labels them as a group.
       </p>
     </>
   ),
@@ -31,7 +31,7 @@ const doc: ComponentDoc = {
       description: (
         <p>
           Give every button the same <code>name</code>, set <code>checked</code> from your state and update it in{' '}
-          <code>onSelect</code>. The surrounding element carries the group role and its accessible name.
+          <code>onSelect</code>. The form field labels the buttons as a group, and each keeps its own label.
         </p>
       ),
     },
@@ -82,9 +82,8 @@ const doc: ComponentDoc = {
   accessibility: [
     'Each radio button is a native <input type="radio">, so the arrow keys move between the buttons that share a name and Space selects.',
     <>
-      The buttons do not form a group on their own. Wrap them in an element with{' '}
-      <code>role=&quot;radiogroup&quot;</code> and an accessible name, such as <code>aria-labelledby</code> pointing at
-      a heading.
+      The buttons do not form a group on their own. Put them in a FormField: a field with several radio buttons gives
+      them <code>role=&quot;group&quot;</code>, named by its label and described by its description.
     </>,
     'Clicking the label selects the radio button. The description is tied to it with aria-describedby.',
     <>
@@ -95,8 +94,7 @@ const doc: ComponentDoc = {
       For a radio button without a visible label, set <code>ariaLabel</code>.
     </>,
     <>
-      Do not put radio buttons straight into a FormField: each one would take the field&apos;s control ID. Label the
-      group with a heading, as in the examples, or use RadioGroup, which a FormField labels as a whole.
+      Each radio button in a FormField keeps an ID of its own. Set <code>controlId</code> on a button to choose it.
     </>,
   ],
   related: ['radio-group', 'tiles', 'checkbox', 'toggle'],

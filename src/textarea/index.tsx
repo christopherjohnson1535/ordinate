@@ -19,7 +19,7 @@ const Textarea = React.forwardRef(
       placeholder,
       disabled = false,
       readOnly = false,
-      warning = false,
+      warning,
       autoFocus = false,
       spellcheck,
       disableBrowserAutocorrect = false,

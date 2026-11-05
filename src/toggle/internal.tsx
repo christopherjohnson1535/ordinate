@@ -4,7 +4,7 @@ import React, { useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 
 import { AbstractSwitch } from '../internal/components/abstract-switch';
-import { useFormFieldContext } from '../internal/context/form-field-context';
+import { useChoiceControlFieldContext } from '../internal/context/form-field-context';
 import { fireNonCancelableEvent } from '../internal/events';
 import { ToggleProps } from './interfaces';
 
@@ -34,7 +34,7 @@ export const InternalToggle = React.forwardRef(
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => ({ focus: () => inputRef.current?.focus() }));
 
-    const field = useFormFieldContext({ controlId, ariaLabelledby, ariaDescribedby });
+    const field = useChoiceControlFieldContext({ controlId, ariaLabelledby, ariaDescribedby });
     const isReadOnly = readOnly && !disabled;
 
     const handleChange = () => {
