@@ -16,6 +16,7 @@ $two-column-min-width: breakpoints.$xs;
 }
 
 .frame {
+  container-name: opening;
   container-type: inline-size;
 }
 
@@ -31,6 +32,8 @@ $two-column-min-width: breakpoints.$xs;
   align-items: flex-start;
   gap: ord.$space-scaled-m;
   min-inline-size: 0;
+  // The headline sizes are in cqi, so the title follows the column it is set in, beside a picture or not.
+  container-type: inline-size;
 }
 
 .meta {
@@ -187,7 +190,7 @@ $two-column-min-width: breakpoints.$xs;
   }
 }
 
-@container (min-inline-size: #{$two-column-min-width}) {
+@container opening (min-inline-size: #{$two-column-min-width}) {
   .has-media {
     align-items: center;
     column-gap: ord.$space-xxl;
@@ -210,12 +213,6 @@ $two-column-min-width: breakpoints.$xs;
     &.media-position-start {
       grid-template-areas: 'media text';
     }
-  }
-
-  // Beside a picture the split opening's text has half the width, so it takes the next headline size
-  // down, which keeps long words whole.
-  .variant-split .has-media .title {
-    font-size: ord.$font-size-headline-l;
   }
 
   .has-media > .text {

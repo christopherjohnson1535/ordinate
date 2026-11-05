@@ -21,7 +21,8 @@ const doc: ComponentDoc = {
         There are three layouts. <code>statement</code> sets one large sentence with a picture or drawing beside it.{' '}
         <code>split</code> puts the text on one side and frames the picture on a tinted panel on the other.{' '}
         <code>masthead</code> centers a very large title between printed rules, like the front page of a journal. The
-        opening measures its own width, not the window's: below 688 pixels the picture moves under the text.
+        opening measures its own width, not the window's: below 688 pixels the picture moves under the text. The title
+        is sized to the column it is set in, too, and in a narrow column it shrinks so a long word stays whole.
       </p>
     </>
   ),

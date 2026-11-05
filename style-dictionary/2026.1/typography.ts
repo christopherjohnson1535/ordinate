@@ -29,13 +29,15 @@ export const tokens: TypographyDictionary = {
   fontSizeDisplayL: '32px',
   fontFamilySerif: "'IBM Plex Serif', Georgia, serif",
   fontFamilyCondensed: "'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif",
-  // Headlines on website layouts: openings, section titles, story and plate titles.
+  // Headlines on website layouts: openings, section titles, story and plate titles. The fluid sizes
+  // follow the container the headline sits in (cqi), not the viewport. In a narrow container the
+  // largest size stays under 15cqi, below its minimum if need be, so a long word fits on one line.
   fontFamilyHeadline: '{fontFamilyDisplay}',
   fontWeightHeadline: '{fontWeightHeading}',
   fontSizeHeadlineS: '24px',
   fontSizeHeadlineM: '36px',
   fontSizeHeadlineL: '56px',
-  fontSizeHeadlineXl: 'clamp(48px, 7vw, 96px)',
+  fontSizeHeadlineXl: 'min(clamp(48px, 7cqi, 96px), 15cqi)',
   lineHeightHeadline: '1.05',
   letterSpacingHeadline: '-0.02em',
   fontSizeLead: '20px',

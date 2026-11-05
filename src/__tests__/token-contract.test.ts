@@ -43,6 +43,12 @@ describe('token contract', () => {
       expect(() => resolveTokens(revision.tokens)).not.toThrow();
     });
 
+    test('sizes headlines by their container, not the viewport', () => {
+      Object.entries(resolveTokens(revision.tokens))
+        .filter(([name]) => name.startsWith('fontSizeHeadline'))
+        .forEach(([, value]) => expect(value).not.toMatch(/\d(vw|vi|vmin|vmax)\b/));
+    });
+
     test('ships every token in the generated CSS', () => {
       const block = blockFor(id);
       const missing = allTokenNames.filter(name => !block.includes(`${toCssVariable(name)}:`));
@@ -96,6 +102,14 @@ describe.each(styles.map(style => [style.id, style] as const))('style %s', (id, 
     const selector = block.split('{')[0];
     revisions.forEach(revision => expect(selector).toContain(`.ord-revision-${revision.id.replace(/\./g, '-')}`));
     Object.keys(style.overrides).forEach(name => expect(block).toContain(`${toCssVariable(name)}:`));
+  });
+
+  test('sizes headlines by their container, not the viewport', () => {
+    // Website components lay themselves out by their container, so a headline sized by the window
+    // can outgrow a narrow column and break a word in two.
+    Object.entries(style.overrides)
+      .filter(([name]) => name.startsWith('fontSizeHeadline'))
+      .forEach(([, value]) => expect(value).not.toMatch(/\d(vw|vi|vmin|vmax)\b/));
   });
 
   test('keeps references live instead of copying revision values', () => {
