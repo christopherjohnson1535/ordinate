@@ -1,8 +1,8 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useId, useState } from 'react';
+import React, { useState } from 'react';
 
-import Box from '@ordinate/components/box';
+import FormField from '@ordinate/components/form-field';
 import RadioButton from '@ordinate/components/radio-button';
 import SpaceBetween from '@ordinate/components/space-between';
 
@@ -14,29 +14,23 @@ const schedules = [
 
 export default function Standalone() {
   const [schedule, setSchedule] = useState('daily');
-  const headingId = useId();
 
   return (
-    <SpaceBetween size="s">
-      <Box variant="h4" tagOverride="h3" id={headingId}>
-        Backup schedule
-      </Box>
-      <div role="radiogroup" aria-labelledby={headingId}>
-        <SpaceBetween size="xs">
-          {schedules.map(option => (
-            <RadioButton
-              key={option.value}
-              name="backup-schedule"
-              value={option.value}
-              checked={schedule === option.value}
-              onSelect={() => setSchedule(option.value)}
-              description={option.description}
-            >
-              {option.label}
-            </RadioButton>
-          ))}
-        </SpaceBetween>
-      </div>
-    </SpaceBetween>
+    <FormField label="Backup schedule">
+      <SpaceBetween size="xs">
+        {schedules.map(option => (
+          <RadioButton
+            key={option.value}
+            name="backup-schedule"
+            value={option.value}
+            checked={schedule === option.value}
+            onSelect={() => setSchedule(option.value)}
+            description={option.description}
+          >
+            {option.label}
+          </RadioButton>
+        ))}
+      </SpaceBetween>
+    </FormField>
   );
 }

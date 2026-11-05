@@ -21,8 +21,6 @@ export default function Group() {
         {events.map(item => (
           <Checkbox
             key={item.id}
-            // Each checkbox needs its own ID; otherwise they all take the field's.
-            controlId={`alert-${item.id}`}
             checked={selected.includes(item.id)}
             description={item.description}
             onChange={event =>

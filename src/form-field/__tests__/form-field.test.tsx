@@ -5,8 +5,11 @@ import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import Button from '../../../lib/components/button';
+import Checkbox from '../../../lib/components/checkbox';
 import FormField from '../../../lib/components/form-field';
 import Input from '../../../lib/components/input';
+import RadioButton from '../../../lib/components/radio-button';
+import SpaceBetween from '../../../lib/components/space-between';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
@@ -211,5 +214,97 @@ describe('FormField test utilities and accessibility', () => {
       </form>
     );
     await expectNoAxeViolations(container);
+  });
+});
+
+describe('FormField with checkboxes and radio buttons', () => {
+  function expectUniqueIds() {
+    const ids = Array.from(document.querySelectorAll('[id]'), element => element.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  }
+
+  test('labels several checkboxes as a group, each with its own ID and name', async () => {
+    const { container } = render(
+      <FormField label="Send alerts for" description="Alerts go to the on-call rota.">
+        <Checkbox checked={false}>Deploy finished</Checkbox>
+        <Checkbox checked={true}>Health check failed</Checkbox>
+      </FormField>
+    );
+    expectUniqueIds();
+    const group = screen.getByRole('group', { name: 'Send alerts for' });
+    expect(group).toHaveAccessibleDescription('Alerts go to the on-call rota.');
+    const checkboxes = screen.getAllByRole('checkbox');
+    expect(checkboxes.map(checkbox => group.contains(checkbox))).toEqual([true, true]);
+    expect(checkboxes[0]).toHaveAccessibleName('Deploy finished');
+    expect(checkboxes[1]).toHaveAccessibleName('Health check failed');
+    expect(createWrapper().findFormField()!.findLabel()!.getElement()).not.toHaveAttribute('for');
+    await expectNoAxeViolations(container);
+  });
+
+  test('labels several radio buttons as a group, also when they are wrapped in a layout', async () => {
+    const { container } = render(
+      <FormField label="Backup schedule">
+        <div role="radiogroup" aria-label="Schedule">
+          <SpaceBetween size="xs">
+            <RadioButton name="schedule" value="daily" checked={true}>
+              Daily
+            </RadioButton>
+            <RadioButton name="schedule" value="weekly" checked={false}>
+              Weekly
+            </RadioButton>
+          </SpaceBetween>
+        </div>
+      </FormField>
+    );
+    expectUniqueIds();
+    expect(screen.getByRole('group', { name: 'Backup schedule' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Daily' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Weekly' })).toBeInTheDocument();
+    await expectNoAxeViolations(container);
+  });
+
+  test('gives checkboxes and radio buttons in one field unique IDs', () => {
+    render(
+      <FormField label="Retention">
+        <Checkbox checked={false}>Keep logs</Checkbox>
+        <Checkbox checked={false}>Keep metrics</Checkbox>
+        <RadioButton name="period" value="30" checked={true}>
+          30 days
+        </RadioButton>
+        <RadioButton name="period" value="90" checked={false}>
+          90 days
+        </RadioButton>
+      </FormField>
+    );
+    expectUniqueIds();
+    expect(screen.getAllByRole('checkbox').map(element => element.id)).toHaveLength(2);
+    expect(screen.getByRole('checkbox', { name: 'Keep logs' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Keep metrics' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: '30 days' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: '90 days' })).toBeInTheDocument();
+  });
+
+  test('a single checkbox is labeled by the field and by its own label', () => {
+    render(
+      <FormField label="Logging" description="Kept for 30 days.">
+        <Checkbox checked={false}>Enable request logs</Checkbox>
+      </FormField>
+    );
+    expect(screen.queryByRole('group')).toBeNull();
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).toHaveAccessibleName('Logging Enable request logs');
+    expect(checkbox).toHaveAccessibleDescription('Kept for 30 days.');
+    expect(createWrapper().findFormField()!.findLabel()!.getElement()).toHaveAttribute('for', checkbox.id);
+  });
+
+  test('a checkbox keeps a controlId set on it', () => {
+    render(
+      <FormField label="Send alerts for">
+        <Checkbox checked={false} controlId="alert-deploy">
+          Deploy finished
+        </Checkbox>
+      </FormField>
+    );
+    expect(screen.getByRole('checkbox')).toHaveAttribute('id', 'alert-deploy');
   });
 });

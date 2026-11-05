@@ -1,6 +1,6 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useEffect, useId, useState } from 'react';
+import React, { useCallback, useEffect, useId, useState } from 'react';
 import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
@@ -59,6 +59,16 @@ export function InternalFormField({
   const constraintId = `${baseId}constraint`;
   const characterCountId = `${baseId}character-count`;
 
+  // Checkboxes, radio buttons and toggles keep their own IDs and report them here. One of them takes the
+  // label like any control; several of them are labeled together as a group, each by its own label.
+  const [choiceControlIds, setChoiceControlIds] = useState<string[]>([]);
+  const registerChoiceControl = useCallback((id: string) => {
+    setChoiceControlIds(ids => [...ids, id]);
+    return () => setChoiceControlIds(ids => ids.filter(other => other !== id));
+  }, []);
+  const isGroup = choiceControlIds.length > 1;
+  const labelFor = isGroup ? undefined : (choiceControlIds[0] ?? controlId);
+
   const settledCharacterCount = useSettledValue(characterCountText, characterCountDelay);
 
   if (errorText && warningText) {
@@ -90,7 +100,7 @@ export function InternalFormField({
           {(label || info) && (
             <div className={styles['label-row']}>
               {label && (
-                <label id={labelId} className={styles.label} htmlFor={controlId}>
+                <label id={labelId} className={styles.label} htmlFor={labelFor}>
                   {label}
                 </label>
               )}
@@ -105,8 +115,21 @@ export function InternalFormField({
         </div>
         <div className={styles.body}>
           <div className={clsx(styles.controls, stretch && styles.stretch)}>
-            <div className={styles.control}>
-              <FormFieldContext.Provider value={{ controlId, ...sharedContext }}>{children}</FormFieldContext.Provider>
+            <div
+              className={styles.control}
+              role={isGroup ? 'group' : undefined}
+              aria-labelledby={isGroup ? sharedContext.ariaLabelledby : undefined}
+              aria-describedby={isGroup ? sharedContext.ariaDescribedby : undefined}
+            >
+              <FormFieldContext.Provider
+                value={
+                  isGroup
+                    ? { invalid: sharedContext.invalid, warning: sharedContext.warning, registerChoiceControl }
+                    : { controlId, ...sharedContext, registerChoiceControl }
+                }
+              >
+                {children}
+              </FormFieldContext.Provider>
             </div>
             {secondaryControl && (
               <div className={styles['secondary-control']}>

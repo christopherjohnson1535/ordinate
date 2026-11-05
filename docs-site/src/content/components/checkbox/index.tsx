@@ -34,9 +34,8 @@ const doc: ComponentDoc = {
       title: 'Several options',
       description: (
         <p>
-          A list of checkboxes under one question, for choices that can all be on at once. The form field's label is
-          read before each checkbox's own label. Give each checkbox its own <code>controlId</code>, because every
-          control in a form field takes the field's ID by default.
+          A list of checkboxes under one question, for choices that can all be on at once. A form field that holds
+          several checkboxes labels them as a group, and each checkbox keeps its own label.
         </p>
       ),
     },
@@ -91,8 +90,9 @@ const doc: ComponentDoc = {
       Tab and toggled with Space. Clicking the label toggles it too.
     </>,
     <>
-      The label names the checkbox and the description describes it. Inside a form field, the field's label is read
-      first and then the checkbox's label. Without visible text, set <code>ariaLabel</code>.
+      The label names the checkbox and the description describes it. With one checkbox in a form field, the field's
+      label is read first and then the checkbox's label. A form field with several checkboxes labels them as a group,
+      with <code>role=&quot;group&quot;</code>. Without visible text, set <code>ariaLabel</code>.
     </>,
     <>
       <code>indeterminate</code> sets the native property, so screen readers announce "mixed" or "partly checked".

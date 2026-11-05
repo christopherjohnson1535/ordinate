@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { InternalIcon } from '../icon/internal';
 import { AbstractSwitch } from '../internal/components/abstract-switch';
-import { useFormFieldContext } from '../internal/context/form-field-context';
+import { useChoiceControlFieldContext } from '../internal/context/form-field-context';
 import { fireNonCancelableEvent } from '../internal/events';
 import { CheckboxProps } from './interfaces';
 
@@ -37,7 +37,7 @@ export const InternalCheckbox = React.forwardRef(
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => ({ focus: () => inputRef.current?.focus() }));
 
-    const field = useFormFieldContext({ controlId, ariaLabelledby, ariaDescribedby });
+    const field = useChoiceControlFieldContext({ controlId, ariaLabelledby, ariaDescribedby });
     const isReadOnly = readOnly && !disabled;
 
     // `indeterminate` exists only as a DOM property, with no HTML attribute for React to render.

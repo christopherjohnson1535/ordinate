@@ -6,7 +6,12 @@ import { BaseComponentProps } from '../internal/base-component';
 import { FormFieldControlProps } from '../internal/context/form-field-context';
 import { NonCancelableEventHandler } from '../internal/events';
 
-export interface RadioButtonProps extends BaseComponentProps, Omit<FormFieldControlProps, 'invalid'> {
+export interface RadioButtonProps extends BaseComponentProps, Omit<FormFieldControlProps, 'controlId' | 'invalid'> {
+  /**
+   * ID of the native control. Generated when not set, also inside a `FormField`, so that a field can hold
+   * several of these controls.
+   */
+  controlId?: string;
   /**
    * Whether the radio button is selected. The radio button is controlled: set this in `onSelect`.
    */

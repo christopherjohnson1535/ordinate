@@ -6,7 +6,12 @@ import { BaseComponentProps } from '../internal/base-component';
 import { FormFieldControlProps } from '../internal/context/form-field-context';
 import { NonCancelableEventHandler } from '../internal/events';
 
-export interface CheckboxProps extends BaseComponentProps, Omit<FormFieldControlProps, 'invalid'> {
+export interface CheckboxProps extends BaseComponentProps, Omit<FormFieldControlProps, 'controlId' | 'invalid'> {
+  /**
+   * ID of the native control. Generated when not set, also inside a `FormField`, so that a field can hold
+   * several of these controls.
+   */
+  controlId?: string;
   /**
    * Whether the checkbox is checked. The checkbox is controlled: update this in `onChange`.
    */
