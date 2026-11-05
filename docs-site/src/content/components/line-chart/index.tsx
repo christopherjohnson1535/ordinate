@@ -76,7 +76,10 @@ const doc: ComponentDoc = {
       description: (
         <p>
           <code>log</code> spaces each power of ten evenly, for values that span several orders of magnitude. Both axes
-          take it; only positive values are drawn.
+          take it; only positive values are drawn. By default the ticks fall on powers of ten, with 2 and 5 times each
+          power when the axis spans only a few. File sizes here are in binary units, so <code>xTicks</code> puts a tick
+          at every 32 times the last, where each label is a whole number of KiB, MiB or GiB. <code>yTicks</code> sets
+          the ticks of the y axis the same way.
         </p>
       ),
     },

@@ -254,4 +254,49 @@ describe('LineChart', () => {
     chart.findApplication()!.keydown('Enter');
     await expectNoAxeViolations(container);
   });
+
+  describe('ticks', () => {
+    // Sizes in bytes from 1 KiB to 1 MiB, by powers of 4.
+    const sizes = [1024, 4096, 16384, 65536, 262144, 1048576];
+    const transfer: LineChartProps.DataSeries<number> = {
+      title: 'Transfer',
+      type: 'line',
+      data: sizes.map((x, index) => ({ x, y: (index + 1) * 10 })),
+    };
+    const binary = (bytes: number) => (bytes >= 1048576 ? `${bytes / 1048576} MiB` : `${bytes / 1024} KiB`);
+    const xLabels = (chart: ReturnType<typeof renderChart>['chart']) =>
+      chart.findXAxisTicks().map(tick => tick.getText());
+    const yLabels = (chart: ReturnType<typeof renderChart>['chart']) =>
+      chart.findYAxisTicks().map(tick => tick.getText());
+
+    test('adds 2 and 5 multiples to a log axis that spans few decades', () => {
+      const { chart } = renderChart({ series: [transfer], xScaleType: 'log' });
+      expect(xLabels(chart)).toEqual(['2,000', '5,000', '10K', '20K', '50K', '100K', '200K', '500K', '1M']);
+    });
+
+    test('draws x ticks at the given values on a log axis', () => {
+      const { chart } = renderChart({
+        series: [transfer],
+        xScaleType: 'log',
+        xTicks: [1024, 16384, 262144, 1048576, 4194304],
+        xTickFormatter: binary,
+      });
+      expect(xLabels(chart)).toEqual(['1 KiB', '16 KiB', '256 KiB', '1 MiB']);
+    });
+
+    test('draws x ticks at the given values on a linear axis', () => {
+      const { chart } = renderChart({ xTicks: [1, 1.5, 3] });
+      expect(xLabels(chart)).toEqual(['1', '1.5', '3']);
+    });
+
+    test('draws y ticks at the given values', () => {
+      const { chart } = renderChart({ yTicks: [5, 25, 35, 50, 1000] });
+      expect(yLabels(chart)).toEqual(['25', '35', '50']);
+    });
+
+    test('draws y ticks at the given values on a log axis', () => {
+      const { chart } = renderChart({ series: [transfer], yScaleType: 'log', yTicks: [16, 32, 64] });
+      expect(yLabels(chart)).toEqual(['16', '32', '64']);
+    });
+  });
 });

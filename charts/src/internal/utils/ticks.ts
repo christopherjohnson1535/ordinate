@@ -82,20 +82,9 @@ export function niceLogDomain(domain: readonly [number, number]): [number, numbe
   return low === high ? [low, high * 10] : [low, high];
 }
 
-/**
- * Ticks for a logarithmic axis: powers of ten, with 2 and 5 times each power when the domain
- * spans too few decades to show enough of them, and every other power when it spans many.
- */
-export function logTicks(min: number, max: number, count: number): number[] {
-  if (!(min > 0) || !(max > 0)) {
-    return [];
-  }
-  const [low, high] = min < max ? [min, max] : [max, min];
+function powerTicks(low: number, high: number, multiples: readonly number[], every: number): number[] {
   const first = Math.floor(Math.log10(low));
   const last = Math.ceil(Math.log10(high));
-  const decades = last - first;
-  const multiples = decades < count / 3 ? [1, 2, 5] : [1];
-  const every = Math.max(1, Math.ceil((decades + 1) / Math.max(count, 1)));
   const ticks: number[] = [];
   for (let exponent = first; exponent <= last; exponent++) {
     if ((exponent - first) % every !== 0) {
@@ -109,6 +98,34 @@ export function logTicks(min: number, max: number, count: number): number[] {
     }
   }
   return ticks;
+}
+
+/**
+ * Ticks for a logarithmic axis, at most `count` of them where possible: 1, 2 and 5 times each
+ * power of ten when they fit, else the powers of ten, else every second or third power. A domain
+ * too narrow to hold two of those gets evenly spaced ticks.
+ */
+export function logTicks(min: number, max: number, count: number): number[] {
+  if (!(min > 0) || !(max > 0)) {
+    return [];
+  }
+  const [low, high] = min < max ? [min, max] : [max, min];
+  const limit = Math.max(count, 2);
+  // Only the ticks inside the domain count, so a domain that starts or ends between powers of
+  // ten, such as 1,024 to 1,048,576, still gets the 2 and 5 multiples when they fit.
+  const ticks = powerTicks(low, high, [1, 2, 5], 1);
+  if (ticks.length < 2) {
+    return linearTicks(low, high, limit);
+  }
+  if (ticks.length <= limit) {
+    return ticks;
+  }
+  for (let every = 1; ; every++) {
+    const powers = powerTicks(low, high, [1], every);
+    if (powers.length <= limit || every > 308) {
+      return powers;
+    }
+  }
 }
 
 export type TimeUnit = 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year';
