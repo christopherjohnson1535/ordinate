@@ -20,8 +20,9 @@ const doc: ComponentDoc = {
         A stop is <code>planned</code> (faint), <code>open</code> (in ink) or <code>done</code> (filled in). A{' '}
         <code>station</code> is drawn as a square, for a stop that matters more than the others. The current stop is
         ringed in the accent color with a note above it, “You are here” unless you set <code>currentStopLabel</code>,
-        and the selected line sits on a highlight band. The map scales to the width of its container and scrolls
-        sideways once it is too narrow to read.
+        and the selected line sits on a highlight band. A long terminus title or description wraps onto more lines, and
+        the map grows to fit it. The map scales to the width of its container and scrolls sideways once it is too narrow
+        to read.
       </p>
     </>
   ),
@@ -36,7 +37,6 @@ const doc: ComponentDoc = {
           where the learner left off.
         </p>
       ),
-      layout: 'flush',
     },
     {
       id: 'links',

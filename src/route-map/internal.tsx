@@ -1,9 +1,10 @@
 // Copyright Christopher Johnson. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { fireCancelableEvent } from '../internal/events';
+import { useBrowserLayoutEffect } from '../internal/hooks/use-browser-layout-effect';
 import { useInternalI18n } from '../internal/i18n/context';
 import { isPlainLeftClick } from '../internal/link-click';
 import { RouteMapProps } from './interfaces';
@@ -27,6 +28,54 @@ const STOP_RADIUS = 7;
 const STATION_SIZE = 16;
 const TERMINUS_SIZE = 44;
 const TERMINUS_TEXT = 172;
+const TERMINUS_GAP = 14;
+const TERMINUS_TEXT_WIDTH = TERMINUS_TEXT - TERMINUS_GAP;
+const TERMINUS_TITLE_PITCH = 20;
+const TERMINUS_DESCRIPTION_PITCH = 16;
+const TEXT_DESCENT = 5;
+// Text cannot be measured on the server, so the terminus text is wrapped and the map sized from a
+// generous width per character of the title and description fonts. The browser then measures the
+// drawn text and grows the map if a font runs wider.
+const TITLE_CHAR_WIDTH = 9.5;
+const DESCRIPTION_CHAR_WIDTH = 7.2;
+
+interface TerminusLayout {
+  titleLines: string[];
+  descriptionLines: string[];
+  /** Estimated width of the widest line, in drawing units. */
+  textWidth: number;
+  /** Offset of the last baseline below the middle of the terminus mark. */
+  lastBaseline: number;
+}
+
+function wrap(text: string, maxChars: number): string[] {
+  const lines: string[] = [];
+  for (const word of text.split(/\s+/).filter(Boolean)) {
+    const last = lines.length - 1;
+    if (last >= 0 && lines[last].length + 1 + word.length <= maxChars) {
+      lines[last] += ` ${word}`;
+    } else {
+      lines.push(word);
+    }
+  }
+  return lines;
+}
+
+function layOutTerminus({ title, description }: RouteMapProps.Terminus): TerminusLayout {
+  const titleLines = wrap(title, Math.floor(TERMINUS_TEXT_WIDTH / TITLE_CHAR_WIDTH));
+  const descriptionLines = description
+    ? wrap(description, Math.floor(TERMINUS_TEXT_WIDTH / DESCRIPTION_CHAR_WIDTH))
+    : [];
+  const textWidth = Math.max(
+    ...titleLines.map(line => line.length * TITLE_CHAR_WIDTH),
+    ...descriptionLines.map(line => line.length * DESCRIPTION_CHAR_WIDTH)
+  );
+  const lastTitleBaseline = -4 + (titleLines.length - 1) * TERMINUS_TITLE_PITCH;
+  const lastBaseline = descriptionLines.length
+    ? lastTitleBaseline + TERMINUS_TITLE_PITCH + (descriptionLines.length - 1) * TERMINUS_DESCRIPTION_PITCH
+    : lastTitleBaseline;
+  return { titleLines, descriptionLines, textWidth, lastBaseline };
+}
 
 export function InternalRouteMap({
   lines,
@@ -44,10 +93,32 @@ export function InternalRouteMap({
   const lastStopX = FIRST_STOP_X + (mostStops - 1) * STOP_PITCH;
   const busX = Math.max(900, lastStopX + 2 * STOP_PITCH);
   const terminusX = busX + 148;
-  const width = terminus ? terminusX + TERMINUS_SIZE + TERMINUS_TEXT : lastStopX + STOP_PITCH;
+  const terminusLayout = terminus ? layOutTerminus(terminus) : null;
   const ys = lines.map((_, index) => FIRST_LINE_Y + index * LINE_PITCH);
   const middleY = lines.length ? (ys[0] + ys[ys.length - 1]) / 2 : FIRST_LINE_Y;
-  const height = (ys[ys.length - 1] ?? FIRST_LINE_Y) + FIRST_LINE_Y + 4;
+
+  // The extent of the drawn terminus, measured in the browser, so that no font clips its text.
+  const mapRef = useRef<SVGSVGElement>(null);
+  const [measured, setMeasured] = useState({ right: 0, bottom: 0 });
+  const width = Math.max(
+    terminusLayout
+      ? terminusX + TERMINUS_SIZE + Math.max(TERMINUS_TEXT, TERMINUS_GAP + terminusLayout.textWidth + TERMINUS_GAP)
+      : lastStopX + STOP_PITCH,
+    measured.right
+  );
+  const height = Math.max(
+    (ys[ys.length - 1] ?? FIRST_LINE_Y) + FIRST_LINE_Y + 4,
+    terminusLayout ? middleY + terminusLayout.lastBaseline + TEXT_DESCENT + TERMINUS_GAP : 0,
+    measured.bottom
+  );
+
+  useBrowserLayoutEffect(() => {
+    const element = mapRef.current?.querySelector<SVGGraphicsElement>(`.${styles.terminus}`);
+    const box = element && typeof element.getBBox === 'function' ? element.getBBox() : null;
+    const right = box ? Math.ceil(box.x + box.width + TERMINUS_GAP) : 0;
+    const bottom = box ? Math.ceil(box.y + box.height + TERMINUS_GAP) : 0;
+    setMeasured(previous => (previous.right === right && previous.bottom === bottom ? previous : { right, bottom }));
+  }, [terminus?.title, terminus?.description, middleY, terminusX]);
 
   const routeOf = (line: RouteMapProps.Line, y: number) => {
     if (!terminus) {
@@ -75,7 +146,7 @@ export function InternalRouteMap({
 
   return (
     <div {...rest} className={clsx(styles.root, className)} role="group" aria-label={ariaLabel}>
-      <svg className={styles.map} viewBox={`0 0 ${width} ${height}`} direction="ltr">
+      <svg ref={mapRef} className={styles.map} viewBox={`0 0 ${width} ${height}`} direction="ltr">
         {lines.map((line, index) => (
           <path
             key={line.id}
@@ -144,7 +215,9 @@ export function InternalRouteMap({
         {terminus && lines.length > 1 && (
           <circle className={styles.junction} cx={busX} cy={middleY} r={5} aria-hidden="true" />
         )}
-        {terminus && <Terminus terminus={terminus} x={terminusX} y={middleY} onClick={follow} />}
+        {terminus && terminusLayout && (
+          <Terminus terminus={terminus} layout={terminusLayout} x={terminusX} y={middleY} onClick={follow} />
+        )}
         {current && (
           <g className={styles.current} transform={`translate(${current.x} ${current.y})`}>
             <circle className={styles['current-ring']} r={14} aria-hidden="true" />
@@ -160,12 +233,15 @@ export function InternalRouteMap({
 
 interface TerminusProps {
   terminus: RouteMapProps.Terminus;
+  layout: TerminusLayout;
   x: number;
   y: number;
   onClick: (lineId: null, href: string) => (event: React.MouseEvent) => void;
 }
 
-function Terminus({ terminus, x, y, onClick }: TerminusProps) {
+function Terminus({ terminus, layout, x, y, onClick }: TerminusProps) {
+  const textX = x + TERMINUS_SIZE + TERMINUS_GAP;
+  const descriptionY = y - 4 + layout.titleLines.length * TERMINUS_TITLE_PITCH;
   const content = (
     <>
       <rect
@@ -184,12 +260,12 @@ function Terminus({ terminus, x, y, onClick }: TerminusProps) {
         height={TERMINUS_SIZE - 18}
         aria-hidden="true"
       />
-      <text className={styles.title} x={x + TERMINUS_SIZE + 14} y={y - 4}>
-        {terminus.title}
+      <text className={styles.title} x={textX} y={y - 4}>
+        <Lines lines={layout.titleLines} x={textX} pitch={TERMINUS_TITLE_PITCH} />
       </text>
-      {terminus.description && (
-        <text className={styles.description} x={x + TERMINUS_SIZE + 14} y={y + 16}>
-          {terminus.description}
+      {layout.descriptionLines.length > 0 && (
+        <text className={styles.description} x={textX} y={descriptionY}>
+          <Lines lines={layout.descriptionLines} x={textX} pitch={TERMINUS_DESCRIPTION_PITCH} />
         </text>
       )}
     </>
@@ -200,5 +276,18 @@ function Terminus({ terminus, x, y, onClick }: TerminusProps) {
     </a>
   ) : (
     <g className={styles.terminus}>{content}</g>
+  );
+}
+
+// Each wrapped line but the last keeps its trailing space, so the text still reads as one sentence.
+function Lines({ lines, x, pitch }: { lines: string[]; x: number; pitch: number }) {
+  return (
+    <>
+      {lines.map((line, index) => (
+        <tspan key={index} x={x} dy={index === 0 ? 0 : pitch}>
+          {index < lines.length - 1 ? `${line} ` : line}
+        </tspan>
+      ))}
+    </>
   );
 }

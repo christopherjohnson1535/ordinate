@@ -84,11 +84,11 @@ export namespace RouteMapProps {
 
   export interface Terminus {
     /**
-     * The name of the terminus.
+     * The name of the terminus. Long names wrap onto more lines.
      */
     title: string;
     /**
-     * A short second line under the title.
+     * A second line under the title. Long text wraps onto more lines.
      */
     description?: string;
     /**

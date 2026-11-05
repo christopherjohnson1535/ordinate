@@ -65,6 +65,17 @@ export default function RouteMapPermutations() {
         <h2>One line</h2>
         <RouteMap lines={lines.slice(2, 3)} terminus={{ title: 'Capstone' }} ariaLabel="One line" />
       </section>
+      <section className={styles.section}>
+        <h2>A long terminus title and description</h2>
+        <RouteMap
+          lines={lines.slice(2, 3)}
+          terminus={{
+            title: 'MIGRATION WEEK WRAP-UP',
+            description: 'Run the north annex for a week, then write up what went wrong and what you would change',
+          }}
+          ariaLabel="Long terminus"
+        />
+      </section>
     </article>
   );
 }

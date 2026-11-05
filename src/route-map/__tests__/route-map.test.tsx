@@ -87,6 +87,41 @@ describe('RouteMap', () => {
     expect(screen.getByRole('link', { name: /Capstone/ })).toHaveAttribute('href', '/capstone/');
   });
 
+  test('wraps a long terminus description and grows the map to fit it', () => {
+    const viewBox = () => routeMap().find('svg')!.getElement().getAttribute('viewBox')!.split(' ').map(Number);
+    const { rerender } = render(
+      <RouteMap lines={lines} ariaLabel="Course route" terminus={{ title: 'Capstone', description: 'One lab' }} />
+    );
+    const [, , shortWidth, shortHeight] = viewBox();
+    const description = 'Run the north annex for a week, then write up what went wrong and what you would change';
+    rerender(<RouteMap lines={lines} ariaLabel="Course route" terminus={{ title: 'Capstone', description }} />);
+    expect(routeMap().findTerminus()!.getText()).toBe(`Capstone${description}`);
+    const descriptionLines = routeMap().findTerminus()!.findAll('text')[1].findAll('tspan');
+    expect(descriptionLines.length).toBeGreaterThan(1);
+    const [, , width, height] = viewBox();
+    expect(width).toBe(shortWidth);
+    expect(height).toBeGreaterThanOrEqual(shortHeight);
+
+    rerender(
+      <RouteMap
+        lines={[lines[1]]}
+        ariaLabel="Course route"
+        terminus={{ title: 'Capstone', description: `${description} ${description}` }}
+      />
+    );
+    const [, , , oneLineHeight] = viewBox();
+    expect(oneLineHeight).toBeGreaterThan(104);
+
+    rerender(
+      <RouteMap
+        lines={lines}
+        ariaLabel="Course route"
+        terminus={{ title: 'Capstone', description: 'Pneumonoultramicroscopicsilicovolcanoconiosis' }}
+      />
+    );
+    expect(viewBox()[2]).toBeGreaterThan(shortWidth);
+  });
+
   test('fires onFollow on a plain click and lets the handler take over navigation', () => {
     const onFollow = vi.fn((event: CustomEvent) => event.preventDefault());
     render(
