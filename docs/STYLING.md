@@ -124,7 +124,7 @@ A Badge is a short label in small mono capitals, keyed by a colored square of `s
 
 An Alert is a margin note rather than a box. A construction line in the note's color opens it, the icon and a mono caption naming the kind of note sit in a narrow margin, and the title, text and action follow in ink. Its `type` is `note`, `complete`, `caution` or `fault`, and `i18nStrings` replaces the caption.
 
-The old names (`type`, `colorOverride`, Badge's `color`, the old status values, Alert's and Flashbar's `info`, `success`, `warning` and `error`, Flashbar's `in-progress`, ProgressBar's `in-progress`, `success` and `error`, and SideNavigation's item `code`) still work with a warning until the next major version.
+The old names (`type`, `colorOverride`, Badge's `color`, the old status values, Alert's, Flashbar's and Stamp's `info`, `success`, `warning` and `error`, Flashbar's `in-progress`, ProgressBar's `in-progress`, `success` and `error`, and SideNavigation's item `code`) still work with a warning until the next major version.
 
 ## States
 

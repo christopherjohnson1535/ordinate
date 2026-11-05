@@ -383,7 +383,7 @@ export default function Console() {
                     </SpaceBetween>
                   }
                 >
-                  North Annex <Stamp type="success">Running</Stamp>
+                  North Annex <Stamp type="complete">Running</Stamp>
                 </Header>
               }
             >

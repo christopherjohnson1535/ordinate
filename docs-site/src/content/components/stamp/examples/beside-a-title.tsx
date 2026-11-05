@@ -24,7 +24,7 @@ export default function BesideATitle() {
       >
         <SpaceBetween direction="horizontal" size="s" alignItems="center">
           <span>CR-2041: Move gallery-east to us-mountain-1</span>
-          {approved ? <Stamp type="success">Approved</Stamp> : <Stamp type="draft">Draft</Stamp>}
+          {approved ? <Stamp type="complete">Approved</Stamp> : <Stamp type="draft">Draft</Stamp>}
         </SpaceBetween>
       </Header>
       <Box color="text-body-secondary">

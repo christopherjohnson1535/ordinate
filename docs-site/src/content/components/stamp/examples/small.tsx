@@ -21,7 +21,7 @@ const drawings: Drawing[] = [
 ];
 
 const types: Record<Drawing['state'], StampProps.Type> = {
-  Issued: 'success',
+  Issued: 'complete',
   Draft: 'draft',
   Superseded: 'neutral',
 };

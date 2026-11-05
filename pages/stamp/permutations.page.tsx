@@ -10,10 +10,10 @@ import Table from '~components/table';
 import styles from './styles.module.scss';
 
 const types: { type: StampProps.Type; text: string }[] = [
-  { type: 'success', text: 'Approved' },
-  { type: 'warning', text: 'Expiring' },
-  { type: 'error', text: 'Failed' },
-  { type: 'info', text: 'For review' },
+  { type: 'complete', text: 'Approved' },
+  { type: 'caution', text: 'Expiring' },
+  { type: 'fault', text: 'Failed' },
+  { type: 'note', text: 'For review' },
   { type: 'neutral', text: 'Archived' },
   { type: 'draft', text: 'Draft' },
 ];
@@ -22,7 +22,7 @@ const services = [
   {
     name: 'north-annex-web',
     state: (
-      <Stamp type="success" size="small" rotation="none">
+      <Stamp type="complete" size="small" rotation="none">
         Running
       </Stamp>
     ),
@@ -30,7 +30,7 @@ const services = [
   {
     name: 'vault-store',
     state: (
-      <Stamp type="error" size="small" rotation="none">
+      <Stamp type="fault" size="small" rotation="none">
         Failed
       </Stamp>
     ),
@@ -83,7 +83,7 @@ export default function StampPermutations() {
       <section className={styles.section}>
         <h2>Beside a page title</h2>
         <Header variant="h1" description="North Annex, production · us-mountain-1">
-          North Annex <Stamp type="success">Running</Stamp>
+          North Annex <Stamp type="complete">Running</Stamp>
         </Header>
         <Header variant="h2">
           Release notes, rev 4{' '}
@@ -105,7 +105,7 @@ export default function StampPermutations() {
         />
         <Box>
           The plan was{' '}
-          <Stamp type="info" size="small">
+          <Stamp type="note" size="small">
             Issued
           </Stamp>{' '}
           on Monday and can no longer be edited.
@@ -113,7 +113,7 @@ export default function StampPermutations() {
         <Box>
           A very long stamp in a narrow column is cut short:{' '}
           <span style={{ display: 'inline-block', inlineSize: 120 }}>
-            <Stamp type="warning" size="small">
+            <Stamp type="caution" size="small">
               Awaiting second signature
             </Stamp>
           </span>

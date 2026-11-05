@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import Stamp, { StampProps } from '../../../lib/components/stamp';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { expectNoAxeViolations } from '../../__tests__/a11y';
 
-const types: StampProps.Type[] = ['success', 'warning', 'error', 'info', 'neutral', 'draft'];
+const types: StampProps.Type[] = ['complete', 'caution', 'fault', 'note', 'neutral', 'draft'];
 
 describe('Stamp', () => {
   test('is text that screen readers read as written', () => {
     render(
       <h1>
-        North Annex <Stamp type="success">Running</Stamp>
+        North Annex <Stamp type="complete">Running</Stamp>
       </h1>
     );
     expect(screen.getByRole('heading', { name: 'North Annex Running' })).toBeInTheDocument();
@@ -54,6 +54,26 @@ describe('Stamp', () => {
     expect(stamps.slice(0, types.length).map(stamp => stamp.getType())).toEqual(types);
     expect(new Set(stamps.map(stamp => stamp.getElement().className)).size).toBe(types.length + 1);
     expect(stamps[types.length].isRotated()).toBe(false);
+  });
+
+  test('still accepts the old type names, with a warning', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const legacy: [StampProps.LegacyType, StampProps.Type][] = [
+      ['info', 'note'],
+      ['success', 'complete'],
+      ['warning', 'caution'],
+      ['error', 'fault'],
+    ];
+    for (const [old, current] of legacy) {
+      const { container: before, unmount: unmountBefore } = render(<Stamp type={old}>Status</Stamp>);
+      const legacyHtml = before.innerHTML;
+      unmountBefore();
+      const { container: after, unmount } = render(<Stamp type={current}>Status</Stamp>);
+      expect(legacyHtml).toBe(after.innerHTML);
+      unmount();
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining(`"${old}" is now called "${current}"`));
+    }
+    warn.mockRestore();
   });
 
   test('passes id and data attributes, but not className', () => {

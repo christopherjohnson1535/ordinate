@@ -150,11 +150,11 @@ export default function StatusGroup({ number }: { number: number }) {
       </Cell>
       <Cell name="Stamp">
         <Row>
-          <Stamp type="success">Approved</Stamp>
+          <Stamp type="complete">Approved</Stamp>
           <Stamp type="draft" size="small">
             Draft
           </Stamp>
-          <Stamp type="error" size="small" rotation="none">
+          <Stamp type="fault" size="small" rotation="none">
             Failed
           </Stamp>
         </Row>

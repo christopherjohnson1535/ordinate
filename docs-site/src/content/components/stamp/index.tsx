@@ -17,8 +17,8 @@ const doc: ComponentDoc = {
         with a dashed rule in gray, for work that has not been issued.
       </p>
       <p>
-        Stamp names its types <code>success</code>, <code>info</code>, <code>warning</code> and <code>error</code>. They
-        use the same colors as the status words elsewhere in the library: complete, note, caution and fault.
+        The status types are named like the states across the library: <code>complete</code>, <code>note</code>,{' '}
+        <code>caution</code> and <code>fault</code>, each in its status color.
       </p>
     </>
   ),

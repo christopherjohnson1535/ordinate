@@ -7,7 +7,8 @@ import { StampProps } from './interfaces';
 
 import styles from './styles.css.js';
 
-export interface InternalStampProps extends StampProps {
+export interface InternalStampProps extends Omit<StampProps, 'type'> {
+  type?: StampProps.Type;
   /**
    * Lets other components position the stamp. Not part of the public API.
    */

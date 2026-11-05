@@ -12,11 +12,13 @@ export interface StampProps extends BaseComponentProps {
   children?: React.ReactNode;
   /**
    * What the stamp says about the thing it marks:
-   * * `success`, `warning`, `error` and `info` for a status, in the matching status color.
+   * * `complete`, `caution`, `fault` and `note` for a status, named like the states, in the matching status color.
+   *   The old names (`success`, `warning`, `error` and `info`) still work with a warning until the next major
+   *   version.
    * * `neutral` for a state with no judgement in it, such as "Archived".
    * * `draft` for work not issued yet. It is drawn with a dashed rule.
    */
-  type?: StampProps.Type;
+  type?: StampProps.Type | StampProps.LegacyType;
   /**
    * `slight` sets the stamp a little askew, as if pressed by hand; `none` keeps it level. The tilt is
    * only drawn: the text stays in the reading order.
@@ -29,7 +31,12 @@ export interface StampProps extends BaseComponentProps {
 }
 
 export namespace StampProps {
-  export type Type = 'success' | 'warning' | 'error' | 'info' | 'neutral' | 'draft';
+  export type Type = 'complete' | 'caution' | 'fault' | 'note' | 'neutral' | 'draft';
+
+  /**
+   * Deprecated: the old names of the status types. Use `Type`.
+   */
+  export type LegacyType = 'success' | 'warning' | 'error' | 'info';
   export type Rotation = 'none' | 'slight';
   export type Size = 'small' | 'medium';
 }

@@ -4,9 +4,9 @@ import { ComponentWrapper, ElementWrapper } from '../core';
 
 import styles from '../../../stamp/styles.css.js';
 
-type StampType = 'success' | 'warning' | 'error' | 'info' | 'neutral' | 'draft';
+type StampType = 'complete' | 'caution' | 'fault' | 'note' | 'neutral' | 'draft';
 
-const types: ReadonlyArray<StampType> = ['success', 'warning', 'error', 'info', 'neutral', 'draft'];
+const types: ReadonlyArray<StampType> = ['complete', 'caution', 'fault', 'note', 'neutral', 'draft'];
 
 export default class StampWrapper extends ComponentWrapper {
   static rootSelector = `.${styles.stamp}`;

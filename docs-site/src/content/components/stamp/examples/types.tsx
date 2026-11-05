@@ -8,10 +8,10 @@ import Stamp from '@ordinate/components/stamp';
 export default function Types() {
   return (
     <SpaceBetween direction="horizontal" size="l" alignItems="center">
-      <Stamp type="success">Approved</Stamp>
-      <Stamp type="info">In review</Stamp>
-      <Stamp type="warning">On hold</Stamp>
-      <Stamp type="error">Rejected</Stamp>
+      <Stamp type="complete">Approved</Stamp>
+      <Stamp type="note">In review</Stamp>
+      <Stamp type="caution">On hold</Stamp>
+      <Stamp type="fault">Rejected</Stamp>
       <Stamp type="neutral">Archived</Stamp>
       <Stamp type="draft">Draft</Stamp>
     </SpaceBetween>
