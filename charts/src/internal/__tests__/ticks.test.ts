@@ -80,6 +80,15 @@ describe('log ticks', () => {
     expect(logTicks(1, 100, 10)).toEqual([1, 2, 5, 10, 20, 50, 100]);
   });
 
+  test('counts only the ticks inside a domain that starts and ends between powers', () => {
+    expect(logTicks(1024, 1048576, 10)).toEqual([2000, 5000, 1e4, 2e4, 5e4, 1e5, 2e5, 5e5, 1e6]);
+    expect(logTicks(1024, 1048576, 5)).toEqual([1e4, 1e5, 1e6]);
+  });
+
+  test('falls back to even steps inside a single decade', () => {
+    expect(logTicks(300, 700, 5)).toEqual([300, 400, 500, 600, 700]);
+  });
+
   test('skips decades when there are too many for the space', () => {
     expect(logTicks(1, 1e8, 3)).toEqual([1, 1000, 1e6]);
   });

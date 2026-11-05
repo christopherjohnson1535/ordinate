@@ -13,31 +13,29 @@ $arrow-breadth: calc(2 * #{ord.$space-xs});
 $inset: calc(#{ord.$border-width-default} * 1.414);
 
 .panel {
-  @include styles.border-radius(ord.$border-radius-dropdown);
   position: fixed;
   z-index: styles.$z-index-overlay;
   display: block;
   box-sizing: border-box;
-  border-width: ord.$border-width-default;
-  border-style: solid;
   white-space: normal;
   text-align: start;
 
   &[hidden] {
     display: none;
   }
-
-  @include styles.with-motion {
-    animation-name: panel-enter;
-    animation-duration: ord.$motion-duration-responsive;
-    animation-timing-function: ord.$motion-easing-standard;
-  }
 }
 
+// A plate lifted off the sheet, which rises onto its offset as it opens, like the components'
+// popover.
 .variant-sheet {
-  border-color: ord.$color-border-strong;
-  background-color: ord.$color-background-container;
+  @include styles.plate;
   color: ord.$color-text-body;
+
+  @include styles.with-motion {
+    animation-name: plate-enter;
+    animation-duration: ord.$motion-duration-expressive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
 
   > .arrow {
     background-color: ord.$color-border-strong;
@@ -49,9 +47,18 @@ $inset: calc(#{ord.$border-width-default} * 1.414);
 }
 
 .variant-inverse {
+  @include styles.border-radius(ord.$border-radius-dropdown);
+  border-width: ord.$border-width-default;
+  border-style: solid;
   border-color: ord.$color-background-tooltip;
   background-color: ord.$color-background-tooltip;
   color: ord.$color-text-tooltip;
+
+  @include styles.with-motion {
+    animation-name: panel-enter;
+    animation-duration: ord.$motion-duration-responsive;
+    animation-timing-function: ord.$motion-easing-standard;
+  }
 
   > .arrow,
   > .arrow::after {
@@ -117,6 +124,13 @@ $inset: calc(#{ord.$border-width-default} * 1.414);
 
   &::after {
     clip-path: polygon(0 #{$inset}, calc(100% - #{$inset}) 50%, 0 calc(100% - #{$inset}));
+  }
+}
+
+@keyframes plate-enter {
+  from {
+    opacity: 0;
+    transform: translateY(ord.$size-offset-plate);
   }
 }
 

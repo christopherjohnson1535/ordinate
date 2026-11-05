@@ -20,7 +20,7 @@ const doc: ComponentDoc = {
       <p>
         Bar and line series share one palette in the order they are listed, so the first line after two bar series takes
         the third color. Bars stand side by side by default, or stack with <code>stackedBars</code>; lines are never
-        stacked.
+        stacked. Stacked bars add a total row to the detail popover, the sum of the bar series at that category.
       </p>
     </>
   ),
@@ -41,7 +41,8 @@ const doc: ComponentDoc = {
       description: (
         <p>
           With <code>stackedBars</code> the bars of each category stack into one column whose height is their sum. The
-          line here is a separate measure in the same unit, the tickets still open at the end of each day.
+          line here is a separate measure in the same unit, the tickets still open at the end of each day. The total in
+          the detail popover counts the closed tickets only, not the open ones.
         </p>
       ),
     },

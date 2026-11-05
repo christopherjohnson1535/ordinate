@@ -140,6 +140,8 @@ export interface ModelInput<T extends ChartValue> {
   yScaleType: 'linear' | 'log';
   xDomain?: ReadonlyArray<T>;
   yDomain?: readonly [number, number];
+  xTicks?: ReadonlyArray<T>;
+  yTicks?: ReadonlyArray<number>;
   stackedBars: boolean;
   horizontal: boolean;
   width: number;
@@ -193,6 +195,21 @@ function formatContinuousTick<T extends ChartValue>(
     return formatter(value as T);
   }
   return formatTickNumber(value, scale.type === 'log' ? value : step);
+}
+
+// The given tick values that lie on a continuous scale, in order.
+function ticksOnScale(values: ReadonlyArray<ChartValue>, scale: ContinuousScale): number[] {
+  const [low, high] = scale.domain[0] <= scale.domain[1] ? scale.domain : [scale.domain[1], scale.domain[0]];
+  const margin = (high - low) * 1e-9;
+  const numbers = values
+    .map(toNumber)
+    .filter(value => value >= low - margin && value <= high + margin && Number.isFinite(scale.map(value)));
+  return [...new Set(numbers)].sort((a, b) => a - b);
+}
+
+// Given ticks can have uneven steps, so each label takes the decimals its own value needs.
+function ownStep(value: number): number {
+  return Math.abs(value) % 1 || 1;
 }
 
 /**
@@ -285,12 +302,16 @@ export function computeCartesianModel<T extends ChartValue>(input: ModelInput<T>
   const place = (category: number, value: number): Point => (horizontal ? [value, category] : [category, value]);
 
   // Ticks.
-  const valueTicks: Tick[] = valueScale.ticks(valueTickCount).map((value, index, all) => ({
+  const valueTickValues = input.yTicks ? ticksOnScale(input.yTicks, valueScale) : valueScale.ticks(valueTickCount);
+  const valueTicks: Tick[] = valueTickValues.map((value, index, all) => ({
     key: `y-${value}`,
     position: valueAt(value),
     label: input.yTickFormatter
       ? input.yTickFormatter(value)
-      : formatTickNumber(value, yScaleType === 'log' ? value : (all[1] ?? value) - (all[0] ?? 0)),
+      : formatTickNumber(
+          value,
+          input.yTicks ? ownStep(value) : yScaleType === 'log' ? value : (all[1] ?? value) - (all[0] ?? 0)
+        ),
     showLabel: true,
   }));
 
@@ -300,12 +321,19 @@ export function computeCartesianModel<T extends ChartValue>(input: ModelInput<T>
     const labels = scale.domain.map(value => formatCategory(value as T, input.xTickFormatter));
     const needed = horizontal ? 16 : Math.max(...labels.map(label => estimateTextWidth(label)), 0) + 12;
     const every = scale.step > 0 ? Math.max(1, Math.ceil(needed / scale.step)) : 1;
-    categoryTicks = scale.domain.map((value, index) => ({
-      key: `x-${valueKey(value)}`,
-      position: scale.map(value),
-      label: labels[index],
-      showLabel: index % every === 0,
-    }));
+    const chosen = input.xTicks ? new Set(input.xTicks.map(valueKey)) : null;
+    categoryTicks = scale.domain.flatMap((value, index) =>
+      chosen && !chosen.has(valueKey(value))
+        ? []
+        : [
+            {
+              key: `x-${valueKey(value)}`,
+              position: scale.map(value),
+              label: labels[index],
+              showLabel: chosen !== null || index % every === 0,
+            },
+          ]
+    );
   } else {
     const scale = categoryScale;
     // Powers of ten make short labels, so a log axis can take ticks closer together.
@@ -315,13 +343,13 @@ export function computeCartesianModel<T extends ChartValue>(input: ModelInput<T>
         ? categoryTickSpacing / 2
         : categoryTickSpacing;
     const count = Math.max(2, Math.floor(categoryLength / spacing));
-    const ticks = scale.ticks(count);
+    const ticks = input.xTicks ? ticksOnScale(input.xTicks, scale) : scale.ticks(count);
     const interval = scale.tickInterval(count);
     const step = (ticks[1] ?? ticks[0] ?? 0) - (ticks[0] ?? 0);
     categoryTicks = ticks.map(value => ({
       key: `x-${value}`,
       position: scale.map(value),
-      label: formatContinuousTick(value, scale, input.xTickFormatter, step, interval),
+      label: formatContinuousTick(value, scale, input.xTickFormatter, input.xTicks ? ownStep(value) : step, interval),
       showLabel: true,
     }));
   }

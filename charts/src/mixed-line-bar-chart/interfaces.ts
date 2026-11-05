@@ -34,6 +34,7 @@ export interface MixedLineBarChartProps<T extends MixedLineBarChartProps.DataTyp
   xScaleType?: CartesianChartProps<T, MixedLineBarChartProps.SeriesSpec<T>>['xScaleType'];
   /**
    * Stacks the bars of all bar series in each category instead of placing them side by side.
+   * The detail popover then shows the total of the bar series; lines are not added to it.
    */
   stackedBars?: boolean;
   /**

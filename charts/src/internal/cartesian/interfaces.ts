@@ -91,6 +91,18 @@ export interface CartesianChartProps<T extends ChartDataTypes, S extends Cartesi
    */
   yDomain?: readonly [number, number];
   /**
+   * The x values to draw ticks at, on any scale type. Use it when round numbers are not the
+   * right steps, such as powers of 1,024 for sizes in binary units. On a categorical axis it
+   * picks the categories that get a tick and a label. Values outside the axis are left out. By
+   * default the chart picks round values that fit the width.
+   */
+  xTicks?: ReadonlyArray<T>;
+  /**
+   * The y values to draw ticks and grid rules at, on a linear or log scale. Values outside the
+   * axis are left out. By default the chart picks round values that fit the height.
+   */
+  yTicks?: ReadonlyArray<number>;
+  /**
    * The scale of the x axis:
    * * `linear`: numbers, evenly spaced.
    * * `log`: positive numbers, each power of ten evenly spaced.

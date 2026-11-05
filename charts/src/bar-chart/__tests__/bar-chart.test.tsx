@@ -40,6 +40,12 @@ describe('BarChart', () => {
     expect(screen.getByRole('application')).toHaveAttribute('aria-roledescription', 'bar chart');
   });
 
+  test('draws ticks only at the given categories', () => {
+    const { chart } = renderChart({ xTicks: ['Q1', 'Q3'] });
+    expect(chart.findXAxisTicks().map(tick => tick.getText())).toEqual(['Q1', 'Q3']);
+    expect(chart.findBars()).toHaveLength(6);
+  });
+
   test('stacks bars and totals them in the popover', () => {
     const { chart } = renderChart({ stackedBars: true });
     const bars = chart.findBars().map(bar => rect(bar.getElement()));

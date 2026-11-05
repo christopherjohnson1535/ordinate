@@ -28,7 +28,7 @@ export interface DetailsOptions<T extends ChartValue> {
   xTickFormatter?: TickFormatter<T>;
   highlightedId: string | null;
   totalLabel: string;
-  /** Adds a total row, for stacked series. */
+  /** Adds a total row of the stacked series: areas and bars. Lines and thresholds are left out. */
   showTotal: boolean;
 }
 
@@ -38,7 +38,7 @@ function formatX<T extends ChartValue>(value: T, formatter?: TickFormatter<T>): 
 
 /**
  * What the detail popover shows at one x position: a row per series that has a value there,
- * the thresholds, and a total for stacks.
+ * the thresholds, and a total of the stacked areas or bars.
  */
 export function getPositionDetails<T extends ChartValue>({
   series,
@@ -64,8 +64,11 @@ export function getPositionDetails<T extends ChartValue>({
       if (value !== undefined) {
         const source = item.source as Exclude<CartesianSeries<T>, { type: 'threshold' }>;
         text = source.valueFormatter ? source.valueFormatter(value, position.value) : formatNumber(value);
-        total += value;
-        stacked++;
+        // Only areas and bars stack; a line beside stacked bars is a separate measure, such as a target.
+        if (item.kind === 'area' || item.kind === 'bar') {
+          total += value;
+          stacked++;
+        }
       }
     }
     if (text !== null) {

@@ -147,6 +147,8 @@ export function InternalCartesianChart<T extends ChartValue, S extends Cartesian
           yScaleType={yScaleType}
           xDomain={props.xDomain}
           yDomain={props.yDomain}
+          xTicks={props.xTicks}
+          yTicks={props.yTicks}
           stackedBars={props.stackedBars ?? false}
           horizontal={props.horizontalBars ?? false}
           showTotal={props.showTotal ?? false}

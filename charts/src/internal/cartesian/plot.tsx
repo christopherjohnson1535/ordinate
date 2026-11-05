@@ -24,6 +24,8 @@ export interface CartesianPlotProps<T extends ChartValue> {
   yScaleType: 'linear' | 'log';
   xDomain?: ReadonlyArray<T>;
   yDomain?: readonly [number, number];
+  xTicks?: ReadonlyArray<T>;
+  yTicks?: ReadonlyArray<number>;
   stackedBars: boolean;
   horizontal: boolean;
   /** Adds a total to the detail popover, for stacked series. */
@@ -148,6 +150,8 @@ export function CartesianPlot<T extends ChartValue>(props: CartesianPlotProps<T>
       yScaleType: props.yScaleType,
       xDomain: props.xDomain,
       yDomain: props.yDomain,
+      xTicks: props.xTicks,
+      yTicks: props.yTicks,
       stackedBars: props.stackedBars,
       horizontal,
       height,
@@ -166,6 +170,8 @@ export function CartesianPlot<T extends ChartValue>(props: CartesianPlotProps<T>
     props.yScaleType,
     props.xDomain,
     props.yDomain,
+    props.xTicks,
+    props.yTicks,
     props.stackedBars,
     props.xTickFormatter,
     props.yTickFormatter,

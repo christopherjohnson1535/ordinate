@@ -48,6 +48,27 @@ describe('MixedLineBarChart', () => {
     ).toEqual(['Issued50', 'Average45', 'Target60']);
   });
 
+  test('totals only the stacked bars, not the lines', () => {
+    const stacked: MixedLineBarChartProps.SeriesSpec<string>[] = [
+      { title: 'Issued', type: 'bar', data: [{ x: 'Jan', y: 40 }] },
+      { title: 'Revised', type: 'bar', data: [{ x: 'Jan', y: 15 }] },
+      { title: 'Target', type: 'line', data: [{ x: 'Jan', y: 70 }] },
+    ];
+    const { chart } = renderChart({ series: stacked, stackedBars: true });
+    chart.findApplication()!.focus();
+    chart.findApplication()!.keydown('ArrowRight');
+    const popover = chart.findDetailPopover()!;
+    expect(popover.findRows().map(row => row.getText())).toEqual(['Issued40', 'Revised15', 'Target70']);
+    expect(popover.findSummary()!.getText()).toBe('Total55');
+  });
+
+  test('shows no total for a single stacked bar beside a line', () => {
+    const { chart } = renderChart({ stackedBars: true });
+    chart.findApplication()!.focus();
+    chart.findApplication()!.keydown('ArrowRight');
+    expect(chart.findDetailPopover()!.findSummary()).toBeNull();
+  });
+
   test('legend items are drawn like their series', () => {
     const { chart } = renderChart();
     const [bar, line, threshold] = chart.findLegendItems().map(item => item.getElement().querySelector('svg')!);

@@ -39,6 +39,17 @@ $z-index-overlay: 1000;
   border-end-end-radius: $radius;
 }
 
+// Matches `plate` in the components' src/internal/styles/drawing.scss: a sheet lifted off the
+// drawing, with a hairline ink edge and a hard ink offset below it.
+@mixin plate($radius: ord.$border-radius-modal) {
+  @include border-radius($radius);
+  border-width: ord.$border-width-default;
+  border-style: solid;
+  border-color: ord.$color-border-strong;
+  background-color: ord.$color-background-container;
+  box-shadow: ord.$size-offset-plate ord.$size-offset-plate 0 0 ord.$color-border-strong;
+}
+
 @mixin focus-ring {
   outline-width: ord.$border-width-focus-ring;
   outline-style: solid;
