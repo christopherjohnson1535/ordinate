@@ -18,10 +18,6 @@ export const knownAxeViolations: Record<string, Record<string, string>> = {
     'scrollable-region-focusable':
       'With disableBodyScroll the main area scrolls on its own but cannot take focus when nothing in it can.',
   },
-  'container/permutations': {
-    'scrollable-region-focusable':
-      'Content of a fitHeight container scrolls inside it but cannot take focus when nothing in it can.',
-  },
   'examples/all-components': {
     'label-content-name-mismatch':
       'The tree view names each item by its own row text, as on tree-view/simple, so the secondary text and the ' +

@@ -50,8 +50,9 @@ export interface ContainerProps extends BaseComponentProps {
    */
   footer?: React.ReactNode;
   /**
-   * Makes the section fill the height of its parent. Long content scrolls inside it. Use it to give sections
-   * in the same row the same height.
+   * Makes the section fill the height of its parent. Long content scrolls inside it, and while it does the
+   * content takes focus so it can be scrolled from the keyboard. Use it to give sections in the same row the
+   * same height.
    */
   fitHeight?: boolean;
 }

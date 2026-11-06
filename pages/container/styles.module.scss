@@ -13,6 +13,8 @@
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  // A row of fixed height, so a fitHeight container fills it and scrolls inside rather than growing.
+  grid-template-rows: minmax(0, 1fr);
   gap: 16px;
   block-size: 280px;
 }

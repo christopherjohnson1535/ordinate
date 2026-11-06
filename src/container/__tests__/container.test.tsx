@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import Container from '../../../lib/components/container';
 import createWrapper from '../../../lib/components/test-utils/dom';
@@ -76,6 +76,47 @@ describe('Container', () => {
   test('is neutral by default and applies fitHeight', () => {
     render(<Container fitHeight={true}>Content</Container>);
     expect(container().getElement()).toHaveClass(styles['kind-neutral'], styles['fit-height']);
+  });
+
+  describe('with fitHeight', () => {
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    // jsdom lays nothing out, so the sizes the browser would measure are given here.
+    const mockSizes = (scrollHeight: number, clientHeight: number) => {
+      vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockReturnValue(scrollHeight);
+      vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(clientHeight);
+    };
+    const content = (container: HTMLElement) => container.querySelector(`.${styles.content}`) as HTMLElement;
+
+    test('lets content that scrolls take focus, named by the heading', () => {
+      mockSizes(400, 160);
+      const { container } = render(
+        <Container fitHeight={true} heading="Long">
+          Content
+        </Container>
+      );
+      expect(content(container)).toHaveAttribute('tabindex', '0');
+      expect(screen.getByRole('group', { name: 'Long' })).toBe(content(container));
+    });
+
+    test('leaves content that fits out of the tab order', () => {
+      mockSizes(100, 160);
+      const { container } = render(
+        <Container fitHeight={true} heading="Short">
+          Content
+        </Container>
+      );
+      expect(content(container)).not.toHaveAttribute('tabindex');
+      expect(content(container)).not.toHaveAttribute('role');
+    });
+
+    test('does not make content focusable without fitHeight', () => {
+      mockSizes(400, 160);
+      const { container } = render(<Container heading="Long">Content</Container>);
+      expect(content(container)).not.toHaveAttribute('tabindex');
+    });
   });
 
   test('keeps the drawing marks out of the accessibility tree', () => {
