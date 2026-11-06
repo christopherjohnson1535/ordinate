@@ -94,21 +94,31 @@ const contentDisplayOptions = columnDefinitions.map(({ id, header }) => ({
   alwaysVisible: id === 'name',
 }));
 
-// The index of the drawing set: sheets numbered A-01 onwards, account pages in a second set.
+// The number of each sheet in the drawing set: A-01 onwards, and account pages in a second set.
+const sheetNumbers: Record<string, string> = {
+  '#/overview': 'A-01',
+  '#/services': 'A-02',
+  '#/deployments': 'A-03',
+  '#/logs': 'A-04',
+  '#/settings': 'A-05',
+  '#/people': 'B-01',
+  '#/billing': 'B-02',
+};
+
+// The index of the drawing set.
 const sheets: SideNavigationProps.Item[] = [
-  { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
-  { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
-  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03' },
-  { type: 'link', text: 'Logs', href: '#/logs', code: 'A-04' },
-  { type: 'link', text: 'Settings', href: '#/settings', code: 'A-05' },
+  { type: 'link', text: 'Overview', href: '#/overview' },
+  { type: 'link', text: 'Services', href: '#/services' },
+  { type: 'link', text: 'Deployments', href: '#/deployments' },
+  { type: 'link', text: 'Logs', href: '#/logs' },
+  { type: 'link', text: 'Settings', href: '#/settings' },
   { type: 'divider' },
   {
     type: 'section-group',
     title: 'Account',
-    code: 'Set B',
     items: [
-      { type: 'link', text: 'People and access', href: '#/people', code: 'B-01' },
-      { type: 'link', text: 'Billing', href: '#/billing', code: 'B-02' },
+      { type: 'link', text: 'People and access', href: '#/people' },
+      { type: 'link', text: 'Billing', href: '#/billing' },
     ],
   },
 ];
@@ -341,7 +351,7 @@ export default function Console() {
               ariaLabel="Sheet"
               items={[
                 { label: 'Project', value: 'North Annex, production' },
-                { label: 'Sheet', value: sheet ? `${sheet.code} ${sheet.text}` : 'A-02 Services' },
+                { label: 'Sheet', value: sheet ? `${sheetNumbers[sheet.href]} ${sheet.text}` : 'A-02 Services' },
                 { label: 'Revision', value: '△2, 31 Oct 2026' },
                 { label: 'Checked', value: 'D. Ruiz' },
               ]}

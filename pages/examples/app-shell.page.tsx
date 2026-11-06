@@ -220,20 +220,19 @@ export default function AppShell() {
           activeHref={activeHref}
           onFollow={navigate}
           items={[
-            { type: 'link', text: 'Dashboard', href: '#/dashboard', code: 'A-01' },
-            { type: 'link', text: 'Projects', href: '#/projects', code: 'A-02' },
+            { type: 'link', text: 'Dashboard', href: '#/dashboard' },
+            { type: 'link', text: 'Projects', href: '#/projects' },
             {
               type: 'section',
               text: 'Networking',
-              code: 'Set B',
               items: [
-                { type: 'link', text: 'Endpoints', href: '#/endpoints', code: 'B-01' },
-                { type: 'link', text: 'Firewalls', href: '#/firewalls', code: 'B-02' },
+                { type: 'link', text: 'Endpoints', href: '#/endpoints' },
+                { type: 'link', text: 'Firewalls', href: '#/firewalls' },
               ],
             },
             { type: 'divider' },
-            { type: 'link', text: 'Billing', href: '#/billing', code: 'C-01' },
-            { type: 'link', text: 'Documentation', href: '#/docs', code: 'C-02', external: true },
+            { type: 'link', text: 'Billing', href: '#/billing' },
+            { type: 'link', text: 'Documentation', href: '#/docs', external: true },
           ]}
         />
       </div>

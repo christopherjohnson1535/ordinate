@@ -104,7 +104,7 @@ test('follows the sheet index, names the sheet in the title block and reaches th
   const titleBlock = devPage.content.locator('dl[aria-label="Sheet"]');
   await expect(titleBlock).toContainText('A-02 Services');
 
-  const billing = devPage.content.getByRole('link', { name: 'B-02 Billing' });
+  const billing = devPage.content.getByRole('link', { name: 'Billing' });
   await billing.click();
   await expect(billing).toHaveAttribute('aria-current', 'page');
   await expect(titleBlock).toContainText('B-02 Billing');

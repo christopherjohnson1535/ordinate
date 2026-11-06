@@ -38,18 +38,17 @@ export const statusTypes: Record<ServiceStatus, StatusIndicatorProps.State> = {
 };
 
 export const sheets: SideNavigationProps.Item[] = [
-  { type: 'link', text: 'Overview', href: '#/overview', code: 'A-01' },
-  { type: 'link', text: 'Services', href: '#/services', code: 'A-02' },
-  { type: 'link', text: 'Deployments', href: '#/deployments', code: 'A-03' },
-  { type: 'link', text: 'Logs', href: '#/logs', code: 'A-04' },
+  { type: 'link', text: 'Overview', href: '#/overview' },
+  { type: 'link', text: 'Services', href: '#/services' },
+  { type: 'link', text: 'Deployments', href: '#/deployments' },
+  { type: 'link', text: 'Logs', href: '#/logs' },
   { type: 'divider' },
   {
     type: 'section-group',
     title: 'Account',
-    code: 'Set B',
     items: [
-      { type: 'link', text: 'People and access', href: '#/people', code: 'B-01' },
-      { type: 'link', text: 'Billing', href: '#/billing', code: 'B-02' },
+      { type: 'link', text: 'People and access', href: '#/people' },
+      { type: 'link', text: 'Billing', href: '#/billing' },
     ],
   },
 ];
