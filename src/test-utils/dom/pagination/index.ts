@@ -23,8 +23,8 @@ export default class PaginationWrapper extends ComponentWrapper {
   }
 
   /**
-   * Returns the button for a page number, if it is shown. Page numbers are lettered with leading zeros,
-   * such as "03", so they are compared as numbers.
+   * Returns the button for a page number, if it is shown. The leading zero drawn before small page numbers
+   * is not part of the button's text, so its text is the number, such as "3".
    */
   findPageNumberByIndex(pageIndex: number): ElementWrapper<HTMLButtonElement> | null {
     return this.findPageNumbers().find(button => Number(button.getText()) === pageIndex) ?? null;

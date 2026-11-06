@@ -71,12 +71,21 @@ describe('Pagination', () => {
     expect(screen.getByRole('list', { name: 'Pagination' })).toBeInTheDocument();
   });
 
+  test('names each page button with the number it shows, drawing the padding zero apart', () => {
+    render(<Pagination currentPageIndex={3} pagesCount={12} />);
+    const button = screen.getByRole('button', { name: 'Page 3 of 12' });
+    // The text is the number alone, so the name contains what the button shows.
+    expect(button).toHaveTextContent(/^3$/);
+    expect(button.querySelector('[data-padding="0"]')).not.toBeNull();
+    expect(screen.getByRole('button', { name: 'Page 12 of 12' }).querySelector('[data-padding]')).toBeNull();
+  });
+
   test('clicking a page fires onChange with its number', () => {
     const onChangeSpy = vi.fn();
     render(<Controlled onChangeSpy={onChangeSpy} />);
     fireEvent.click(screen.getByRole('button', { name: 'Page 4 of 10' }));
     expect(onChangeSpy).toHaveBeenCalledWith(4);
-    expect(wrapper().findCurrentPage().getText()).toBe('04');
+    expect(wrapper().findCurrentPage().getText()).toBe('4');
   });
 
   test('clicking the current page does not fire onChange', () => {
@@ -117,7 +126,7 @@ describe('Pagination', () => {
 
   test('collapses long ranges with ellipses around the current page', () => {
     render(<Pagination currentPageIndex={10} pagesCount={20} />);
-    expect(shownPages()).toEqual(['01', '09', '10', '11', '20']);
+    expect(shownPages()).toEqual(['1', '9', '10', '11', '20']);
     expect(wrapper().findEllipses()).toHaveLength(2);
   });
 
@@ -152,7 +161,7 @@ describe('Pagination', () => {
 
   test('clamps the current page into range', () => {
     render(<Pagination currentPageIndex={9} pagesCount={3} />);
-    expect(wrapper().findCurrentPage().getText()).toBe('03');
+    expect(wrapper().findCurrentPage().getText()).toBe('3');
   });
 
   test('ariaLabels replace the built-in names', () => {
@@ -234,7 +243,7 @@ describe('Pagination test utilities and accessibility', () => {
   test('the wrapper finds page numbers by index', () => {
     render(<Controlled currentPageIndex={1} pagesCount={5} />);
     wrapper().findPageNumberByIndex(4)!.click();
-    expect(wrapper().findCurrentPage().getText()).toBe('04');
+    expect(wrapper().findCurrentPage().getText()).toBe('4');
     expect(wrapper().findPageNumberByIndex(9)).toBeNull();
   });
 

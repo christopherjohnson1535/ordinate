@@ -17,6 +17,22 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
+/**
+ * The lettered page number. The padding zero is drawn by the style sheet rather than written in the text, so
+ * the button's text is the number itself, "2", which is part of its name, "Page 2 of 12", and voice control
+ * can find the button by what it shows.
+ */
+function PageNumber({ pageNumber, count }: { pageNumber: number; count: number }) {
+  const lettered = formatPageNumber(pageNumber, count);
+  const padding = lettered.slice(0, lettered.length - String(pageNumber).length);
+  return (
+    <>
+      {padding && <span className={styles.padding} data-padding={padding} />}
+      {String(pageNumber)}
+    </>
+  );
+}
+
 export function InternalPagination({
   currentPageIndex,
   pagesCount,
@@ -95,7 +111,7 @@ export function InternalPagination({
                   disabled={disabled}
                   onClick={() => goTo(item)}
                 >
-                  {formatPageNumber(item, count)}
+                  <PageNumber pageNumber={item} count={count} />
                 </button>
               </li>
             ) : (

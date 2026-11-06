@@ -130,3 +130,8 @@
   min-block-size: ord.$size-control-height-small;
   block-size: ord.$size-control-height-small;
 }
+
+// The padding zero of a page number, drawn here so it is not part of the button's text.
+.padding::before {
+  content: attr(data-padding);
+}
